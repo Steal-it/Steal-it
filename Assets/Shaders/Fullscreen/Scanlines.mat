@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pixelate
-  m_Shader: {fileID: -6465566751694194690, guid: e22dc9b92fcc35343bded9da6f1e7aca, type: 3}
+  m_Name: Scanlines
+  m_Shader: {fileID: -6465566751694194690, guid: 035b115e71255a748a52d9410e624ca2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -37,7 +37,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _PixelSize: 400
+    - _Float: 2
+    - _Frequency: 100
+    - _Intensity: 0.03
+    - _Scanline_Size: 250.64
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

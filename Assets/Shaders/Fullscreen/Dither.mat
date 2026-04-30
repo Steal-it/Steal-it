@@ -48,7 +48,7 @@ Material:
     - _Custom_Beyes_Size: 0
     - _Custom_Palettes: 0
     - _Dither_Opacity: 0.5
-    - _Quantization_Level: 64
+    - _Quantization_Level: 32
     - _Saturation_Layers: 5
     m_Colors:
     - _Bayes_Size: {r: 320, g: 180, b: 0, a: 0}
