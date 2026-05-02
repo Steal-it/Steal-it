@@ -96,6 +96,7 @@ MonoBehaviour:
   - {fileID: -3357603926938260329}
   - {fileID: 4279343489288553032}
   - {fileID: 6203324108383271047}
+  - {fileID: 941148276258124765}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -136,6 +137,22 @@ MonoBehaviour:
   maxNits:
     m_OverrideState: 1
     m_Value: 647
+--- !u!114 &941148276258124765
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9544b0afc3e19419fa69b203ee95cd, type: 3}
+  m_Name: AfterImageEffect
+  m_EditorClassIdentifier: Assembly-CSharp::AfterImageEffect
+  active: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.524
 --- !u!114 &4279343489288553032
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -167,7 +184,7 @@ MonoBehaviour:
   active: 1
   distance:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 0.2
   cropToFit:
     m_OverrideState: 0
     m_Value: 0
