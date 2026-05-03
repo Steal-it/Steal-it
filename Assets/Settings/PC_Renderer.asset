@@ -15,23 +15,9 @@ MonoBehaviour:
   m_Active: 1
   settings:
     afterImageMaterial: {fileID: 2100000, guid: fe1940b750d1d9e448ab74e78116e71c, type: 2}
+    useFBF: 0
+    useGrayscale: 0
   renderEvent: 550
---- !u!114 &-3064190134475764019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb6e5a531f192be4c85e0e5d53033053, type: 3}
-  m_Name: StunEffect FBF
-  m_EditorClassIdentifier: Assembly-CSharp::AfterImageRenderFeatureFBF
-  m_Active: 0
-  settings:
-    afterImageMaterial: {fileID: 0}
-  renderEvent: 600
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,8 +47,7 @@ MonoBehaviour:
   - {fileID: 5815481455747800867}
   - {fileID: 5580496078598270200}
   - {fileID: -8677674912393468948}
-  - {fileID: -3064190134475764019}
-  m_RendererFeatureMap: 2cf2387acba5b739231fb87f92bdb450f86c4fe39de7714dece377baa4b49287cdce50b64ecf79d5
+  m_RendererFeatureMap: 2cf2387acba5b739231fb87f92bdb450f86c4fe39de7714dece377baa4b49287
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}

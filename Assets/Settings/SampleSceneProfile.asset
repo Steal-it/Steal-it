@@ -149,10 +149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9544b0afc3e19419fa69b203ee95cd, type: 3}
   m_Name: AfterImageEffect
   m_EditorClassIdentifier: Assembly-CSharp::AfterImageEffect
-  active: 0
+  active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.524
+    m_Value: 1
 --- !u!114 &4279343489288553032
 MonoBehaviour:
   m_ObjectHideFlags: 3

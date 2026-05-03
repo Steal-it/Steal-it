@@ -41,8 +41,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BlendAmount: 0.524
+    - _BlendAmount: 1
     - _Blend_Amount: 0
+    - _UseFBF: 0
+    - _UseGrayScale: 0
+    - _UseGrayscale: 0
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
