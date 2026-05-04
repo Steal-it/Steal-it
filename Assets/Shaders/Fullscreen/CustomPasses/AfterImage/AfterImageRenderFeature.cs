@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.RenderGraphModule.Util;
+using UnityEditor.EditorTools;
 
 public class AfterImageRenderFeature : ScriptableRendererFeature
 {
@@ -21,6 +22,7 @@ public class AfterImageRenderFeature : ScriptableRendererFeature
 
         settings.material.SetInt("_UseFBF", settings.useFBF ? 1 : 0);
         settings.material.SetInt("_UseGrayscale", settings.useGrayscale ? 1 : 0);
+        settings.material.SetInt("_BadGrayscale", settings.badGrayscale ? 1 : 0);
 
         // TODO:Test with VR
         // if (settings.useFBF)
@@ -68,8 +70,11 @@ public class AfterImageRenderFeature : ScriptableRendererFeature
     public class AfterImageSettings
     {
         public Material material;
+        [Tooltip("Turn on frame buffer fetch for mobile optimization")]
         public bool useFBF;
         public bool useGrayscale;
+        [Tooltip("Useful for after flash effect")]
+        public bool badGrayscale;
     }
 
     class AfterImagePass : ScriptableRenderPass
