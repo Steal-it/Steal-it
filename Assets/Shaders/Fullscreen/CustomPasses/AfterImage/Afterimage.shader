@@ -6,6 +6,7 @@ Shader "Custom/AfterImage"
         _BlendAmount ("Blend Amount", Range(0, 0.99)) = 0.9
         [Toggle(_USEFBF_ON)] _UseFBF ("Use Framebuffer Fetch", Float) = 0
         [Toggle(_USEGRAYSCALE_ON)] _UseGrayscale ("Use Grayscale", Float) = 0
+        [Toggle(_BADGRAYSCALE_ON)] _BadGrayscale ("Bad Grayscale", Float) = 0
     }
 
     SubShader
@@ -22,6 +23,7 @@ Shader "Custom/AfterImage"
             #pragma fragment Frag
             #pragma multi_compile_local _ _USEFBF_ON
             #pragma multi_compile_local _ _USEGRAYSCALE_ON
+            #pragma multi_compile_local _ _BADGRAYSCALE_ON
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
@@ -41,6 +43,12 @@ Shader "Custom/AfterImage"
             half3 ToGrayscale(half3 color)
             {
                 half gray = dot(color, half3(0.2126, 0.7152, 0.0722));
+                return half3(gray, gray, gray);
+            }
+
+            half3 ToBadGrayscale(half3 color)
+            {
+                half gray = dot(color, half3(0.199, 0.587, 0.114));
                 return half3(gray, gray, gray);
             }
 
@@ -64,6 +72,9 @@ Shader "Custom/AfterImage"
                 // Grayscale opzionale sulla history
                 #if defined(_USEGRAYSCALE_ON)
                     hist = ToGrayscale(hist);
+                    #if defined(_BADGRAYSCALE_ON)
+                        hist = ToBadGrayscale(hist)
+                    #endif
                 #endif
 
                 // Blend
