@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class FreeFlyCamera : MonoBehaviour
-{
+public class FreeFlyCamera : MonoBehaviour {
     [Header("Movement Settings")]
     public float moveSpeed = 10f;
     public float fastMoveFactor = 3f;
@@ -14,10 +13,8 @@ public class FreeFlyCamera : MonoBehaviour
     private float rotationX = 0f;
     private float rotationY = 0f;
 
-    void Start()
-    {
-        if (lockCursor)
-        {
+    void Start() {
+        if (lockCursor) {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -28,21 +25,18 @@ public class FreeFlyCamera : MonoBehaviour
         rotationY = rot.x;
     }
 
-    void Update()
-    {
+    void Update() {
         HandleRotation();
         HandleMovement();
 
         // Optional: Toggle cursor lock with Escape
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
         }
     }
 
-    void HandleRotation()
-    {
+    void HandleRotation() {
         rotationX += Input.GetAxis("Mouse X") * lookSensitivity;
         rotationY += Input.GetAxis("Mouse Y") * lookSensitivity;
 
@@ -53,12 +47,10 @@ public class FreeFlyCamera : MonoBehaviour
         transform.localRotation *= Quaternion.AngleAxis(rotationY, Vector3.left);
     }
 
-    void HandleMovement()
-    {
+    void HandleMovement() {
         float currentSpeed = moveSpeed;
 
-        if (Input.GetKey(fastMoveKey))
-        {
+        if (Input.GetKey(fastMoveKey)) {
             currentSpeed *= fastMoveFactor;
         }
 
