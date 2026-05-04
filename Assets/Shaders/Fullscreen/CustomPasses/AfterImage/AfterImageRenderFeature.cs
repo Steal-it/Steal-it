@@ -22,6 +22,17 @@ public class AfterImageRenderFeature : ScriptableRendererFeature
         settings.material.SetInt("_UseFBF", settings.useFBF ? 1 : 0);
         settings.material.SetInt("_UseGrayscale", settings.useGrayscale ? 1 : 0);
 
+        // TODO:Test with VR
+        // if (settings.useFBF)
+        //     settings.material.EnableKeyword("_USEFBF_ON");
+        // else
+        //     settings.material.DisableKeyword("_USEFBF_ON");
+
+        // if (settings.useGrayscale)
+        //     settings.material.EnableKeyword("_USEGRAYSCALE_ON");
+        // else
+        //     settings.material.DisableKeyword("_USEGRAYSCALE_ON");
+
         afterImagePass = new AfterImagePass(settings);
 
         // Configures where the render pass should be injected.
@@ -77,7 +88,7 @@ public class AfterImageRenderFeature : ScriptableRendererFeature
         private class PassData
         {
             internal Material material;
-            internal float blend;
+            internal bool usingFBF;
             internal TextureHandle activeColorTexture;
         }
 
@@ -87,7 +98,15 @@ public class AfterImageRenderFeature : ScriptableRendererFeature
         // What the GPU execute
         static void ExecutePass(PassData data, RasterGraphContext context)
         {
-            Blitter.BlitTexture(context.cmd, data.activeColorTexture, new Vector4(1, 1, 0, 0), data.material, 0);
+            if (data.usingFBF)
+            {
+                // dont need to specify the source in FBF because is well known
+                Blitter.BlitTexture(context.cmd, new Vector4(1, 1, 0, 0), data.material, 0);
+            }
+            else
+            {
+                Blitter.BlitTexture(context.cmd, data.activeColorTexture, new Vector4(1, 1, 0, 0), data.material, 0);
+            }
         }
 
         // RecordRenderGraph is where the RenderGraph handle can be accessed, through which render passes can be added to the graph.
@@ -169,18 +188,34 @@ public class AfterImageRenderFeature : ScriptableRendererFeature
             // This optimization has some caveats. You have to be careful when the color buffer is persistent across frames and between different cameras, such as in camera stacking.
             // In those cases you need to make sure your texture is an RTHandle and that you properly manage the lifecycle of it.
             resourceData.cameraColor = destination;
-            // renderGraph.AddCopyPass(destination, source, passName: "Copy Back FF Destination (also using FBF)"); //?????????
+            // renderGraph.AddCopyPass(destination, source, passName: "Copy Back FF Destination (also using FBF)"); // Alternative more expensive?????????
 
 
         }
 
         private void NormalPass(RenderGraph renderGraph, ContextContainer frameContext, TextureHandle source, TextureHandle destination, TextureHandle history, float blendAmount)
         {
-            RenderGraphUtils.BlitMaterialParameters para = new(source, destination, settings.material, 0);    // apply the effect on the current frame
+            // render pass (GPU job) 
+            // Even if is a simple blit operation i use the RasterRenderPass in order to merge passes since BlitPass is unsafe for some reason
+            using (var builder = renderGraph.AddRasterRenderPass<PassData>(_passName, out var passData))
+            {
+                // populating data
+                passData.material = settings.material;
+                passData.usingFBF = settings.useFBF;
+                passData.activeColorTexture = source;
 
-            // Shortcut for the RasterRenderPass
-            renderGraph.AddBlitPass(para, passName: _passName);
+                // We declare the src as input attachment. This is required for framebuffer fetch. 
+                // builder.SetInputAttachment(source, 0, AccessFlags.Read);
+                builder.UseTexture(source, AccessFlags.Read);
 
+                // set the final destination of the frame.
+                // We cannot use MRT because shader_graph does not support it
+                builder.SetRenderAttachment(destination, 0);
+                // builder.SetRenderAttachment(history, 1);
+
+                // assign the task
+                builder.SetRenderFunc((PassData data, RasterGraphContext context) => ExecutePass(data, context));
+            }
             // update the RTHandle 
             renderGraph.AddCopyPass(destination, history, passName: "AfterImage_SaveHistory");
         }
@@ -192,7 +227,7 @@ public class AfterImageRenderFeature : ScriptableRendererFeature
             {
                 // populating data
                 passData.material = settings.material;
-                passData.blend = blendAmount;
+                passData.usingFBF = settings.useFBF;
                 passData.activeColorTexture = source;
 
                 // We declare the src as input attachment. This is required for framebuffer fetch. 
