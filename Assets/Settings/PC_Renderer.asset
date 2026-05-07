@@ -12,12 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16d1c8bfe828ef49a85e4e589dd8a21, type: 3}
   m_Name: StunEffect
   m_EditorClassIdentifier: Assembly-CSharp::AfterImageFeature
-  m_Active: 1
+  m_Active: 0
   settings:
     material: {fileID: 2100000, guid: fe1940b750d1d9e448ab74e78116e71c, type: 2}
     useFBF: 1
     useGrayscale: 0
+    badGrayscale: 0
   renderEvent: 550
+--- !u!114 &-917323372073072809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: Posterization
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.FullScreenPassRendererFeature
+  m_Active: 0
+  injectionPoint: 550
+  fetchColorBuffer: 1
+  requirements: 0
+  passMaterial: {fileID: 2100000, guid: 27ce774488989134cb353d9dc3a934dc, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,8 +67,9 @@ MonoBehaviour:
   - {fileID: 4158975074247438892}
   - {fileID: 5815481455747800867}
   - {fileID: 5580496078598270200}
+  - {fileID: -917323372073072809}
   - {fileID: -8677674912393468948}
-  m_RendererFeatureMap: 2cf2387acba5b739231fb87f92bdb450f86c4fe39de7714dece377baa4b49287
+  m_RendererFeatureMap: 2cf2387acba5b739231fb87f92bdb450f86c4fe39de7714d57c76bd7400345f3ece377baa4b49287
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -109,7 +131,7 @@ MonoBehaviour:
   m_Name: Scanlines
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.FullScreenPassRendererFeature
   m_Active: 0
-  injectionPoint: 550
+  injectionPoint: 450
   fetchColorBuffer: 1
   requirements: 0
   passMaterial: {fileID: 2100000, guid: 3a6dfa7b7302cf3489a154ccfde7e624, type: 2}

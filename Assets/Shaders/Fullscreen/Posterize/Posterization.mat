@@ -7,13 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Afterimage
-  m_Shader: {fileID: -6465566751694194690, guid: 02ca84c56505ce344bda52aa271cfc8b, type: 3}
+  m_Name: Posterization
+  m_Shader: {fileID: -6465566751694194690, guid: 373283ef60615874a9e3834c35ca1399, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _USEFBF_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,12 +23,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _HistoryTex:
+    - _Noise_Texture:
+        m_Texture: {fileID: 2800000, guid: ab21783073830e74d82a48d7392da168, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Palette:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_0c89bfd470914c1faefcf49c79dea3a8_Texture_1_Texture2D:
-        m_Texture: {fileID: 0}
+    - _Triplanar_80a6c08357c1467fa0b61c3f236524e5_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: bfe9bed86b7429d4c8182ab6fbbe49a7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -46,12 +49,25 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BadGrayscale: 0
-    - _BlendAmount: 0.826
-    - _Blend_Amount: 0
-    - _UseFBF: 1
-    - _UseGrayScale: 0
-    - _UseGrayscale: 0
-    m_Colors: []
+    - _Brightness: 1.5
+    - _Darkness: 0.6
+    - _HUE_mod: 0
+    - _Hue: 3.87
+    - _Noise_strenght: 0.02
+    - _PostLevel: 10
+    - _Posterizaion_Level: 3.21
+    - _SAT_mod: 0
+    - _Sat: 0.28
+    - _Saturation: 0.2
+    - _Texture_Blend: 1
+    - _Tint: 0.3
+    - _UseCustomPalette: 0
+    - _Use_Palette: 0
+    - _Use_Unity_Posterization: 0
+    - _VAL_mod: 0
+    - _Val: 2.63
+    m_Colors:
+    - _Base_Color: {r: 0.45376468, g: 0.9716981, b: 0.87955797, a: 1}
+    - _Vector4: {r: 6, g: 6, b: 6, a: 6}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
