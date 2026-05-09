@@ -1,4 +1,6 @@
 .vscode
+/[Aa]ssets/DEV/
+/[Aa]ssets/DEV.meta
 
 # Unity .gitignore Template
 # Source: https://github.com/github/gitignore/blob/main/Unity.gitignore
