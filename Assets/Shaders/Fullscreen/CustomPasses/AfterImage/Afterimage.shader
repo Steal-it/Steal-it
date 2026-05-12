@@ -25,6 +25,10 @@ Shader "Custom/AfterImage"
             #pragma multi_compile_local _ _USEGRAYSCALE_ON
             #pragma multi_compile_local _ _BADGRAYSCALE_ON
 
+            // ── VR: abilita Single-Pass Instanced / Multiview ──────────────
+            #pragma multi_compile_instancing
+            #pragma instancing_options renderinglayer
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
 
@@ -32,7 +36,7 @@ Shader "Custom/AfterImage"
                 FRAMEBUFFER_INPUT_X_HALF(0);
             #endif
 
-            TEXTURE2D(_HistoryTex);
+            TEXTURE2D_X(_HistoryTex);
             SAMPLER(sampler_HistoryTex);
 
             CBUFFER_START(UnityPerMaterial)
@@ -67,7 +71,7 @@ Shader "Custom/AfterImage"
                 #endif
 
                 // Leggi history
-                half3 hist = SAMPLE_TEXTURE2D(_HistoryTex, sampler_HistoryTex, uv).rgb;
+                half3 hist = SAMPLE_TEXTURE2D_X(_HistoryTex, sampler_HistoryTex, uv).rgb;
 
                 // Grayscale opzionale sulla history
                 #if defined(_USEGRAYSCALE_ON)
