@@ -20,6 +20,7 @@ public class AfterImageRenderFeature : ScriptableRendererFeature {
         settings.material.SetInt("_UseFBF", settings.useFBF ? 1 : 0);
         settings.material.SetInt("_UseGrayscale", settings.useGrayscale ? 1 : 0);
         settings.material.SetInt("_BadGrayscale", settings.badGrayscale ? 1 : 0);
+        settings.material.SetInt("_useVR", settings.useVR ? 1 : 0);
 
         // TODO:Test with VR
         // if (settings.useFBF)
@@ -75,6 +76,7 @@ public class AfterImageRenderFeature : ScriptableRendererFeature {
         public bool useGrayscale;
         [Tooltip("Useful for after flash effect (it requires the useGrayscale)")]
         public bool badGrayscale;
+        public bool useVR;
     }
 
     class AfterImagePass : ScriptableRenderPass {
@@ -135,11 +137,13 @@ public class AfterImageRenderFeature : ScriptableRendererFeature {
             TextureDesc desc = renderGraph.GetTextureDesc(source);
 
             // Allocate persistent history RTHandle if needed or if resolution changed
-            if (m_HistoryRT == null || m_HistoryRT.rt.width != desc.width || m_HistoryRT.rt.height != desc.height) {
+            if (m_HistoryRT == null || m_HistoryRT.rt.width != desc.width || m_HistoryRT.rt.height != desc.height || m_HistoryRT.rt.volumeDepth != desc.slices || m_HistoryRT.rt.dimension != desc.dimension) {
                 m_HistoryRT?.Release();
                 m_HistoryRT = RTHandles.Alloc(
                     desc.width, desc.height,
                     colorFormat: desc.colorFormat,
+                    slices: desc.slices,
+                    dimension: desc.dimension,
                     name: $"{_passName}_History"
                 );
             }
