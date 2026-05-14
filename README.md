@@ -1,3 +1,29 @@
+# TEO
+
+## RIG
+
+- Camera Offset
+    - Main Camera
+        - Vignette when turning and moving
+    - Gaze Interactor (D)
+    - Gaze Stabilized (D)
+    - Left/Right Controller (with ControllerConfigurator)
+        - Poke Interactor
+        - Near-Far Interactor (both enabled)
+        - Left/Right Controller Visual
+- Locomotion
+    - Turn
+        - Snap (D)
+        - Smooth
+    - Move
+    - Grab Move (D)
+    - Climb (D)
+    - Gravity
+    - Jump
+
+Let's find QUACK
+
+
 # How to configure
 
 ## Requirements
@@ -16,7 +42,9 @@
 
 ## Clone and set up
 
-Clone the repo, add it into Unity Hub and start it using the proper Unity Editor version. Once opened, go to Build Profiles and switch to Android. Packages and dependencies should be already imported.
+Clone the repo, add it into Unity Hub and start it using the proper Unity Editor version. Once opened, go to `Build Profiles` and switch to Android. Packages and dependencies should be already imported.
+
+In order to use the rig and the interactions inside the Editor, go to `Project Settings > XR Plug-in Management > XR Interaction Toolkit` and enbale `Use XR Interaction Simulator in scenes`.
 
 ## Merge and merge conflitcs
 
