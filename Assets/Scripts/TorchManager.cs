@@ -19,7 +19,7 @@ public class TorchManager : MonoBehaviour {
 
     void Awake() {
         if (Instance != null) {
-            Debug.LogError("An instance of TorchManager already exists!");
+            Debug.LogError($"An instance of {nameof(TorchManager)} already exists!");
             return;
         }
 
@@ -27,6 +27,10 @@ public class TorchManager : MonoBehaviour {
 
         selectedControllerConfigurator = useTorchOnLeftController ? leftControllerConfigurator : rightControllerConfigurator;
 
+        if (selectedControllerConfigurator == null) {
+            Debug.LogError($"{nameof(ControllerConfigurator)} not assigned to destination controller!");
+            return;
+        }
         Instantiate(torchPrefabGameObject, selectedControllerConfigurator.transform);
     }
 }

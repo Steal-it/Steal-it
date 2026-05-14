@@ -10,6 +10,9 @@ public class ControllerConfigurator : MonoBehaviour, IControllerConfigurator {
     private InputActionReference controllerActivateInputAction;
 
     public void Enable(Action<InputAction.CallbackContext> _action) {
+        nearFarInteractor.enableNearCasting = false;
+        nearFarInteractor.enableFarCasting = false;
+
         controllerActivateInputAction.action.Enable();
         controllerActivateInputAction.action.performed += _action;
 
@@ -17,6 +20,9 @@ public class ControllerConfigurator : MonoBehaviour, IControllerConfigurator {
     }
 
     public void Disable(Action<InputAction.CallbackContext> _action) {
+        nearFarInteractor.enableNearCasting = true;
+        nearFarInteractor.enableFarCasting = true;
+
         controllerActivateInputAction.action.Disable();
         controllerActivateInputAction.action.performed -= _action;
     }

@@ -1,3 +1,29 @@
+# TEO
+
+## RIG
+
+- Camera Offset
+    - Main Camera
+        - Vignette when turning and moving
+    - Gaze Interactor (D)
+    - Gaze Stabilized (D)
+    - Left/Right Controller (with ControllerConfigurator)
+        - Poke Interactor
+        - Near-Far Interactor (both enabled)
+        - Left/Right Controller Visual
+- Locomotion
+    - Turn
+        - Snap (D)
+        - Smooth
+    - Move
+    - Grab Move (D)
+    - Climb (D)
+    - Gravity
+    - Jump
+
+Let's find QUACK
+
+
 # How to configure
 
 ## Requirements
