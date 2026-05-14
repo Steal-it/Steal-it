@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 4609489392589321124}
   - component: {fileID: 4728922528080384912}
   m_Layer: 0
-  m_Name: Push Button
+  m_Name: PokeInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

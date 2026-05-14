@@ -338,6 +338,7 @@ GameObject:
   - component: {fileID: 340622573300162379}
   - component: {fileID: 3875946364365079176}
   - component: {fileID: 2129763541350733589}
+  - component: {fileID: 2862393771210143833}
   m_Layer: 0
   m_Name: Right Controller
   m_TagString: Untagged
@@ -507,6 +508,20 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+--- !u!114 &2862393771210143833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5002103311445545489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c0ab812f601f44fbd8415834123871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ControllerConfigurator
+  nearFarInteractor: {fileID: 5371314703180341519}
+  controllerActivateInputAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &5166433300203379420
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,6 +878,7 @@ GameObject:
   - component: {fileID: 1474353219155766442}
   - component: {fileID: 5634797677458796437}
   - component: {fileID: 2435619281496680634}
+  - component: {fileID: 1056556906979079894}
   m_Layer: 0
   m_Name: Left Controller
   m_TagString: Untagged
@@ -1032,6 +1048,20 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+--- !u!114 &1056556906979079894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7195739529415447137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c0ab812f601f44fbd8415834123871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ControllerConfigurator
+  nearFarInteractor: {fileID: 2643323343283992863}
+  controllerActivateInputAction: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1001 &381161163272787879
 PrefabInstance:
   m_ObjectHideFlags: 0
