@@ -1,23 +1,16 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Torch : MonoBehaviour {
-    [SerializeField]
-    private InputActionReference inputAction;
-
-    void Awake() {
-        inputAction.action.Enable();
-        inputAction.action.performed += Flash;
-        // TODO: track device change https://youtu.be/NObwdF9RqCg?si=QtYNqLSqe-xpNHuo
+    void Start() {
+        TorchManager.Instance.ControllerConfigurator.Enable(Flash);
     }
 
-    private void Flash(InputAction.CallbackContext context) {
+    private void Flash(InputAction.CallbackContext _context) {
         Debug.Log("FLASH");
     }
 
     void OnDestroy() {
-        inputAction.action.Disable();
-        inputAction.action.performed -= Flash;
+        TorchManager.Instance.ControllerConfigurator.Disable(Flash);
     }
 }
