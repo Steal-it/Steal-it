@@ -903,52 +903,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7195739529415447137, guid: f1b1779b894fb344aafc6fb2e54d32cd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 554915220}
-    - targetCorrespondingSourceObject: {fileID: 5002103311445545489, guid: f1b1779b894fb344aafc6fb2e54d32cd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 551586195}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1b1779b894fb344aafc6fb2e54d32cd, type: 3}
---- !u!1 &551586189 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5002103311445545489, guid: f1b1779b894fb344aafc6fb2e54d32cd, type: 3}
+--- !u!114 &551586195 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2862393771210143833, guid: f1b1779b894fb344aafc6fb2e54d32cd, type: 3}
   m_PrefabInstance: {fileID: 464745675}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &551586195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 551586189}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41c0ab812f601f44fbd8415834123871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerConfigurator
-  nearFarInteractor: {fileID: 1002078924}
-  controllerActivateInputAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
---- !u!1 &554915214 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7195739529415447137, guid: f1b1779b894fb344aafc6fb2e54d32cd, type: 3}
+--- !u!114 &554915220 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1056556906979079894, guid: f1b1779b894fb344aafc6fb2e54d32cd, type: 3}
   m_PrefabInstance: {fileID: 464745675}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &554915220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554915214}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41c0ab812f601f44fbd8415834123871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerConfigurator
-  nearFarInteractor: {fileID: 938567877}
-  controllerActivateInputAction: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &586628486
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,28 +1599,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890106905}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &938567877 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2643323343283992863, guid: f1b1779b894fb344aafc6fb2e54d32cd, type: 3}
-  m_PrefabInstance: {fileID: 464745675}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25a07ef133a37d140a87cdf1f1c75fdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1002078924 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5371314703180341519, guid: f1b1779b894fb344aafc6fb2e54d32cd, type: 3}
-  m_PrefabInstance: {fileID: 464745675}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25a07ef133a37d140a87cdf1f1c75fdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1251843242
 GameObject:
   m_ObjectHideFlags: 0

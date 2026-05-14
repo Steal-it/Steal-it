@@ -16,7 +16,9 @@
 
 ## Clone and set up
 
-Clone the repo, add it into Unity Hub and start it using the proper Unity Editor version. Once opened, go to Build Profiles and switch to Android. Packages and dependencies should be already imported.
+Clone the repo, add it into Unity Hub and start it using the proper Unity Editor version. Once opened, go to `Build Profiles` and switch to Android. Packages and dependencies should be already imported.
+
+In order to use the rig and the interactions inside the Editor, go to `Project Settings > XR Plug-in Management > XR Interaction Toolkit` and enbale `Use XR Interaction Simulator in scenes`.
 
 ## Merge and merge conflitcs
 
