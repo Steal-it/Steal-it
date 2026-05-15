@@ -47,4 +47,9 @@ public class BlockPlayerVision : MonoBehaviour {
 
         visionBlockRenderer.enabled = alpha > 0;
     }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(playerHead.position, detectionRadius);
+    }
 }
