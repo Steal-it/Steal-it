@@ -2854,6 +2854,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 495753856}
     m_Modifications:
+    - target: {fileID: 871595348378439398, guid: 07ef4b4d16d1c5743b74eb261e449398, type: 3}
+      propertyPath: playerHead
+      value: 
+      objectReference: {fileID: 495753856}
     - target: {fileID: 2453631358549799925, guid: 07ef4b4d16d1c5743b74eb261e449398, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3090,7 +3094,8 @@ PrefabInstance:
       value: XR Origin (XR Rig)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8308155275432020238, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6836749399222160328, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
       insertIndex: -1
