@@ -863,6 +863,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DirectInteractionAffordance
       objectReference: {fileID: 0}
+    - target: {fileID: 8559399095067588744, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
+      propertyPath: m_Renderer
+      value: 
+      objectReference: {fileID: 6241764391914400125}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -891,7 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1410cbaaadf84a7aaa6459d37ad21b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Rendering.MaterialPropertyBlockHelper
-  m_Renderer: {fileID: 0}
+  m_Renderer: {fileID: 2168493852692267705}
   m_MaterialIndex: 0
 --- !u!114 &1549126843618421383
 MonoBehaviour:

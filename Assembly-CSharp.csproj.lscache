@@ -63,6 +63,9 @@ Assets/Scripts/
  Interactables/
   Spawnable.cs
   Spawner.cs
+ Player/
+  BlockPlayerVision.cs
+  FollowHeadHeight.cs
  Torch.cs
  TorchManager.cs
  UI/ButtonCounter.cs
