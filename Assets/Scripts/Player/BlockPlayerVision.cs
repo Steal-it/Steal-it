@@ -14,14 +14,16 @@ public class BlockPlayerVision : MonoBehaviour {
     private LayerMask collisionLayers;
 
     private Renderer visionBlockRenderer;
+    private Collider[] hitColiders = new Collider[2];
+
     void Awake() {
         visionBlockRenderer = GetComponent<MeshRenderer>();
         visionBlockRenderer.enabled = true;
     }
 
     void Update() {
-        Collider[] hitColiders = Physics.OverlapSphere(playerHead.position, detectionRadius, collisionLayers);
-        if (hitColiders.Length > 0) {
+        int overlaps = Physics.OverlapSphereNonAlloc(playerHead.position, detectionRadius, hitColiders, collisionLayers);
+        if (overlaps > 0) {
             float distance = ComputeClosesDistance(hitColiders);
             float alpha = Mathf.InverseLerp(detectionRadius, 0.05f, distance);
             Fade(alpha);
