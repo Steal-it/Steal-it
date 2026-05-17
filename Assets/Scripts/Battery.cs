@@ -3,12 +3,19 @@ using System.Collections;
 using UnityEngine;
 
 public class Battery : MonoBehaviour {
-    public event EventHandler OnBatteryRanOut;
+    public event EventHandler<OnBatteryRanOutEventArgs> OnBatteryRanOut;
+    public class OnBatteryRanOutEventArgs : EventArgs {
+        public float delayToDestroy;
+    }
 
     public float ChargeLevel => chargeLevel;
 
     [SerializeField]
     private float dischargeTime = 120;
+    [SerializeField]
+    private ParticleSystem runOutParticleSystem;
+    [SerializeField]
+    private GameObject visualsGameObject;
 
     private float chargeLevel = 1;
     private bool isUsing;
@@ -27,7 +34,12 @@ public class Battery : MonoBehaviour {
 
         if (chargeLevel == 0) {
             isUsing = false;
-            OnBatteryRanOut?.Invoke(this, EventArgs.Empty);
+            runOutParticleSystem.Play();
+            visualsGameObject.SetActive(false);
+
+            OnBatteryRanOut?.Invoke(this, new OnBatteryRanOutEventArgs {
+                delayToDestroy = runOutParticleSystem.main.startLifetime.constantMax
+            });
         }
     }
 

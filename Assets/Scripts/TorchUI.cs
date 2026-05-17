@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,11 @@ public class TorchUI : MonoBehaviour {
     [SerializeField]
     private int barsCount = 6;
     [SerializeField]
-    private Gradient gradient;
+    private BarColor highLevelColor;
+    [SerializeField]
+    private BarColor midLevelColor;
+    [SerializeField]
+    private BarColor lowLevelColor;
 
     private Camera headset;
     private Image[] barImageArray;
@@ -29,19 +34,20 @@ public class TorchUI : MonoBehaviour {
         barTemplateGameObject.SetActive(false);
     }
 
-    void FixedUpdate() {
-        transform.LookAt(headset.transform);
-    }
-
     public void UpdateBatteryDisplay(float _value) {
         _value = Mathf.Clamp01(_value);
 
         // Count how many bars to display
         float barFraction = 1f / barsCount;
         int activeBarsCount = Mathf.CeilToInt(_value / barFraction);
+        // Select the proper color according to the battery level
+        Color color = activeBarsCount > highLevelColor.minBarsCount ?
+            highLevelColor.color :
+            activeBarsCount > midLevelColor.minBarsCount ?
+                midLevelColor.color :
+                lowLevelColor.color;
 
         for (int i = 0; i < barImageArray.Length; i++) {
-            Color color = gradient.Evaluate(_value);
             if (i >= activeBarsCount) {
                 // Set the bar to transparent if it has not to be displayed
                 color.a = 0;
@@ -54,4 +60,10 @@ public class TorchUI : MonoBehaviour {
     public void ToggleDisplay(bool _isActive) {
         panelTransform.gameObject.SetActive(_isActive);
     }
+}
+
+[Serializable]
+public struct BarColor {
+    public int minBarsCount;
+    public Color color;
 }
