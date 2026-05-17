@@ -33,7 +33,7 @@ public class TorchUI : MonoBehaviour {
         transform.LookAt(headset.transform);
     }
 
-    public void UpdateBatterySlider(float _value) {
+    public void UpdateBatteryDisplay(float _value) {
         _value = Mathf.Clamp01(_value);
 
         // Count how many bars to display
@@ -49,5 +49,9 @@ public class TorchUI : MonoBehaviour {
 
             barImageArray[i].color = color;
         }
+    }
+
+    public void ToggleDisplay(bool _isActive) {
+        panelTransform.gameObject.SetActive(_isActive);
     }
 }
