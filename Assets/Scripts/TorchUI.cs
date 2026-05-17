@@ -22,9 +22,6 @@ public class TorchUI : MonoBehaviour {
     void Start() {
         headset = Camera.main;
 
-        // Correctly orientate the canvas, to constrast LookAt rotation
-        transform.localScale = new Vector3(-1, 1, 1);
-
         // Instantiate bars
         barImageArray = new Image[barsCount];
         for (int i = 0; i < barsCount; i++) {
