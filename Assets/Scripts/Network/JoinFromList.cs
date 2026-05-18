@@ -31,7 +31,6 @@ public class BrowseMenuControlJoinButton : MonoBehaviour
     // Expected to be called by a UI element
     public void Join()
     {
-        Debug.Log("TEST! "+joincode);
         if (!roomClient || string.IsNullOrEmpty(joincode))
         {
             return;

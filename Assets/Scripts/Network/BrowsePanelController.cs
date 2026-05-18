@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Ubiq.Rooms;
+using Ubiq.XR.Notifications;
 using UnityEngine;
+using TMPro;
 
 public class BrowsePanelController : MonoBehaviour
 {
@@ -8,8 +10,8 @@ public class BrowsePanelController : MonoBehaviour
     public Menu mainMenu;
     public Transform controlsRoot;
     public GameObject roomListPanel;
-    //public GameObject noRoomsMessagePanel;
     public GameObject controlTemplate;
+    public TextMeshProUGUI connectionStatusText;
     private List<BrowseMenuControl> controls = new List<BrowseMenuControl>();
     private List<IRoom> lastRoomArgs;
     private float nextRoomRefreshTime = -1;
@@ -17,6 +19,7 @@ public class BrowsePanelController : MonoBehaviour
     {
         mainMenu.roomClient.OnRooms.AddListener(RoomClient_OnRoomsDiscovered);
         mainMenu.roomClient.OnJoinedRoom.AddListener(RoomClient_OnJoinedRoom);
+        PlayerNotifications.OnNotification += UpdateConnectionStatus;
         UpdateAvailableRooms();
     }
     private void OnDisable()
@@ -56,19 +59,27 @@ public class BrowsePanelController : MonoBehaviour
                 Destroy(controls[i].gameObject);
             }
             controls.Clear();
-            //noRoomsMessagePanel.SetActive(true);
-            //roomListPanel.SetActive(false);
+
             return;
         }
-        //noRoomsMessagePanel.SetActive(false);
+
         roomListPanel.SetActive(true);
         int controlI = 0;
+
         for (int roomI = 0; roomI < rooms.Count; controlI++,roomI++)
         {
+            bool isRoomTheCurrentRoom = rooms[roomI].Name == mainMenu.roomClient.Room.Name;
+
             if (controls.Count <= controlI) {
                 controls.Add(InstantiateControl());
             }
+
             controls[controlI].Bind(mainMenu.roomClient,rooms[roomI]);
+
+            if(isRoomTheCurrentRoom) {
+                connectionStatusText.text = "Connected";
+            }
+
         }
         while (controls.Count > controlI) {
             Destroy(controls[controlI].gameObject);
@@ -81,6 +92,12 @@ public class BrowsePanelController : MonoBehaviour
         {
             mainMenu.roomClient.DiscoverRooms();
             nextRoomRefreshTime = Time.realtimeSinceStartup + roomRefreshInterval;
+        }
+    }
+
+    private void UpdateConnectionStatus(Notification test) {
+        if(test.Message.Contains("Connection lost")) {
+            connectionStatusText.text = "Currently not connected to any room (connection lost)";
         }
     }
 }
