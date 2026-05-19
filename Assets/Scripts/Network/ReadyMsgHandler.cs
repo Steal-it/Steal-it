@@ -5,6 +5,8 @@ using Ubiq.Messaging;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+
 [System.Serializable]
 public class ReadyMessage
 {
@@ -13,6 +15,9 @@ public class ReadyMessage
 public class ReadyMsgHandler : MonoBehaviour {
 
     public Menu mainMenu;
+
+    [SerializeField]
+    private LevelManager levelManager;
     private NetworkContext context;
 
     private int receiveCounter;
@@ -33,7 +38,7 @@ public class ReadyMsgHandler : MonoBehaviour {
         if(receiveCounter==mainMenu.roomClient.Peers.Count()+1)
         {
             Debug.Log("All ready!");
-            SceneManager.LoadScene("Test",LoadSceneMode.Single);
+            levelManager.LoadScreen("Test");
         }
     }
 
