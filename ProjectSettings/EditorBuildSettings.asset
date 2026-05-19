@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/DEV/Lobby.unity
+    guid: 9d3a015ca962442d9ac62176f3b46a73
+  - enabled: 1
+    path: Assets/DEV/Test.unity
+    guid: 9a370d728db2b357cadcce16b449e75d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: cc85932eca1ded1499f9de63d450e657, type: 2}

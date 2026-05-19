@@ -3,6 +3,7 @@ using System.Linq;
 using TinyJson;
 using Ubiq.Messaging;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class ReadyMessage
@@ -26,8 +27,13 @@ public class ReadyMsgHandler : MonoBehaviour {
     {
         if(context.Scene != null)
         {
-            Debug.Log("Send");
+            receiveCounter+=1;
             context.SendJson<ReadyMessage>(new ReadyMessage { message = "ReadyMsg" });
+        }
+        if(receiveCounter==mainMenu.roomClient.Peers.Count()+1)
+        {
+            Debug.Log("All ready!");
+            SceneManager.LoadScene("Test",LoadSceneMode.Single);
         }
     }
 
@@ -40,7 +46,7 @@ public class ReadyMsgHandler : MonoBehaviour {
             receiveCounter+=1;
         }
 
-        if(receiveCounter==mainMenu.roomClient.Peers.Count())
+        if(receiveCounter==mainMenu.roomClient.Peers.Count()+1)
         {
             Debug.Log("All ready!");
         }
