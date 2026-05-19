@@ -1,17 +1,17 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class Torch : MonoBehaviour {
-    public event EventHandler OnTorchDied;
+    public event EventHandler<OnTorchTurnedEventArgs> OnTorchTurned;
+    public class OnTorchTurnedEventArgs : EventArgs {
+        public bool isTurnedOn;
+    }
 
     [SerializeField]
     private XRSocketInteractor socketInteractor;
-    [SerializeField]
-    private TorchUI torchUI;
 
     private Battery battery;
     private bool emitLight;
@@ -33,56 +33,50 @@ public class Torch : MonoBehaviour {
     }
 
     private void OnBatteryRemoved(SelectExitEventArgs _event) {
+        if (battery == null) return;
+
         battery.StopUse();
         battery.OnBatteryRanOut -= Battery_OnBatteryRanOut;
 
-        battery = null;
         emitLight = false;
         ToggleLight();
     }
 
-    private void Battery_OnBatteryRanOut(object _sender, Battery.OnBatteryRanOutEventArgs _e) {
-        OnTorchDied?.Invoke(this, EventArgs.Empty);
+    private void Battery_OnBatteryRanOut(object _sender, EventArgs _event) {
+        battery = null;
 
-        Destroy(battery.gameObject, _e.delayToDestroy);
+        emitLight = false;
+        ToggleLight();
     }
 
     private void GetAndUseBattery(Transform _interactableTransform) {
         battery = _interactableTransform.GetComponent<Battery>();
         battery.OnBatteryRanOut += Battery_OnBatteryRanOut;
 
-        StartCoroutine(battery.Use());
-        StartCoroutine(UpdateUI());
+        battery.Use();
 
         emitLight = true;
         ToggleLight();
-    }
-
-    private IEnumerator UpdateUI() {
-        torchUI.ToggleDisplay(true);
-
-        while (battery != null) {
-            yield return new WaitForFixedUpdate();
-
-            // NOTE: batter not null double check because, in the meanwhile we are waiting the fixed update,
-            //       battery might have become null
-            if (battery != null) {
-                torchUI.UpdateBatteryDisplay(battery.ChargeLevel);
-            }
-        }
-
-        // Disable UI every time a battery is removed
-        torchUI.ToggleDisplay(false);
     }
 
     private void OnTriggerPressed(InputAction.CallbackContext _context) {
         if (battery != null) {
             emitLight = !emitLight;
             ToggleLight();
+
+            if (emitLight) {
+                battery.Use();
+            } else {
+                battery.StopUse();
+            }
         }
     }
 
     private void ToggleLight() {
+        OnTorchTurned?.Invoke(this, new OnTorchTurnedEventArgs {
+            isTurnedOn = emitLight
+        });
+
         Debug.Log(emitLight ? "LIGHT ON" : "LIGHT OFF");
     }
 

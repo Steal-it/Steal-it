@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TorchUI : MonoBehaviour {
+public class BatteryUI : MonoBehaviour {
     [SerializeField]
     private Transform panelTransform;
     [SerializeField]
@@ -16,12 +16,9 @@ public class TorchUI : MonoBehaviour {
     [SerializeField]
     private BarColor lowLevelColor;
 
-    private Camera headset;
     private Image[] barImageArray;
 
     void Start() {
-        headset = Camera.main;
-
         // Instantiate bars
         barImageArray = new Image[barsCount];
         for (int i = 0; i < barsCount; i++) {
@@ -57,10 +54,10 @@ public class TorchUI : MonoBehaviour {
     public void ToggleDisplay(bool _isActive) {
         panelTransform.gameObject.SetActive(_isActive);
     }
-}
 
-[Serializable]
-public struct BarColor {
-    public int minBarsCount;
-    public Color color;
+    [Serializable]
+    public struct BarColor {
+        public int minBarsCount;
+        public Color color;
+    }
 }

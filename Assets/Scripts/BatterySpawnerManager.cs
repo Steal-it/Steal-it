@@ -6,13 +6,18 @@ public class BatterySpawnerManager : MonoBehaviour {
 
     private void Start() {
         foreach (Transform spawner in transform) {
-            Instantiate(batteryPrefabGameObject, spawner.position, spawner.rotation, spawner);
+            if (spawner.gameObject.activeSelf) {
+                Battery battery = Instantiate(batteryPrefabGameObject, spawner.position, spawner.rotation, spawner).GetComponent<Battery>();
+                battery.DisableUI(null);
+            }
         }
     }
 
     void OnDrawGizmosSelected() {
         foreach (Transform spawner in transform) {
-            Gizmos.DrawWireSphere(spawner.position, 0.05f);
+            if (spawner.gameObject.activeSelf) {
+                Gizmos.DrawWireSphere(spawner.position, 0.05f);
+            }
         }
     }
 }

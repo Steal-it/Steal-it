@@ -1,14 +1,11 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Battery : MonoBehaviour {
-    public event EventHandler<OnBatteryRanOutEventArgs> OnBatteryRanOut;
-    public class OnBatteryRanOutEventArgs : EventArgs {
-        public float delayToDestroy;
-    }
-
-    public float ChargeLevel => chargeLevel;
+    public event EventHandler OnBatteryRanOut;
 
     [SerializeField]
     private float dischargeTime = 120;
@@ -16,11 +13,39 @@ public class Battery : MonoBehaviour {
     private ParticleSystem runOutParticleSystem;
     [SerializeField]
     private GameObject visualsGameObject;
+    [SerializeField]
+    private BatteryUI batteryUI;
 
+    private XRGrabInteractable grabInteractable;
     private float chargeLevel = 1;
     private bool isUsing;
 
-    public IEnumerator Use() {
+    void Start() {
+        grabInteractable = GetComponent<XRGrabInteractable>();
+
+        grabInteractable.selectEntered.AddListener(EnableUI);
+        grabInteractable.selectExited.AddListener(DisableUI);
+    }
+
+    public void Use() {
+        EnableUI(null);
+
+        StartCoroutine(UseCO());
+    }
+
+    public void StopUse() {
+        isUsing = false;
+    }
+
+    public void DisableUI(SelectExitEventArgs _event) {
+        batteryUI.ToggleDisplay(false);
+    }
+
+    private void EnableUI(SelectEnterEventArgs _event) {
+        batteryUI.ToggleDisplay(true);
+    }
+
+    private IEnumerator UseCO() {
         if (chargeLevel == 0) yield break;
 
         isUsing = true;
@@ -30,20 +55,25 @@ public class Battery : MonoBehaviour {
 
             float decrementValue = Time.fixedDeltaTime / dischargeTime;
             chargeLevel = Mathf.Clamp01(chargeLevel - decrementValue);
+
+            batteryUI.UpdateBatteryDisplay(chargeLevel);
         }
 
         if (chargeLevel == 0) {
+            // Logically stop and visually destroy the battery
             isUsing = false;
             runOutParticleSystem.Play();
             visualsGameObject.SetActive(false);
 
-            OnBatteryRanOut?.Invoke(this, new OnBatteryRanOutEventArgs {
-                delayToDestroy = runOutParticleSystem.main.startLifetime.constantMax
-            });
+            OnBatteryRanOut?.Invoke(this, EventArgs.Empty);
+
+            // Actaully destroy the battery after the particle system ends
+            Destroy(gameObject, runOutParticleSystem.main.startLifetime.constantMax);
         }
     }
 
-    public void StopUse() {
-        isUsing = false;
+    void OnDestroy() {
+        grabInteractable.selectEntered.RemoveAllListeners();
+        grabInteractable.selectExited.RemoveAllListeners();
     }
 }
