@@ -11,24 +11,43 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class BaseMessage
 {
-    public string message;
+    public string messageType {get; private set;}
 
-    public BaseMessage(String msg) {
-        this.message = msg;
+    public BaseMessage(String msgType) {
+        this.messageType = msgType;
     }
 }
 
 [System.Serializable]
-public class ReadyMessage: BaseMessage {
-    public ReadyMessage(String msg) : base(msg) {}
+public class ReadyMessage: BaseMessage
+{
+    public ReadyMessage() : base("ReadyMsg") {}
 }
 
 [System.Serializable]
-public class LoadSceneCompletedMessage: BaseMessage {
-    public LoadSceneCompletedMessage(String msg) : base(msg) {}
+public class LoadSceneCompletedMessage: BaseMessage
+{
+    public LoadSceneCompletedMessage() : base("LoadSceneCompletedMsg") {}
 }
 
-public class MsgHandler : MonoBehaviour {
+[System.Serializable]
+public class RecoverCurrentCounterRequestMessage: BaseMessage
+{
+    public RecoverCurrentCounterRequestMessage() : base("RecoverCurrentCounterRequestMsg") {}
+}
+
+[System.Serializable]
+public class RecoverCurrentCounterReplyMessage: BaseMessage
+{
+    public int localCounter {get; private set;}
+    public RecoverCurrentCounterReplyMessage(int localCounter) : base("RecoverCurrentCounterReplyMsg")
+    {
+        this.localCounter = localCounter;
+    }
+}
+
+public class MsgHandler : MonoBehaviour
+{
 
     public Menu mainMenu;
 
@@ -36,6 +55,7 @@ public class MsgHandler : MonoBehaviour {
     private LevelManager levelManager;
     private NetworkContext context;
 
+    private bool wasCounterRequested;
     private int receiveCounter;
 
     private void Start()
@@ -52,6 +72,7 @@ public class MsgHandler : MonoBehaviour {
         
         Debug.Log("All ready!");
         receiveCounter = 0;
+        wasCounterRequested=false;
         levelManager.LoadScreen("Test");
     }
 
@@ -66,12 +87,25 @@ public class MsgHandler : MonoBehaviour {
         levelManager.UpdatePeerLoadingStatus();
     }
 
+    private void RecoverCurrentCounterRequestMessageHandler()
+    {
+        context.SendJson<RecoverCurrentCounterReplyMessage>(new RecoverCurrentCounterReplyMessage(this.receiveCounter));
+    }
+
+    private void RecoverCurrentCounterReplyMessageHandler(RecoverCurrentCounterReplyMessage msg)
+    {
+        if(wasCounterRequested && msg.localCounter>this.receiveCounter)
+        {
+            this.receiveCounter = msg.localCounter;
+        }
+    }
+
     public void SendReadyMessage()
     {
         if(context.Scene != null)
         {
             receiveCounter+=1;
-            context.SendJson<ReadyMessage>(new ReadyMessage ("ReadyMsg"));
+            context.SendJson<ReadyMessage>(new ReadyMessage());
             if(receiveCounter==1)
             {
                 ChangeLevelHandler();
@@ -84,7 +118,7 @@ public class MsgHandler : MonoBehaviour {
         if(context.Scene != null)
         {
             receiveCounter+=1;
-            context.SendJson<LoadSceneCompletedMessage>(new LoadSceneCompletedMessage ("LoadCompleteMsg"));
+            context.SendJson<LoadSceneCompletedMessage>(new LoadSceneCompletedMessage());
             if(receiveCounter==1)
             {
                 PeerLoadingHandler();
@@ -94,25 +128,30 @@ public class MsgHandler : MonoBehaviour {
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage msg)
     {
-        System.Object message = msg.FromJson<System.Object>();
-
-        if(message is ReadyMessage)
+        BaseMessage message = msg.FromJson<BaseMessage>();
+        switch(message.messageType)
         {
-            Debug.Log("Received Ready Msg");
-            receiveCounter+=1;
-            if(receiveCounter==1)
-            {
+            case "ReadyMsg":
+                Debug.Log("Received Ready Msg");
                 ChangeLevelHandler();
-            }
-        }
-        if(message is LoadSceneCompletedMessage)
-        {
-            Debug.Log("Received Load Msg");
-            receiveCounter+=1;
-            if(receiveCounter==1)
-            {
+                break;
+            case "LoadSceneCompletedMsg":
+                Debug.Log("Received Load Msg");
                 PeerLoadingHandler();
-            }
+                break;
+            case "RecoverCurrentCounterRequestMsg":
+                wasCounterRequested = true;
+                Debug.Log("Received counter request");
+                RecoverCurrentCounterRequestMessageHandler();
+                break;
+            case "RecoverCurrentCounterReplyMsg":
+                Debug.Log("Received counter reply");
+                RecoverCurrentCounterReplyMessage finalMessage = msg.FromJson<RecoverCurrentCounterReplyMessage>();
+                RecoverCurrentCounterReplyMessageHandler(finalMessage);
+                break;
+            default:
+                Debug.LogError("Received unknown message!"+message.messageType);
+                break;
         }
     }
 
