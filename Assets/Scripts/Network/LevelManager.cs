@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,6 +10,8 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
 
+    public TextMeshProUGUI loadingInfoText;
+
     [SerializeField]
     private GameObject _loaderCanvas;
 
@@ -15,6 +19,11 @@ public class LevelManager : MonoBehaviour
     private UnityEngine.UI.Image _progressBar;
 
     private float _target;
+    
+    private Boolean hadAllPeerLoadedScene;
+
+    [SerializeField]
+    private MsgHandler msgHandler;
     void Awake() {
         if(Instance == null)
         {
@@ -36,6 +45,7 @@ public class LevelManager : MonoBehaviour
         scene.allowSceneActivation = false;
 
         _loaderCanvas.SetActive(true);
+        hadAllPeerLoadedScene = false;
 
         do {
             await Task.Delay(100);
@@ -44,10 +54,24 @@ public class LevelManager : MonoBehaviour
         } while (scene.progress < 0.9f);
 
         await Task.Delay(1000);
-    
+        if(loadingInfoText) {
+            loadingInfoText.text = "Waiting other players to finish loading...";
+        }
+        msgHandler.SendLoadSceneCompletedMessage();
+
+        do {
+            await Task.Delay(100);
+        } while(!hadAllPeerLoadedScene);
+
+        hadAllPeerLoadedScene = false;
         scene.allowSceneActivation = true;
         _loaderCanvas.SetActive(false);
     
+    }
+
+    public void UpdatePeerLoadingStatus()
+    {
+        hadAllPeerLoadedScene=true;
     }
 
     void Update() {
