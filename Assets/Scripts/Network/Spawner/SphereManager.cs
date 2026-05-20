@@ -34,22 +34,6 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
         context = NetworkScene.Register(this);
 
         XRGrabInteractable grab = GetComponent<XRGrabInteractable>();
-        grab.selectExited.AddListener(EndGrabHandler);
-        grab.selectEntered.AddListener(StartGrabHandler);
-    }
-
-    private void EndGrabHandler(SelectExitEventArgs eventArgs)
-    {
-        var interactable = (XRGrabInteractable)eventArgs.interactableObject;
-        interactable.enabled = true;
-        owner = false;
-    }
-
-    private void StartGrabHandler(SelectEnterEventArgs eventArgs)
-    {
-        var interactable = (XRGrabInteractable)eventArgs.interactableObject;
-        interactable.enabled = false;
-        owner = true;
     }
 
     private void SendMessage()
