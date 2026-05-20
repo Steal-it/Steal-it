@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class BaseMessage
 {
-    public string messageType {get; set;}
+    public string messageType; //Need to be public due to serialization
 
     public BaseMessage(String msgType) {
         this.messageType = msgType;
@@ -21,7 +21,7 @@ public class BaseMessage
 [System.Serializable]
 public class ReadyMessage: BaseMessage
 {
-    public ReadyMessage() : base("ReadyMsg") {} //Need to be public due to serialization
+    public ReadyMessage() : base("ReadyMsg") {} 
 }
 
 [System.Serializable]
@@ -39,7 +39,7 @@ public class RecoverCurrentCounterRequestMessage: BaseMessage
 [System.Serializable]
 public class RecoverCurrentCounterReplyMessage: BaseMessage
 {
-    public int localCounter {get; set;} //Need to be public due to serialization
+    public int localCounter; //Need to be public due to serialization
     public RecoverCurrentCounterReplyMessage(int localCounter) : base("RecoverCurrentCounterReplyMsg")
     {
         this.localCounter = localCounter;
@@ -128,6 +128,7 @@ public class MsgHandler : MonoBehaviour
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage msg)
     {
+        Debug.Log("Received: "+msg);
         BaseMessage message = msg.FromJson<BaseMessage>();
         Debug.Log("message: "+message.messageType+"!");
         switch(message.messageType)
