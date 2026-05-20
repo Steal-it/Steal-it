@@ -56,22 +56,24 @@ public class MsgHandler : MonoBehaviour
     private NetworkContext context;
 
     private bool wasCounterRequested;
-    private int receiveCounter;
+    private int receiveReadyMsgCounter;
+    private int receiveLoadCompleteMsgCounter;
 
     private void Start()
     {
         context = NetworkScene.Register(this);
-        receiveCounter = 0;
+        receiveReadyMsgCounter = 0;
+        receiveLoadCompleteMsgCounter = 0;
     }
 
     private async void ChangeLevelHandler()
     {
         do {
             await Task.Delay(100);
-        } while (receiveCounter!=mainMenu.roomClient.Peers.Count()+1);
+        } while (receiveReadyMsgCounter!=mainMenu.roomClient.Peers.Count()+1);
         
-        Debug.Log("All ready!");
-        receiveCounter = 0;
+        Debug.Log("All ready for change!");
+        receiveReadyMsgCounter = 0;
         wasCounterRequested=false;
         levelManager.LoadScreen("Test");
     }
@@ -80,23 +82,23 @@ public class MsgHandler : MonoBehaviour
     {
         do {
             await Task.Delay(100);
-        } while (receiveCounter!=mainMenu.roomClient.Peers.Count()+1);
+        } while (receiveLoadCompleteMsgCounter!=mainMenu.roomClient.Peers.Count()+1);
         
-        Debug.Log("All ready!");
-        receiveCounter = 0;
+        Debug.Log("All ready for unlocking!");
+        receiveLoadCompleteMsgCounter = 0;
         levelManager.UpdatePeerLoadingStatus();
     }
 
     private void RecoverCurrentCounterRequestMessageHandler()
     {
-        context.SendJson<RecoverCurrentCounterReplyMessage>(new RecoverCurrentCounterReplyMessage(this.receiveCounter));
+        context.SendJson<RecoverCurrentCounterReplyMessage>(new RecoverCurrentCounterReplyMessage(receiveReadyMsgCounter));
     }
 
     private void RecoverCurrentCounterReplyMessageHandler(RecoverCurrentCounterReplyMessage msg)
     {
-        if(wasCounterRequested && msg.localCounter>this.receiveCounter)
+        if(wasCounterRequested && msg.localCounter>receiveReadyMsgCounter)
         {
-            this.receiveCounter = msg.localCounter;
+            receiveReadyMsgCounter = msg.localCounter;
         }
     }
 
@@ -104,9 +106,9 @@ public class MsgHandler : MonoBehaviour
     {
         if(context.Scene != null)
         {
-            receiveCounter+=1;
+            receiveReadyMsgCounter+=1;
             context.SendJson<ReadyMessage>(new ReadyMessage());
-            if(receiveCounter==1)
+            if(receiveReadyMsgCounter==1)
             {
                 ChangeLevelHandler();
             }
@@ -117,9 +119,9 @@ public class MsgHandler : MonoBehaviour
     {
         if(context.Scene != null)
         {
-            receiveCounter+=1;
+            receiveLoadCompleteMsgCounter+=1;
             context.SendJson<LoadSceneCompletedMessage>(new LoadSceneCompletedMessage());
-            if(receiveCounter==1)
+            if(receiveLoadCompleteMsgCounter==1)
             {
                 PeerLoadingHandler();
             }
@@ -128,18 +130,24 @@ public class MsgHandler : MonoBehaviour
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage msg)
     {
-        Debug.Log("Received: "+msg);
         BaseMessage message = msg.FromJson<BaseMessage>();
-        Debug.Log("message: "+message.messageType+"!");
         switch(message.messageType)
         {
             case "ReadyMsg":
                 Debug.Log("Received Ready Msg");
-                ChangeLevelHandler();
+                receiveReadyMsgCounter+=1;
+                if(receiveReadyMsgCounter==1)
+                {
+                    ChangeLevelHandler();
+                }
                 break;
             case "LoadSceneCompletedMsg":
                 Debug.Log("Received Load Msg");
-                PeerLoadingHandler();
+                receiveLoadCompleteMsgCounter+=1;
+                if(receiveLoadCompleteMsgCounter==1)
+                {
+                    PeerLoadingHandler();
+                }
                 break;
             case "RecoverCurrentCounterRequestMsg":
                 wasCounterRequested = true;
