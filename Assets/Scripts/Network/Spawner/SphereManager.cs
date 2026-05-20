@@ -70,6 +70,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage message)
     {
+        Debug.Log("receiving");
         var msg = message.FromJson<MovementMessage>();
         var pose = Transforms.ToWorld(msg.pose,context.Scene.transform);
         transform.position = pose.position;
