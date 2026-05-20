@@ -3,6 +3,7 @@ using Ubiq.Rooms;
 using Ubiq.XR.Notifications;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class BrowsePanelController : MonoBehaviour
 {
@@ -30,9 +31,12 @@ public class BrowsePanelController : MonoBehaviour
             mainMenu.roomClient.OnJoinedRoom.RemoveListener(RoomClient_OnJoinedRoom);
         }
     }
-    private BrowseMenuControl InstantiateControl () {
+    private BrowseMenuControl InstantiateControl (bool isRoomTheCurrentRoom) {
         var go = GameObject.Instantiate(controlTemplate, controlsRoot);
-        go.SetActive(true);
+        if(!isRoomTheCurrentRoom)
+        {
+            go.SetActive(true);
+        }
         return go.GetComponent<BrowseMenuControl>();
     }
     private void RoomClient_OnJoinedRoom(IRoom room)
@@ -71,7 +75,7 @@ public class BrowsePanelController : MonoBehaviour
             bool isRoomTheCurrentRoom = rooms[roomI].Name == mainMenu.roomClient.Room.Name;
 
             if (controls.Count <= controlI) {
-                controls.Add(InstantiateControl());
+                controls.Add(InstantiateControl(isRoomTheCurrentRoom));
             }
 
             controls[controlI].Bind(mainMenu.roomClient,rooms[roomI]);

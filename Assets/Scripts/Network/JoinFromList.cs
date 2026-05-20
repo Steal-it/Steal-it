@@ -11,13 +11,13 @@ public class BrowseMenuControlJoinButton : MonoBehaviour
         Debug.Log("Enabled");
         browseMenuControl.OnBind.AddListener(BrowseRoomControl_OnBind);
     }
-    /*private void OnDisable()
+    private void OnDisable()
     {
         if (browseMenuControl)
         {
             browseMenuControl.OnBind.RemoveListener(BrowseRoomControl_OnBind);
         }
-    }*/
+    }
     private void BrowseRoomControl_OnBind(RoomClient roomClient, IRoom room)
     {
         this.roomClient = roomClient;
