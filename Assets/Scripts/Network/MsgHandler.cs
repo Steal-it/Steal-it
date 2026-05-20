@@ -72,6 +72,10 @@ public class MsgHandler : MonoBehaviour {
         {
             receiveCounter+=1;
             context.SendJson<ReadyMessage>(new ReadyMessage ("ReadyMsg"));
+            if(receiveCounter==1)
+            {
+                ChangeLevelHandler();
+            }
         }
     }
 
@@ -81,6 +85,10 @@ public class MsgHandler : MonoBehaviour {
         {
             receiveCounter+=1;
             context.SendJson<LoadSceneCompletedMessage>(new LoadSceneCompletedMessage ("LoadCompleteMsg"));
+            if(receiveCounter==1)
+            {
+                PeerLoadingHandler();
+            }
         }
     }
 
