@@ -50,6 +50,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     private void OnRelease(SelectExitEventArgs args)
     {
         Debug.Log("Object released");
+        owner = false;
     }
 
     private void Start()
