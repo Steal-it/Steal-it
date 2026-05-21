@@ -9,11 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/DEV/Lobby.unity
+    path: Assets/Scenes/Lobby.unity
     guid: 9d3a015ca962442d9ac62176f3b46a73
   - enabled: 1
-    path: Assets/DEV/Test.unity
+    path: Assets/Scenes/Test.unity
     guid: fc61935b89e8272b9b7036661b25763a
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 9d3a015ca962442d9ac62176f3b46a73
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: cc85932eca1ded1499f9de63d450e657, type: 2}
