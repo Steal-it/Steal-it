@@ -699,6 +699,7 @@ Transform:
   - {fileID: 2261077831673702606}
   - {fileID: 4589573399253547036}
   - {fileID: 3077492511453938306}
+  - {fileID: 1286214233931927460}
   m_Father: {fileID: 1192197961997125552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &605622210036214928
@@ -859,6 +860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControllerConfigurator
   nearFarInteractor: {fileID: 5902376740398460520}
   controllerActivateInputAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  handTorchController: {fileID: 5908172466111075079}
 --- !u!1 &6783008580735272991
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,6 +934,7 @@ Transform:
   - {fileID: 2981025181254669006}
   - {fileID: 4770466263258911416}
   - {fileID: 4590300676161071480}
+  - {fileID: 2411782700490477717}
   m_Father: {fileID: 1192197961997125552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5495313700675891480
@@ -1092,6 +1095,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControllerConfigurator
   nearFarInteractor: {fileID: 3200965482897523916}
   controllerActivateInputAction: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  handTorchController: {fileID: 7016565473495075894}
 --- !u!1 &8178580055119792059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1741,6 +1745,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7378618157167557198, guid: b84cd05e1160fe34cab2585022c8cd99, type: 3}
   m_PrefabInstance: {fileID: 980536864700821719}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1333257405624883802
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7536589771608422650}
+    m_Modifications:
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683512019893589310, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+      propertyPath: m_Name
+      value: Right Hand-Torch Controller
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+--- !u!4 &1286214233931927460 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 241263139763410430, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+  m_PrefabInstance: {fileID: 1333257405624883802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5908172466111075079 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4863506092562663773, guid: 194105133d765754496e84b7a8eca5c4, type: 3}
+  m_PrefabInstance: {fileID: 1333257405624883802}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ca8e5f692fb394996bf7363b458a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandTorchController
 --- !u!1001 &1393286344288467617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1989,6 +2066,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3475118261464492563, guid: 9f3369e30fbd31f4bb596b1a99babe83, type: 3}
   m_PrefabInstance: {fileID: 1913865498453567633}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2339791118058642692
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5328773610500854714}
+    m_Modifications:
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550966333053652305, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+      propertyPath: m_Name
+      value: Left Hand-Torch Controller
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+--- !u!4 &2411782700490477717 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 72273332566035857, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+  m_PrefabInstance: {fileID: 2339791118058642692}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7016565473495075894 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4694794526383804722, guid: 8a172a6faf7289141b718ac7838f092b, type: 3}
+  m_PrefabInstance: {fileID: 2339791118058642692}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ca8e5f692fb394996bf7363b458a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandTorchController
 --- !u!1001 &2561045381749234793
 PrefabInstance:
   m_ObjectHideFlags: 0

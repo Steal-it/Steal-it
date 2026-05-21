@@ -3,19 +3,19 @@ using UnityEngine;
 public class TorchManager : MonoBehaviour {
     public static TorchManager Instance { get; private set; }
 
-    public ControllerConfigurator ControllerConfigurator => selectedControllerConfigurator;
+    public TorchControllerConfigurator ControllerConfigurator => selectedControllerConfigurator;
 
     [SerializeField]
-    private ControllerConfigurator leftControllerConfigurator;
+    private TorchControllerConfigurator leftControllerConfigurator;
     [SerializeField]
-    private ControllerConfigurator rightControllerConfigurator;
+    private TorchControllerConfigurator rightControllerConfigurator;
     [SerializeField]
     private bool useTorchOnLeftController;
 
     [Space, SerializeField]
     private GameObject torchPrefabGameObject;
 
-    private ControllerConfigurator selectedControllerConfigurator;
+    private TorchControllerConfigurator selectedControllerConfigurator;
 
     void Awake() {
         if (Instance != null) {
@@ -25,12 +25,11 @@ public class TorchManager : MonoBehaviour {
 
         Instance = this;
 
+        leftControllerConfigurator.ConfigureTorchHandController();
+        rightControllerConfigurator.ConfigureTorchHandController();
+
         selectedControllerConfigurator = useTorchOnLeftController ? leftControllerConfigurator : rightControllerConfigurator;
 
-        if (selectedControllerConfigurator == null) {
-            Debug.LogError($"{nameof(ControllerConfigurator)} not assigned to destination controller!");
-            return;
-        }
-        Instantiate(torchPrefabGameObject, selectedControllerConfigurator.transform);
+        Instantiate(torchPrefabGameObject, selectedControllerConfigurator.HandTorchControllerTransform);
     }
 }

@@ -164,7 +164,6 @@ GameObject:
   - component: {fileID: 5547761697060238278}
   - component: {fileID: 472691851071878876}
   - component: {fileID: 5755357893630131388}
-  - component: {fileID: 3014828083320499035}
   m_Layer: 0
   m_Name: SocketInteractor
   m_TagString: Untagged
@@ -246,8 +245,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_StartingHoverFilters: []
-  m_StartingSelectFilters:
-  - {fileID: 3014828083320499035}
+  m_StartingSelectFilters: []
   m_ShowInteractableHoverMeshes: 1
   m_InteractableHoverMeshMaterial: {fileID: 0}
   m_InteractableCantHoverMeshMaterial: {fileID: 0}
@@ -259,16 +257,3 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!114 &3014828083320499035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5828428092207229500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23124b6a7cddfb4da40134c60de0c2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SocketSelectFilter
-  GrabInteractableArray: []

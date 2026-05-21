@@ -12,12 +12,14 @@ public class Torch : MonoBehaviour {
 
     [SerializeField]
     private XRSocketInteractor socketInteractor;
+    [SerializeField]
+    private LayerMask rungLayer;
 
     private Battery battery;
     private bool emitLight;
 
     void Start() {
-        TorchManager.Instance.ControllerConfigurator.Enable(OnTriggerPressed);
+        TorchManager.Instance.ControllerConfigurator.Enable(transform, OnTriggerPressed);
 
         socketInteractor.selectEntered.AddListener(OnNewBatteryInstalled);
         socketInteractor.selectExited.AddListener(OnBatteryRemoved);
@@ -30,31 +32,45 @@ public class Torch : MonoBehaviour {
 
     private void OnNewBatteryInstalled(SelectEnterEventArgs _event) {
         GetAndUseBattery(_event.interactableObject.transform);
+
+        // Disallow the socket of the battery to show the mesh of a new battery
+        socketInteractor.showInteractableHoverMeshes = false;
     }
 
     private void OnBatteryRemoved(SelectExitEventArgs _event) {
         if (battery == null) return;
 
+        // Stop discharging the battery
         battery.StopUse();
         battery.OnBatteryRanOut -= Battery_OnBatteryRanOut;
 
+        // Turn off the light
         emitLight = false;
         ToggleLight();
+
+        // Allow the socket of the battery to show the mesh of a new battery
+        socketInteractor.showInteractableHoverMeshes = true;
     }
 
     private void Battery_OnBatteryRanOut(object _sender, EventArgs _event) {
         battery = null;
 
+        // Turn off the light
         emitLight = false;
         ToggleLight();
+
+        // Allow the socket of the battery to show the mesh of a new battery
+        socketInteractor.showInteractableHoverMeshes = true;
     }
 
     private void GetAndUseBattery(Transform _interactableTransform) {
         battery = _interactableTransform.GetComponent<Battery>();
         battery.OnBatteryRanOut += Battery_OnBatteryRanOut;
 
+        // Start discharging the battery
         battery.Use();
 
+        // Turn on the light
         emitLight = true;
         ToggleLight();
     }
