@@ -10,7 +10,7 @@ public class SphereSpawner : MonoBehaviour
     [Header("Prefab to spawn")]
     public GameObject sphereTemplate;
 
-    private NetworkSpawnManager spawnManager;
+    public NetworkSpawnManager spawnManager;
     private XRInteractionManager interactionManager;
     private XRSimpleInteractable interactable;
 
@@ -28,8 +28,6 @@ public class SphereSpawner : MonoBehaviour
             Debug.LogError("No XRInteractionManager found in scene");
         }
 
-        // Find network spawn manager
-        spawnManager = NetworkSpawnManager.Find(this);
         if (!spawnManager)
         {
             Debug.LogError("No NetworkSpawnManager found in scene");
@@ -86,6 +84,7 @@ public class SphereSpawner : MonoBehaviour
         var interactor = eventArgs.interactorObject;
         if (interactor != null)
         {
+            Debug.Log("Test");
             interactionManager.SelectExit(interactor, interactable);
 
             StartCoroutine(SelectNextFrame(interactor, xrGrab));

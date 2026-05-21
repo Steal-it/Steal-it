@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
 
+    public Transform rigTransformer;
+
     public TextMeshProUGUI loadingInfoText;
 
     [SerializeField]
@@ -41,8 +43,8 @@ public class LevelManager : MonoBehaviour
         _target = 0;
         _progressBar.fillAmount = 0;
 
-        var scene = SceneManager.LoadSceneAsync(sceneName);
-        scene.allowSceneActivation = false;
+        /*var scene = SceneManager.LoadSceneAsync(sceneName);
+        scene.allowSceneActivation = false;*/
 
         _loaderCanvas.SetActive(true);
         hadAllPeerLoadedScene = false;
@@ -50,9 +52,10 @@ public class LevelManager : MonoBehaviour
         do {
             await Task.Delay(100);
 
-            _target = scene.progress;
-        } while (scene.progress < 0.9f);
-
+            //_target = scene.progress;
+        } while (false);
+        rigTransformer.position += Vector3.right * 19;
+        Debug.Log(rigTransformer.position);
         await Task.Delay(1000);
         if(loadingInfoText) {
             loadingInfoText.text = "Waiting other players to finish loading...";
@@ -64,7 +67,8 @@ public class LevelManager : MonoBehaviour
         } while(!hadAllPeerLoadedScene);
 
         hadAllPeerLoadedScene = false;
-        scene.allowSceneActivation = true;
+        //scene.allowSceneActivation = true;
+
         _loaderCanvas.SetActive(false);
     
     }
