@@ -21,6 +21,8 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
 
     public bool sender;
 
+    public string originalSender;
+
     private NetworkContext context;
     private XRGrabInteractable grabInteractable;
 
@@ -41,6 +43,17 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     {
         grabInteractable.selectEntered.RemoveListener(OnGrab);
         grabInteractable.selectExited.RemoveListener(OnRelease);
+    }
+
+    private void Update()
+    {
+        Menu mainMenu = FindFirstObjectByType<Menu>();
+        if(mainMenu.roomClient.Me.uuid == originalSender)
+        {
+            Debug.Log("sender");
+            sender = true;
+        }
+        Debug.Log(originalSender+"-2-"+mainMenu.roomClient.Me.uuid);
     }
 
     private void OnGrab(SelectEnterEventArgs args)

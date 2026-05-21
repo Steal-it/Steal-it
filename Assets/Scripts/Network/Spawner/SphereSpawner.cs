@@ -10,6 +10,8 @@ public class SphereSpawner : MonoBehaviour
     [Header("Prefab to spawn")]
     public GameObject sphereTemplate;
 
+    public Menu mainMenu;
+
     public NetworkSpawnManager spawnManager;
     private XRInteractionManager interactionManager;
     private XRSimpleInteractable interactable;
@@ -44,7 +46,8 @@ public class SphereSpawner : MonoBehaviour
         var spawnedSphere = go.GetComponent<SphereManager>();
 
         spawnedSphere.transform.position = transform.position;
-        spawnedSphere.owner = true;
+        spawnedSphere.owner = false;
+        spawnedSphere.originalSender = mainMenu.roomClient.Me.uuid;
 
         var xrGrab = go.GetComponent<XRGrabInteractable>();
 
