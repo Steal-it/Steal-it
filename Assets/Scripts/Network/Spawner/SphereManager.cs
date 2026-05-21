@@ -10,7 +10,6 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class MovementMessage
 {
     public Pose pose;
-    public bool isFree;
 }
 
 public class SphereManager : MonoBehaviour, INetworkSpawnable
@@ -19,7 +18,6 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     public NetworkId NetworkId {get;set;}
 
     public bool owner;
-    public bool isFree;
 
     private NetworkContext context;
     private XRGrabInteractable grabInteractable;
@@ -46,17 +44,12 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     private void OnGrab(SelectEnterEventArgs args)
     {
         Debug.Log("Object grabbed by: " + args.interactorObject.transform.name);
-        if(isFree)
-        {
-            owner = true;
-            isFree = false; 
-        }
+        owner = true;
     }
 
     private void OnRelease(SelectExitEventArgs args)
     {
         Debug.Log("Object released");
-        isFree = true;
     }
 
     private void Start()
@@ -68,7 +61,6 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     {
         var message = new MovementMessage();
         message.pose = Transforms.ToLocal(transform,context.Scene.transform);
-        message.isFree = this.isFree;
         context.SendJson(message);
     }
 
@@ -86,23 +78,16 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
         var pose = Transforms.ToWorld(msg.pose,context.Scene.transform);
         transform.position = pose.position;
         transform.rotation = pose.rotation;
-        if(isFree && !msg.isFree)
-        {
-            Debug.Log("Change owner");
-            //If I register the ball as free but I get a message saying is no longer free, this means another is now the owner, so set owner to false
-            owner = false;
-        }
-        isFree = msg.isFree;
-        if(!isFree && !owner)
+        if(!owner)
         {
             Debug.Log("Disabled interaction: not Free and not Owned");
-            body.useGravity = false;
+            body.isKinematic = true;
             grabInteractable.enabled = false;
         }
-        else if(isFree)
+        else
         {
             Debug.Log("Enabling interaction");
-            body.useGravity = true;
+            body.isKinematic = false;
             grabInteractable.enabled = true;
         }
     }

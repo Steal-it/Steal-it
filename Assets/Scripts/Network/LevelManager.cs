@@ -51,7 +51,7 @@ public class LevelManager : MonoBehaviour
 
         msgHandler.SendLoadLevelCompletedMessage();
 
-        int oldCounter = 0;
+        /*int oldCounter = 0;
         int totalNumberOfPeers = 0;
         float increaseOf = 0;
 
@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
             {
                 _target += increaseOf;
             }
-        } while(!hadAllPeerLoadedScene);
+        } while(!hadAllPeerLoadedScene);*/
 
         hadAllPeerLoadedScene = false;
 
