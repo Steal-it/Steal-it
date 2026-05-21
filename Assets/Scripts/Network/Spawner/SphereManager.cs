@@ -21,7 +21,9 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
 
     public bool sender;
 
-    public string originalSender;
+    public string originalSender; //Only the original sender will have this populated
+
+    public bool hasOriginalSenderCheckBeenPerformed;
 
     private NetworkContext context;
     private XRGrabInteractable grabInteractable;
@@ -31,6 +33,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
         body = GetComponent<Rigidbody>();
         grabInteractable = GetComponent<XRGrabInteractable>();
         owner = false;
+        hasOriginalSenderCheckBeenPerformed=false;
     }
 
     private void OnEnable()
@@ -46,14 +49,18 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     }
 
     private void Update()
-    {
-        Menu mainMenu = FindFirstObjectByType<Menu>();
-        if(mainMenu.roomClient.Me.uuid == originalSender)
+    {   
+        if(!hasOriginalSenderCheckBeenPerformed)
         {
-            Debug.Log("sender");
-            sender = true;
+            Menu mainMenu = FindFirstObjectByType<Menu>();
+            if(mainMenu.roomClient.Me.uuid == originalSender)
+            {
+                Debug.Log("sender");
+                sender = true;
+            }
+            Debug.Log(originalSender+"-2-"+mainMenu.roomClient.Me.uuid);
+            hasOriginalSenderCheckBeenPerformed=true;
         }
-        Debug.Log(originalSender+"-2-"+mainMenu.roomClient.Me.uuid);
     }
 
     private void OnGrab(SelectEnterEventArgs args)
