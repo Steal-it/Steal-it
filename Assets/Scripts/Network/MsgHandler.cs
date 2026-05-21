@@ -25,9 +25,9 @@ public class ReadyMessage: BaseMessage
 }
 
 [System.Serializable]
-public class LoadSceneCompletedMessage: BaseMessage
+public class LoadLevelCompletedMessage: BaseMessage
 {
-    public LoadSceneCompletedMessage() : base("LoadSceneCompletedMsg") {}
+    public LoadLevelCompletedMessage() : base("LoadLevelCompletedMsg") {}
 }
 
 [System.Serializable]
@@ -57,7 +57,7 @@ public class MsgHandler : MonoBehaviour
 
     private bool wasCounterRequested;
     private int receiveReadyMsgCounter;
-    private int receiveLoadCompleteMsgCounter;
+    public int receiveLoadCompleteMsgCounter {get; private set;}
 
     private void Start()
     {
@@ -115,12 +115,12 @@ public class MsgHandler : MonoBehaviour
         }
     }
 
-    public void SendLoadSceneCompletedMessage()
+    public void SendLoadLevelCompletedMessage()
     {
         if(context.Scene != null)
         {
             receiveLoadCompleteMsgCounter+=1;
-            context.SendJson<LoadSceneCompletedMessage>(new LoadSceneCompletedMessage());
+            context.SendJson<LoadLevelCompletedMessage>(new LoadLevelCompletedMessage());
             if(receiveLoadCompleteMsgCounter==1)
             {
                 PeerLoadingHandler();
@@ -141,7 +141,7 @@ public class MsgHandler : MonoBehaviour
                     ChangeLevelHandler();
                 }
                 break;
-            case "LoadSceneCompletedMsg":
+            case "LoadLevelCompletedMsg":
                 Debug.Log("Received Load Msg");
                 receiveLoadCompleteMsgCounter+=1;
                 if(receiveLoadCompleteMsgCounter==1)

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.UIElements;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager Instance;
+    public static LevelManager lvlManager;
 
     public Transform rigTransformer;
 
@@ -27,9 +28,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private MsgHandler msgHandler;
     void Awake() {
-        if(Instance == null)
+        if(lvlManager == null)
         {
-            Instance = this;
+            lvlManager = this;
             DontDestroyOnLoad(gameObject);
         } 
         else
@@ -38,36 +39,34 @@ public class LevelManager : MonoBehaviour
         }
     }
     
-    public async void LoadScreen(string sceneName)
+    public async void LoadScreen(string levelName)
     {
         _target = 0;
         _progressBar.fillAmount = 0;
 
-        /*var scene = SceneManager.LoadSceneAsync(sceneName);
-        scene.allowSceneActivation = false;*/
-
         _loaderCanvas.SetActive(true);
         hadAllPeerLoadedScene = false;
 
-        do {
-            await Task.Delay(100);
-
-            //_target = scene.progress;
-        } while (false);
         rigTransformer.position += Vector3.right * 19;
-        Debug.Log(rigTransformer.position);
-        await Task.Delay(1000);
-        if(loadingInfoText) {
-            loadingInfoText.text = "Waiting other players to finish loading...";
-        }
-        msgHandler.SendLoadSceneCompletedMessage();
+
+        msgHandler.SendLoadLevelCompletedMessage();
+
+        int oldCounter = 0;
+        int totalNumberOfPeers = 0;
+        float increaseOf = 0;
 
         do {
+            oldCounter = msgHandler.receiveLoadCompleteMsgCounter;
             await Task.Delay(100);
+            totalNumberOfPeers = msgHandler.mainMenu.roomClient.Peers.Count()+1;
+            increaseOf = 1/totalNumberOfPeers;
+            if(oldCounter < msgHandler.receiveLoadCompleteMsgCounter)
+            {
+                _target += increaseOf;
+            }
         } while(!hadAllPeerLoadedScene);
 
         hadAllPeerLoadedScene = false;
-        //scene.allowSceneActivation = true;
 
         _loaderCanvas.SetActive(false);
     

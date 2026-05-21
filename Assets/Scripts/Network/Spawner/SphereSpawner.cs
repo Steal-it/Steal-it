@@ -17,21 +17,8 @@ public class SphereSpawner : MonoBehaviour
     private void Awake()
     {
         interactable = GetComponent<XRSimpleInteractable>();
-        if (!interactable)
-        {
-            Debug.LogError("No XRSimpleInteractable found on SphereSpawner object");
-        }
 
-        interactionManager = FindObjectOfType<XRInteractionManager>();
-        if (!interactionManager)
-        {
-            Debug.LogError("No XRInteractionManager found in scene");
-        }
-
-        if (!spawnManager)
-        {
-            Debug.LogError("No NetworkSpawnManager found in scene");
-        }
+        interactionManager = FindFirstObjectByType<XRInteractionManager>();
     }
 
     private void OnEnable()
@@ -52,52 +39,21 @@ public class SphereSpawner : MonoBehaviour
 
     private void OnSelectEntered(SelectEnterEventArgs eventArgs)
     {
-        if (!spawnManager || !interactionManager)
-        {
-            return;
-        }
-
-        
         var go = spawnManager.SpawnWithPeerScope(sphereTemplate);
         go.SetActive(true);
         var spawnedSphere = go.GetComponent<SphereManager>();
-
-        if (spawnedSphere == null)
-        {
-            Debug.LogError("Spawned object does not have a SphereManager component");
-            return;
-        }
 
         spawnedSphere.transform.position = transform.position;
         spawnedSphere.owner = true;
 
         var xrGrab = go.GetComponent<XRGrabInteractable>();
-        if (xrGrab == null)
-        {
-            Debug.LogError("Spawned prefab is missing XRGrabInteractable");
-            return;
-        }
 
         xrGrab.interactionManager = interactionManager;
         xrGrab.enabled = true;
 
         var interactor = eventArgs.interactorObject;
-        if (interactor != null)
-        {
-            Debug.Log("Test");
-            interactionManager.SelectExit(interactor, interactable);
-
-            StartCoroutine(SelectNextFrame(interactor, xrGrab));
-        }
+        interactionManager.SelectEnter(interactor, interactable);
+        interactionManager.SelectExit(interactor, interactable);
     }
 
-    private IEnumerator SelectNextFrame(IXRSelectInteractor interactor, XRGrabInteractable interactable)
-    {
-        yield return null;
-
-        if (interactionManager != null)
-        {
-            interactionManager.SelectEnter(interactor, interactable);
-        }
-    }
 }
