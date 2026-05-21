@@ -10,8 +10,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class MovementMessage
 {
     public Pose pose;
+    public bool free;
 }
-
 public class SphereManager : MonoBehaviour, INetworkSpawnable
 {
     private Rigidbody body;
@@ -51,6 +51,10 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     {
         Debug.Log("Object released");
         owner = false;
+        var msg = new MovementMessage();
+        msg.pose = Transforms.ToLocal(transform,context.Scene.transform);
+        msg.free = true;
+        context.SendJson(msg);
     }
 
     private void Start()
@@ -62,6 +66,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     {
         var message = new MovementMessage();
         message.pose = Transforms.ToLocal(transform,context.Scene.transform);
+        message.free = false;
         context.SendJson(message);
     }
 
@@ -86,6 +91,13 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
             grabInteractable.enabled = false;
         }
         else
+        {
+            Debug.Log("Enabling interaction");
+            body.isKinematic = false;
+            grabInteractable.enabled = true;
+        }
+
+        if(msg.free)
         {
             Debug.Log("Enabling interaction");
             body.isKinematic = false;
