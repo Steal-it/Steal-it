@@ -871,6 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SphereSpawner
   sphereTemplate: {fileID: 5823145183571074609, guid: a766fc0271288d600a31371d4cf6a01c, type: 3}
+  spawnManager: {fileID: 1828123961}
 --- !u!65 &241052524
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2616,11 +2617,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 991878769}
   m_CullTransparentMesh: 1
---- !u!4 &1018634791 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6007424888155438505, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
-  m_PrefabInstance: {fileID: 588447541}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1042569338
 GameObject:
   m_ObjectHideFlags: 0
@@ -4539,7 +4535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb832f29bb4b39994839e5dc7e9c8000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  rigTransformer: {fileID: 1018634791}
+  rigTransformer: {fileID: 298389596}
   loadingInfoText: {fileID: 1668786090}
   _loaderCanvas: {fileID: 123889302}
   _progressBar: {fileID: 1056456862}
