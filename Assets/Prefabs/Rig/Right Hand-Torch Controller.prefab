@@ -75,7 +75,7 @@ MonoBehaviour:
   freeHandTorchVisual: {fileID: 4412353570008612969}
   standardAttachPoint: {fileID: 2170015180226264664}
   freeHandAttachPoint: {fileID: 7815142460548153554}
-  rungLayer:
+  ladderLayer:
     serializedVersion: 2
     m_Bits: 64
 --- !u!1 &6434314826510393781

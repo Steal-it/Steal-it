@@ -858,9 +858,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c0ab812f601f44fbd8415834123871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerConfigurator
+  handTorchController: {fileID: 5908172466111075079}
   nearFarInteractor: {fileID: 5902376740398460520}
   controllerActivateInputAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  handTorchController: {fileID: 5908172466111075079}
 --- !u!1 &6783008580735272991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,9 +1093,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c0ab812f601f44fbd8415834123871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerConfigurator
+  handTorchController: {fileID: 7016565473495075894}
   nearFarInteractor: {fileID: 3200965482897523916}
   controllerActivateInputAction: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  handTorchController: {fileID: 7016565473495075894}
 --- !u!1 &8178580055119792059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,6 +1634,10 @@ PrefabInstance:
     - target: {fileID: 5745700813747042508, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7104419533170684624, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}
+      propertyPath: m_PhysicsLayerMask.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

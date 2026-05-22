@@ -12,14 +12,14 @@ public class HandTorchController : MonoBehaviour {
     [SerializeField]
     private Transform freeHandAttachPoint;
     [SerializeField]
-    private LayerMask rungLayer;
+    private LayerMask ladderLayer;
 
     private TorchControllerConfigurator torchControllerConfigurator;
     private Transform torchTransform;
 
     void OnTriggerEnter(Collider _other) {
         // Detect if the other object is a rung of a ladder
-        if (((1 << _other.gameObject.layer) & rungLayer) != 0) {
+        if (((1 << _other.gameObject.layer) & ladderLayer) != 0) {
             torchControllerConfigurator.EnableInteractions();
 
             ActivateFreeHandTorchVisual();
@@ -28,7 +28,7 @@ public class HandTorchController : MonoBehaviour {
 
     void OnTriggerExit(Collider _other) {
         // Detect if the other object is a rung of a ladder
-        if (((1 << _other.gameObject.layer) & rungLayer) != 0) {
+        if (((1 << _other.gameObject.layer) & ladderLayer) != 0) {
             torchControllerConfigurator.DisableInteractions();
 
             ActivateStandardTorchVisual();
