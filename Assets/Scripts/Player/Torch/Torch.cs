@@ -24,14 +24,21 @@ public class Torch : MonoBehaviour {
         socketInteractor.selectEntered.AddListener(OnNewBatteryInstalled);
         socketInteractor.selectExited.AddListener(OnBatteryRemoved);
 
-        // Use the initial battery at the start of the game
-        if (socketInteractor.startingSelectedInteractable != null) {
-            GetAndUseBattery(socketInteractor.startingSelectedInteractable.transform);
-        }
+        // Start the torch with no batteries, so turn it off
+        emitLight = false;
+        ToggleLight();
     }
 
     private void OnNewBatteryInstalled(SelectEnterEventArgs _event) {
-        GetAndUseBattery(_event.interactableObject.transform);
+        battery = _event.interactableObject.transform.GetComponent<Battery>();
+        battery.OnBatteryRanOut += Battery_OnBatteryRanOut;
+
+        // Start discharging the battery
+        battery.Use();
+
+        // Turn on the light
+        emitLight = true;
+        ToggleLight();
 
         // Disallow the socket of the battery to show the mesh of a new battery
         socketInteractor.showInteractableHoverMeshes = false;
@@ -61,18 +68,6 @@ public class Torch : MonoBehaviour {
 
         // Allow the socket of the battery to show the mesh of a new battery
         socketInteractor.showInteractableHoverMeshes = true;
-    }
-
-    private void GetAndUseBattery(Transform _interactableTransform) {
-        battery = _interactableTransform.GetComponent<Battery>();
-        battery.OnBatteryRanOut += Battery_OnBatteryRanOut;
-
-        // Start discharging the battery
-        battery.Use();
-
-        // Turn on the light
-        emitLight = true;
-        ToggleLight();
     }
 
     private void OnTriggerPressed(InputAction.CallbackContext _context) {
