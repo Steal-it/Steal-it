@@ -46,8 +46,8 @@ public class SphereSpawner : MonoBehaviour
         var spawnedSphere = go.GetComponent<SphereManager>();
 
         spawnedSphere.transform.position = transform.position;
-        spawnedSphere.owner = false;
-        spawnedSphere.originalSender = mainMenu.roomClient.Me.uuid;
+        spawnedSphere.AmIOwner = false;
+        spawnedSphere.OriginalSender = mainMenu.roomClient.Me.uuid;
 
         var xrGrab = go.GetComponent<XRGrabInteractable>();
 

@@ -9,11 +9,13 @@ using UnityEngine.UIElements;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager lvlManager;
+    public static LevelManager LvlManager;
 
-    public Transform rigTransformer;
+    [SerializeField]
+    private Transform _rigTransformer;
 
-    public TextMeshProUGUI loadingInfoText;
+    [SerializeField]
+    private TextMeshProUGUI _loadingInfoText;
 
     [SerializeField]
     private GameObject _loaderCanvas;
@@ -28,9 +30,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private MsgHandler msgHandler;
     void Awake() {
-        if(lvlManager == null)
+        if(LvlManager == null)
         {
-            lvlManager = this;
+            LvlManager = this;
             DontDestroyOnLoad(gameObject);
         } 
         else
@@ -47,7 +49,16 @@ public class LevelManager : MonoBehaviour
         _loaderCanvas.SetActive(true);
         hadAllPeerLoadedScene = false;
 
-        rigTransformer.position += Vector3.right * 19;
+        switch(levelName)
+        {
+            case "Test":
+                _rigTransformer.position = new Vector3(17f,2f,2f);
+                break;
+            default:
+                Debug.LogError("Attempt to switch to "+levelName+" but it does not exists");
+                return;
+        }
+        
 
         msgHandler.SendLoadLevelCompletedMessage();
 

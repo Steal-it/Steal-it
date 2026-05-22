@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using TinyJson;
 using Ubiq.Messaging;
+using Ubiq.Rooms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using WebSocketSharp;
 
 
 
@@ -48,67 +50,94 @@ public class RecoverCurrentCounterReplyMessage: BaseMessage
 
 public class MsgHandler : MonoBehaviour
 {
+    public static MsgHandler Instance { get; private set; }
 
-    public Menu mainMenu;
+    public event EventHandler OnCounterRecoverFinished;
+    [SerializeField]
+    private Menu _mainMenu;
 
     [SerializeField]
-    private LevelManager levelManager;
-    private NetworkContext context;
+    private LevelManager _levelManager;
+    private NetworkContext _context;
 
-    private bool wasCounterRequested;
-    private int receiveReadyMsgCounter;
-    public int receiveLoadCompleteMsgCounter {get; private set;}
+    private bool _wasCounterRequested;
+    private int _receiveReadyMsgCounter;
+    private int _receiveLoadCompleteMsgCounter;
+
+    private int _receiveRecoverCurrentCounterReplyCounter;
+
+    private void Awake() {
+        if (Instance == null)
+        {
+            Instance = this;
+            return;
+        }
+    }
 
     private void Start()
     {
-        context = NetworkScene.Register(this);
-        receiveReadyMsgCounter = 0;
-        receiveLoadCompleteMsgCounter = 0;
+        _context = NetworkScene.Register(this);
+        _receiveReadyMsgCounter = 0;
+        _receiveLoadCompleteMsgCounter = 0;
+        _receiveRecoverCurrentCounterReplyCounter = 0;
+        _mainMenu.roomClient.OnJoinedRoom.AddListener(OnJoinedRoomHandler);
     }
 
     private async void ChangeLevelHandler()
     {
         do {
             await Task.Delay(100);
-        } while (receiveReadyMsgCounter!=mainMenu.roomClient.Peers.Count()+1);
+        } while (_receiveReadyMsgCounter!=_mainMenu.roomClient.Peers.Count()+1);
         
         Debug.Log("All ready for change!");
-        receiveReadyMsgCounter = 0;
-        wasCounterRequested=false;
-        levelManager.LoadScreen("Test");
+        _receiveReadyMsgCounter = 0;
+        _wasCounterRequested=false;
+        _levelManager.LoadScreen("Test");
     }
 
     private async void PeerLoadingHandler()
     {
         do {
             await Task.Delay(100);
-        } while (receiveLoadCompleteMsgCounter!=mainMenu.roomClient.Peers.Count()+1);
+        } while (_receiveLoadCompleteMsgCounter!=_mainMenu.roomClient.Peers.Count()+1);
         
         Debug.Log("All ready for unlocking!");
-        receiveLoadCompleteMsgCounter = 0;
-        levelManager.UpdatePeerLoadingStatus();
+        _receiveLoadCompleteMsgCounter = 0;
+        _levelManager.UpdatePeerLoadingStatus();
     }
 
     private void RecoverCurrentCounterRequestMessageHandler()
     {
-        context.SendJson<RecoverCurrentCounterReplyMessage>(new RecoverCurrentCounterReplyMessage(receiveReadyMsgCounter));
+        _context.SendJson<RecoverCurrentCounterReplyMessage>(new RecoverCurrentCounterReplyMessage(_receiveReadyMsgCounter));
     }
 
     private void RecoverCurrentCounterReplyMessageHandler(RecoverCurrentCounterReplyMessage msg)
     {
-        if(wasCounterRequested && msg.localCounter>receiveReadyMsgCounter)
+        if(_wasCounterRequested && msg.localCounter>_receiveReadyMsgCounter)
         {
-            receiveReadyMsgCounter = msg.localCounter;
+            _receiveReadyMsgCounter = msg.localCounter;
         }
+    }
+
+    private async void RecoverCurrentCounterProcessStatusChecker()
+    {
+        //Check whether the recovery counter process has ended and signal registered handler
+
+        do {
+            await Task.Delay(100);
+        }while(_receiveRecoverCurrentCounterReplyCounter == _mainMenu.roomClient.Peers.Count());
+
+        _receiveRecoverCurrentCounterReplyCounter=0;
+        OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
     }
 
     public void SendReadyMessage()
     {
-        if(context.Scene != null)
+        if(_context.Scene != null)
         {
-            receiveReadyMsgCounter+=1;
-            context.SendJson<ReadyMessage>(new ReadyMessage());
-            if(receiveReadyMsgCounter==1)
+            _receiveReadyMsgCounter+=1;
+            _context.SendJson<ReadyMessage>(new ReadyMessage());
+            if(_receiveReadyMsgCounter==1)
             {
                 ChangeLevelHandler();
             }
@@ -117,11 +146,11 @@ public class MsgHandler : MonoBehaviour
 
     public void SendLoadLevelCompletedMessage()
     {
-        if(context.Scene != null)
+        if(_context.Scene != null)
         {
-            receiveLoadCompleteMsgCounter+=1;
-            context.SendJson<LoadLevelCompletedMessage>(new LoadLevelCompletedMessage());
-            if(receiveLoadCompleteMsgCounter==1)
+            _receiveLoadCompleteMsgCounter+=1;
+            _context.SendJson<LoadLevelCompletedMessage>(new LoadLevelCompletedMessage());
+            if(_receiveLoadCompleteMsgCounter==1)
             {
                 PeerLoadingHandler();
             }
@@ -135,22 +164,22 @@ public class MsgHandler : MonoBehaviour
         {
             case "ReadyMsg":
                 Debug.Log("Received Ready Msg");
-                receiveReadyMsgCounter+=1;
-                if(receiveReadyMsgCounter==1)
+                _receiveReadyMsgCounter+=1;
+                if(_receiveReadyMsgCounter==1)
                 {
                     ChangeLevelHandler();
                 }
                 break;
             case "LoadLevelCompletedMsg":
                 Debug.Log("Received Load Msg");
-                receiveLoadCompleteMsgCounter+=1;
-                if(receiveLoadCompleteMsgCounter==1)
+                _receiveLoadCompleteMsgCounter+=1;
+                if(_receiveLoadCompleteMsgCounter==1)
                 {
                     PeerLoadingHandler();
                 }
                 break;
             case "RecoverCurrentCounterRequestMsg":
-                wasCounterRequested = true;
+                _wasCounterRequested = true;
                 Debug.Log("Received counter request");
                 RecoverCurrentCounterRequestMessageHandler();
                 break;
@@ -158,11 +187,26 @@ public class MsgHandler : MonoBehaviour
                 Debug.Log("Received counter reply");
                 RecoverCurrentCounterReplyMessage finalMessage = msg.FromJson<RecoverCurrentCounterReplyMessage>();
                 RecoverCurrentCounterReplyMessageHandler(finalMessage);
+                _receiveRecoverCurrentCounterReplyCounter+=1;
+                if(_receiveRecoverCurrentCounterReplyCounter==1)
+                {
+                    RecoverCurrentCounterProcessStatusChecker();
+                }
                 break;
             default:
                 Debug.LogError("Received unknown message!"+message.messageType);
                 break;
         }
+    }
+
+    private void OnJoinedRoomHandler(IRoom arg)
+    {
+        if(_mainMenu.roomClient.Peers.Count()==0 && !arg.Name.IsNullOrEmpty())
+        {
+            OnCounterRecoverFinished?.Invoke(this,EventArgs.Empty);
+            return;
+        }
+        _context.SendJson<RecoverCurrentCounterRequestMessage>(new RecoverCurrentCounterRequestMessage());
     }
 
 }

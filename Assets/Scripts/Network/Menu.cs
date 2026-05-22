@@ -2,12 +2,31 @@ using NUnit.Framework.Internal;
 using Ubiq.Messaging;
 using UnityEngine;
 using Ubiq.Rooms;
+using System;
+using System.Threading.Tasks;
 
 public class Menu : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Transform SpawnRelativeTransform;
     private NetworkScene _networkScene;
-    public Transform spawnRelativeTransform;
+    private RoomClient _roomClient;
+
+    [SerializeField]
+    private GameObject _readyButton;
+    [SerializeField]
+    private MsgHandler _msgHandler;
+
+    void Start() {
+        _msgHandler = MsgHandler.Instance;
+    }
+    void OnEnable()
+    {   
+        _msgHandler.OnCounterRecoverFinished += OnCounterRecoverFinishedHandler;
+    }
+
+    void OnDestroy() {
+        _msgHandler.OnCounterRecoverFinished -= OnCounterRecoverFinishedHandler;
+    }
     public NetworkScene networkScene
     {
         get
@@ -19,8 +38,6 @@ public class Menu : MonoBehaviour
             return _networkScene;
         }
     }
-
-    private RoomClient _roomClient;
     public RoomClient roomClient
     {
         get
@@ -36,12 +53,16 @@ public class Menu : MonoBehaviour
         }
     }
 
-    public void Request ()
+    public void Request()
     {
         var cam = Camera.main.transform;
-        transform.position = cam.TransformPoint(spawnRelativeTransform.localPosition);
-        transform.rotation = cam.rotation * spawnRelativeTransform.localRotation;
+        transform.position = cam.TransformPoint(SpawnRelativeTransform.localPosition);
+        transform.rotation = cam.rotation * SpawnRelativeTransform.localRotation;
         gameObject.SetActive(true);
     }
-    
+
+    private void OnCounterRecoverFinishedHandler(object sender, EventArgs e)
+    {
+        _readyButton.SetActive(true);
+    }
 }

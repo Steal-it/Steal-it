@@ -9,120 +9,119 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class MovementMessage
 {
-    public Pose position;
-    public bool isOwned;
+    public Pose Position;
+    public bool IsOwned;
 }
 public class SphereManager : MonoBehaviour, INetworkSpawnable
 {
-    private Rigidbody body;
     public NetworkId NetworkId {get;set;}
+    public bool AmIOwner;
 
-    public bool owner;
+    public bool AmISender;
 
-    public bool sender;
+    public string OriginalSender; //Only the original AmISender will have this populated
 
-    public string originalSender; //Only the original sender will have this populated
+    private bool _hasOriginalSenderCheckBeenPerformed;
 
-    public bool hasOriginalSenderCheckBeenPerformed;
-
-    private NetworkContext context;
-    private XRGrabInteractable grabInteractable;
+    private NetworkContext _context;
+    private XRGrabInteractable _grabInteractable;
+    private Rigidbody _body;
 
     private void Awake()
     {
-        body = GetComponent<Rigidbody>();
-        grabInteractable = GetComponent<XRGrabInteractable>();
-        owner = false;
-        hasOriginalSenderCheckBeenPerformed=false;
+        _body = GetComponent<Rigidbody>();
+        _grabInteractable = GetComponent<XRGrabInteractable>();
+        AmIOwner = false;
+        _hasOriginalSenderCheckBeenPerformed=false;
     }
 
     private void OnEnable()
     {
-        grabInteractable.selectEntered.AddListener(OnGrab);
-        grabInteractable.selectExited.AddListener(OnRelease);
+        _grabInteractable.selectEntered.AddListener(OnGrab);
+        _grabInteractable.selectExited.AddListener(OnRelease);
     }
 
     private void OnDisable()
     {
-        grabInteractable.selectEntered.RemoveListener(OnGrab);
-        grabInteractable.selectExited.RemoveListener(OnRelease);
+        _grabInteractable.selectEntered.RemoveListener(OnGrab);
+        _grabInteractable.selectExited.RemoveListener(OnRelease);
     }
 
     private void Update()
     {   
-        if(!hasOriginalSenderCheckBeenPerformed)
+        if(!_hasOriginalSenderCheckBeenPerformed)
         {
             Menu mainMenu = FindFirstObjectByType<Menu>();
-            if(mainMenu.roomClient.Me.uuid == originalSender)
+            if(mainMenu.roomClient.Me.uuid == OriginalSender)
             {
-                Debug.Log("sender");
-                sender = true;
+                Debug.Log("AmISender");
+                AmISender = true;
             }
-            Debug.Log(originalSender+"-2-"+mainMenu.roomClient.Me.uuid);
-            hasOriginalSenderCheckBeenPerformed=true;
+            Debug.Log(OriginalSender+"-2-"+mainMenu.roomClient.Me.uuid);
+            _hasOriginalSenderCheckBeenPerformed=true;
         }
     }
 
     private void OnGrab(SelectEnterEventArgs args)
     {
         Debug.Log("Object grabbed by: " + args.interactorObject.transform.name);
-        owner = true;
-        sender = true;
+        AmIOwner = true;
+        AmISender = true;
     }
 
     private void OnRelease(SelectExitEventArgs args)
     {
         Debug.Log("Object released");
-        owner = false;
+        AmIOwner = false;
         var msg = new MovementMessage();
-        msg.position = Transforms.ToLocal(transform,context.Scene.transform);
-        msg.isOwned = false;
-        context.SendJson(msg);
+        msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
+        msg.IsOwned = false;
+        _context.SendJson(msg);
     }
 
     private void Start()
     {
-        context = NetworkScene.Register(this);
+        _context = NetworkScene.Register(this);
     }
 
     private void SendMessage()
     {
         var message = new MovementMessage();
-        message.position = Transforms.ToLocal(transform,context.Scene.transform);
-        message.isOwned = owner;
-        context.SendJson(message);
+        message.Position = Transforms.ToLocal(transform,_context.Scene.transform);
+        message.IsOwned = AmIOwner;
+        _context.SendJson(message);
     }
 
     private void FixedUpdate()
     {
-        //Only sender transmit position, therefore, if I am not the sender I deactivate gravity
-        if(sender)
+        //Only AmISender transmit Position, therefore, if I am not the AmISender I deactivate gravity
+        if(AmISender)
         {
-            body.isKinematic = false;
+            _body.isKinematic = false;
             SendMessage();
         }
         else
         {
-            body.isKinematic = true;
+            _body.isKinematic = true;
         }
     }
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage message)
     {
         var msg = message.FromJson<MovementMessage>();
-        var pose = Transforms.ToWorld(msg.position,context.Scene.transform);
+        var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
         transform.position = pose.position;
         transform.rotation = pose.rotation;
 
-        if(msg.isOwned)
+        if(msg.IsOwned)
         {
-            //If object is taken by another, The current player is no longer the sender
-            sender=false;
-            grabInteractable.enabled = false;
+            //If object is taken by another, The current player is no longer the AmISender
+            AmISender=false;
+            _grabInteractable.enabled = false;
         }
         else
         {
-            grabInteractable.enabled = true;
+            _grabInteractable.enabled = true;
         }
     }
 }

@@ -7,32 +7,36 @@ using System;
 
 public class BrowsePanelController : MonoBehaviour
 {
-    public float roomRefreshInterval = 2.0f;
-    public Menu mainMenu;
-    public Transform controlsRoot;
-    public GameObject roomListPanel;
-    public GameObject controlTemplate;
-    public TextMeshProUGUI connectionStatusText;
+    private float roomRefreshInterval = 2.0f;
+    public Menu MainMenu;
+    [SerializeField]
+    private Transform _controlsRoot;
+    [SerializeField]
+    private GameObject _roomListPanel;
+    [SerializeField]
+    private GameObject _controlTemplate;
+    [SerializeField]
+    private TextMeshProUGUI _connectionStatusText;
     private List<BrowseMenuControl> controls = new List<BrowseMenuControl>();
     private List<IRoom> lastRoomArgs;
-    private float nextRoomRefreshTime = -1;
+    private float _nextRoomRefreshTime = -1;
     private void OnEnable()
     {
-        mainMenu.roomClient.OnRooms.AddListener(RoomClient_OnRoomsDiscovered);
-        mainMenu.roomClient.OnJoinedRoom.AddListener(RoomClient_OnJoinedRoom);
+        MainMenu.roomClient.OnRooms.AddListener(RoomClient_OnRoomsDiscovered);
+        MainMenu.roomClient.OnJoinedRoom.AddListener(RoomClient_OnJoinedRoom);
         PlayerNotifications.OnNotification += UpdateConnectionStatus;
         UpdateAvailableRooms();
     }
     private void OnDisable()
     {
-        if (mainMenu.roomClient)
+        if (MainMenu.roomClient)
         {
-            mainMenu.roomClient.OnRooms.RemoveListener(RoomClient_OnRoomsDiscovered);
-            mainMenu.roomClient.OnJoinedRoom.RemoveListener(RoomClient_OnJoinedRoom);
+            MainMenu.roomClient.OnRooms.RemoveListener(RoomClient_OnRoomsDiscovered);
+            MainMenu.roomClient.OnJoinedRoom.RemoveListener(RoomClient_OnJoinedRoom);
         }
     }
     private BrowseMenuControl InstantiateControl (bool isRoomTheCurrentRoom) {
-        var go = GameObject.Instantiate(controlTemplate, controlsRoot);
+        var go = GameObject.Instantiate(_controlTemplate, _controlsRoot);
         if(!isRoomTheCurrentRoom)
         {
             go.SetActive(true);
@@ -43,7 +47,7 @@ public class BrowsePanelController : MonoBehaviour
     {
         UpdateAvailableRooms();
         // Immediately ask for a refresh - maybe room we left is now empty
-        mainMenu.roomClient.DiscoverRooms();
+        MainMenu.roomClient.DiscoverRooms();
     }
     private void RoomClient_OnRoomsDiscovered(List<IRoom> rooms,RoomsDiscoveredRequest request)
     {
@@ -67,21 +71,21 @@ public class BrowsePanelController : MonoBehaviour
             return;
         }
 
-        roomListPanel.SetActive(true);
+        _roomListPanel.SetActive(true);
         int controlI = 0;
 
         for (int roomI = 0; roomI < rooms.Count; controlI++,roomI++)
         {
-            bool isRoomTheCurrentRoom = rooms[roomI].Name == mainMenu.roomClient.Room.Name;
+            bool isRoomTheCurrentRoom = rooms[roomI].Name == MainMenu.roomClient.Room.Name;
 
             if (controls.Count <= controlI) {
                 controls.Add(InstantiateControl(isRoomTheCurrentRoom));
             }
 
-            controls[controlI].Bind(mainMenu.roomClient,rooms[roomI]);
+            controls[controlI].Bind(MainMenu.roomClient,rooms[roomI]);
 
             if(isRoomTheCurrentRoom) {
-                connectionStatusText.text = "Connected";
+                _connectionStatusText.text = "Connected";
             }
 
         }
@@ -92,16 +96,16 @@ public class BrowsePanelController : MonoBehaviour
     }
     private void Update()
     {
-        if (Time.realtimeSinceStartup > nextRoomRefreshTime)
+        if (Time.realtimeSinceStartup > _nextRoomRefreshTime)
         {
-            mainMenu.roomClient.DiscoverRooms();
-            nextRoomRefreshTime = Time.realtimeSinceStartup + roomRefreshInterval;
+            MainMenu.roomClient.DiscoverRooms();
+            _nextRoomRefreshTime = Time.realtimeSinceStartup + roomRefreshInterval;
         }
     }
 
     private void UpdateConnectionStatus(Notification test) {
         if(test.Message.Contains("Connection lost")) {
-            connectionStatusText.text = "Currently not connected to any room (connection lost)";
+            _connectionStatusText.text = "Currently not connected to any room (connection lost)";
         }
     }
 }

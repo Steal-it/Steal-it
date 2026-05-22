@@ -6,19 +6,19 @@ using TMPro;
 public class UsernameUpdater : MonoBehaviour
 {
     [SerializeField]
-    private RoomClient rc;
+    private Menu _mainMenu;
 
     private TextMeshProUGUI text;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         text = GetComponent<TextMeshProUGUI>();
-        rc.OnPeerUpdated.AddListener(OnPeerListener);
+        _mainMenu.roomClient.OnPeerUpdated.AddListener(OnPeerListener);
     }
 
     private void OnPeerListener(IPeer peer)
     {
-        if(rc.Me == peer)
+        if(_mainMenu.roomClient.Me == peer)
         {
             updateUsername();
         }    
@@ -26,9 +26,9 @@ public class UsernameUpdater : MonoBehaviour
 
     private void updateUsername()
     {
-        if(rc.Me != null)
+        if(_mainMenu.roomClient.Me != null)
         {
-            string name=rc.Me[DisplayNameManager.KEY];
+            string name=_mainMenu.roomClient.Me[DisplayNameManager.KEY];
             if(!string.IsNullOrEmpty(name))
             {
                 text.text = $"Welcome {name}";
