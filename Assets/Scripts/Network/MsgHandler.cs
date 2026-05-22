@@ -106,9 +106,19 @@ public class MsgHandler : MonoBehaviour
         _levelManager.UpdatePeerLoadingStatus();
     }
 
-    private void RecoverCurrentCounterRequestMessageHandler()
+    private async void RecoverCurrentCounterRequestMessageHandler()
     {
-        _context.SendJson<RecoverCurrentCounterReplyMessage>(new RecoverCurrentCounterReplyMessage(_receiveReadyMsgCounter));
+        if(_context.Scene != null)
+        {
+            _context.SendJson<RecoverCurrentCounterReplyMessage>(new RecoverCurrentCounterReplyMessage(_receiveReadyMsgCounter));
+        }
+        else
+        {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); //Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            RecoverCurrentCounterRequestMessageHandler();
+        }
+        
     }
 
     private void RecoverCurrentCounterReplyMessageHandler(RecoverCurrentCounterReplyMessage msg)
@@ -131,7 +141,7 @@ public class MsgHandler : MonoBehaviour
         OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
     }
 
-    public void SendReadyMessage()
+    public async void SendReadyMessage()
     {
         if(_context.Scene != null)
         {
@@ -142,9 +152,15 @@ public class MsgHandler : MonoBehaviour
                 ChangeLevelHandler();
             }
         }
+        else
+        {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); //Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendReadyMessage();
+        }
     }
 
-    public void SendLoadLevelCompletedMessage()
+    public async void SendLoadLevelCompletedMessage()
     {
         if(_context.Scene != null)
         {
@@ -154,6 +170,10 @@ public class MsgHandler : MonoBehaviour
             {
                 PeerLoadingHandler();
             }
+        } else {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); //Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendLoadLevelCompletedMessage();
         }
     }
 
@@ -199,14 +219,23 @@ public class MsgHandler : MonoBehaviour
         }
     }
 
-    private void OnJoinedRoomHandler(IRoom arg)
+    private async void OnJoinedRoomHandler(IRoom arg)
     {
         if(_mainMenu.roomClient.Peers.Count()==0 && !arg.Name.IsNullOrEmpty())
         {
             OnCounterRecoverFinished?.Invoke(this,EventArgs.Empty);
             return;
         }
-        _context.SendJson<RecoverCurrentCounterRequestMessage>(new RecoverCurrentCounterRequestMessage());
+        if(_context.Scene != null)
+        {
+            _context.SendJson<RecoverCurrentCounterRequestMessage>(new RecoverCurrentCounterRequestMessage());
+        }
+        else
+        {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); //Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            OnJoinedRoomHandler(arg);
+        }
     }
 
 }
