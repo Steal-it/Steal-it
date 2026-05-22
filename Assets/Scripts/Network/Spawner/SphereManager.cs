@@ -100,12 +100,12 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
         //Only AmISender transmit Position, therefore, if I am not the AmISender I deactivate gravity
         if(AmISender)
         {
-            _body.isKinematic = false;
+            _body.useGravity = true;
             SendMessage();
         }
         else
         {
-            _body.isKinematic = true;
+            _body.useGravity = false;
         }
     }
 
