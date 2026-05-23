@@ -11,12 +11,12 @@ TagManager:
   - 
   - Water
   - UI
-  - Ladder
   - 
-  - 
-  - 
-  - 
-  - 
+  - FarInteraction
+  - NearInteraction
+  - NearAndFarInteracion
+  - IgnorePlayer
+  - PokeInteraction
   - 
   - 
   - 

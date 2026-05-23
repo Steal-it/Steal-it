@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs.meta
 guid: 17c2b830940f76241b3b847e28e66454
+========
+guid: 94927a5161ebac849a36733efcf22373
+>>>>>>>> more-interactions:Assets/AffordanceThemes.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

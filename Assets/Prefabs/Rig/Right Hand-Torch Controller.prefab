@@ -77,7 +77,7 @@ MonoBehaviour:
   freeHandAttachPoint: {fileID: 7815142460548153554}
   ladderLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!1 &6434314826510393781
 GameObject:
   m_ObjectHideFlags: 0
