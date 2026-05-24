@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Threading.Tasks;
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using Ubiq.Spawning;
-using Unity.VisualScripting;
 using UnityEditor.XR.Interaction.Toolkit.Utilities;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -12,7 +10,6 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 //If object is owned, transfer position, otherwise transfer velocity
 public class MovementMessageV2
 {
-    public Pose? Position;
     public Vector3 velocity;
     public bool IsOwned;
 }
@@ -22,10 +19,10 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     public bool AmIOwner;
     public bool isOwned;
     public string OriginalSender; //Only the original AmISender will have this populated
+
     private NetworkContext _context;
     private XRGrabInteractable _grabInteractable;
     private Rigidbody _body;
-    private bool _hasOriginalSenderCheckBeenPerformed;
 
     private void Awake()
     {
@@ -33,36 +30,12 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
         _grabInteractable = GetComponent<XRGrabInteractable>();
         AmIOwner = false;
         isOwned = false;
-        _hasOriginalSenderCheckBeenPerformed=false;
     }
 
     private void OnEnable()
     {
         _grabInteractable.selectEntered.AddListener(OnGrab);
         _grabInteractable.selectExited.AddListener(OnRelease);
-    }
-
-    async private void Update()
-    {
-        if(!_hasOriginalSenderCheckBeenPerformed)
-        {
-            Menu mainMenu = FindFirstObjectByType<Menu>();
-            Debug.Log(OriginalSender+"-2-"+mainMenu.roomClient.Me.uuid);
-            if(mainMenu.roomClient.Me.uuid == OriginalSender)
-            {
-                _hasOriginalSenderCheckBeenPerformed=true;
-                var pose = Transforms.ToLocal(Camera.main.transform, _context.Scene.transform);
-                transform.position = pose.position;
-                transform.rotation = pose.rotation;
-                var msg = new MovementMessageV2();
-                msg.Position = pose;
-
-                //Give time to other peers to spawn the object
-                await Task.Delay(1000);
-                _context.SendJson(msg);
-                Debug.Log("sending position");
-            }
-        }
     }
 
     private void Start()
@@ -121,16 +94,6 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     public void ProcessMessage(ReferenceCountedSceneGraphMessage message)
     {
         var msg = message.FromJson<MovementMessageV2>();
-
-        if(msg.Position.HasValue) {
-            Debug.Log("Received position");
-
-            var pose = Transforms.ToWorld(msg.Position.Value,_context.Scene.transform);
-            transform.position = pose.position;
-            transform.rotation = pose.rotation;
-
-            return;
-        }
 
         var vel = msg.velocity;
         GetComponent<Rigidbody>().linearVelocity = vel;
