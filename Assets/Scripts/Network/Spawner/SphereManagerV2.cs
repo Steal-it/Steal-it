@@ -19,9 +19,6 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     public bool AmIOwner;
     public bool isOwned;
     public string OriginalSender; //Only the original AmISender will have this populated
-
-    private bool _hasOriginalSenderCheckBeenPerformed;
-
     private NetworkContext _context;
     private XRGrabInteractable _grabInteractable;
     private Rigidbody _body;
@@ -43,6 +40,15 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     private void Start()
     {
         _context = NetworkScene.Register(this);
+
+        Menu mainMenu = FindFirstObjectByType<Menu>();
+        if(mainMenu.roomClient.Me.uuid == OriginalSender)
+        {
+            var pose = Transforms.ToLocal(transform,_context.Scene.transform);
+            transform.position = pose.position;
+            transform.rotation = pose.rotation;
+        }
+        Debug.Log(OriginalSender+"-2-"+mainMenu.roomClient.Me.uuid);
     }
 
     private void FixedUpdate()
