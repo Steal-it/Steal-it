@@ -24,6 +24,8 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     private NetworkContext _context;
     private XRGrabInteractable _grabInteractable;
     private Rigidbody _body;
+    private Vector3 _lastPos;
+    private Vector3 _vel;
 
     private void Awake()
     {
@@ -46,11 +48,15 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
 
     private void FixedUpdate()
     {
+        _vel = (Transforms.ToLocal(transform,_context.Scene.transform).position - _lastPos) / Time.fixedDeltaTime;
+
         //Only AmISender transmit Position, therefore, if I am not the AmISender I deactivate gravity
         if(AmIOwner)
         { 
             SendMessage();
         }
+
+        _lastPos = Transforms.ToLocal(transform,_context.Scene.transform).position;
     }
 
     private void OnGrab(SelectEnterEventArgs args)
@@ -67,7 +73,9 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
         isOwned = false;
 
         var msg = new MovementMessageV2();
-        msg.velocity = GetComponent<Rigidbody>().linearVelocity;
+        //msg.velocity = GetComponent<Rigidbody>().linearVelocity;
+        msg.velocity = _vel;
+        print("REL: " + _vel);
         //msg.Position = new Pose(transform.position, transform.rotation);
         msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
         msg.IsOwned = false;
@@ -106,11 +114,12 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
             _body.useGravity = true;
         }
 
-        if(msg.velocity != Vector3.zero)
-        {
+        // if(msg.velocity != Vector3.zero)
+        // {
             var vel = msg.velocity;
             GetComponent<Rigidbody>().linearVelocity = vel;
-        }
+            print("NEW: " + GetComponent<Rigidbody>().linearVelocity);
+        // }
 
         var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
         //var pose = msg.Position;
