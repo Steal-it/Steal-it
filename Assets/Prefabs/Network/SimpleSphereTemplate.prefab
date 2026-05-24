@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 288813701652087317}
   - component: {fileID: 4881951483389994077}
   - component: {fileID: 4513774249662260648}
-  - component: {fileID: 1839205852794269851}
   - component: {fileID: 1948536872245731546}
   - component: {fileID: 5656904566202406515}
+  - component: {fileID: 2710826668965258217}
   m_Layer: 0
   m_Name: SimpleSphereTemplate
   m_TagString: Untagged
@@ -143,21 +143,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &1839205852794269851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5823145183571074609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9711705556228cee4a42575d190172b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SphereManager
-  AmIOwner: 0
-  AmISender: 0
-  OriginalSender: 
 --- !u!114 &1948536872245731546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,3 +293,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2710826668965258217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823145183571074609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82ddfdf178fbd3898e6c7327afaac6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SphereManagerV2
+  AmIOwner: 0
+  isOwned: 0
+  OriginalSender: 
