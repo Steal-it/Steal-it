@@ -10,6 +10,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 //If object is owned, transfer position, otherwise transfer velocity
 public class MovementMessageV2
 {
+    public Vector3 velocity;
     public Pose Position;
     public bool IsOwned;
 }
@@ -66,7 +67,7 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
         isOwned = false;
 
         var msg = new MovementMessageV2();
-        msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
+        msg.velocity = GetComponent<Rigidbody>().linearVelocity;
         msg.IsOwned = false;
 
         _context.SendJson(msg);
@@ -87,15 +88,11 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     {
         var msg = message.FromJson<MovementMessageV2>();
 
-        var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
-        transform.position = pose.position;
-        transform.rotation = pose.rotation;
-
         isOwned = msg.IsOwned;
 
         if (isOwned)
         {
-            //If object is taken by another, The current player is no longer the AmISender
+            //If object is taken by another, disable interaction and gravity
             _grabInteractable.enabled = false;
             _body.useGravity = false;
         }
@@ -104,6 +101,19 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
             _grabInteractable.enabled = true;
             _body.useGravity = true;
         }
+
+        if(msg.velocity == Vector3.zero)
+        {
+            var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
+            transform.position = pose.position;
+            transform.rotation = pose.rotation;
+        }
+        else
+        {
+            var vel = msg.velocity;
+            GetComponent<Rigidbody>().linearVelocity = vel;
+        }
+
     }
 
     private void OnDisable()
