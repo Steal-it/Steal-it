@@ -1386,6 +1386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1637397333}
   - component: {fileID: 1637397335}
+  - component: {fileID: 1637397336}
   m_Layer: 0
   m_Name: Avatar Manager
   m_TagString: Untagged
@@ -1421,7 +1422,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Ubiq::Ubiq.Avatars.AvatarManager
   avatarCatalogue: {fileID: 11400000, guid: 9cdc9d38da270862fa38bc5ab55bef51, type: 2}
-  avatarPrefab: {fileID: 3172939939781028348, guid: 7fd12be3d4d92fc2e835145d4a4933e8, type: 3}
+  avatarPrefab: {fileID: 3172939939781028348, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
+--- !u!114 &1637397336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637397332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f7ee17ed2876761a06d4a52f2cad97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ubiq.Avatars.AvatarManager
+  avatarManager: {fileID: 1637397335}
+  roomClient: {fileID: 1952626370}
 --- !u!1 &1668786088
 GameObject:
   m_ObjectHideFlags: 0
