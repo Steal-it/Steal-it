@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Threading.Tasks;
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using Ubiq.Spawning;
+using Unity.VisualScripting;
 using UnityEditor.XR.Interaction.Toolkit.Utilities;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -10,6 +12,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 //If object is owned, transfer position, otherwise transfer velocity
 public class MovementMessageV2
 {
+    public Pose Position;
     public Vector3 velocity;
     public bool IsOwned;
 }
@@ -37,7 +40,7 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
         _grabInteractable.selectExited.AddListener(OnRelease);
     }
 
-    private void Start()
+    async private void Start()
     {
         _context = NetworkScene.Register(this);
 
@@ -47,6 +50,12 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
             var pose = Transforms.ToLocal(transform,_context.Scene.transform);
             transform.position = pose.position;
             transform.rotation = pose.rotation;
+            var msg = new MovementMessageV2();
+            msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
+
+            //Give time to other peers to spawn the object
+            await Task.Delay(1000);
+            _context.SendJson(msg);
         }
         Debug.Log(OriginalSender+"-2-"+mainMenu.roomClient.Me.uuid);
     }
@@ -102,6 +111,16 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     public void ProcessMessage(ReferenceCountedSceneGraphMessage message)
     {
         var msg = message.FromJson<MovementMessageV2>();
+
+        if(!msg.Position.IsUnityNull()) {
+            Debug.Log("Received position");
+
+            var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
+            transform.position = pose.position;
+            transform.rotation = pose.rotation;
+
+            return;
+        }
 
         var vel = msg.velocity;
         GetComponent<Rigidbody>().linearVelocity = vel;
