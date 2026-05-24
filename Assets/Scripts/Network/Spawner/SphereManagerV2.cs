@@ -68,6 +68,8 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
 
         var msg = new MovementMessageV2();
         msg.velocity = GetComponent<Rigidbody>().linearVelocity;
+        //msg.Position = new Pose(transform.position, transform.rotation);
+        msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
         msg.IsOwned = false;
 
         _context.SendJson(msg);
@@ -76,6 +78,8 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     private void SendMessage()
     {
         var message = new MovementMessageV2();
+
+        //message.Position = new Pose(transform.position, transform.rotation);
         message.Position = Transforms.ToLocal(transform,_context.Scene.transform);
         
         //When SendMessage is called, the instance is always the owner
@@ -102,7 +106,18 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
             _body.useGravity = true;
         }
 
-        if(msg.velocity == Vector3.zero)
+        if(msg.velocity != Vector3.zero)
+        {
+            var vel = msg.velocity;
+            GetComponent<Rigidbody>().linearVelocity = vel;
+        }
+
+        var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
+        //var pose = msg.Position;
+        transform.position = pose.position;
+        transform.rotation = pose.rotation;
+
+        /*if(msg.velocity == Vector3.zero)
         {
             var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
             transform.position = pose.position;
@@ -112,7 +127,7 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
         {
             var vel = msg.velocity;
             GetComponent<Rigidbody>().linearVelocity = vel;
-        }
+        }*/
 
     }
 
