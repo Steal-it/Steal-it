@@ -10,7 +10,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 //If object is owned, transfer position, otherwise transfer velocity
 public class MovementMessageV2
 {
-    public Vector3 velocity;
+    public Pose Position;
     public bool IsOwned;
 }
 public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
@@ -74,7 +74,7 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
         isOwned = false;
 
         var msg = new MovementMessageV2();
-        msg.velocity = GetComponent<Rigidbody>().linearVelocity;
+        msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
         msg.IsOwned = false;
 
         _context.SendJson(msg);
@@ -83,7 +83,7 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     private void SendMessage()
     {
         var message = new MovementMessageV2();
-        message.velocity = GetComponent<Rigidbody>().linearVelocity;
+        message.Position = Transforms.ToLocal(transform,_context.Scene.transform);
         
         //When SendMessage is called, the instance is always the owner
         message.IsOwned = true;
@@ -95,8 +95,9 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     {
         var msg = message.FromJson<MovementMessageV2>();
 
-        var vel = msg.velocity;
-        GetComponent<Rigidbody>().linearVelocity = vel;
+        var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
+        transform.position = pose.position;
+        transform.rotation = pose.rotation;
 
         isOwned = msg.IsOwned;
 

@@ -9,8 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class MovementMessage
 {
-    //public Pose Position;
-    public Vector3 velocity;
+    public Pose Position;
     public bool IsOwned;
 }
 public class SphereManager : MonoBehaviour, INetworkSpawnable
@@ -75,8 +74,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
         Debug.Log("Object released");
         AmIOwner = false;
         var msg = new MovementMessage();
-        msg.velocity = GetComponent<Rigidbody>().linearVelocity;
-        //msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
+        msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
         msg.IsOwned = false;
         _context.SendJson(msg);
     }
@@ -89,8 +87,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     private void SendMessage()
     {
         var message = new MovementMessage();
-        //message.Position = Transforms.ToLocal(transform,_context.Scene.transform);
-        message.velocity = GetComponent<Rigidbody>().linearVelocity;
+        message.Position = Transforms.ToLocal(transform,_context.Scene.transform);
         message.IsOwned = AmIOwner;
         _context.SendJson(message);
     }
@@ -112,11 +109,9 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     public void ProcessMessage(ReferenceCountedSceneGraphMessage message)
     {
         var msg = message.FromJson<MovementMessage>();
-        //var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
-        //transform.position = pose.position;
-        //transform.rotation = pose.rotation;
-        var vel = msg.velocity;
-        GetComponent<Rigidbody>().linearVelocity = vel;
+        var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
+        transform.position = pose.position;
+        transform.rotation = pose.rotation;
 
         if(msg.IsOwned)
         {
