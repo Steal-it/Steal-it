@@ -1421,7 +1421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Ubiq::Ubiq.Avatars.AvatarManager
   avatarCatalogue: {fileID: 11400000, guid: 9cdc9d38da270862fa38bc5ab55bef51, type: 2}
-  avatarPrefab: {fileID: 3172939939781028348, guid: 27ab53da320e23574872cc8e28ad3b9b, type: 3}
+  avatarPrefab: {fileID: 3172939939781028348, guid: 7fd12be3d4d92fc2e835145d4a4933e8, type: 3}
 --- !u!1 &1668786088
 GameObject:
   m_ObjectHideFlags: 0

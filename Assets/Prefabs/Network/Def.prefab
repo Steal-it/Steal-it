@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2075108969}
   - component: {fileID: 6305583007509887283}
   m_Layer: 0
-  m_Name: COPYUbiq Floating Avatar
+  m_Name: Def
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,6 +265,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3172939939781028348, guid: b0d64f917d2447e4f85037ad6283d5bf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8661746244001222169}
+    - targetCorrespondingSourceObject: {fileID: 6310238835740853278, guid: b0d64f917d2447e4f85037ad6283d5bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3707743823302227964}
+    - targetCorrespondingSourceObject: {fileID: 6310238835740853278, guid: b0d64f917d2447e4f85037ad6283d5bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5975735557605423490}
   m_SourcePrefab: {fileID: 100100000, guid: b0d64f917d2447e4f85037ad6283d5bf, type: 3}
 --- !u!137 &308880390316127805 stripped
 SkinnedMeshRenderer:
@@ -276,6 +282,46 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 7552204851892433321, guid: b0d64f917d2447e4f85037ad6283d5bf, type: 3}
   m_PrefabInstance: {fileID: 8448906606297741168}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2509335136288813934 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6310238835740853278, guid: b0d64f917d2447e4f85037ad6283d5bf, type: 3}
+  m_PrefabInstance: {fileID: 8448906606297741168}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &3707743823302227964
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509335136288813934}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.17061877
+  m_Height: 1.0562946
+  m_Direction: 1
+  m_Center: {x: -0.00021778047, y: -0.12430781, z: 0.045510143}
+--- !u!114 &5975735557605423490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509335136288813934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237de5e8dde8818849e5d317b0cfa4df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TorsoIdentifier
 --- !u!4 &2997466259208464852 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6690563873827004068, guid: b0d64f917d2447e4f85037ad6283d5bf, type: 3}

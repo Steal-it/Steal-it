@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1948536872245731546}
   - component: {fileID: 5656904566202406515}
   - component: {fileID: 2625599717531426053}
+  - component: {fileID: 9119213627508947016}
   m_Layer: 0
   m_Name: SimpleSphereTemplate
   m_TagString: Untagged
@@ -300,11 +301,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5823145183571074609}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d82ddfdf178fbd3898e6c7327afaac6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SphereManagerV2
   AmIOwner: 0
   isOwned: 0
+  OriginalSender: 
+--- !u!114 &9119213627508947016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823145183571074609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9711705556228cee4a42575d190172b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SphereManager
+  AmIOwner: 0
+  AmISender: 0
   OriginalSender: 
