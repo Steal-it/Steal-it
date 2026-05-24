@@ -12,7 +12,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 //If object is owned, transfer position, otherwise transfer velocity
 public class MovementMessageV2
 {
-    public Pose Position;
+    public Pose? Position;
     public Vector3 velocity;
     public bool IsOwned;
 }
@@ -56,6 +56,7 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
             //Give time to other peers to spawn the object
             await Task.Delay(1000);
             _context.SendJson(msg);
+            Debug.Log("sending position");
         }
         Debug.Log(OriginalSender+"-2-"+mainMenu.roomClient.Me.uuid);
     }
@@ -112,10 +113,10 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     {
         var msg = message.FromJson<MovementMessageV2>();
 
-        if(!msg.Position.IsUnityNull()) {
+        if(msg.Position.HasValue) {
             Debug.Log("Received position");
 
-            var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
+            var pose = Transforms.ToWorld(msg.Position.Value,_context.Scene.transform);
             transform.position = pose.position;
             transform.rotation = pose.rotation;
 
