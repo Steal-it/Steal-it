@@ -47,16 +47,8 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     {
         //Only AmISender transmit Position, therefore, if I am not the AmISender I deactivate gravity
         if(AmIOwner)
-        {
-            _body.useGravity = true;
+        { 
             SendMessage();
-        }
-        else
-        {
-            if(isOwned)
-            {
-                _body.useGravity = false;
-            }
         }
     }
 
@@ -105,10 +97,12 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
         {
             //If object is taken by another, The current player is no longer the AmISender
             _grabInteractable.enabled = false;
+            _body.useGravity = false;
         }
         else
         {
             _grabInteractable.enabled = true;
+            _body.useGravity = true;
         }
     }
 
