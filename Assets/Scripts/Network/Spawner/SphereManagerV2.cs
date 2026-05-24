@@ -25,6 +25,7 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
     private NetworkContext _context;
     private XRGrabInteractable _grabInteractable;
     private Rigidbody _body;
+    private bool _hasOriginalSenderCheckBeenPerformed;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
         _grabInteractable = GetComponent<XRGrabInteractable>();
         AmIOwner = false;
         isOwned = false;
+        _hasOriginalSenderCheckBeenPerformed=false;
     }
 
     private void OnEnable()
@@ -40,25 +42,32 @@ public class SphereManagerV2 : MonoBehaviour, INetworkSpawnable
         _grabInteractable.selectExited.AddListener(OnRelease);
     }
 
-    async private void Start()
+    async private void Update()
+    {
+        if(!_hasOriginalSenderCheckBeenPerformed)
+        {
+            Menu mainMenu = FindFirstObjectByType<Menu>();
+            Debug.Log(OriginalSender+"-2-"+mainMenu.roomClient.Me.uuid);
+            if(mainMenu.roomClient.Me.uuid == OriginalSender)
+            {
+                _hasOriginalSenderCheckBeenPerformed=true;
+                var pose = Transforms.ToLocal(Camera.main.transform, _context.Scene.transform);
+                transform.position = pose.position;
+                transform.rotation = pose.rotation;
+                var msg = new MovementMessageV2();
+                msg.Position = pose;
+
+                //Give time to other peers to spawn the object
+                await Task.Delay(1000);
+                _context.SendJson(msg);
+                Debug.Log("sending position");
+            }
+        }
+    }
+
+    private void Start()
     {
         _context = NetworkScene.Register(this);
-
-        Menu mainMenu = FindFirstObjectByType<Menu>();
-        if(mainMenu.roomClient.Me.uuid == OriginalSender)
-        {
-            var pose = Transforms.ToLocal(transform,_context.Scene.transform);
-            transform.position = pose.position;
-            transform.rotation = pose.rotation;
-            var msg = new MovementMessageV2();
-            msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
-
-            //Give time to other peers to spawn the object
-            await Task.Delay(1000);
-            _context.SendJson(msg);
-            Debug.Log("sending position");
-        }
-        Debug.Log(OriginalSender+"-2-"+mainMenu.roomClient.Me.uuid);
     }
 
     private void FixedUpdate()
