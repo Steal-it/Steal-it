@@ -76,4 +76,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e2495be265bfe4d8e4585df83fcb48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatterySpawnerManager
-  batteryPrefabGameObject: {fileID: 3358312751606746407, guid: 2884cbcff29c3fc4b92e42a46dc3cb54, type: 3}
+  batteryPrefabGameObject: {fileID: 8585545105387066892, guid: 48a97144d953e4d4884433058aab9be0, type: 3}

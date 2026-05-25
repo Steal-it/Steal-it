@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8921990950895260790}
   - component: {fileID: 5643644621821948167}
   - component: {fileID: 4011665392905410833}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Spawnable
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  m_FarAttachMode: 1
+  m_FarAttachMode: 0
   m_LimitLinearVelocity: 0
   m_LimitAngularVelocity: 0
   m_MaxLinearVelocityDelta: 10
@@ -237,7 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6264855903371201296}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1184186701721217411}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 7588417473051743438}
   - component: {fileID: 4966990686924001074}
   - component: {fileID: 4202218884986884079}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -395,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1498958180132271407, guid: 33fea93f8ce1a664387af7531c2bcc2c, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1891192276311655047, guid: 33fea93f8ce1a664387af7531c2bcc2c, type: 3}
       propertyPath: m_InteractableSource
@@ -403,7 +403,7 @@ PrefabInstance:
       objectReference: {fileID: 5643644621821948167}
     - target: {fileID: 4024185100756853835, guid: 33fea93f8ce1a664387af7531c2bcc2c, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4727954086489887983, guid: 33fea93f8ce1a664387af7531c2bcc2c, type: 3}
       propertyPath: m_LocalPosition.x
