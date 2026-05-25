@@ -1,29 +1,3 @@
-# TEO
-
-## RIG
-
-- Camera Offset
-    - Main Camera
-        - Vignette when turning and moving
-    - Gaze Interactor (D)
-    - Gaze Stabilized (D)
-    - Left/Right Controller (with ControllerConfigurator)
-        - Poke Interactor
-        - Near-Far Interactor (both enabled)
-        - Left/Right Controller Visual
-- Locomotion
-    - Turn
-        - Snap (D)
-        - Smooth
-    - Move
-    - Grab Move (D)
-    - Climb (D)
-    - Gravity
-    - Jump
-
-Let's find QUACK
-
-
 # How to configure
 
 ## Requirements
@@ -45,6 +19,28 @@ Let's find QUACK
 Clone the repo, add it into Unity Hub and start it using the proper Unity Editor version. Once opened, go to `Build Profiles` and switch to Android. Packages and dependencies should be already imported.
 
 In order to use the rig and the interactions inside the Editor, go to `Project Settings > XR Plug-in Management > XR Interaction Toolkit` and enbale `Use XR Interaction Simulator in scenes`.
+
+For leveraging Git LFS in order to track large files, very common in Unity projects, make sure it is installed and configured running:
+
+```
+    git lfs install
+```
+
+If the command does not return `Git LFS initialized`, download and install it following the [GitHub Docs](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage). Then, run the following commands to track specific files.
+
+```
+    git lfs install
+    git lfs track "*.png"
+    git lfs track "*.jpg"
+    git lfs track "*.psd"
+    git lfs track "*.fbx"
+    git lfs track "*.wav"
+    git lfs track "*.mp3"
+    git lfs track "*.mp4"
+    git lfs track "*.ttf"
+    git add .gitattributes
+    git commit -m "configured Git LFS"
+```
 
 ## Merge and merge conflitcs
 

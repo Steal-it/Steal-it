@@ -168,7 +168,7 @@ GameObject:
   m_Layer: 0
   m_Name: SocketInteractor
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -208,8 +208,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3, y: 0.07769444, z: 0.3}
-  m_Center: {x: 0, y: 0.013847221, z: 0}
+  m_Size: {x: 0.3, y: 0.1, z: 0.3}
+  m_Center: {x: 0, y: 0.025, z: 0}
 --- !u!114 &5755357893630131388
 MonoBehaviour:
   m_ObjectHideFlags: 0

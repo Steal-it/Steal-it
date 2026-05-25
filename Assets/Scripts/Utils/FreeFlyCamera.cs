@@ -1,14 +1,17 @@
 using UnityEngine;
 
 public class FreeFlyCamera : MonoBehaviour {
-    [Header("Movement Settings")]
-    public float moveSpeed = 10f;
-    public float fastMoveFactor = 3f;
-    public float lookSensitivity = 3f;
+    [SerializeField, Header("Movement Settings")]
+    private float moveSpeed = 10f;
+    [SerializeField]
+    private float fastMoveFactor = 3f;
+    [SerializeField]
+    private float lookSensitivity = 3f;
 
-    [Header("Control Settings")]
-    public KeyCode fastMoveKey = KeyCode.LeftShift;
-    public bool lockCursor = true;
+    [SerializeField, Header("Control Settings")]
+    private KeyCode fastMoveKey = KeyCode.LeftShift;
+    [SerializeField]
+    private bool lockCursor = true;
 
     private float rotationX = 0f;
     private float rotationY = 0f;

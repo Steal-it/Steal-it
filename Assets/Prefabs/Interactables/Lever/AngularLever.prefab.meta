@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Interactables/BaseInteractables/FarGrabInteractable.prefab.meta
+guid: e9462a6961593994aa20d00cfb120975
+========
+guid: 652fa08118bb4db4f89238f915d151a5
+>>>>>>>> more-interactions:Assets/Prefabs/Interactables/AngularLever.prefab.meta
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
