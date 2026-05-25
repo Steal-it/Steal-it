@@ -1,0 +1,111 @@
+using System.Collections.Generic;
+using Ubiq.Rooms;
+using Ubiq.XR.Notifications;
+using UnityEngine;
+using TMPro;
+using System;
+
+public class BrowsePanelController : MonoBehaviour
+{
+    private float roomRefreshInterval = 2.0f;
+    public Menu MainMenu;
+    [SerializeField]
+    private Transform _controlsRoot;
+    [SerializeField]
+    private GameObject _roomListPanel;
+    [SerializeField]
+    private GameObject _controlTemplate;
+    [SerializeField]
+    private TextMeshProUGUI _connectionStatusText;
+    private List<BrowseMenuControl> controls = new List<BrowseMenuControl>();
+    private List<IRoom> lastRoomArgs;
+    private float _nextRoomRefreshTime = -1;
+    private void OnEnable()
+    {
+        MainMenu.roomClient.OnRooms.AddListener(RoomClient_OnRoomsDiscovered);
+        MainMenu.roomClient.OnJoinedRoom.AddListener(RoomClient_OnJoinedRoom);
+        PlayerNotifications.OnNotification += UpdateConnectionStatus;
+        UpdateAvailableRooms();
+    }
+    private void OnDisable()
+    {
+        if (MainMenu.roomClient)
+        {
+            MainMenu.roomClient.OnRooms.RemoveListener(RoomClient_OnRoomsDiscovered);
+            MainMenu.roomClient.OnJoinedRoom.RemoveListener(RoomClient_OnJoinedRoom);
+        }
+    }
+    private BrowseMenuControl InstantiateControl (bool isRoomTheCurrentRoom) {
+        var go = GameObject.Instantiate(_controlTemplate, _controlsRoot);
+        if(!isRoomTheCurrentRoom)
+        {
+            go.SetActive(true);
+        }
+        return go.GetComponent<BrowseMenuControl>();
+    }
+    private void RoomClient_OnJoinedRoom(IRoom room)
+    {
+        UpdateAvailableRooms();
+        // Immediately ask for a refresh - maybe room we left is now empty
+        MainMenu.roomClient.DiscoverRooms();
+    }
+    private void RoomClient_OnRoomsDiscovered(List<IRoom> rooms,RoomsDiscoveredRequest request)
+    {
+        // Ignore filtered requests
+        if (string.IsNullOrEmpty(request.joincode))
+        {
+            lastRoomArgs = rooms;
+            UpdateAvailableRooms();
+        }
+    }
+    private void UpdateAvailableRooms() {
+        var rooms = lastRoomArgs;
+        if (rooms == null || rooms.Count == 0)
+        {
+            for (int i = 0; i < controls.Count; i++)
+            {
+                Destroy(controls[i].gameObject);
+            }
+            controls.Clear();
+
+            return;
+        }
+
+        _roomListPanel.SetActive(true);
+        int controlI = 0;
+
+        for (int roomI = 0; roomI < rooms.Count; controlI++,roomI++)
+        {
+            bool isRoomTheCurrentRoom = rooms[roomI].Name == MainMenu.roomClient.Room.Name;
+
+            if (controls.Count <= controlI) {
+                controls.Add(InstantiateControl(isRoomTheCurrentRoom));
+            }
+
+            controls[controlI].Bind(MainMenu.roomClient,rooms[roomI]);
+
+            if(isRoomTheCurrentRoom) {
+                _connectionStatusText.text = "Connected";
+            }
+
+        }
+        while (controls.Count > controlI) {
+            Destroy(controls[controlI].gameObject);
+            controls.RemoveAt(controlI);
+        }
+    }
+    private void Update()
+    {
+        if (Time.realtimeSinceStartup > _nextRoomRefreshTime)
+        {
+            MainMenu.roomClient.DiscoverRooms();
+            _nextRoomRefreshTime = Time.realtimeSinceStartup + roomRefreshInterval;
+        }
+    }
+
+    private void UpdateConnectionStatus(Notification test) {
+        if(test.Message.Contains("Connection lost")) {
+            _connectionStatusText.text = "Currently not connected to any room (connection lost)";
+        }
+    }
+}
