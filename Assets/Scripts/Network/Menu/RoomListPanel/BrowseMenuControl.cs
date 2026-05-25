@@ -7,14 +7,15 @@ using UnityEngine.Events;
 
 public class BrowseMenuControl : MonoBehaviour
 {
-    public TextMeshProUGUI Name;
+    [SerializeField]
+    private TextMeshProUGUI roomNameText;
 
     [Serializable]
     public class BindEvent : UnityEvent<RoomClient, IRoom> { };
     public BindEvent OnBind;
-    public void Bind(RoomClient client, IRoom room)
+    public void Bind(RoomClient _client, IRoom _room)
     {
-        Name.text = room.Name;
-        OnBind.Invoke(client,room);
+        roomNameText.text = _room.Name;
+        OnBind.Invoke(_client,_room);
     }
 }

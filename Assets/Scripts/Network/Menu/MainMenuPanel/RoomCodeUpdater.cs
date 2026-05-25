@@ -5,14 +5,14 @@ using TMPro;
 public class RoomCodeUpdater : MonoBehaviour
 {
     [SerializeField]
-    private RoomClient rc;
+    private Menu mainMenu;
 
     private TextMeshProUGUI text;
 
-    private void Start()
+    void Start()
     {
         text = GetComponent<TextMeshProUGUI>();
-        rc.OnJoinedRoom.AddListener(OnJoinRoomListener);
+        mainMenu.RoomClient.OnJoinedRoom.AddListener(OnJoinRoomListener);
     }
 
     private void OnJoinRoomListener(IRoom room)
@@ -22,4 +22,10 @@ public class RoomCodeUpdater : MonoBehaviour
             text.text=$"Room name: {room.Name}";
         }
     }
+
+    void OnDestroy()
+    {
+        mainMenu.RoomClient.OnJoinedRoom.RemoveListener(OnJoinRoomListener);
+    }
+
 }

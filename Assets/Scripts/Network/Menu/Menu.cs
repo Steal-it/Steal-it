@@ -7,62 +7,53 @@ using System.Threading.Tasks;
 
 public class Menu : MonoBehaviour
 {
-    public Transform SpawnRelativeTransform;
-    private NetworkScene _networkScene;
-    private RoomClient _roomClient;
+    [SerializeField]
+    private RoomClient roomClient;
+
+    //Provides access to roomClient to all children
+    public RoomClient RoomClient
+    {
+        get
+        {
+            return roomClient;
+        }
+        private set
+        {
+            roomClient = value;
+        }
+    }
 
     [SerializeField]
-    private GameObject _readyButton;
+    private GameObject readyButton;
     [SerializeField]
-    private MsgHandler _msgHandler;
+    private MsgHandler msgHandler;
+    [SerializeField]
+    private Transform spawnRelativeTransform;
 
-    void Start() {
-        _msgHandler = MsgHandler.Instance;
+    void Start()
+    {
+        msgHandler = MsgHandler.Instance;
     }
     void OnEnable()
     {   
-        _msgHandler.OnCounterRecoverFinished += OnCounterRecoverFinishedHandler;
+        msgHandler.OnCounterRecoverFinished += OnCounterRecoverFinishedHandler;
     }
 
-    void OnDestroy() {
-        _msgHandler.OnCounterRecoverFinished -= OnCounterRecoverFinishedHandler;
-    }
-    public NetworkScene networkScene
+    void OnDestroy()
     {
-        get
-        {
-            if (!_networkScene)
-            {
-                _networkScene = NetworkScene.Find(this); //Find networkscene in parents
-            }
-            return _networkScene;
-        }
-    }
-    public RoomClient roomClient
-    {
-        get
-        {
-            if (!_roomClient)
-            {
-                if (networkScene)
-                {
-                    _roomClient = networkScene.GetComponent<RoomClient>();
-                }
-            }
-            return _roomClient;
-        }
+        msgHandler.OnCounterRecoverFinished -= OnCounterRecoverFinishedHandler;
     }
 
     public void Request()
     {
         var cam = Camera.main.transform;
-        transform.position = cam.TransformPoint(SpawnRelativeTransform.localPosition);
-        transform.rotation = cam.rotation * SpawnRelativeTransform.localRotation;
+        transform.position = cam.TransformPoint(spawnRelativeTransform.localPosition);
+        transform.rotation = cam.rotation * spawnRelativeTransform.localRotation;
         gameObject.SetActive(true);
     }
 
-    private void OnCounterRecoverFinishedHandler(object sender, EventArgs e)
+    private void OnCounterRecoverFinishedHandler(object _sender, EventArgs _e)
     {
-        _readyButton.SetActive(true);
+        readyButton.SetActive(true);
     }
 }

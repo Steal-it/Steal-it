@@ -1,4 +1,5 @@
 using System.Collections;
+using Ubiq.Rooms;
 using Ubiq.Spawning;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -10,7 +11,8 @@ public class SphereSpawner : MonoBehaviour
     [Header("Prefab to spawn")]
     public GameObject sphereTemplate;
 
-    public Menu mainMenu;
+    [SerializeField]
+    private RoomClient roomClient;
 
     public NetworkSpawnManager spawnManager;
     private XRInteractionManager interactionManager;
@@ -39,22 +41,21 @@ public class SphereSpawner : MonoBehaviour
         }
     }
 
-    private void OnSelectEntered(SelectEnterEventArgs eventArgs)
+    private void OnSelectEntered(SelectEnterEventArgs _eventArgs)
     {
         var go = spawnManager.SpawnWithPeerScope(sphereTemplate);
         go.SetActive(true);
         var spawnedSphere = go.GetComponent<SphereManager>();
 
         spawnedSphere.transform.position = transform.position;
-        spawnedSphere.AmIOwner = false;
-        spawnedSphere.OriginalSender = mainMenu.roomClient.Me.uuid;
+        spawnedSphere.OriginalSender = roomClient.Me.uuid;
 
         var xrGrab = go.GetComponent<XRGrabInteractable>();
 
         xrGrab.interactionManager = interactionManager;
         xrGrab.enabled = true;
 
-        var interactor = eventArgs.interactorObject;
+        var interactor = _eventArgs.interactorObject;
         interactionManager.SelectEnter(interactor, interactable);
         interactionManager.SelectExit(interactor, interactable);
     }
