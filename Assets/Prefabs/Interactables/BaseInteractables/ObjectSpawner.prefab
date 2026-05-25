@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6343990730656476095}
   - component: {fileID: 6551082129679546885}
   - component: {fileID: 2632325527884258086}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ObjectSpawner
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -153,7 +153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6264855903371201296}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 7588417473051743438}
   - component: {fileID: 4966990686924001074}
   - component: {fileID: 4202218884986884079}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1498958180132271407, guid: 33fea93f8ce1a664387af7531c2bcc2c, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1891192276311655047, guid: 33fea93f8ce1a664387af7531c2bcc2c, type: 3}
       propertyPath: m_InteractableSource
@@ -288,7 +288,7 @@ PrefabInstance:
       objectReference: {fileID: 6551082129679546885}
     - target: {fileID: 4024185100756853835, guid: 33fea93f8ce1a664387af7531c2bcc2c, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4727954086489887983, guid: 33fea93f8ce1a664387af7531c2bcc2c, type: 3}
       propertyPath: m_LocalPosition.x
