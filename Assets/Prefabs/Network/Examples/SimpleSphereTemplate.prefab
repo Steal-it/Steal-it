@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5656904566202406515}
   - component: {fileID: 2625599717531426053}
   - component: {fileID: 9119213627508947016}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SimpleSphereTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}

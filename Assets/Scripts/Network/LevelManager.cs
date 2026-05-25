@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour
         _target = 0;
         _progressBar.fillAmount = 0;
 
-        _loaderCanvas.SetActive(true);
+        //_loaderCanvas.SetActive(true);
         hadAllPeerLoadedScene = false;
 
         switch(levelName)
