@@ -345,10 +345,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb832f29bb4b39994839e5dc7e9c8000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  _rigTransformer: {fileID: 0}
-  _loadingInfoText: {fileID: 3799375153646243411}
-  _loaderCanvas: {fileID: 3971785779285935713}
-  _progressBar: {fileID: 8961247844266090294}
+  rigTransformer: {fileID: 0}
+  loaderCanvas: {fileID: 7101632690519264109}
+  progressBar: {fileID: 8961247844266090294}
   msgHandler: {fileID: 0}
 --- !u!1 &5319537447249488302
 GameObject:
