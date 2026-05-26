@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5397934517329776230}
   - component: {fileID: 3723869674837581481}
   - component: {fileID: 5108464270833692276}
-  - component: {fileID: 2241677351035089584}
+  - component: {fileID: 5816275132099228787}
   m_Layer: 0
   m_Name: RoomListElementTemplate
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2241677351035089584
+--- !u!114 &5816275132099228787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770bd39554e40c0b38df518c8c5657a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrowseMenuControl
-  Name: {fileID: 3891115047768547656}
+  roomNameText: {fileID: 3891115047768547656}
   OnBind:
     m_PersistentCalls:
       m_Calls: []
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d93e3b1a40db42d83ec5be2e7b02fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrowseMenuControlJoinButton
-  browseMenuControl: {fileID: 2241677351035089584}
+  browseMenuControl: {fileID: 0}
 --- !u!1 &6662784847954710734
 GameObject:
   m_ObjectHideFlags: 0

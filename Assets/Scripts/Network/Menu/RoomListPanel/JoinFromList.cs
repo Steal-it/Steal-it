@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class BrowseMenuControlJoinButton : MonoBehaviour
 {
-    public BrowseMenuControl browseMenuControl;
-    private RoomClient _roomClient;
-    private string _joinCode;
+    private BrowseMenuControl browseMenuControl;
+    private RoomClient roomClient;
+    private string joinCode;
     private void OnEnable()
     {
+        browseMenuControl = GetComponentInParent<BrowseMenuControl>();
         browseMenuControl.OnBind.AddListener(BrowseRoomControl_OnBind);
     }
     private void OnDisable()
@@ -17,18 +18,18 @@ public class BrowseMenuControlJoinButton : MonoBehaviour
             browseMenuControl.OnBind.RemoveListener(BrowseRoomControl_OnBind);
         }
     }
-    private void BrowseRoomControl_OnBind(RoomClient _roomClient, IRoom room)
+    private void BrowseRoomControl_OnBind(RoomClient _roomClient, IRoom _room)
     {
-        this._roomClient = _roomClient;
-        this._joinCode = room.JoinCode;
+        this.roomClient = _roomClient;
+        this.joinCode = _room.JoinCode;
     }
     
     public void Join()
     {
-        if (!_roomClient || string.IsNullOrEmpty(_joinCode))
+        if (!roomClient || string.IsNullOrEmpty(joinCode))
         {
             return;
         }
-        _roomClient.Join(joincode:_joinCode);
+        roomClient.Join(joincode:joinCode);
     }
 }

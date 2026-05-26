@@ -1,6 +1,6 @@
-using System;
-using Unity.Mathematics;
+#if (UNITY_EDITOR)
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Receiver.Rendering;
 using UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.State;
@@ -33,15 +33,18 @@ public class LadderHandlesConfigurator : MonoBehaviour {
 
         if (handlePrefab == null || ladder == null || handleCount < 1) return;
 
+#if (UNITY_EDITOR)
         if (previousHandleCount != handleCount || previousPadding != padding) {
-            UnityEditor.EditorApplication.delayCall -= () => DisplaceHandles();
-            UnityEditor.EditorApplication.delayCall += () => DisplaceHandles();
+            EditorApplication.delayCall -= () => DisplaceHandles();
+            EditorApplication.delayCall += () => DisplaceHandles();
         }
+#endif
 
         previousHandleCount = handleCount;
         previousPadding = padding;
     }
 
+#if (UNITY_EDITOR)
     private void DisplaceHandles() {
         if (this == null) return;
 
@@ -65,6 +68,7 @@ public class LadderHandlesConfigurator : MonoBehaviour {
             }
         }
     }
+#endif
 
     private void ClearHandles() {
         Transform child = transform.GetChild(0);
