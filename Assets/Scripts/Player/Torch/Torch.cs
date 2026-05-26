@@ -12,8 +12,6 @@ public class Torch : MonoBehaviour {
 
     [SerializeField]
     private XRSocketInteractor socketInteractor;
-    [SerializeField]
-    private LayerMask rungLayer;
 
     private Battery battery;
     private bool emitLight;

@@ -2,19 +2,16 @@ using System.Collections;
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using Ubiq.Spawning;
-using UnityEditor.XR.Interaction.Toolkit.Utilities;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-public class MovementMessage
-{
+public class MovementMessage {
     public Pose Position;
     public bool IsOwned;
 }
-public class SphereManager : MonoBehaviour, INetworkSpawnable
-{
-    public NetworkId NetworkId {get;set;}
+public class SphereManager : MonoBehaviour, INetworkSpawnable {
+    public NetworkId NetworkId { get; set; }
     public bool AmIOwner;
 
     public bool AmISender;
@@ -27,100 +24,82 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable
     private XRGrabInteractable _grabInteractable;
     private Rigidbody _body;
 
-    private void Awake()
-    {
+    private void Awake() {
         _body = GetComponent<Rigidbody>();
         _grabInteractable = GetComponent<XRGrabInteractable>();
         AmIOwner = false;
-        _hasOriginalSenderCheckBeenPerformed=false;
+        _hasOriginalSenderCheckBeenPerformed = false;
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         _grabInteractable.selectEntered.AddListener(OnGrab);
         _grabInteractable.selectExited.AddListener(OnRelease);
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         _grabInteractable.selectEntered.RemoveListener(OnGrab);
         _grabInteractable.selectExited.RemoveListener(OnRelease);
     }
 
-    private void Update()
-    {   
-        if(!_hasOriginalSenderCheckBeenPerformed)
-        {
+    private void Update() {
+        if (!_hasOriginalSenderCheckBeenPerformed) {
             Menu mainMenu = FindFirstObjectByType<Menu>();
-            if(mainMenu.roomClient.Me.uuid == OriginalSender)
-            {
+            if (mainMenu.roomClient.Me.uuid == OriginalSender) {
                 Debug.Log("AmISender");
                 AmISender = true;
             }
-            Debug.Log(OriginalSender+"-2-"+mainMenu.roomClient.Me.uuid);
-            _hasOriginalSenderCheckBeenPerformed=true;
+            Debug.Log(OriginalSender + "-2-" + mainMenu.roomClient.Me.uuid);
+            _hasOriginalSenderCheckBeenPerformed = true;
         }
     }
 
-    private void OnGrab(SelectEnterEventArgs args)
-    {
+    private void OnGrab(SelectEnterEventArgs args) {
         Debug.Log("Object grabbed by: " + args.interactorObject.transform.name);
         AmIOwner = true;
         AmISender = true;
     }
 
-    private void OnRelease(SelectExitEventArgs args)
-    {
+    private void OnRelease(SelectExitEventArgs args) {
         Debug.Log("Object released");
         AmIOwner = false;
         var msg = new MovementMessage();
-        msg.Position = Transforms.ToLocal(transform,_context.Scene.transform);
+        msg.Position = Transforms.ToLocal(transform, _context.Scene.transform);
         msg.IsOwned = false;
         _context.SendJson(msg);
     }
 
-    private void Start()
-    {
+    private void Start() {
         _context = NetworkScene.Register(this);
     }
 
-    private void SendMessage()
-    {
+    private void SendMessage() {
         var message = new MovementMessage();
-        message.Position = Transforms.ToLocal(transform,_context.Scene.transform);
+        message.Position = Transforms.ToLocal(transform, _context.Scene.transform);
         message.IsOwned = AmIOwner;
         _context.SendJson(message);
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         //Only AmISender transmit Position, therefore, if I am not the AmISender I deactivate gravity
-        if(AmISender)
-        {
+        if (AmISender) {
             _body.useGravity = true;
             SendMessage();
-        }
-        else
-        {
+        } else {
             _body.useGravity = false;
         }
     }
 
-    public void ProcessMessage(ReferenceCountedSceneGraphMessage message)
-    {
+    public void ProcessMessage(ReferenceCountedSceneGraphMessage message) {
         var msg = message.FromJson<MovementMessage>();
-        var pose = Transforms.ToWorld(msg.Position,_context.Scene.transform);
+        var pose = Transforms.ToWorld(msg.Position, _context.Scene.transform);
         transform.position = pose.position;
         transform.rotation = pose.rotation;
 
-        if(msg.IsOwned)
-        {
+        if (msg.IsOwned) {
             //If object is taken by another, The current player is no longer the AmISender
-            AmISender=false;
+            AmISender = false;
             _grabInteractable.enabled = false;
-        }
-        else
-        {
+        } else {
             _grabInteractable.enabled = true;
         }
     }
