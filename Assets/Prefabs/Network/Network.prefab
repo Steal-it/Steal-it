@@ -269,8 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0257e790ac76a58aeb9e1388b28be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MsgHandler
-  _mainMenu: {fileID: 0}
-  _levelManager: {fileID: 0}
+  roomClient: {fileID: 9130834755717229769}
 --- !u!1 &6713240966359594687
 GameObject:
   m_ObjectHideFlags: 0

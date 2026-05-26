@@ -8,53 +8,52 @@ using System;
 public class BrowsePanelController : MonoBehaviour
 {
     private float roomRefreshInterval = 2.0f;
-    public Menu MainMenu;
     [SerializeField]
-    private Transform _controlsRoot;
+    private Menu mainMenu;
     [SerializeField]
-    private GameObject _roomListPanel;
+    private Transform controlsRoot;
     [SerializeField]
-    private GameObject _controlTemplate;
+    private GameObject controlTemplate;
     [SerializeField]
-    private TextMeshProUGUI _connectionStatusText;
+    private TextMeshProUGUI connectionStatusText;
     private List<BrowseMenuControl> controls = new List<BrowseMenuControl>();
     private List<IRoom> lastRoomArgs;
-    private float _nextRoomRefreshTime = -1;
+    private float nextRoomRefreshTime = -1;
     private void OnEnable()
     {
-        MainMenu.roomClient.OnRooms.AddListener(RoomClient_OnRoomsDiscovered);
-        MainMenu.roomClient.OnJoinedRoom.AddListener(RoomClient_OnJoinedRoom);
+        mainMenu.RoomClient.OnRooms.AddListener(RoomClient_OnRoomsDiscovered);
+        mainMenu.RoomClient.OnJoinedRoom.AddListener(RoomClient_OnJoinedRoom);
         PlayerNotifications.OnNotification += UpdateConnectionStatus;
         UpdateAvailableRooms();
     }
     private void OnDisable()
     {
-        if (MainMenu.roomClient)
+        if (mainMenu.RoomClient)
         {
-            MainMenu.roomClient.OnRooms.RemoveListener(RoomClient_OnRoomsDiscovered);
-            MainMenu.roomClient.OnJoinedRoom.RemoveListener(RoomClient_OnJoinedRoom);
+            mainMenu.RoomClient.OnRooms.RemoveListener(RoomClient_OnRoomsDiscovered);
+            mainMenu.RoomClient.OnJoinedRoom.RemoveListener(RoomClient_OnJoinedRoom);
         }
     }
-    private BrowseMenuControl InstantiateControl (bool isRoomTheCurrentRoom) {
-        var go = GameObject.Instantiate(_controlTemplate, _controlsRoot);
-        if(!isRoomTheCurrentRoom)
+    private BrowseMenuControl InstantiateControl (bool _isRoomTheCurrentRoom) {
+        var go = GameObject.Instantiate(controlTemplate, controlsRoot);
+        if(!_isRoomTheCurrentRoom)
         {
             go.SetActive(true);
         }
         return go.GetComponent<BrowseMenuControl>();
     }
-    private void RoomClient_OnJoinedRoom(IRoom room)
+    private void RoomClient_OnJoinedRoom(IRoom _room)
     {
         UpdateAvailableRooms();
         // Immediately ask for a refresh - maybe room we left is now empty
-        MainMenu.roomClient.DiscoverRooms();
+        mainMenu.RoomClient.DiscoverRooms();
     }
-    private void RoomClient_OnRoomsDiscovered(List<IRoom> rooms,RoomsDiscoveredRequest request)
+    private void RoomClient_OnRoomsDiscovered(List<IRoom> _rooms,RoomsDiscoveredRequest _request)
     {
         // Ignore filtered requests
-        if (string.IsNullOrEmpty(request.joincode))
+        if (string.IsNullOrEmpty(_request.joincode))
         {
-            lastRoomArgs = rooms;
+            lastRoomArgs = _rooms;
             UpdateAvailableRooms();
         }
     }
@@ -71,21 +70,21 @@ public class BrowsePanelController : MonoBehaviour
             return;
         }
 
-        _roomListPanel.SetActive(true);
+        this.gameObject.SetActive(true);
         int controlI = 0;
 
         for (int roomI = 0; roomI < rooms.Count; controlI++,roomI++)
         {
-            bool isRoomTheCurrentRoom = rooms[roomI].Name == MainMenu.roomClient.Room.Name;
+            bool isRoomTheCurrentRoom = rooms[roomI].Name == mainMenu.RoomClient.Room.Name;
 
             if (controls.Count <= controlI) {
                 controls.Add(InstantiateControl(isRoomTheCurrentRoom));
             }
 
-            controls[controlI].Bind(MainMenu.roomClient,rooms[roomI]);
+            controls[controlI].Bind(mainMenu.RoomClient,rooms[roomI]);
 
             if(isRoomTheCurrentRoom) {
-                _connectionStatusText.text = "Connected";
+                connectionStatusText.text = "Connected";
             }
 
         }
@@ -96,16 +95,16 @@ public class BrowsePanelController : MonoBehaviour
     }
     private void Update()
     {
-        if (Time.realtimeSinceStartup > _nextRoomRefreshTime)
+        if (Time.realtimeSinceStartup > nextRoomRefreshTime)
         {
-            MainMenu.roomClient.DiscoverRooms();
-            _nextRoomRefreshTime = Time.realtimeSinceStartup + roomRefreshInterval;
+            mainMenu.RoomClient.DiscoverRooms();
+            nextRoomRefreshTime = Time.realtimeSinceStartup + roomRefreshInterval;
         }
     }
 
-    private void UpdateConnectionStatus(Notification test) {
-        if(test.Message.Contains("Connection lost")) {
-            _connectionStatusText.text = "Currently not connected to any room (connection lost)";
+    private void UpdateConnectionStatus(Notification _notification) {
+        if(_notification.Message.Contains("Connection lost")) {
+            connectionStatusText.text = "Currently not connected to any room (connection lost)";
         }
     }
 }
