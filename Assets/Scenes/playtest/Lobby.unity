@@ -806,6 +806,10 @@ PrefabInstance:
       propertyPath: _levelManager
       value: 
       objectReference: {fileID: 1758200499}
+    - target: {fileID: 4211592653125914507, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: avatarPrefab
+      value: 
+      objectReference: {fileID: 2335591561892782848, guid: 4adf06f81c5e62845bf4227a5c41e454, type: 3}
     - target: {fileID: 4494900990588012476, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
       propertyPath: m_Name
       value: Network
