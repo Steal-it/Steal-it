@@ -1,4 +1,3 @@
-using System.Collections;
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using Ubiq.Spawning;
@@ -43,22 +42,18 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
         if (!hasOriginalSenderCheckBeenPerformed) {
             Menu mainMenu = FindFirstObjectByType<Menu>(); //Since this object is a prefab, the following search is necessary
             if (mainMenu.RoomClient.Me.uuid == OriginalSender) {
-                Debug.Log("amISender");
                 amISender = true;
             }
-            Debug.Log(OriginalSender + "-2-" + mainMenu.RoomClient.Me.uuid);
             hasOriginalSenderCheckBeenPerformed = true;
         }
     }
 
     private void OnGrab(SelectEnterEventArgs _args) {
-        Debug.Log("Object grabbed by: " + _args.interactorObject.transform.name);
         amIOwner = true;
         amISender = true;
     }
 
     private void OnRelease(SelectExitEventArgs _args) {
-        Debug.Log("Object released");
         amIOwner = false;
         var msg = new MovementMessage();
         msg.Position = Transforms.ToLocal(transform, context.Scene.transform);
@@ -74,7 +69,6 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
         var message = new MovementMessage();
         message.Position = Transforms.ToLocal(transform, context.Scene.transform);
         message.IsOwned = amIOwner;
-        Debug.Log("Sending" + message.IsOwned);
         context.SendJson(message);
     }
 
@@ -89,7 +83,6 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
     }
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
-        Debug.Log("receiving");
         var msg = _message.FromJson<MovementMessage>();
         var pose = Transforms.ToWorld(msg.Position, context.Scene.transform);
         transform.position = pose.position;

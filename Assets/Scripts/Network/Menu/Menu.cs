@@ -5,20 +5,16 @@ using Ubiq.Rooms;
 using System;
 using System.Threading.Tasks;
 
-public class Menu : MonoBehaviour
-{
+public class Menu : MonoBehaviour {
     [SerializeField]
     private RoomClient roomClient;
 
     //Provides access to roomClient to all children
-    public RoomClient RoomClient
-    {
-        get
-        {
+    public RoomClient RoomClient {
+        get {
             return roomClient;
         }
-        private set
-        {
+        private set {
             roomClient = value;
         }
     }
@@ -30,30 +26,31 @@ public class Menu : MonoBehaviour
     [SerializeField]
     private Transform spawnRelativeTransform;
 
-    void Start()
-    {
+    void Start() {
         msgHandler = MsgHandler.Instance;
     }
-    void OnEnable()
-    {   
+    void OnEnable() {
         msgHandler.OnCounterRecoverFinished += OnCounterRecoverFinishedHandler;
+        roomClient.OnJoinedRoom.AddListener(OnJoinedRoomHandler);
     }
 
-    void OnDestroy()
-    {
+    void OnDestroy() {
         msgHandler.OnCounterRecoverFinished -= OnCounterRecoverFinishedHandler;
+        roomClient.OnJoinedRoom.RemoveListener(OnJoinedRoomHandler);
     }
 
-    public void Request()
-    {
+    public void Request() {
         var cam = Camera.main.transform;
         transform.position = cam.TransformPoint(spawnRelativeTransform.localPosition);
         transform.rotation = cam.rotation * spawnRelativeTransform.localRotation;
         gameObject.SetActive(true);
     }
 
-    private void OnCounterRecoverFinishedHandler(object _sender, EventArgs _e)
-    {
+    private void OnCounterRecoverFinishedHandler(object _sender, EventArgs _e) {
+        readyButton.SetActive(true);
+    }
+
+    private void OnJoinedRoomHandler(IRoom arg0) {
         readyButton.SetActive(true);
     }
 }
