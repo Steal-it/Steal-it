@@ -12,12 +12,13 @@ public class Torch : MonoBehaviour {
 
     [SerializeField]
     private XRSocketInteractor socketInteractor;
+    [SerializeField]
+    private Renderer torchRenderer;
 
     private Battery battery;
     private bool emitLight;
 
     void Start() {
-        TorchManager.Instance.ControllerConfigurator.Enable(transform, OnTriggerPressed);
 
         socketInteractor.selectEntered.AddListener(OnNewBatteryInstalled);
         socketInteractor.selectExited.AddListener(OnBatteryRemoved);
@@ -68,7 +69,7 @@ public class Torch : MonoBehaviour {
         socketInteractor.showInteractableHoverMeshes = true;
     }
 
-    private void OnTriggerPressed(InputAction.CallbackContext _context) {
+    public void OnTriggerPressed(InputAction.CallbackContext _) {
         if (battery != null) {
             emitLight = !emitLight;
             ToggleLight();
@@ -81,6 +82,10 @@ public class Torch : MonoBehaviour {
         }
     }
 
+    public void ToggleTorchInPocket(bool _inPoket) {
+        torchRenderer.enabled = !_inPoket;
+    }
+
     private void ToggleLight() {
         OnTorchTurned?.Invoke(this, new OnTorchTurnedEventArgs {
             isTurnedOn = emitLight
@@ -90,8 +95,6 @@ public class Torch : MonoBehaviour {
     }
 
     void OnDestroy() {
-        TorchManager.Instance.ControllerConfigurator.Disable(OnTriggerPressed);
-
         socketInteractor.selectEntered.RemoveAllListeners();
         socketInteractor.selectExited.RemoveAllListeners();
     }

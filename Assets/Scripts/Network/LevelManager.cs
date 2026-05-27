@@ -7,8 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class LevelManager : MonoBehaviour
-{
+public class LevelManager : MonoBehaviour {
     public static LevelManager LvlManager;
 
     [SerializeField]
@@ -24,51 +23,43 @@ public class LevelManager : MonoBehaviour
     private MsgHandler msgHandler;
 
     private float target;
-    
+
     private Boolean hadAllPeerLoadedScene;
 
-    void Awake()
-    {
-        if(LvlManager == null)
-        {
+    void Awake() {
+        if (LvlManager == null) {
             LvlManager = this;
             DontDestroyOnLoad(gameObject);
-        } 
-        else
-        {
+        } else {
             Destroy(gameObject);
         }
     }
 
-    void Start()
-    {
+    void Start() {
         msgHandler.OnAllPeersReadyForChange += LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished += UpdatePeerLoadingStatus;
     }
 
-    void Update()
-    {
-        progressBar.fillAmount = Mathf.MoveTowards(progressBar.fillAmount,target,3*Time.deltaTime);
+    void Update() {
+        progressBar.fillAmount = Mathf.MoveTowards(progressBar.fillAmount, target, 3 * Time.deltaTime);
     }
-    
-    public async void LoadScreen(object sender, MsgHandler.OnAllPeersReadyForChangeEventArgs e)
-    {
+
+    public async void LoadScreen(object sender, MsgHandler.OnAllPeersReadyForChangeEventArgs e) {
         target = 0;
         progressBar.fillAmount = 0;
 
         //loaderCanvas.SetActive(true);
         hadAllPeerLoadedScene = false;
 
-        switch(e.levelName)
-        {
+        switch (e.levelName) {
             case "Test":
-                rigTransformer.position = new Vector3(17f,2f,2f);
+                rigTransformer.position = new Vector3(17f, 2f, 2f);
                 break;
             default:
-                Debug.LogError("Attempt to switch to "+e.levelName+" but it does not exists");
+                Debug.LogError("Attempt to switch to " + e.levelName + " but it does not exists");
                 return;
         }
-        
+
 
         msgHandler.SendLoadLevelCompletedMessage();
 
@@ -90,16 +81,14 @@ public class LevelManager : MonoBehaviour
         hadAllPeerLoadedScene = false;
 
         loaderCanvas.SetActive(false);
-    
+
     }
 
-    public void UpdatePeerLoadingStatus(object sender, EventArgs e)
-    {
-        hadAllPeerLoadedScene=true;
+    public void UpdatePeerLoadingStatus(object sender, EventArgs e) {
+        hadAllPeerLoadedScene = true;
     }
 
-    void OnDestroy()
-    {
+    void OnDestroy() {
         msgHandler.OnAllPeersReadyForChange -= LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished -= UpdatePeerLoadingStatus;
     }

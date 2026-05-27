@@ -1,71 +1,121 @@
-using UnityEngine;
+// using System;
+// using Unity.XR.CoreUtils;
+// using UnityEngine;
+// using UnityEngine.InputSystem;
+// using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class HandTorchController : MonoBehaviour {
-    [SerializeField]
-    private Collider detectorCollider;
-    [SerializeField]
-    private GameObject standardTorchVisual;
-    [SerializeField]
-    private GameObject freeHandTorchVisual;
-    [SerializeField]
-    private Transform standardAttachPoint;
-    [SerializeField]
-    private Transform freeHandAttachPoint;
-    [SerializeField]
-    private LayerMask ladderLayer;
+// public class HandTorchController : MonoBehaviour {
+//     [SerializeField]
+//     private Side side;
+//     [SerializeField]
+//     private PlayerSettingsSO playerSettings;
+//     [SerializeField]
+//     private GameObject torchPrefab;
+//     [SerializeField]
+//     private InputActionReference controllerActivateInputAction;
+//     [SerializeField]
+//     private LayerMask ladderLayer;
 
-    private TorchControllerConfigurator torchControllerConfigurator;
-    private Transform torchTransform;
+//     private HandAnimator handAnimator;
+//     private Torch torch;
+//     private Collider detectorCollider;
+//     private NearFarInteractor nearFarInteractor;
 
-    void OnTriggerEnter(Collider _other) {
-        // Detect if the other object is a rung of a ladder
-        if (((1 << _other.gameObject.layer) & ladderLayer) != 0) {
-            torchControllerConfigurator.EnableInteractions();
+//     void OnEnable() {
+//         playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);
+//     }
 
-            ActivateFreeHandTorchVisual();
-        }
-    }
+//     void Awake() {
+//         TryGetComponent(out handAnimator);
+//         TryGetComponent(out detectorCollider);
+//         torchPrefab.TryGetComponent(out torch);
+//     }
 
-    void OnTriggerExit(Collider _other) {
-        // Detect if the other object is a rung of a ladder
-        if (((1 << _other.gameObject.layer) & ladderLayer) != 0) {
-            torchControllerConfigurator.DisableInteractions();
+//     // private void Start() {
+//     //     XROrigin origin = FindFirstObjectByType<XROrigin>();
+//     //     if (side == Side.Left) {
+//     //         nearFarInteractor = origin.transform.Find("Camera Offset/Left Controller").GetComponentInChildren<NearFarInteractor>();
+//     //     } else {
+//     //         nearFarInteractor = origin.transform.Find("Camera Offset/Right Controller").GetComponentInChildren<NearFarInteractor>();
+//     //     }
+//     //     // hand animator init
+//     //     ChangeHandTorch(playerSettings.playerTorchHand);
+//     // }
 
-            ActivateStandardTorchVisual();
-        }
-    }
+//     // void OnTriggerEnter(Collider _other) {
+//     //     // Detect if the other object is a rung of a ladder
+//     //     if (((1 << _other.gameObject.layer) & ladderLayer) != 0) {
+//     //         EnableInteractions();
+//     //         EnableHandTorch();
+//     //     }
+//     // }
 
-    public void Configure(TorchControllerConfigurator _torchControllerConfigurator) {
-        torchControllerConfigurator = _torchControllerConfigurator;
+//     // void OnTriggerExit(Collider _other) {
+//     //     // Detect if the other object is a rung of a ladder
+//     //     if (((1 << _other.gameObject.layer) & ladderLayer) != 0) {
+//     //         DisableInteractions();
+//     //         EnableFreeHand();
+//     //     }
+//     // }
 
-        // By default disable the rung detector and activate the standard hand pose
-        Disable();
+//     private void EnableTorchHand() {
+//         // DisableInteractions();
 
-        standardTorchVisual.SetActive(true);
-        freeHandTorchVisual.SetActive(false);
-    }
+//         controllerActivateInputAction.action.Enable();
+//         controllerActivateInputAction.action.performed += torch.OnTriggerPressed;
 
-    public void Enable(Transform _torchTransform) {
-        torchTransform = _torchTransform;
+//         detectorCollider.enabled = true;
+//         EnableHandTorch();
+//     }
 
-        detectorCollider.enabled = true;
-    }
 
-    public void Disable() {
-        detectorCollider.enabled = false;
-    }
+//     private void DisableTorchHand() {
+//         // EnableInteractions();
 
-    private void ActivateStandardTorchVisual() {
-        torchTransform.SetPositionAndRotation(standardAttachPoint.position, standardAttachPoint.rotation);
+//         controllerActivateInputAction.action.Disable();
+//         controllerActivateInputAction.action.performed -= torch.OnTriggerPressed;
 
-        standardTorchVisual.SetActive(true);
-        freeHandTorchVisual.SetActive(false);
-    }
+//         detectorCollider.enabled = false;
+//         EnableFreeHand();
+//     }
 
-    private void ActivateFreeHandTorchVisual() {
-        torchTransform.SetPositionAndRotation(freeHandAttachPoint.position, freeHandAttachPoint.rotation);
+//     // private void EnableInteractions() {
+//     //     nearFarInteractor.enableNearCasting = true;
+//     //     nearFarInteractor.enableFarCasting = true;
+//     // }
 
-        standardTorchVisual.SetActive(false);
-        freeHandTorchVisual.SetActive(true);
-    }
-}
+//     // private void DisableInteractions() {
+//     //     nearFarInteractor.enableNearCasting = false;
+//     //     nearFarInteractor.enableFarCasting = false;
+//     // }
+
+//     private void EnableFreeHand() {
+//         handAnimator.ToggleHand(true);
+
+//     }
+//     private void EnableHandTorch() {
+//         handAnimator.ToggleHand(false);
+//     }
+
+//     private void ChangeHandTorch(Side side) {
+//         if (this.side == side) {
+//             EnableTorchHand();
+//         } else {
+//             DisableTorchHand();
+//         }
+//     }
+
+//     public Side GetSide() {
+//         return side;
+//     }
+
+//     void Update() {
+//         if (Keyboard.current[Key.V].wasPressedThisFrame) {
+//             playerSettings.SetPlayerTorchHand(Side.Right);
+//         }
+//     }
+
+//     void OnDisable() {
+//         playerSettings.OnPlayerTorchChanged.Unregister(ChangeHandTorch);
+//     }
+// }
