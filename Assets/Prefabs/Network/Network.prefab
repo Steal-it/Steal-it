@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Ubiq::Ubiq.Rooms.RoomClient
   servers:
-  - {fileID: -7849211376014683480, guid: 1c91df7c43c1dbe4fb0fb303e71a2790, type: 2}
+  - {fileID: -7849211376014683480, guid: 86f501a9e79ad224ca784616b9c07cd1, type: 2}
   timeoutBehaviour: 2
 --- !u!1 &5223570567972221472
 GameObject:

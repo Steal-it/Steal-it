@@ -3,12 +3,20 @@ using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour {
     [SerializeField, Range(5f, 50f)]
-    private float range = 15;
+    private float inRange = 5;
+    [SerializeField, Range(5f, 50f)]
+    private float outRange = 15;
     [SerializeField, Range(1f, 30f)]
     private float respawnCooldown = 15;
 
-    private AIMonster monster;
+    private Monster monster;
     private float cooldown;
+
+    void OnValidate() {
+        if (inRange > outRange) {
+            inRange = outRange;
+        }
+    }
 
     void Start() {
         cooldown = respawnCooldown;
@@ -18,25 +26,26 @@ public class MonsterSpawner : MonoBehaviour {
         if (monster != null) return;
 
         cooldown -= Time.deltaTime;
+        // Wait to try to generate a new monster
         if (cooldown > 0) return;
 
-        Collider[] playerColliderArray = Physics.OverlapSphere(transform.position, range);
-        if (playerColliderArray.Length == 0) return;
+        Collider[] colliderArray = Physics.OverlapSphere(transform.position, outRange);
+        if (colliderArray.Length == 0) return;
 
-        foreach (Collider playerCollider in playerColliderArray) {
-            if (!playerCollider.TryGetComponent<XROrigin>(out _)) continue;
+        foreach (Collider collider in colliderArray) {
+            if (!collider.TryGetComponent<XROrigin>(out _)) continue;
 
-            Transform player = playerCollider.transform;
+            Transform player = collider.transform;
             foreach (Transform spawner in transform) {
                 if (!spawner.gameObject.activeSelf) continue;
 
                 Vector3 spawnerDirection = player.position - spawner.position;
                 Vector3 playerDirection = player.forward;
 
-                print(Vector3.Dot(spawnerDirection, playerDirection));
                 if (Vector3.Dot(spawnerDirection, playerDirection) > 0) {
+                    // Vectors have similar direction, namely the player is turning his back to the spawner
                     MonsterSpawnPoint spawnPoint = spawner.GetComponent<MonsterSpawnPoint>();
-                    monster = spawnPoint.Spawn(spawnerDirection);
+                    monster = spawnPoint.Spawn(player);
 
                     cooldown = respawnCooldown;
                 }
@@ -45,7 +54,7 @@ public class MonsterSpawner : MonoBehaviour {
     }
 
     void OnDrawGizmosSelected() {
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, outRange);
 
         foreach (Transform spawner in transform) {
             if (spawner.gameObject.activeSelf) {
