@@ -1,13 +1,25 @@
+using Ubiq.Avatars;
+using Ubiq.Rooms;
 using UnityEngine;
 
 public class NetworkReferenceManager : MonoBehaviour {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
+    public static NetworkReferenceManager Instance { get; private set; }
 
-    }
+    public RoomClient RoomClient => roomClient;
+    public AvatarManager AvatarManager => avatarManager;
 
-    // Update is called once per frame
-    void Update() {
 
+    [SerializeField]
+    private RoomClient roomClient;
+    [SerializeField]
+    private AvatarManager avatarManager;
+
+    void Awake() {
+        if (Instance != null) {
+            Debug.LogError($"An instance of {nameof(NetworkReferenceManager)} already exists!");
+            return;
+        }
+
+        Instance = this;
     }
 }

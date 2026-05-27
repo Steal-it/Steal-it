@@ -1,6 +1,6 @@
-using System.Collections;
 using Ubiq.Geometry;
 using Ubiq.Messaging;
+using Ubiq.Rooms;
 using Ubiq.Spawning;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -10,6 +10,7 @@ public class MovementMessage {
     public Pose Position;
     public bool IsOwned;
 }
+
 public class SphereManager : MonoBehaviour, INetworkSpawnable {
     public NetworkId NetworkId { get; set; }
     public string OriginalSender { private get; set; } //Only the original amISender will have this populated
@@ -17,6 +18,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
     private bool amISender;
     private bool hasOriginalSenderCheckBeenPerformed;
 
+    private RoomClient roomClient;
     private NetworkContext context;
     private XRGrabInteractable grabInteractable;
     private Rigidbody body;
@@ -29,24 +31,24 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
     }
 
     private void OnEnable() {
+        roomClient = NetworkReferenceManager.Instance.RoomClient;
+
         grabInteractable.selectEntered.AddListener(OnGrab);
         grabInteractable.selectExited.AddListener(OnRelease);
     }
 
-    private void OnDisable() {
-        grabInteractable.selectEntered.RemoveListener(OnGrab);
-        grabInteractable.selectExited.RemoveListener(OnRelease);
+    private void Start() {
+        context = NetworkScene.Register(this);
     }
 
     private void Update() {
         //Unfortunately, putting this in Start method will not work
         if (!hasOriginalSenderCheckBeenPerformed) {
-            Menu mainMenu = FindFirstObjectByType<Menu>(); //Since this object is a prefab, the following search is necessary
-            if (mainMenu.RoomClient.Me.uuid == OriginalSender) {
+            if (roomClient.Me.uuid == OriginalSender) {
                 Debug.Log("amISender");
                 amISender = true;
             }
-            Debug.Log(OriginalSender + "-2-" + mainMenu.RoomClient.Me.uuid);
+            Debug.Log(OriginalSender + "-2-" + roomClient.Me.uuid);
             hasOriginalSenderCheckBeenPerformed = true;
         }
     }
@@ -60,20 +62,18 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
     private void OnRelease(SelectExitEventArgs _args) {
         Debug.Log("Object released");
         amIOwner = false;
-        var msg = new MovementMessage();
-        msg.Position = Transforms.ToLocal(transform, context.Scene.transform);
-        msg.IsOwned = false;
+        var msg = new MovementMessage {
+            Position = Transforms.ToLocal(transform, context.Scene.transform),
+            IsOwned = false
+        };
         context.SendJson(msg);
     }
 
-    private void Start() {
-        context = NetworkScene.Register(this);
-    }
-
     private void SendMessage() {
-        var message = new MovementMessage();
-        message.Position = Transforms.ToLocal(transform, context.Scene.transform);
-        message.IsOwned = amIOwner;
+        var message = new MovementMessage {
+            Position = Transforms.ToLocal(transform, context.Scene.transform),
+            IsOwned = amIOwner
+        };
         Debug.Log("Sending" + message.IsOwned);
         context.SendJson(message);
     }
@@ -92,8 +92,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
         Debug.Log("receiving");
         var msg = _message.FromJson<MovementMessage>();
         var pose = Transforms.ToWorld(msg.Position, context.Scene.transform);
-        transform.position = pose.position;
-        transform.rotation = pose.rotation;
+        transform.SetPositionAndRotation(pose.position, pose.rotation);
 
         if (msg.IsOwned) {
             //If object is taken by another, The current player is no longer the amISender
@@ -102,5 +101,10 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
         } else {
             grabInteractable.enabled = true;
         }
+    }
+
+    private void OnDisable() {
+        grabInteractable.selectEntered.RemoveListener(OnGrab);
+        grabInteractable.selectExited.RemoveListener(OnRelease);
     }
 }

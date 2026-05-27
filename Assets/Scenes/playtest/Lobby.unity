@@ -745,17 +745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0257e790ac76a58aeb9e1388b28be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MsgHandler
---- !u!114 &1758200499 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6567683391160497850, guid: 092eb32917cc7c969b6df8e7d1575699, type: 3}
-  m_PrefabInstance: {fileID: 8763595774419013494}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb832f29bb4b39994839e5dc7e9c8000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelManager
 --- !u!114 &1828123961 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 151067710549161722, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
@@ -786,26 +775,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1515164901610885669, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
-      propertyPath: mainMenu
-      value: 
-      objectReference: {fileID: 3422981629704612653}
-    - target: {fileID: 1515164901610885669, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
-      propertyPath: _mainMenu
-      value: 
-      objectReference: {fileID: 3422981629704612653}
-    - target: {fileID: 1515164901610885669, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
-      propertyPath: roomClient
-      value: 
-      objectReference: {fileID: 1952626370}
-    - target: {fileID: 1515164901610885669, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
-      propertyPath: levelManager
-      value: 
-      objectReference: {fileID: 1758200499}
-    - target: {fileID: 1515164901610885669, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
-      propertyPath: _levelManager
-      value: 
-      objectReference: {fileID: 1758200499}
     - target: {fileID: 4494900990588012476, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
       propertyPath: m_Name
       value: Network

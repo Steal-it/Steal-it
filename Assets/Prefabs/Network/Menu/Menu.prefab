@@ -973,8 +973,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9166966566252141618}
-  - component: {fileID: 3605533673849188904}
   - component: {fileID: 4347440326640683141}
+  - component: {fileID: 3605533673849188904}
   - component: {fileID: 485937895870741308}
   m_Layer: 5
   m_Name: Menu
@@ -1004,22 +1004,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.738, y: 0.636}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &3605533673849188904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4597765539857285132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0483431314aaaf72bc32428d523a702, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Menu
-  roomClient: {fileID: 0}
-  readyButton: {fileID: 2738869590306298767}
-  msgHandler: {fileID: 0}
-  spawnRelativeTransform: {fileID: 0}
 --- !u!54 &4347440326640683141
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1047,6 +1031,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3605533673849188904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4597765539857285132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0483431314aaaf72bc32428d523a702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Menu
+  readyButton: {fileID: 2738869590306298767}
+  msgHandler: {fileID: 0}
+  spawnRelativeTransform: {fileID: 0}
 --- !u!114 &485937895870741308
 MonoBehaviour:
   m_ObjectHideFlags: 0

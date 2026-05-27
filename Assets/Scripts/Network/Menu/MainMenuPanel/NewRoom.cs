@@ -1,25 +1,29 @@
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using Ubiq.Rooms;
 
-public class NewRoomButton : MonoBehaviour
-{
-    [SerializeField]
-    private Menu mainMenu;
+public class NewRoomButton : MonoBehaviour {
     // Expected to be called by a UI element
     [SerializeField]
     private Button button;
+
+    private RoomClient roomClient;
 
     private void Awake() {
         button.onClick.AddListener(NewRoom);
     }
 
-    public void NewRoom ()
-    {
-        string roomName = Guid.NewGuid().ToString().Substring(0,7);
-        mainMenu.RoomClient.Join(
+    private void Start() {
+        roomClient = NetworkReferenceManager.Instance.RoomClient;
+    }
+
+    public void NewRoom() {
+        string roomName = Guid.NewGuid().ToString().Substring(0, 7);
+        roomClient.Join(
             name: roomName,
-            publish: true);
+            publish: true
+        );
     }
 
     private void OnDestroy() {

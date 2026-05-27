@@ -3,40 +3,33 @@ using Ubiq.Rooms;
 using Ubiq;
 using TMPro;
 
-public class UsernameUpdater : MonoBehaviour
-{
-    [SerializeField]
-    private Menu mainMenu;
-
+public class UsernameUpdater : MonoBehaviour {
+    private RoomClient roomClient;
     private TextMeshProUGUI text;
-    void Start()
-    {
+
+    void Start() {
+        roomClient = NetworkReferenceManager.Instance.RoomClient;
+
         text = GetComponent<TextMeshProUGUI>();
-        mainMenu.RoomClient.OnPeerUpdated.AddListener(OnPeerListener);
+        roomClient.OnPeerUpdated.AddListener(OnPeerListener);
     }
 
-    private void OnPeerListener(IPeer peer)
-    {
-        if(mainMenu.RoomClient.Me == peer)
-        {
+    private void OnPeerListener(IPeer peer) {
+        if (roomClient.Me == peer) {
             updateUsername();
-        }    
+        }
     }
 
-    private void updateUsername()
-    {
-        if(mainMenu.RoomClient.Me != null)
-        {
-            string name=mainMenu.RoomClient.Me[DisplayNameManager.KEY];
-            if(!string.IsNullOrEmpty(name))
-            {
+    private void updateUsername() {
+        if (roomClient.Me != null) {
+            string name = roomClient.Me[DisplayNameManager.KEY];
+            if (!string.IsNullOrEmpty(name)) {
                 text.text = $"Welcome {name}";
             }
         }
     }
 
-    void OnDestroy()
-    {
-        mainMenu.RoomClient.OnPeerUpdated.RemoveListener(OnPeerListener);
+    void OnDestroy() {
+        roomClient.OnPeerUpdated.RemoveListener(OnPeerListener);
     }
 }

@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 4777513008304640600}
   - component: {fileID: 9177465001169350331}
   - component: {fileID: 9130834755717229769}
+  - component: {fileID: 6934788661410911001}
   m_Layer: 0
   m_Name: Network
   m_TagString: Untagged
@@ -118,6 +119,20 @@ MonoBehaviour:
   servers:
   - {fileID: -7849211376014683480, guid: 86f501a9e79ad224ca784616b9c07cd1, type: 2}
   timeoutBehaviour: 2
+--- !u!114 &6934788661410911001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4494900990588012476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f00ae77321d61246b2d47b10fe442e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkReferenceManager
+  roomClient: {fileID: 9130834755717229769}
+  avatarManager: {fileID: 4211592653125914507}
 --- !u!1 &5223570567972221472
 GameObject:
   m_ObjectHideFlags: 0

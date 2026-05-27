@@ -1,48 +1,40 @@
-using System.Collections;
 using Ubiq.Rooms;
 using Ubiq.Spawning;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class SphereSpawner : MonoBehaviour
-{
+public class SphereSpawner : MonoBehaviour {
     [Header("Prefab to spawn")]
     public GameObject sphereTemplate;
 
-    [SerializeField]
     private RoomClient roomClient;
-
     public NetworkSpawnManager spawnManager;
-    private XRInteractionManager interactionManager;
     private XRSimpleInteractable interactable;
+    private XRInteractionManager interactionManager;
 
-    private void Awake()
-    {
+    private void Awake() {
         interactable = GetComponent<XRSimpleInteractable>();
-
         interactionManager = FindFirstObjectByType<XRInteractionManager>();
     }
 
-    private void OnEnable()
-    {
-        if (interactable != null)
-        {
+    void Start() {
+        roomClient = NetworkReferenceManager.Instance.RoomClient;
+    }
+
+    private void OnEnable() {
+        if (interactable != null) {
             interactable.selectEntered.AddListener(OnSelectEntered);
         }
     }
 
-    private void OnDisable()
-    {
-        if (interactable != null)
-        {
+    private void OnDisable() {
+        if (interactable != null) {
             interactable.selectEntered.RemoveListener(OnSelectEntered);
         }
     }
 
-    private void OnSelectEntered(SelectEnterEventArgs _eventArgs)
-    {
+    private void OnSelectEntered(SelectEnterEventArgs _eventArgs) {
         var go = spawnManager.SpawnWithPeerScope(sphereTemplate);
         go.SetActive(true);
         var spawnedSphere = go.GetComponent<SphereManager>();
@@ -59,5 +51,4 @@ public class SphereSpawner : MonoBehaviour
         interactionManager.SelectEnter(interactor, interactable);
         interactionManager.SelectExit(interactor, interactable);
     }
-
 }
