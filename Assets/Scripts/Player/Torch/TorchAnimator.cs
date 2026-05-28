@@ -19,7 +19,6 @@ public class TorchAnimator : MonoBehaviour {
     }
 
     public void TorchVisible(bool _value) {
-        print(_value);
         if (moveCoroutine != null) {
             StopCoroutine(moveCoroutine);
         }

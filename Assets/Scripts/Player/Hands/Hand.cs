@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +16,6 @@ public class Hand : MonoBehaviour {
     private HandInteractionController handInteractionController;
     private HandAnimatorController handAnimatorController;
     private Torch torch;
-    private bool firstSpowned = true;
 
     void Awake() {
         TryGetComponent(out handCollisionController);
@@ -29,7 +29,7 @@ public class Hand : MonoBehaviour {
 
         handCollisionController.OnLadder += (_onLadder) => {
             handInteractionController.ToggleInteractions(_onLadder);
-            handAnimatorController.ToggleFreeHandAnimation(_onLadder);
+            handAnimatorController.TogglePocketAnimation(_onLadder);
         };
 
         handCollisionController.OnPoke += handAnimatorController.CalculatePoke;
@@ -44,10 +44,6 @@ public class Hand : MonoBehaviour {
         bool amITheTorchHand = this.side == side;
         torchObj.SetActive(amITheTorchHand);
         if (amITheTorchHand) {
-            if (!firstSpowned) {
-                firstSpowned = false;
-                handAnimatorController.ToggleFreeHandAnimation(false); // toggle freehand animation only on free hand and after the first frame
-            }
             handCollisionController.OnLadder += torch.ToggleTorchInPocket;
             torchActivateInputAction.action.Enable();
         } else {
@@ -56,11 +52,8 @@ public class Hand : MonoBehaviour {
         }
         handCollisionController.SetHandlerEnabled(handCollisionController.LadderHandler, amITheTorchHand); // toggle the collider for ladder on on the torchhand
         handCollisionController.SetHandlerEnabled(handCollisionController.PokeHandler, !amITheTorchHand); // toggle the collider for ladder on on the torchhand
-        handInteractionController.ToggleInteractions(!amITheTorchHand); // toggle the interactions on the free hand
-        torch.ToggleTorchInPocket(!amITheTorchHand); // is in pocket if 
-
-        handAnimatorController.UpdateFreeHandSide(side);
-
+        handInteractionController.ToggleInteractions(!amITheTorchHand); // toggle the interactions on the free hand  
+        handAnimatorController.UpdateGripHand(this.side, !amITheTorchHand);
     }
 
     void OnDestroy() {
