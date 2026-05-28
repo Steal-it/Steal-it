@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7124885932941053760}
   - component: {fileID: 859149492800240172}
   - component: {fileID: 6933425539760233770}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right Hand Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,6 +137,54 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 414943601085382847}
     m_Modifications:
+    - target: {fileID: 7584500273892808, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 509465623060246607, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 624991818145972579, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3177954711391055345, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3891356083593476527, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4574509387503407724, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606447655895926327, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5187629275234738963, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758856551307154495, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6267899033568902112, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6802137803392245816, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805664545772279178, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7007287971298405019, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -177,9 +225,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7383547080179002503, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7671094595625398305, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
       propertyPath: m_Name
       value: Right_Hand
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671094595625398305, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7921061996231179606, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978027967972656419, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8240699471313748821, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8694179389043406908, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8748866125655559900, guid: 81b14148473a1744c99d62c5724eecf2, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

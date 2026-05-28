@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 195368930995322650}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 789744708745715033}
   - component: {fileID: 3682255504792762154}
   - component: {fileID: 2730187307731094353}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Torch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae75d4e18e688ba49b05ac7697207f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Torch
-  controllerActivateInputAction: {fileID: 0}
   socketInteractor: {fileID: 134499350542177033}
   torchRenderer: {fileID: 974308264914983651}
 --- !u!114 &2730187307731094353
@@ -178,6 +177,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TorchLight
       objectReference: {fileID: 0}
+    - target: {fileID: 9033568964592804127, guid: 2da94ea3f68bf8e4b86856df8d03f7b6, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -236,9 +239,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5075089478247603432, guid: 52ebdbdf68423754d9543d1f47313cf5, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8122946929356065664, guid: 52ebdbdf68423754d9543d1f47313cf5, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8935239193093534577, guid: 52ebdbdf68423754d9543d1f47313cf5, type: 3}
       propertyPath: m_Name
       value: TorchVisual
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935239193093534577, guid: 52ebdbdf68423754d9543d1f47313cf5, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -282,6 +297,10 @@ PrefabInstance:
     - target: {fileID: 472691851071878876, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
       propertyPath: m_Center.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388620843456013316, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3014828083320499035, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
       propertyPath: GrabInteractableArray.Array.size
@@ -342,6 +361,10 @@ PrefabInstance:
     - target: {fileID: 5828428092207229500, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
       propertyPath: m_Name
       value: SocketInteractor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828428092207229500, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6502900005856404342, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
       propertyPath: m_LocalPosition.y
