@@ -72,8 +72,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hand
   playerSettings: {fileID: 11400000, guid: 9b522f323ae15ab4ca53102e529efb2c, type: 2}
   side: 1
-  torch: {fileID: 0}
-  torchAttachPoint: {fileID: 0}
+  torchObj: {fileID: 0}
+  torchActivateInputAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!114 &7124885932941053760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,12 +86,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95296a588166ba943bb5232f78f974f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandCollisionController
-  ladderLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  pokeLayer:
-    serializedVersion: 2
-    m_Bits: 2048
+  ladderHandler:
+    layer:
+      serializedVersion: 2
+      m_Bits: 64
+    fireOnEnter: 1
+    fireOnStay: 0
+    fireOnExit: 1
+    enabled: 1
+  pokeHandler:
+    layer:
+      serializedVersion: 2
+      m_Bits: 2048
+    fireOnEnter: 0
+    fireOnStay: 1
+    fireOnExit: 1
+    enabled: 1
 --- !u!114 &859149492800240172
 MonoBehaviour:
   m_ObjectHideFlags: 0

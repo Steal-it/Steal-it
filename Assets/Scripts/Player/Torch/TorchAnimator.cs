@@ -29,13 +29,16 @@ public class TorchAnimator : MonoBehaviour {
 
     IEnumerator MoveTo(Transform _target) {
         Vector3 startPos = transform.position;
+        float fullDistance = Vector3.Distance(torchAttachPoint.position, pocketAttachPoint.position);
+        float currentDistance = Vector3.Distance(startPos, _target.position);
+        float scaledDuration = duration * (currentDistance / fullDistance);
+
         float elapsed = 0f;
 
-        while (elapsed < duration) {
+        while (elapsed < scaledDuration) {
             elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-            float curvedT = curve.Evaluate(t);
-            transform.position = Vector3.Lerp(startPos, _target.position, curvedT);
+            float t = Mathf.Clamp01(elapsed / scaledDuration);
+            transform.position = Vector3.Lerp(startPos, _target.position, curve.Evaluate(t));
             yield return null;
         }
 

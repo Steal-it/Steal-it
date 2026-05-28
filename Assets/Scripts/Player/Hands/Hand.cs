@@ -46,7 +46,7 @@ public class Hand : MonoBehaviour {
         if (amITheTorchHand) {
             if (!firstSpowned) {
                 firstSpowned = false;
-                handAnimatorController.ToggleFreeHandAnimation(false); // toggle freehand animation only on free hand
+                handAnimatorController.ToggleFreeHandAnimation(false); // toggle freehand animation only on free hand and after the first frame
             }
             handCollisionController.OnLadder += torch.ToggleTorchInPocket;
             torchActivateInputAction.action.Enable();
@@ -54,7 +54,8 @@ public class Hand : MonoBehaviour {
             handCollisionController.OnLadder -= torch.ToggleTorchInPocket;
             torchActivateInputAction.action.Disable();
         }
-        handCollisionController.ToggleCollider(amITheTorchHand); // toggle the collider for ladder on on the torchhand
+        handCollisionController.SetHandlerEnabled(handCollisionController.LadderHandler, amITheTorchHand); // toggle the collider for ladder on on the torchhand
+        handCollisionController.SetHandlerEnabled(handCollisionController.PokeHandler, !amITheTorchHand); // toggle the collider for ladder on on the torchhand
         handInteractionController.ToggleInteractions(!amITheTorchHand); // toggle the interactions on the free hand
         torch.ToggleTorchInPocket(!amITheTorchHand); // is in pocket if 
 
