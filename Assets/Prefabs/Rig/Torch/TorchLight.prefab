@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 368326871847357130}
   - component: {fileID: 768334122646163276}
   - component: {fileID: 1119148899520137168}
+  - component: {fileID: 1216766075090670710}
   m_Layer: 0
   m_Name: TorchLight
   m_TagString: Untagged
@@ -127,3 +128,15 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &1216766075090670710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9033568964592804127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31a17c65e6fc61439d44933d0044bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TorchLight

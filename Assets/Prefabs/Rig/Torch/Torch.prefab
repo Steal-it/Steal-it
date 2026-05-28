@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Torch
   socketInteractor: {fileID: 134499350542177033}
-  torchRenderer: {fileID: 974308264914983651}
+  torchLight: {fileID: 3784376561341393229}
 --- !u!114 &2730187307731094353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TorchAnimator
   torchAttachPoint: {fileID: 0}
   pocketAttachPoint: {fileID: 0}
+  torchLight: {fileID: 3784376561341393229}
   curve:
     serializedVersion: 2
     m_Curve:
@@ -120,7 +121,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  duration: 2
+  duration: 1
 --- !u!1001 &2622814769296964923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -191,6 +192,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 368326871847357130, guid: 2da94ea3f68bf8e4b86856df8d03f7b6, type: 3}
   m_PrefabInstance: {fileID: 2622814769296964923}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3784376561341393229 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1216766075090670710, guid: 2da94ea3f68bf8e4b86856df8d03f7b6, type: 3}
+  m_PrefabInstance: {fileID: 2622814769296964923}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31a17c65e6fc61439d44933d0044bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TorchLight
 --- !u!1001 &2744425921408666554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -260,11 +272,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52ebdbdf68423754d9543d1f47313cf5, type: 3}
---- !u!23 &974308264914983651 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3139951092122259801, guid: 52ebdbdf68423754d9543d1f47313cf5, type: 3}
-  m_PrefabInstance: {fileID: 2744425921408666554}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2141668310937243493 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4300536523885905119, guid: 52ebdbdf68423754d9543d1f47313cf5, type: 3}

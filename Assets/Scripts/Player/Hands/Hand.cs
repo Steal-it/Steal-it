@@ -44,10 +44,8 @@ public class Hand : MonoBehaviour {
         bool amITheTorchHand = this.side == side;
         torchObj.SetActive(amITheTorchHand);
         if (amITheTorchHand) {
-            handCollisionController.OnLadder += torch.ToggleTorchInPocket;
             torchActivateInputAction.action.Enable();
         } else {
-            handCollisionController.OnLadder -= torch.ToggleTorchInPocket;
             torchActivateInputAction.action.Disable();
         }
         handCollisionController.SetHandlerEnabled(handCollisionController.LadderHandler, amITheTorchHand); // toggle the collider for ladder on on the torchhand

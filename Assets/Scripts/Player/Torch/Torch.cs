@@ -13,7 +13,7 @@ public class Torch : MonoBehaviour {
     [SerializeField]
     private XRSocketInteractor socketInteractor;
     [SerializeField]
-    private Renderer torchRenderer;
+    private TorchLight torchLight;
 
     private Battery battery;
     private bool emitLight;
@@ -22,6 +22,8 @@ public class Torch : MonoBehaviour {
 
         socketInteractor.selectEntered.AddListener(OnNewBatteryInstalled);
         socketInteractor.selectExited.AddListener(OnBatteryRemoved);
+
+        OnTorchTurned += torchLight.ToggleLight;
 
         // Start the torch with no batteries, so turn it off
         emitLight = false;
@@ -80,10 +82,9 @@ public class Torch : MonoBehaviour {
                 battery.StopUse();
             }
         }
-    }
 
-    public void ToggleTorchInPocket(bool _inPoket) {
-        torchRenderer.enabled = !_inPoket;
+        emitLight = !emitLight;
+        ToggleLight();
     }
 
     private void ToggleLight() {

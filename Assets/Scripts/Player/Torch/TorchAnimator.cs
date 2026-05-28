@@ -8,6 +8,8 @@ public class TorchAnimator : MonoBehaviour {
     [SerializeField]
     private Transform pocketAttachPoint;
     [SerializeField]
+    private TorchLight torchLight;
+    [SerializeField]
     private AnimationCurve curve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
     [SerializeField]
     private float duration = 1f;
@@ -22,6 +24,8 @@ public class TorchAnimator : MonoBehaviour {
         if (moveCoroutine != null) {
             StopCoroutine(moveCoroutine);
         }
+
+        torchLight.InPocket(!_value);
 
         moveCoroutine = StartCoroutine(MoveTo(_value ? torchAttachPoint : pocketAttachPoint));
     }
