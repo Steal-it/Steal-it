@@ -29,7 +29,7 @@ public class Hand : MonoBehaviour {
 
         handCollisionController.OnLadder += (_onLadder) => {
             handInteractionController.ToggleInteractions(_onLadder);
-            handAnimatorController.TogglePocketAnimation(_onLadder);
+            handAnimatorController.ToggleHandAnimation(_onLadder);
         };
 
         handCollisionController.OnPoke += handAnimatorController.CalculatePoke;

@@ -349,6 +349,10 @@ PrefabInstance:
       propertyPath: torchObj
       value: 
       objectReference: {fileID: 366085704433309688}
+    - target: {fileID: 2745481370124594383, guid: 794d0b50d1087ab40a4e3c0a5867b442, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: af818aafc708fac43bbd8b36624bf50c, type: 2}
     - target: {fileID: 2894937795869791415, guid: 794d0b50d1087ab40a4e3c0a5867b442, type: 3}
       propertyPath: m_Name
       value: Right Hand Controller
