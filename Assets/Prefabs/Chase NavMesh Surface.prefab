@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8022214230363775386}
   - component: {fileID: 5291697203110499603}
   m_Layer: 0
-  m_Name: NavMesh Surface
+  m_Name: Chase NavMesh Surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

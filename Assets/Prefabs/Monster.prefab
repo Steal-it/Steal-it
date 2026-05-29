@@ -71,7 +71,13 @@ MonoBehaviour:
   agent: {fileID: 413119976282188543}
   viewRadius: 20
   viewAngle: 150
+  minChasingSpeed: 1.5
+  maxChasingSpeed: 5
+  chasingAcceleration: 2
   killDistance: 2
+  everythingButAvatarLayer:
+    serializedVersion: 2
+    m_Bits: 8183
 --- !u!1 &3957400458458120725
 GameObject:
   m_ObjectHideFlags: 0
