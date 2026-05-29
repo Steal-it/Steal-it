@@ -46,7 +46,7 @@ public class FreeHandAnimator : MonoBehaviour {
 
     public void TorchPosition(bool _value) {
         animator.SetBool(torchProperty, _value);
-        torch = !_value;
+        torch = _value;
     }
 
 }
