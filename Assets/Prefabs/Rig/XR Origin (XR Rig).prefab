@@ -1928,10 +1928,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7226191271852177270, guid: 07ef4b4d16d1c5743b74eb261e449398, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 7770740452667124207, guid: 07ef4b4d16d1c5743b74eb261e449398, type: 3}
       propertyPath: m_Name
       value: BlockVision
