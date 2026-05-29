@@ -7,12 +7,14 @@ public class NetworkReferenceManager : MonoBehaviour {
 
     public RoomClient RoomClient => roomClient;
     public AvatarManager AvatarManager => avatarManager;
-
+    public MsgHandler MsgHandler => msgHandler;
 
     [SerializeField]
     private RoomClient roomClient;
     [SerializeField]
     private AvatarManager avatarManager;
+    [SerializeField]
+    private MsgHandler msgHandler;
 
     void Awake() {
         if (Instance != null) {

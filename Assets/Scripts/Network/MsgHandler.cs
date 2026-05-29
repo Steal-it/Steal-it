@@ -39,7 +39,6 @@ public class RecoverCurrentCounterReplyMessage : BaseMessage {
 }
 
 public class MsgHandler : MonoBehaviour {
-    public static MsgHandler Instance { get; private set; }
     public event EventHandler OnCounterRecoverFinished;
     public event EventHandler OnAllPeersLoadingLevelFinished;
     public event EventHandler<OnAllPeersReadyForChangeEventArgs> OnAllPeersReadyForChange;
@@ -53,13 +52,6 @@ public class MsgHandler : MonoBehaviour {
     private int receiveReadyMsgCounter;
     private int receiveLoadCompleteMsgCounter;
     private int receiveRecoverCurrentCounterReplyCounter;
-
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-            return;
-        }
-    }
 
     private void Start() {
         roomClient = NetworkReferenceManager.Instance.RoomClient;

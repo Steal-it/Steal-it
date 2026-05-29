@@ -2,33 +2,23 @@ using System;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
-    public static LevelManager LvlManager;
-
     [SerializeField]
     private Transform rigTransformer;
-
+    [SerializeField]
+    private Transform gameSpawnPoint;
     [SerializeField]
     private GameObject loaderCanvas;
-
     [SerializeField]
     private UnityEngine.UI.Image progressBar;
 
-    [SerializeField]
     private MsgHandler msgHandler;
 
     private float target;
     // private Boolean hadAllPeerLoadedScene;
 
-    void Awake() {
-        if (LvlManager == null) {
-            LvlManager = this;
-            DontDestroyOnLoad(gameObject);
-        } else {
-            Destroy(gameObject);
-        }
-    }
-
     void Start() {
+        msgHandler = NetworkReferenceManager.Instance.MsgHandler;
+
         msgHandler.OnAllPeersReadyForChange += LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished += UpdatePeerLoadingStatus;
     }
@@ -37,19 +27,19 @@ public class LevelManager : MonoBehaviour {
         progressBar.fillAmount = Mathf.MoveTowards(progressBar.fillAmount, target, 3 * Time.deltaTime);
     }
 
-    public void LoadScreen(object sender, MsgHandler.OnAllPeersReadyForChangeEventArgs e) {
+    public void LoadScreen(object _sender, MsgHandler.OnAllPeersReadyForChangeEventArgs _event) {
         target = 0;
         progressBar.fillAmount = 0;
 
         //loaderCanvas.SetActive(true);
         // hadAllPeerLoadedScene = false;
 
-        switch (e.levelName) {
+        switch (_event.levelName) {
             case "Test":
-                rigTransformer.position = new Vector3(17f, 2f, 2f);
+                rigTransformer.position = gameSpawnPoint.position;
                 break;
             default:
-                Debug.LogError("Attempt to switch to " + e.levelName + " but it does not exists");
+                Debug.LogError("Attempt to switch to " + _event.levelName + " but it does not exists");
                 return;
         }
 
@@ -77,7 +67,7 @@ public class LevelManager : MonoBehaviour {
 
     }
 
-    public void UpdatePeerLoadingStatus(object sender, EventArgs e) {
+    public void UpdatePeerLoadingStatus(object _sender, EventArgs _event) {
         // hadAllPeerLoadedScene = true;
     }
 

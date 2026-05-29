@@ -515,19 +515,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2062521917389945543}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MsgHandler, Assembly-CSharp
-        m_MethodName: SendReadyMessage
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &3233012427205729010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,9 +1031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0483431314aaaf72bc32428d523a702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Menu
-  readyButton: {fileID: 2738869590306298767}
-  msgHandler: {fileID: 0}
-  spawnRelativeTransform: {fileID: 0}
+  readyButton: {fileID: 5245997535512007537}
 --- !u!114 &485937895870741308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1743,7 +1729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b989237b78d0b5df8c06fff9b5e8905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomCodeUpdater
-  mainMenu: {fileID: 3605533673849188904}
 --- !u!1 &6894834904491041168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +1906,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5c03d93529c8ffcac0c1276ca35e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrowsePanelController
-  mainMenu: {fileID: 3605533673849188904}
   controlsRoot: {fileID: 5322503036309764074}
   controlTemplate: {fileID: 2477091698127168621, guid: 955ee81d50937134ba9a9e5c72eb9bd8, type: 3}
   connectionStatusText: {fileID: 859773158057013013}
@@ -2283,7 +2267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e9ddd9b88620da428a7f84be6106246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewRoomButton
-  mainMenu: {fileID: 3605533673849188904}
   button: {fileID: 2521884719809244688}
 --- !u!1 &8113815627660448447
 GameObject:
@@ -2435,7 +2418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ace68de29ff5b9a8fc5e2077cd6be7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UsernameUpdater
-  mainMenu: {fileID: 3605533673849188904}
 --- !u!1 &8352999746160079395
 GameObject:
   m_ObjectHideFlags: 0

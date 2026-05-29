@@ -133,6 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NetworkReferenceManager
   roomClient: {fileID: 9130834755717229769}
   avatarManager: {fileID: 4211592653125914507}
+  msgHandler: {fileID: 1515164901610885669}
 --- !u!1 &5223570567972221472
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0257e790ac76a58aeb9e1388b28be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MsgHandler
-  roomClient: {fileID: 9130834755717229769}
 --- !u!1 &6713240966359594687
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,8 +344,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55f7ee17ed2876761a06d4a52f2cad97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ubiq.Avatars.AvatarManager
-  avatarManager: {fileID: 4211592653125914507}
-  roomClient: {fileID: 9130834755717229769}
 --- !u!1 &8410299998355878147
 GameObject:
   m_ObjectHideFlags: 0
