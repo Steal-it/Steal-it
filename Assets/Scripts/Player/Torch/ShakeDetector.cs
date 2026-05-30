@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 public class ShakeDetector : MonoBehaviour {
     [SerializeField]
@@ -27,21 +26,11 @@ public class ShakeDetector : MonoBehaviour {
     private int shakeCount;
     private float cooldown;
 
-    #region TESTING
-    private bool enable;
-    #endregion
-
+    void Start() {
+        enabled = false;
+    }
 
     private void Update() {
-        #region TESTING
-        if (Keyboard.current[Key.X].wasPressedThisFrame) {
-            enable = !enable;
-            previousPosition = transform.position;
-        }
-        #endregion
-
-        if (!enable) return;
-
         if (cooldown > 0) {
             cooldown -= Time.deltaTime;
         } else {
@@ -80,5 +69,11 @@ public class ShakeDetector : MonoBehaviour {
     private void ResetShake() {
         shakeCount = 0;
         timeRemaining = 0;
+    }
+
+    public void ToggleShake(bool _value) {
+        enabled = _value;
+        ResetShake();
+        previousPosition = transform.position;
     }
 }

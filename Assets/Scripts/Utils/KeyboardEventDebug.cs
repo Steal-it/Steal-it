@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class KeyboardEventDebug : MonoBehaviour {
     [SerializeField]
     private PlayerSettingsSO playerSettings;
+    [SerializeField]
+    private ShakeDetector shake;
     private bool t = true;
     void Update() {
         if (Keyboard.current[Key.V].wasPressedThisFrame) {
@@ -15,6 +17,10 @@ public class KeyboardEventDebug : MonoBehaviour {
                 playerSettings.SetPlayerTorchHand(Side.Left);
                 t = true;
             }
+        }
+
+        if (Keyboard.current[Key.X].wasPressedThisFrame) {
+            shake.ToggleShake(true);
         }
     }
 }
