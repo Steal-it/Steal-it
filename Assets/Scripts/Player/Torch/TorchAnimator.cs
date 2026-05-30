@@ -31,21 +31,23 @@ public class TorchAnimator : MonoBehaviour {
     }
 
     IEnumerator MoveTo(Transform _target) {
-        Vector3 startPos = transform.position;
-        float fullDistance = Vector3.Distance(torchAttachPoint.position, pocketAttachPoint.position);
-        float currentDistance = Vector3.Distance(startPos, _target.position);
-        float scaledDuration = duration * (currentDistance / fullDistance);
+        Vector3 startLocalPos = transform.localPosition;
+        Vector3 targetLocalPos = _target.localPosition;
 
+        float fullDistance = Vector3.Distance(torchAttachPoint.localPosition, pocketAttachPoint.localPosition);
+        float currentDistance = Vector3.Distance(startLocalPos, targetLocalPos);
+
+        float scaledDuration = duration * (currentDistance / fullDistance);
         float elapsed = 0f;
 
         while (elapsed < scaledDuration) {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / scaledDuration);
-            transform.position = Vector3.Lerp(startPos, _target.position, curve.Evaluate(t));
+            transform.localPosition = Vector3.Lerp(startLocalPos, targetLocalPos, curve.Evaluate(t));
             yield return null;
         }
 
-        transform.position = _target.position;
+        transform.localPosition = targetLocalPos;
     }
 
 }
