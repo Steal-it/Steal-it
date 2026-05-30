@@ -69,9 +69,9 @@ public class BlockPlayerVision : MonoBehaviour {
         }
     }
 
-    private float ComputeClosesDistance(Collider[] colliders) {
+    private float ComputeClosesDistance(Collider[] _colliders) {
         float closestDistance = float.MaxValue;
-        foreach (var col in colliders) {
+        foreach (var col in _colliders) {
             if (col != null) {
                 Vector3 point = col.ClosestPoint(playerHead.position);
                 float distance = Vector3.Distance(point, playerHead.position);
@@ -85,9 +85,9 @@ public class BlockPlayerVision : MonoBehaviour {
         return closestDistance;
     }
 
-    private void Fade(float alpha) {
+    private void Fade(float _alpha) {
         Color color = visionBlockPanel.color;
-        color.a = alpha;
+        color.a = _alpha;
         visionBlockPanel.color = color;
     }
 

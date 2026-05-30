@@ -8,8 +8,8 @@ public class TorchLight : MonoBehaviour {
         TryGetComponent(out torchLight);
     }
 
-    public void ToggleLight(object _, Torch.OnTorchTurnedEventArgs eventArgs) {
-        torchLight.enabled = eventArgs.isTurnedOn;
+    public void ToggleLight(object _, Torch.OnTorchTurnedEventArgs _eventArgs) {
+        torchLight.enabled = _eventArgs.isTurnedOn;
         power = torchLight.enabled;
     }
 

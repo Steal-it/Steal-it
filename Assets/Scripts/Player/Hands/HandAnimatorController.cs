@@ -48,11 +48,11 @@ public class HandAnimatorController : MonoBehaviour {
         }
     }
 
-    private void OnGripUpdate(InputVar<float> grip) {
-        if (!grip.valid) {
+    private void OnGripUpdate(InputVar<float> _grip) {
+        if (!_grip.valid) {
             freeHandAnimator.TargetGrip = 0;
             return;
         }
-        freeHandAnimator.TargetGrip = grip.value;
+        freeHandAnimator.TargetGrip = _grip.value;
     }
 }

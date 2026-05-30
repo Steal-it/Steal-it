@@ -40,8 +40,8 @@ public class Hand : MonoBehaviour {
         ChangeHandTorch(playerSettings.playerTorchHand);
     }
 
-    private void ChangeHandTorch(Side side) {
-        bool amITheTorchHand = this.side == side;
+    private void ChangeHandTorch(Side _side) {
+        bool amITheTorchHand = side == _side;
         torchObj.SetActive(amITheTorchHand);
         if (amITheTorchHand) {
             torchActivateInputAction.action.Enable();
@@ -51,7 +51,7 @@ public class Hand : MonoBehaviour {
         handCollisionController.SetHandlerEnabled(handCollisionController.LadderHandler, amITheTorchHand); // toggle the collider for ladder on on the torchhand
         handCollisionController.SetHandlerEnabled(handCollisionController.PokeHandler, !amITheTorchHand); // toggle the collider for ladder on on the torchhand
         handInteractionController.ToggleInteractions(!amITheTorchHand); // toggle the interactions on the free hand  
-        handAnimatorController.UpdateGripHand(this.side, !amITheTorchHand);
+        handAnimatorController.UpdateGripHand(side, !amITheTorchHand);
     }
 
     void OnDestroy() {
