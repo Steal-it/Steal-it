@@ -15,10 +15,10 @@ public class FreeHandAnimator : MonoBehaviour {
     private float currentPoke;
     private bool torch = false;
 
-    private static readonly int torchProperty = Animator.StringToHash("InTorchPosition");
     private static readonly int gripProperty = Animator.StringToHash("Grabbing");
     private static readonly int pokeProperty = Animator.StringToHash("Pokeing");
     private static readonly int completedProperty = Animator.StringToHash("CompletedGrab");
+    private static readonly int torchProperty = Animator.StringToHash("InTorchPosition");
 
     void Awake() {
         TryGetComponent(out animator);
@@ -44,7 +44,7 @@ public class FreeHandAnimator : MonoBehaviour {
         }
     }
 
-    public void TorchPosition(bool _value) {
+    public void ToggleTorchPosition(bool _value) {
         animator.SetBool(torchProperty, _value);
         torch = _value;
     }

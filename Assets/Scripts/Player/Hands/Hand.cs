@@ -29,7 +29,7 @@ public class Hand : MonoBehaviour {
 
         handCollisionController.OnLadder += (_onLadder) => {
             handInteractionController.ToggleInteractions(_onLadder);
-            handAnimatorController.ToggleHandAnimation(_onLadder);
+            handAnimatorController.ToggleLadderAnimation(_onLadder);
         };
 
         handCollisionController.OnPoke += handAnimatorController.CalculatePoke;
@@ -49,7 +49,7 @@ public class Hand : MonoBehaviour {
             torchActivateInputAction.action.Disable();
         }
         handCollisionController.SetHandlerEnabled(handCollisionController.LadderHandler, amITheTorchHand); // toggle the collider for ladder on on the torchhand
-        handCollisionController.SetHandlerEnabled(handCollisionController.PokeHandler, !amITheTorchHand); // toggle the collider for ladder on on the torchhand
+        handCollisionController.SetHandlerEnabled(handCollisionController.PokeHandler, !amITheTorchHand); // toggle the collider for poke on the free hand
         handInteractionController.ToggleInteractions(!amITheTorchHand); // toggle the interactions on the free hand  
         handAnimatorController.UpdateGripHand(side, !amITheTorchHand);
     }

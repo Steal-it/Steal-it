@@ -20,7 +20,7 @@ public class TorchAnimator : MonoBehaviour {
         transform.SetPositionAndRotation(torchAttachPoint.position, torchAttachPoint.rotation);
     }
 
-    public void TorchVisible(bool _value) {
+    public void ToggleTorchVisible(bool _value) {
         if (moveCoroutine != null) {
             StopCoroutine(moveCoroutine);
         }

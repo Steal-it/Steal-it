@@ -16,13 +16,13 @@ public class HandAnimatorController : MonoBehaviour {
         headAndHandsAvatar = GetComponentInParent<HeadAndHandsAvatar>();
     }
 
-    public void ToggleHandAnimation(bool _freeHand) {
-        freeHandAnimator.TorchPosition(!_freeHand); // position only on torchhand
-        torchAnimator.TorchVisible(!_freeHand); // torch is visible only on torchhand
+    public void ToggleLadderAnimation(bool _freeHand) {
+        freeHandAnimator.ToggleTorchPosition(!_freeHand); // position only on torchhand
+        torchAnimator.ToggleTorchVisible(!_freeHand); // torch is visible only on torchhand
     }
 
     public void UpdateGripHand(Side side, bool _isThisHandFree) {
-        freeHandAnimator.TorchPosition(!_isThisHandFree);
+        freeHandAnimator.ToggleTorchPosition(!_isThisHandFree);
         if (_isThisHandFree) {
             if (side == Side.Left) {
                 headAndHandsAvatar.OnLeftGripUpdate.AddListener(OnGripUpdate);
