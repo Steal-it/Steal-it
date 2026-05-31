@@ -1,4 +1,4 @@
-Shader "UI/UI"
+Shader "Custom/UI/NoZTest"
 {
     Properties
     {
