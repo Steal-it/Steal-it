@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MonsterSpawnerManager : MonoBehaviour {
+public class MonsterWanderModeManager : MonoBehaviour {
     [SerializeField]
     private float width;
     [SerializeField]

@@ -27,9 +27,14 @@ public class Monster : MonoBehaviour {
     private NavMeshSurface wanderNavMeshSurface;
     [SerializeField]
     private NavMeshSurface chaseNavMeshSurface;
+    [SerializeField, Range(0.2f, 1)]
+    private float lightExposureTime = 0.5f;
 
     private Transform avatarManagerTransform;
     private Transform player;
+    private float lightExposureTimer;
+    private int lightExposureCounter;
+    private bool isStunned;
 
     void OnValidate() {
         if (minChasingSpeed > maxChasingSpeed) {
@@ -45,6 +50,16 @@ public class Monster : MonoBehaviour {
     }
 
     void Update() {
+        // If at least one player is flashing the monster, start light exposure timer
+        if (lightExposureCounter > 0 && !isStunned) {
+            lightExposureTimer -= Time.deltaTime;
+
+            if (lightExposureTimer <= 0) {
+                isStunned = true;
+                print("MONSTER STUNNED");
+            }
+        }
+
         if (agent.isStopped) return;
 
         if (Vector3.Distance(agent.destination, transform.position) < agent.stoppingDistance) {
@@ -64,7 +79,7 @@ public class Monster : MonoBehaviour {
                 agent.destination = transform.position;
 
                 OnAgentKilled?.Invoke(this, EventArgs.Empty);
-                print("KILLED");
+                print($"PLAYER KILLED");
             }
 
             return;
@@ -115,6 +130,24 @@ public class Monster : MonoBehaviour {
     public void SetDestination(Vector3 _targetPosition) {
         agent.isStopped = false;
         agent.destination = _targetPosition;
+    }
+
+    public void StartLightExposureTimer() {
+        if (lightExposureCounter == 0) {
+            // Start the light exposure timer only at the first flash
+            lightExposureTimer = lightExposureTime;
+
+            print("START");
+        }
+
+        lightExposureCounter++;
+    }
+
+    public void StopLightExposureTimer() {
+        print("STOP");
+        if (lightExposureCounter == 0) return;
+
+        lightExposureCounter--;
     }
 
     void OnDrawGizmosSelected() {

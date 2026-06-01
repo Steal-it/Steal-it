@@ -5274,7 +5274,7 @@ PrefabInstance:
     - target: {fileID: 4844814252237110208, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       propertyPath: m_Renderer
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 786476364322383501}
     - target: {fileID: 5643644621821948167, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       propertyPath: 'm_Colliders.Array.data[0]'
       value: 
