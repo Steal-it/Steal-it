@@ -1,150 +1,35 @@
-using System;
-using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Monster : MonoBehaviour {
-    public event EventHandler OnAgentStopped;
-    public event EventHandler OnAgentKilled;
+    [SerializeField]
+    private MonsterStateManager monsterStateManager;
 
-    [SerializeField]
-    private NavMeshAgent agent;
-    [SerializeField, Range(10, 30)]
-    private float viewRadius = 20;
-    [SerializeField, Range(0, 360)]
-    private float viewAngle = 150;
-    [SerializeField, Range(1, 3)]
-    private float minChasingSpeed = 1.5f;
-    [SerializeField, Range(3, 6)]
-    private float maxChasingSpeed = 5;
-    [SerializeField, Range(1, 3)]
-    private float chasingAcceleration = 2;
-    [SerializeField, Range(0, 4)]
-    private float killDistance = 1.5f;
-    [SerializeField]
-    private LayerMask everythingButAvatarLayer;
-    [SerializeField]
-    private NavMeshSurface wanderNavMeshSurface;
-    [SerializeField]
-    private NavMeshSurface chaseNavMeshSurface;
-    [SerializeField, Range(0.2f, 1)]
-    private float lightExposureTime = 0.5f;
-
-    private Transform avatarManagerTransform;
-    private Transform player;
     private float lightExposureTimer;
     private int lightExposureCounter;
-    private bool isStunned;
-
-    void OnValidate() {
-        if (minChasingSpeed > maxChasingSpeed) {
-            minChasingSpeed = maxChasingSpeed;
-        }
-    }
-
-    void Start() {
-        avatarManagerTransform = NetworkReferenceManager.Instance.AvatarManager.transform;
-
-        wanderNavMeshSurface.enabled = true;
-        chaseNavMeshSurface.enabled = false;
-    }
 
     void Update() {
+        if (monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Stunned) return;
+
         // If at least one player is flashing the monster, start light exposure timer
-        if (lightExposureCounter > 0 && !isStunned) {
+        if (lightExposureCounter > 0) {
             lightExposureTimer -= Time.deltaTime;
 
             if (lightExposureTimer <= 0) {
-                isStunned = true;
-                print("MONSTER STUNNED");
+                monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
             }
         }
-
-        if (agent.isStopped) return;
-
-        if (Vector3.Distance(agent.destination, transform.position) < agent.stoppingDistance) {
-            agent.isStopped = true;
-
-            OnAgentStopped?.Invoke(this, EventArgs.Empty);
-        }
-
-        if (player != null) {
-            agent.destination = player.position;
-            // Increase speed over time when chasing the player
-            float newSpeed = agent.speed + Time.deltaTime / chasingAcceleration;
-            agent.speed = newSpeed > maxChasingSpeed ? maxChasingSpeed : newSpeed;
-
-            if (Vector3.Distance(transform.position, player.position) < killDistance) {
-                agent.isStopped = true;
-                agent.destination = transform.position;
-
-                OnAgentKilled?.Invoke(this, EventArgs.Empty);
-                print($"PLAYER KILLED");
-            }
-
-            return;
-        }
-
-        // Loop over all players (children of avatar manager)
-        foreach (Transform avatar in avatarManagerTransform) {
-            TorsoIdentifier torso = avatar.GetComponentInChildren<TorsoIdentifier>();
-            if (IsInFOV(torso.transform.position)) {
-                player = torso.transform;
-
-                // Change surface to ignore walls when chasing
-                wanderNavMeshSurface.enabled = false;
-                chaseNavMeshSurface.enabled = true;
-
-                // Slow down before targeting the player not to overshoot
-                agent.speed = minChasingSpeed;
-                agent.autoBraking = false;
-                return;
-            }
-        }
-    }
-
-    private bool IsInFOV(Vector3 _targetPosition) {
-        Vector3 dirToTarget = _targetPosition - transform.position;
-
-        // Check distance (outside the arc)
-        if (dirToTarget.magnitude > viewRadius) {
-            return false;
-        }
-
-        // Check angle (outside the cone)
-        float angle = Vector3.Angle(transform.forward, dirToTarget);
-        if (angle > viewAngle / 2f) {
-            return false;
-        }
-
-        // Check avatar (behind nothing)
-        Vector3 playerCenter = _targetPosition + Vector3.up;
-        Vector3 monsterCenter = transform.position + Vector3.up;
-        if (Physics.Raycast(monsterCenter, playerCenter - monsterCenter, viewRadius, everythingButAvatarLayer)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public void SetDestination(Vector3 _targetPosition) {
-        agent.isStopped = false;
-        agent.destination = _targetPosition;
     }
 
     public void StartLightExposureTimer() {
         if (lightExposureCounter == 0) {
             // Start the light exposure timer only at the first flash
-            lightExposureTimer = lightExposureTime;
-
-            print("START");
+            lightExposureTimer = monsterStateManager.LightExposureTime;
         }
 
         lightExposureCounter++;
     }
 
     public void StopLightExposureTimer() {
-        print("STOP");
         if (lightExposureCounter == 0) return;
 
         lightExposureCounter--;
@@ -152,11 +37,11 @@ public class Monster : MonoBehaviour {
 
     void OnDrawGizmosSelected() {
         int numLines = 6;
-        float angleOffset = viewAngle / numLines;
+        float angleOffset = monsterStateManager.ViewAngle / numLines;
         for (int i = 0; i < numLines + 1; i++) {
-            Vector3 line = DirFromAngle(-viewAngle / 2 + angleOffset * i);
+            Vector3 line = DirFromAngle(-monsterStateManager.ViewAngle / 2 + angleOffset * i);
 
-            Gizmos.DrawLine(transform.position, transform.position + line * viewRadius);
+            Gizmos.DrawLine(transform.position, transform.position + line * monsterStateManager.ViewRadius);
         }
 
         Vector3 DirFromAngle(float _angleDegrees) {

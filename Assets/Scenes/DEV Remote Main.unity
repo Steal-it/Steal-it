@@ -269,7 +269,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 86699d36c619ed04989736b8311b6026, type: 2}
+  - {fileID: 2100000, guid: c4429028c366ada479f8fb4ea81e5b33, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -332,6 +332,10 @@ PrefabInstance:
       propertyPath: chaseNavMeshSurface
       value: 
       objectReference: {fileID: 110176377}
+    - target: {fileID: 1447304108538325013, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
+      propertyPath: monsterStateManager
+      value: 
+      objectReference: {fileID: 863188837}
     - target: {fileID: 1447304108538325013, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
       propertyPath: wanderNavMeshSurface
       value: 
@@ -657,7 +661,7 @@ GameObject:
   m_Component:
   - component: {fileID: 384344818}
   m_Layer: 0
-  m_Name: Enviornment
+  m_Name: Maze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1001,6 +1005,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660037285}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &672790862
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 672790863}
+  m_Layer: 0
+  m_Name: --- Environment ---
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &672790863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672790862}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &697649099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6836749399222160328, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
@@ -1208,7 +1243,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5515af31f685eff459e3cbb8e263398c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
-  monster: {fileID: 0}
+  monster: {fileID: 219418724}
+  lightExposureTime: 0.5
+  monsterWanderModeManager: {fileID: 1655985044}
+  viewRadius: 20
+  viewAngle: 150
+  everythingButAvatarLayer:
+    serializedVersion: 2
+    m_Bits: 8183
+  wanderAndStunnedSpeed: 3
+  wanderAndStunnedNavMeshSurface: {fileID: 1769635539}
+  minChasingSpeed: 1.5
+  maxChasingSpeed: 5
+  chasingAcceleration: 2
+  killDistance: 1.5
+  chaseNavMeshSurface: {fileID: 110176377}
 --- !u!4 &863188838
 Transform:
   m_ObjectHideFlags: 0
@@ -2141,7 +2190,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1545472206506657313, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
       propertyPath: m_Name
-      value: Wander NavMesh Surface
+      value: WanderAndStunned NavMesh Surface
       objectReference: {fileID: 0}
     - target: {fileID: 5291697203110499603, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
       propertyPath: m_NavMeshData
@@ -2238,7 +2287,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawnerManager
   width: 95
   height: 95
-  monster: {fileID: 219418724}
 --- !u!1 &1702624306
 GameObject:
   m_ObjectHideFlags: 0
@@ -3062,6 +3110,7 @@ SceneRoots:
   - {fileID: 1287379896}
   - {fileID: 1637647120}
   - {fileID: 1655985043}
+  - {fileID: 863188838}
   - {fileID: 1943750399}
   - {fileID: 222072680}
   - {fileID: 2114262701}
@@ -3070,10 +3119,10 @@ SceneRoots:
   - {fileID: 1322911065}
   - {fileID: 410087041}
   - {fileID: 2105100659}
-  - {fileID: 384344818}
   - {fileID: 219418723}
   - {fileID: 1640456638}
   - {fileID: 701364803}
+  - {fileID: 672790863}
+  - {fileID: 384344818}
   - {fileID: 1903601976}
   - {fileID: 1252288552}
-  - {fileID: 863188838}

@@ -15,6 +15,11 @@ public class WanderState : IMonsterState {
 
         monster = monsterStateManager.Monster;
         agent = monsterStateManager.Agent;
+
+        isChangingState = false;
+        monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = true;
+        agent.speed = monsterStateManager.WanderAndStunnedSpeed;
+        agent.autoBraking = true;
     }
 
     public void UpdateState() {
@@ -34,7 +39,8 @@ public class WanderState : IMonsterState {
                 player = torso.transform;
 
                 monsterStateManager.ChangeState(MonsterStateManager.StateKey.Chase);
-                return;
+
+                break;
             }
         }
     }
@@ -64,7 +70,9 @@ public class WanderState : IMonsterState {
         return true;
     }
 
-    public void ExitState() { }
+    public void ExitState() {
+        monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = false;
+    }
 
     public void Accept(IMonsterStateVisitor _stateVisitor) {
         _stateVisitor.Visit(this);

@@ -11,19 +11,27 @@ public class MonsterStateManager : MonoBehaviour {
     }
 
     public Dictionary<StateKey, IMonsterState> StateDictionary => stateDictionary;
-    public MonsterWanderModeManager MonsterWanderModeManager => monsterWanderModeManager;
+    public StateKey CurrentStateKey => currentStateKey;
     public Monster Monster => monster;
     public NavMeshAgent Agent => monster.GetComponent<NavMeshAgent>();
+    public float LightExposureTime => lightExposureTime;
+
+    // Wander Mode
     public float ViewRadius => viewRadius;
     public float ViewAngle => viewAngle;
+    public LayerMask EverythingButAvatarLayer => everythingButAvatarLayer;
+    public MonsterWanderModeManager MonsterWanderModeManager => monsterWanderModeManager;
+
+    // Wander and Stunned Mode
+    public float WanderAndStunnedSpeed => wanderAndStunnedSpeed;
+    public NavMeshSurface WanderAndStunnedNavMeshSurface => wanderAndStunnedNavMeshSurface;
+
+    // Chase Mode
     public float MinChasingSpeed => minChasingSpeed;
     public float MaxChasingSpeed => maxChasingSpeed;
     public float ChasingAcceleration => chasingAcceleration;
     public float KillDistance => killDistance;
-    public LayerMask EverythingButAvatarLayer => everythingButAvatarLayer;
-    public NavMeshSurface WanderNavMeshSurface => wanderNavMeshSurface;
     public NavMeshSurface ChaseNavMeshSurface => chaseNavMeshSurface;
-    public float LightExposureTime => lightExposureTime;
 
     [SerializeField]
     private Monster monster;
@@ -39,8 +47,12 @@ public class MonsterStateManager : MonoBehaviour {
     private float viewAngle = 150;
     [SerializeField]
     private LayerMask everythingButAvatarLayer;
+
+    [Header("Wander and Stunned Mode")]
+    [SerializeField, Range(2, 4)]
+    private float wanderAndStunnedSpeed = 3;
     [SerializeField]
-    private NavMeshSurface wanderNavMeshSurface;
+    private NavMeshSurface wanderAndStunnedNavMeshSurface;
 
     [Header("Chase Mode")]
     [SerializeField, Range(1, 3)]
@@ -56,10 +68,18 @@ public class MonsterStateManager : MonoBehaviour {
 
     private Dictionary<StateKey, IMonsterState> stateDictionary = new Dictionary<StateKey, IMonsterState>();
     private IMonsterState currentState;
+    private StateKey currentStateKey;
+
+    void OnValidate() {
+        if (minChasingSpeed > maxChasingSpeed) {
+            minChasingSpeed = maxChasingSpeed;
+        }
+    }
 
     void Start() {
         stateDictionary.Add(StateKey.Wander, new WanderState());
         stateDictionary.Add(StateKey.Chase, new ChaseState());
+        stateDictionary.Add(StateKey.Stunned, new StunnedState());
 
         currentState = stateDictionary[StateKey.Wander];
         currentState.EnterState(this);
@@ -73,6 +93,7 @@ public class MonsterStateManager : MonoBehaviour {
         currentState.ExitState();
 
         currentState = stateDictionary[_stateKey];
+        currentStateKey = _stateKey;
 
         currentState.EnterState(this);
     }

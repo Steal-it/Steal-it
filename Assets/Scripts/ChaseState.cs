@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class ChaseState : IMonsterState, IMonsterStateVisitor {
+    public Transform Player => player;
+
     private MonsterStateManager monsterStateManager;
     private Monster monster;
     private NavMeshAgent agent;
@@ -14,6 +16,11 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
         monster = monsterStateManager.Monster;
         agent = monsterStateManager.Agent;
 
+        isChangingState = false;
+        monsterStateManager.ChaseNavMeshSurface.enabled = true;
+        agent.speed = monsterStateManager.MinChasingSpeed;
+        agent.autoBraking = false;
+
         IMonsterState wanderState = monsterStateManager.StateDictionary[MonsterStateManager.StateKey.Wander];
         wanderState.Accept(this);
     }
@@ -21,29 +28,34 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
     public void UpdateState() {
         if (isChangingState) return;
 
-        if (player != null) {
-            agent.destination = player.position;
-            // Increase speed over time when chasing the player
-            float newSpeed = agent.speed + Time.deltaTime / monsterStateManager.ChasingAcceleration;
-            agent.speed = newSpeed > monsterStateManager.MaxChasingSpeed ? monsterStateManager.MaxChasingSpeed : newSpeed;
+        if (player == null) return;
 
-            if (Vector3.Distance(monster.transform.position, player.position) < monsterStateManager.KillDistance) {
-                isChangingState = true;
+        agent.destination = player.position;
+        // Increase speed over time when chasing the player
+        float newSpeed = agent.speed + Time.deltaTime / monsterStateManager.ChasingAcceleration;
+        agent.speed = newSpeed > monsterStateManager.MaxChasingSpeed ? monsterStateManager.MaxChasingSpeed : newSpeed;
 
-                agent.destination = monster.transform.position;
+        if (Vector3.Distance(monster.transform.position, player.position) < monsterStateManager.KillDistance) {
+            isChangingState = true;
 
-                // OnAgentKilled?.Invoke(this, EventArgs.Empty);
-                Debug.Log($"PLAYER KILLED");
-                monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
-            }
+            agent.destination = monster.transform.position;
+
+            Debug.Log($"PLAYER KILLED");
+            monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
         }
     }
 
-    public void ExitState() { }
+    public void ExitState() {
+        monsterStateManager.ChaseNavMeshSurface.enabled = false;
+    }
 
-    public void Accept(IMonsterStateVisitor _stateVisitor) { }
+    public void Accept(IMonsterStateVisitor _stateVisitor) {
+        _stateVisitor.Visit(this);
+    }
 
     public void Visit(WanderState _wanderState) {
         player = _wanderState.Player;
     }
+
+    public void Visit(ChaseState _chaseState) { }
 }
