@@ -396,6 +396,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4266b1e2d3fc51043804e054c56c6d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIMonster
+--- !u!114 &219418725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2954893742755480266, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
+  m_PrefabInstance: {fileID: 219418723}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 187b5acadd48e6746924ee5973005c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterAnimator
 --- !u!1 &222072679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,65 +1225,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809426182}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &863188836
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 863188838}
-  - component: {fileID: 863188837}
-  m_Layer: 0
-  m_Name: MonsterStateManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &863188837
+--- !u!114 &863188837 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7817551075691924048, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+  m_PrefabInstance: {fileID: 4812771410466400116}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 863188836}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5515af31f685eff459e3cbb8e263398c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
-  monster: {fileID: 219418724}
-  lightExposureTime: 0.5
-  monsterWanderModeManager: {fileID: 1655985044}
-  viewRadius: 20
-  viewAngle: 150
-  everythingButAvatarLayer:
-    serializedVersion: 2
-    m_Bits: 8183
-  wanderAndStunnedSpeed: 3
-  wanderAndStunnedNavMeshSurface: {fileID: 1769635539}
-  minChasingSpeed: 1.5
-  maxChasingSpeed: 5
-  chasingAcceleration: 2
-  killDistance: 1.5
-  chaseNavMeshSurface: {fileID: 110176377}
---- !u!4 &863188838
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 863188836}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &902192802 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7536589771608422650, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
@@ -2241,52 +2204,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
---- !u!1 &1655985042
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1655985043}
-  - component: {fileID: 1655985044}
-  m_Layer: 0
-  m_Name: MonsterWanderModeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1655985043
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1655985042}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1655985044
+--- !u!114 &1655985044 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6947077805517222016, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+  m_PrefabInstance: {fileID: 2869547154981292504}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1655985042}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55403bdc816b8da4e9e30adedd3176d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawnerManager
-  width: 95
-  height: 95
 --- !u!1 &1702624306
 GameObject:
   m_ObjectHideFlags: 0
@@ -3103,14 +3031,148 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144207967}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &2869547154981292504
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1599650372841817237, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_Name
+      value: MonsterRandomDestinationManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
+--- !u!1001 &4812771410466400116
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1396581264225524947, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_Name
+      value: MonsterStateManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4308710233346701290, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7817551075691924048, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: monster
+      value: 
+      objectReference: {fileID: 219418724}
+    - target: {fileID: 7817551075691924048, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: monsterAnimator
+      value: 
+      objectReference: {fileID: 219418725}
+    - target: {fileID: 7817551075691924048, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: chaseNavMeshSurface
+      value: 
+      objectReference: {fileID: 110176377}
+    - target: {fileID: 7817551075691924048, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: monsterWanderModeManager
+      value: 
+      objectReference: {fileID: 1655985044}
+    - target: {fileID: 7817551075691924048, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
+      propertyPath: wanderAndStunnedNavMeshSurface
+      value: 
+      objectReference: {fileID: 1769635539}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: faf8ac9cb296cdc4098f0aa1cf8aa1fa, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1287379896}
   - {fileID: 1637647120}
-  - {fileID: 1655985043}
-  - {fileID: 863188838}
+  - {fileID: 2869547154981292504}
+  - {fileID: 4812771410466400116}
   - {fileID: 1943750399}
   - {fileID: 222072680}
   - {fileID: 2114262701}

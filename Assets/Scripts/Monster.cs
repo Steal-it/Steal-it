@@ -13,6 +13,7 @@ public class Monster : MonoBehaviour {
         // If at least one player is flashing the monster, start light exposure timer
         if (lightExposureCounter > 0) {
             lightExposureTimer -= Time.deltaTime;
+            print(lightExposureTimer);
 
             if (lightExposureTimer <= 0) {
                 monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
@@ -35,7 +36,9 @@ public class Monster : MonoBehaviour {
         lightExposureCounter--;
     }
 
-    void OnDrawGizmosSelected() {
+    void OnDrawGizmos() {
+        if (monsterStateManager == null) return;
+
         int numLines = 6;
         float angleOffset = monsterStateManager.ViewAngle / numLines;
         for (int i = 0; i < numLines + 1; i++) {
@@ -49,5 +52,7 @@ public class Monster : MonoBehaviour {
             _angleDegrees += transform.eulerAngles.y;
             return new Vector3(Mathf.Sin(_angleDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(_angleDegrees * Mathf.Deg2Rad));
         }
+
+        // Gizmos.DrawWireSphere(transform.position, monsterStateManager.StunnedMinDistanceDestination);
     }
 }

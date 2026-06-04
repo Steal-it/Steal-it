@@ -20,13 +20,14 @@ public class WanderState : IMonsterState {
         monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = true;
         agent.speed = monsterStateManager.WanderAndStunnedSpeed;
         agent.autoBraking = true;
+        agent.destination = monster.transform.position;
     }
 
     public void UpdateState() {
         if (isChangingState) return;
 
         if (Vector3.Distance(agent.destination, monster.transform.position) < agent.stoppingDistance) {
-            Vector3 randomDestination = monsterStateManager.MonsterWanderModeManager.GenerateRandomDestinationToAgent();
+            Vector3 randomDestination = monsterStateManager.MonsterRandomDestinationManager.GenerateRandomDestination();
             agent.destination = randomDestination;
         }
 

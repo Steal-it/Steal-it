@@ -38,24 +38,19 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
         if (Vector3.Distance(monster.transform.position, player.position) < monsterStateManager.KillDistance) {
             isChangingState = true;
 
-            agent.destination = monster.transform.position;
-
             Debug.Log($"PLAYER KILLED");
             monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
         }
     }
 
     public void ExitState() {
+        agent.destination = monster.transform.position;
         monsterStateManager.ChaseNavMeshSurface.enabled = false;
     }
 
-    public void Accept(IMonsterStateVisitor _stateVisitor) {
-        _stateVisitor.Visit(this);
-    }
+    public void Accept(IMonsterStateVisitor _stateVisitor) { }
 
     public void Visit(WanderState _wanderState) {
         player = _wanderState.Player;
     }
-
-    public void Visit(ChaseState _chaseState) { }
 }

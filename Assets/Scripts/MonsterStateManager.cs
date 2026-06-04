@@ -20,7 +20,11 @@ public class MonsterStateManager : MonoBehaviour {
     public float ViewRadius => viewRadius;
     public float ViewAngle => viewAngle;
     public LayerMask EverythingButAvatarLayer => everythingButAvatarLayer;
-    public MonsterWanderModeManager MonsterWanderModeManager => monsterWanderModeManager;
+    public MonsterRandomDestinationManager MonsterRandomDestinationManager => monsterWanderModeManager;
+
+    // Stunned Mode
+    public MonsterAnimator MonsterAnimator => monsterAnimator;
+    public float StunnedMinDistanceDestination => stunnedMinDistanceDestination;
 
     // Wander and Stunned Mode
     public float WanderAndStunnedSpeed => wanderAndStunnedSpeed;
@@ -40,13 +44,19 @@ public class MonsterStateManager : MonoBehaviour {
 
     [Header("Wander Mode")]
     [SerializeField]
-    private MonsterWanderModeManager monsterWanderModeManager;
+    private MonsterRandomDestinationManager monsterWanderModeManager;
     [SerializeField, Range(10, 30)]
     private float viewRadius = 20;
     [SerializeField, Range(0, 360)]
     private float viewAngle = 150;
     [SerializeField]
     private LayerMask everythingButAvatarLayer;
+
+    [Header("Stunned Mode")]
+    [SerializeField]
+    private MonsterAnimator monsterAnimator;
+    [SerializeField, Range(20, 50)]
+    private float stunnedMinDistanceDestination = 30;
 
     [Header("Wander and Stunned Mode")]
     [SerializeField, Range(2, 4)]
@@ -90,6 +100,8 @@ public class MonsterStateManager : MonoBehaviour {
     }
 
     public void ChangeState(StateKey _stateKey) {
+        print(currentStateKey + " -> " + _stateKey);
+
         currentState.ExitState();
 
         currentState = stateDictionary[_stateKey];
