@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 462200235526316127}
   - component: {fileID: 1447304108538325013}
   - component: {fileID: 2954893742755480266}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 944812404086829449}
   - component: {fileID: 9091746503512996033}
   - component: {fileID: 3535648677460212783}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8881184191368254168}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CrossedEye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3677187363459951663}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CrossedEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 3367361519822473092}
   - component: {fileID: 8737547515057256956}
   - component: {fileID: 1725371363855441856}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 6420812037925481200}
   - component: {fileID: 4278724160697141744}
   - component: {fileID: 6435673855079052470}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 7374222542084698549}
   - component: {fileID: 3409995060888614526}
   - component: {fileID: 3502778281240768182}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -595,7 +595,7 @@ GameObject:
   - component: {fileID: 3019742665859017099}
   - component: {fileID: 2882346793979687838}
   - component: {fileID: 3249641084408933632}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,7 +685,7 @@ GameObject:
   - component: {fileID: 1072517480740590836}
   - component: {fileID: 8582452676095830391}
   - component: {fileID: 2950766957327965239}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -773,7 +773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7635547271272961954}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}

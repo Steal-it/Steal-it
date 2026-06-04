@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55403bdc816b8da4e9e30adedd3176d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawnerManager
-  width: 95
-  height: 95
+  width: 50
+  height: 50
