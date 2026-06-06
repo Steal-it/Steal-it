@@ -96,6 +96,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2735971514160390952}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2361865893428281028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5623377455925860753}
+  - component: {fileID: 755795982228467428}
+  m_Layer: 0
+  m_Name: InputActionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5623377455925860753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2361865893428281028}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.28002, y: 0, z: 2.13197}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2570736506614938560}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &755795982228467428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2361865893428281028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64cb7e50daf6bb4db7d0d37ee7d2afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputActionsManager
+  inputActionsAssociations:
+  - input: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    customAction: {fileID: 945162861446812389}
+  - input: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    customAction: {fileID: 546261489166052722}
 --- !u!1 &5713258110544257261
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +329,9 @@ PrefabInstance:
     - {fileID: 4351132835828196289, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3444175152561107260, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 5623377455925860753}
+    - targetCorrespondingSourceObject: {fileID: 3444175152561107260, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4909015189092936663}
     - targetCorrespondingSourceObject: {fileID: 2997466259208464852, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
@@ -366,6 +418,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 794d0b50d1087ab40a4e3c0a5867b442, type: 3}
+--- !u!114 &945162861446812389 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1482351985030835623, guid: 794d0b50d1087ab40a4e3c0a5867b442, type: 3}
+  m_PrefabInstance: {fileID: 1841897324720586562}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8e50e01fefec2e4c90427e3b9e764d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hand
 --- !u!4 &2039452069587484669 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 414943601085382847, guid: 794d0b50d1087ab40a4e3c0a5867b442, type: 3}
@@ -445,6 +508,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e646a089d56862d42bc36e0bef4933dd, type: 3}
+--- !u!114 &546261489166052722 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1851059032227928103, guid: e646a089d56862d42bc36e0bef4933dd, type: 3}
+  m_PrefabInstance: {fileID: 2172139714311533909}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8e50e01fefec2e4c90427e3b9e764d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hand
 --- !u!4 &1640655694332444778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 639575084543440191, guid: e646a089d56862d42bc36e0bef4933dd, type: 3}

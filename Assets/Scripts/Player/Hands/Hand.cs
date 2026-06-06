@@ -2,15 +2,13 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Hand : MonoBehaviour {
+public class Hand : CustomAction {
     [SerializeField]
     private PlayerSettingsSO playerSettings;
     [SerializeField]
     private Side side;
     [SerializeField]
     private GameObject torchObj;
-    [SerializeField]
-    private InputActionReference torchActivateInputAction;
 
     private HandCollisionController handCollisionController;
     private HandInteractionController handInteractionController;
@@ -33,7 +31,6 @@ public class Hand : MonoBehaviour {
         };
 
         handCollisionController.OnPoke += handAnimatorController.CalculatePoke;
-        torchActivateInputAction.action.performed += torch.OnTriggerPressed;
 
         playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);
 
@@ -44,9 +41,9 @@ public class Hand : MonoBehaviour {
         bool amITheTorchHand = side == _side;
         torchObj.SetActive(amITheTorchHand);
         if (amITheTorchHand) {
-            torchActivateInputAction.action.Enable();
+            InputSetActive(true);
         } else {
-            torchActivateInputAction.action.Disable();
+            InputSetActive(false);
         }
         handCollisionController.SetHandlerEnabled(handCollisionController.LadderHandler, amITheTorchHand); // toggle the collider for ladder on on the torchhand
         handCollisionController.SetHandlerEnabled(handCollisionController.PokeHandler, !amITheTorchHand); // toggle the collider for poke on the free hand
@@ -55,8 +52,14 @@ public class Hand : MonoBehaviour {
     }
 
     void OnDestroy() {
-        torchActivateInputAction.action.performed += torch.OnTriggerPressed;
         playerSettings.OnPlayerTorchChanged.Unregister(ChangeHandTorch);
     }
 
+    public override void OnInputFired(InputAction.CallbackContext ctx) {
+        torch.OnTriggerPressed(ctx);
+    }
+
+    public override void OnInputStop(InputAction.CallbackContext ctx) {
+        return;
+    }
 }
