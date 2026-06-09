@@ -145,6 +145,8 @@ MonoBehaviour:
     customAction: {fileID: 945162861446812389}
   - input: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     customAction: {fileID: 546261489166052722}
+  - input: {fileID: -3875704489234743591, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    customAction: {fileID: 2028077023701873777}
 --- !u!1 &5713258110544257261
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +336,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3444175152561107260, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4909015189092936663}
+    - targetCorrespondingSourceObject: {fileID: 3444175152561107260, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3220561074617249299}
     - targetCorrespondingSourceObject: {fileID: 2997466259208464852, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4248101575231042863}
@@ -627,6 +632,117 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de8a0fabfe82aa4baf6e06586dd7080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TorchAnimator
+--- !u!1001 &6938957294558895573
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2570736506614938560}
+    m_Modifications:
+    - target: {fileID: 472691851071878876, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_Size.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 472691851071878876, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 472691851071878876, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_Size.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.348
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.074
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755357893630131388, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828428092207229500, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_Name
+      value: SocketInteractor
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502900005856404342, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6502900005856404342, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.135
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 4896112478271878693, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5828428092207229500, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2028077023701873777}
+  m_SourcePrefab: {fileID: 100100000, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+--- !u!4 &3220561074617249299 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5547761697060238278, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+  m_PrefabInstance: {fileID: 6938957294558895573}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3507913358414362601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5828428092207229500, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+  m_PrefabInstance: {fileID: 6938957294558895573}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2028077023701873777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3507913358414362601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba67ac95f942ba408d5db1d8c5953fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GooglesSocket
+  seeThrough: {fileID: 0}
+  OnGooglesInserted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &7805968245432638011
 PrefabInstance:
   m_ObjectHideFlags: 0
