@@ -13,11 +13,11 @@ public class GooglesSocket : CustomAction {
     private XRSocketInteractor socketInteractor;
     private Googles currentGoogles;
 
-    public override void OnInputFired(InputAction.CallbackContext ctx) {
+    public override void OnInputFired(InputAction.CallbackContext _) {
         currentGoogles?.ToggleGlasses();
     }
 
-    public override void OnInputStop(InputAction.CallbackContext ctx) {
+    public override void OnInputStop(InputAction.CallbackContext _) {
         return;
     }
 
@@ -34,6 +34,7 @@ public class GooglesSocket : CustomAction {
         currentGoogles.OnGooglesToggle += ToggleSeeThrough;
         OnGooglesInserted?.Invoke();
         socketInteractor.enabled = false;
+        currentGoogles.DisableVisuals();
     }
 
     private void ToggleSeeThrough(bool _active) {

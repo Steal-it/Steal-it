@@ -91,8 +91,6 @@ public class Torch : MonoBehaviour {
         OnTorchTurned?.Invoke(this, new OnTorchTurnedEventArgs {
             isTurnedOn = emitLight
         });
-
-        Debug.Log(emitLight ? "LIGHT ON" : "LIGHT OFF");
     }
 
     void OnDestroy() {

@@ -10,7 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 68615080635505177, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       propertyPath: m_Name
-      value: NearGrabInteractable
+      value: Goggles
+      objectReference: {fileID: 0}
+    - target: {fileID: 5643644621821948167, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7599467750495293340, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55,5 +59,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 68615080635505177, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 425225245317040224}
   m_SourcePrefab: {fileID: 100100000, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+--- !u!1 &1310049828553574748 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 68615080635505177, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+  m_PrefabInstance: {fileID: 1359522409584841541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &425225245317040224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310049828553574748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d767f8253d89d4b4596088a0ea68c2a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Googles
+  dischargeTime: 60
+  visualsGameObject: {fileID: 4177935199512097523}
+--- !u!1 &4177935199512097523 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3109453518150836662, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+  m_PrefabInstance: {fileID: 1359522409584841541}
+  m_PrefabAsset: {fileID: 0}

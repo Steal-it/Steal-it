@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Googles : MonoBehaviour {
     [SerializeField]
-    private float dischargeTime = 60;
+    private float dischargeRate = 60;
     [SerializeField]
     private GameObject visualsGameObject;
     public Action<bool> OnGooglesToggle;
@@ -28,18 +28,19 @@ public class Googles : MonoBehaviour {
         if (seeCoroutine != null) {
             StopCoroutine(seeCoroutine);
         }
-        seeCoroutine = StartCoroutine(UseCO());
+        seeCoroutine = StartCoroutine(UseXray());
     }
 
-    private IEnumerator UseCO() {
+    private IEnumerator UseXray() {
         if (chargeLevel == 0) yield break;
 
         OnGooglesToggle?.Invoke(true);
 
+
         while (chargeLevel > 0) {
             yield return new WaitForFixedUpdate();
 
-            float decrementValue = Time.fixedDeltaTime / dischargeTime;
+            float decrementValue = Time.fixedDeltaTime / dischargeRate;
             chargeLevel = Mathf.Clamp01(chargeLevel - decrementValue);
         }
 
