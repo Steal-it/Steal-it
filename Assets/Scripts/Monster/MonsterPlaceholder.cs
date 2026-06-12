@@ -1,6 +1,6 @@
 public class MonsterPlaceholder : NetworkObject {
     void Awake() {
-        OnAwake();
+        OnAwake(this);
     }
 
     protected override void SendOnFixedUpdate() { }

@@ -7,10 +7,10 @@ public abstract class NetworkObject : MonoBehaviour {
     protected bool AmIOwner { private get; set; }
     protected bool AmISender { private get; set; }
 
-    protected void OnAwake() {
+    protected void OnAwake(NetworkObject _this) {
         AmIOwner = false;
 
-        Context = NetworkScene.Register(this);
+        Context = NetworkScene.Register(_this);
     }
 
     protected void OnFixedUpdate() {
