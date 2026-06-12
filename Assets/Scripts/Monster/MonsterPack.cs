@@ -10,11 +10,16 @@ public class MonsterPack : MonoBehaviour {
     private GameObject monsterPlaceholder;
 
     void Start() {
-        NetworkReferenceManager.Instance.NewRoomButton.OnNewRoomCreated += NewRoomButton_OnNewRoomCreated;
+        NetworkReferenceManager.Instance.MainMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
+        NetworkReferenceManager.Instance.MainMenu.OnRoomJoined += MainMenu_OnRoomJoined;
     }
 
-    private void NewRoomButton_OnNewRoomCreated(object _sender, EventArgs _event) {
+    private void MainMenu_OnNewRoomCreated(object _sender, EventArgs _event) {
         EnableServerMonster();
+    }
+
+    private void MainMenu_OnRoomJoined(object _sender, EventArgs _event) {
+        EnableClientMonster();
     }
 
     private void BrowseMenuControlJoinButton_OnClientJoined(object _sender, EventArgs _event) {
@@ -37,5 +42,10 @@ public class MonsterPack : MonoBehaviour {
         monsterStateManager.gameObject.SetActive(false);
         monster.gameObject.SetActive(false);
         monsterPlaceholder.SetActive(true);
+    }
+
+    void OnDestroy() {
+        NetworkReferenceManager.Instance.MainMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
+        NetworkReferenceManager.Instance.MainMenu.OnRoomJoined -= MainMenu_OnRoomJoined;
     }
 }
