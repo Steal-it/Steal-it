@@ -12,6 +12,10 @@ public class MonsterPack : MonoBehaviour {
     void Start() {
         NetworkReferenceManager.Instance.MainMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
         NetworkReferenceManager.Instance.MainMenu.OnRoomJoined += MainMenu_OnRoomJoined;
+
+        monsterStateManager.gameObject.SetActive(false);
+        monster.gameObject.SetActive(false);
+        monsterPlaceholder.SetActive(false);
     }
 
     private void MainMenu_OnNewRoomCreated(object _sender, EventArgs _event) {

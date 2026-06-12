@@ -1,11 +1,19 @@
 using UnityEngine;
 
-public class Monster : MonoBehaviour {
+public class Monster : NetworkObject {
     [SerializeField]
     private MonsterStateManager monsterStateManager;
 
     private float lightExposureTimer;
     private int lightExposureCounter;
+
+    void OnEnable() {
+        SelectObject();
+    }
+
+    void Start() {
+        OnStart();
+    }
 
     void Update() {
         if (monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Stunned) return;
@@ -21,6 +29,10 @@ public class Monster : MonoBehaviour {
         }
     }
 
+    void FixedUpdate() {
+        OnFixedUpdate();
+    }
+
     public void StartLightExposureTimer() {
         if (lightExposureCounter == 0) {
             // Start the light exposure timer only at the first flash
@@ -34,6 +46,18 @@ public class Monster : MonoBehaviour {
         if (lightExposureCounter == 0) return;
 
         lightExposureCounter--;
+    }
+
+    protected override void SendOnFixedUpdate() { }
+
+    protected override void NotSendOnFixedUpdate() { }
+
+    protected override void OwnedOnReceived() { }
+
+    protected override void NotOwnedOnReceived() { }
+
+    void OnDisable() {
+        DeselectObject();
     }
 
     void OnDrawGizmos() {
