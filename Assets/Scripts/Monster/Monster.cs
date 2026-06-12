@@ -1,6 +1,14 @@
+using Ubiq.Geometry;
+using Ubiq.Messaging;
 using UnityEngine;
 
-public class Monster : NetworkObject {
+public class Monster : MonoBehaviour {
+    protected NetworkContext Context { private get; set; }
+    protected bool AmIOwner { private get; set; }
+    protected bool AmISender { private get; set; }
+
+
+
     [SerializeField]
     private MonsterStateManager monsterStateManager;
 
@@ -8,12 +16,14 @@ public class Monster : NetworkObject {
     private int lightExposureCounter;
 
     void Awake() {
-        OnAwake();
+        AmIOwner = false;
+
+        Context = NetworkScene.Register(this);
     }
 
-    void OnEnable() {
-        SelectObject();
-    }
+    // void OnEnable() {
+    //     SelectObject();
+    // }
 
     void Update() {
         if (monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Stunned) return;
@@ -30,7 +40,51 @@ public class Monster : NetworkObject {
     }
 
     void FixedUpdate() {
-        OnFixedUpdate();
+        // Only if I am the sender I transmit the position
+        if (true) {
+            SendMessage();
+        } else {
+        }
+    }
+
+    protected void SelectObject() {
+        AmIOwner = true;
+        AmISender = true;
+        SendMessage();
+    }
+
+    protected void ReleaseObject() {
+        AmIOwner = false;
+        SendMessage();
+    }
+
+    protected void DeselectObject() {
+        AmIOwner = false;
+        AmISender = false;
+        SendMessage();
+    }
+
+    protected void SendMessage() {
+        print("Send");
+        MovementMessage message = new MovementMessage {
+            Position = Transforms.ToLocal(transform, Context.Scene.transform),
+            IsOwned = AmIOwner
+        };
+
+        Context.SendJson(message);
+    }
+
+    public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
+        print("Received");
+        MovementMessage message = _message.FromJson<MovementMessage>();
+        Pose pose = Transforms.ToWorld(message.Position, Context.Scene.transform);
+        transform.SetPositionAndRotation(pose.position, pose.rotation);
+
+        if (message.IsOwned) {
+            // If object is taken by another, the current player is no longer the amISender
+            AmISender = false;
+        } else {
+        }
     }
 
     public void StartLightExposureTimer() {
@@ -48,17 +102,9 @@ public class Monster : NetworkObject {
         lightExposureCounter--;
     }
 
-    protected override void SendOnFixedUpdate() { }
-
-    protected override void NotSendOnFixedUpdate() { }
-
-    protected override void OwnedOnReceived() { }
-
-    protected override void NotOwnedOnReceived() { }
-
-    void OnDisable() {
-        DeselectObject();
-    }
+    // void OnDisable() {
+    //     DeselectObject();
+    // }
 
     void OnDrawGizmos() {
         if (monsterStateManager == null) return;

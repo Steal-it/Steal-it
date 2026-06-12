@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 9205352204091402431}
   - component: {fileID: 5149558592360750955}
   - component: {fileID: 4971175063801977183}
+  - component: {fileID: 7401960151035805380}
   m_Layer: 10
   m_Name: MonsterPlaceholder
   m_TagString: Untagged
@@ -476,7 +477,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5051900472626878694}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -569,6 +570,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterAnimator
   animator: {fileID: 5149558592360750955}
+--- !u!114 &7401960151035805380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5051900472626878694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa1afbdc43ad17740bdb2df86b1df8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterPlaceholder
 --- !u!1 &5271374392353787487
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,6 +41,7 @@ public abstract class NetworkObject : MonoBehaviour {
     }
 
     protected void SendMessage() {
+        print("Send");
         MovementMessage message = new MovementMessage {
             Position = Transforms.ToLocal(transform, Context.Scene.transform),
             IsOwned = AmIOwner
@@ -50,6 +51,7 @@ public abstract class NetworkObject : MonoBehaviour {
     }
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
+        print("Received");
         MovementMessage message = _message.FromJson<MovementMessage>();
         Pose pose = Transforms.ToWorld(message.Position, Context.Scene.transform);
         transform.SetPositionAndRotation(pose.position, pose.rotation);
