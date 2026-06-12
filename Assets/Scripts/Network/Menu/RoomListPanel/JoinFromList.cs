@@ -1,19 +1,25 @@
+using System;
 using Ubiq.Rooms;
 using UnityEngine;
 
 public class BrowseMenuControlJoinButton : MonoBehaviour {
+    public event EventHandler OnClientJoined;
+
     private BrowseMenuControl browseMenuControl;
     private RoomClient roomClient;
     private string joinCode;
+
     private void OnEnable() {
         browseMenuControl = GetComponentInParent<BrowseMenuControl>();
         browseMenuControl.OnBind.AddListener(BrowseRoomControl_OnBind);
     }
+
     private void OnDisable() {
         if (browseMenuControl) {
             browseMenuControl.OnBind.RemoveListener(BrowseRoomControl_OnBind);
         }
     }
+
     private void BrowseRoomControl_OnBind(RoomClient _roomClient, IRoom _room) {
         roomClient = _roomClient;
         joinCode = _room.JoinCode;
@@ -24,5 +30,7 @@ public class BrowseMenuControlJoinButton : MonoBehaviour {
             return;
         }
         roomClient.Join(joincode: joinCode);
+
+        OnClientJoined?.Invoke(this, EventArgs.Empty);
     }
 }

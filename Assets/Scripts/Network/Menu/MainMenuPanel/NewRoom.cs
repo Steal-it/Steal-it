@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using Ubiq.Rooms;
 
 public class NewRoomButton : MonoBehaviour {
+    public event EventHandler OnNewRoomCreated;
+
     // Expected to be called by a UI element
     [SerializeField]
     private Button button;
@@ -24,6 +26,8 @@ public class NewRoomButton : MonoBehaviour {
             name: roomName,
             publish: true
         );
+
+        OnNewRoomCreated?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnDestroy() {
