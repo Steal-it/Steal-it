@@ -7,7 +7,7 @@ public abstract class NetworkObject : MonoBehaviour {
     protected bool AmIOwner { private get; set; }
     protected bool AmISender { private get; set; }
 
-    protected void OnStart() {
+    protected void OnAwake() {
         AmIOwner = false;
 
         Context = NetworkScene.Register(this);
@@ -50,7 +50,6 @@ public abstract class NetworkObject : MonoBehaviour {
     }
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
-        print("Message received");
         MovementMessage message = _message.FromJson<MovementMessage>();
         Pose pose = Transforms.ToWorld(message.Position, Context.Scene.transform);
         transform.SetPositionAndRotation(pose.position, pose.rotation);

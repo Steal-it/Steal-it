@@ -7,12 +7,12 @@ public class Monster : NetworkObject {
     private float lightExposureTimer;
     private int lightExposureCounter;
 
-    void OnEnable() {
-        SelectObject();
+    void Awake() {
+        OnAwake();
     }
 
-    void Start() {
-        OnStart();
+    void OnEnable() {
+        SelectObject();
     }
 
     void Update() {
