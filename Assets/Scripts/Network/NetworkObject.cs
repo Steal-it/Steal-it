@@ -2,11 +2,14 @@ using Ubiq.Geometry;
 using Ubiq.Messaging;
 using UnityEngine;
 
+/// <summary>
+/// In order make a NetworkObject working, it has to be child of the Ubiq Network GameObject
+/// </summary>
 public abstract class NetworkObject : MonoBehaviour {
     protected NetworkContext Context { private get; set; }
     protected bool AmIOwner { private get; set; }
     protected bool AmISender { private get; set; }
-    private Transform Transform { get; set; }
+    protected Transform Transform { private get; set; }
 
     protected void OnAwake(NetworkObject _this) {
         Context = NetworkScene.Register(_this);
@@ -25,10 +28,9 @@ public abstract class NetworkObject : MonoBehaviour {
         }
     }
 
-    protected void SelectObject(Transform _transform = null) {
+    protected void SelectObject() {
         AmIOwner = true;
         AmISender = true;
-        Transform = _transform != null ? _transform : transform;
         SendMessage();
     }
 
@@ -44,7 +46,6 @@ public abstract class NetworkObject : MonoBehaviour {
     }
 
     protected void SendMessage() {
-        print("Send");
         MovementMessage message = new MovementMessage {
             Position = Transforms.ToLocal(Transform, Context.Scene.transform),
             IsOwned = AmIOwner
@@ -54,10 +55,9 @@ public abstract class NetworkObject : MonoBehaviour {
     }
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
-        print("Received");
         MovementMessage message = _message.FromJson<MovementMessage>();
         Pose pose = Transforms.ToWorld(message.Position, Context.Scene.transform);
-        transform.SetPositionAndRotation(pose.position, pose.rotation);
+        Transform.SetPositionAndRotation(pose.position, pose.rotation);
 
         if (message.IsOwned) {
             // If object is taken by another, the current player is no longer the amISender

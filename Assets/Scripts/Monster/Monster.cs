@@ -38,7 +38,8 @@ public class Monster : NetworkObject {
         monsterAI.gameObject.SetActive(true);
         monsterPlaceholder.gameObject.SetActive(false);
 
-        SelectObject(monsterAI.transform);
+        Transform = monsterAI.transform;
+        SelectObject();
     }
 
     /// <summary>
@@ -48,7 +49,8 @@ public class Monster : NetworkObject {
         monsterAI.gameObject.SetActive(false);
         monsterPlaceholder.gameObject.SetActive(true);
 
-        DeselectObject();
+        Transform = monsterPlaceholder.transform;
+        // DeselectObject();
     }
 
     void OnDestroy() {
