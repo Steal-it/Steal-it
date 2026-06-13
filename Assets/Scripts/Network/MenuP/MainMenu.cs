@@ -21,11 +21,11 @@ public class MainMenu : MonoBehaviour {
     }
 
     private void CreateNewRoom() {
-        string roomName = Guid.NewGuid().ToString().Substring(0, 7);
-        NetworkReferenceManager.Instance.RoomClient.Join(
-            name: roomName,
-            publish: true
-        );
+        // string roomName = Guid.NewGuid().ToString().Substring(0, 7);
+        // NetworkReferenceManager.Instance.RoomClient.Join(
+        //     name: roomName,
+        //     publish: true
+        // );
 
         OnNewRoomCreated?.Invoke(this, EventArgs.Empty);
     }

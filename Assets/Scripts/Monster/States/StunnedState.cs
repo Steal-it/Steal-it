@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class StunnedState : IMonsterState {
     private MonsterStateManager monsterStateManager;
-    private Monster monster;
+    private MonsterAI monster;
     private NavMeshAgent agent;
     private bool isAnimationFinished;
     private bool isChangingState;

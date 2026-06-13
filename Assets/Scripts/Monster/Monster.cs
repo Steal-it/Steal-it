@@ -1,51 +1,59 @@
+using System;
 using UnityEngine;
 
 public class Monster : NetworkObject {
     [SerializeField]
-    private MonsterStateManager monsterStateManager;
-
-    private float lightExposureTimer;
-    private int lightExposureCounter;
+    private MonsterAI monsterAI;
+    [SerializeField]
+    private MonsterPlaceholder monsterPlaceholder;
 
     void Awake() {
         OnAwake(this);
     }
 
-    void OnEnable() {
-        SelectObject();
-    }
+    void Start() {
+        NetworkReferenceManager.Instance.MainMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
+        NetworkReferenceManager.Instance.MainMenu.OnRoomJoined += MainMenu_OnRoomJoined;
 
-    void Update() {
-        if (monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Stunned) return;
-
-        // If at least one player is flashing the monster, start light exposure timer
-        if (lightExposureCounter > 0) {
-            lightExposureTimer -= Time.deltaTime;
-            print(lightExposureTimer);
-
-            if (lightExposureTimer <= 0) {
-                monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
-            }
-        }
+        monsterAI.gameObject.SetActive(false);
+        monsterPlaceholder.gameObject.SetActive(false);
     }
 
     void FixedUpdate() {
         OnFixedUpdate();
     }
 
-    public void StartLightExposureTimer() {
-        if (lightExposureCounter == 0) {
-            // Start the light exposure timer only at the first flash
-            lightExposureTimer = monsterStateManager.LightExposureTime;
-        }
-
-        lightExposureCounter++;
+    private void MainMenu_OnNewRoomCreated(object _sender, EventArgs _event) {
+        EnableServerMonster();
     }
 
-    public void StopLightExposureTimer() {
-        if (lightExposureCounter == 0) return;
+    private void MainMenu_OnRoomJoined(object _sender, EventArgs _event) {
+        EnableClientMonster();
+    }
 
-        lightExposureCounter--;
+    /// <summary>
+    /// Enables the monster with its logic, used for the client that created the room, acting as a server.
+    /// </summary>
+    private void EnableServerMonster() {
+        monsterAI.gameObject.SetActive(true);
+        monsterPlaceholder.gameObject.SetActive(false);
+
+        SelectObject(monsterAI.transform);
+    }
+
+    /// <summary>
+    /// Disable the monster and its logic to use the placeholder, used for the clients that did not created the room.
+    /// </summary>
+    private void EnableClientMonster() {
+        monsterAI.gameObject.SetActive(false);
+        monsterPlaceholder.gameObject.SetActive(true);
+
+        DeselectObject();
+    }
+
+    void OnDestroy() {
+        NetworkReferenceManager.Instance.MainMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
+        NetworkReferenceManager.Instance.MainMenu.OnRoomJoined -= MainMenu_OnRoomJoined;
     }
 
     protected override void SendOnFixedUpdate() { }
@@ -55,28 +63,4 @@ public class Monster : NetworkObject {
     protected override void OwnedOnReceived() { }
 
     protected override void NotOwnedOnReceived() { }
-
-    void OnDisable() {
-        DeselectObject();
-    }
-
-    void OnDrawGizmos() {
-        if (monsterStateManager == null) return;
-
-        int numLines = 6;
-        float angleOffset = monsterStateManager.ViewAngle / numLines;
-        for (int i = 0; i < numLines + 1; i++) {
-            Vector3 line = DirFromAngle(-monsterStateManager.ViewAngle / 2 + angleOffset * i);
-
-            Gizmos.DrawLine(transform.position, transform.position + line * monsterStateManager.ViewRadius);
-        }
-
-        Vector3 DirFromAngle(float _angleDegrees) {
-            // Offset by the agent's current Y rotation so the cone rotates with it
-            _angleDegrees += transform.eulerAngles.y;
-            return new Vector3(Mathf.Sin(_angleDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(_angleDegrees * Mathf.Deg2Rad));
-        }
-
-        // Gizmos.DrawWireSphere(transform.position, monsterStateManager.StunnedMinDistanceDestination);
-    }
 }

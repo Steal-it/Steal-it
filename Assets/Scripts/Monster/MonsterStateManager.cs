@@ -12,7 +12,7 @@ public class MonsterStateManager : MonoBehaviour {
 
     public Dictionary<StateKey, IMonsterState> StateDictionary => stateDictionary;
     public StateKey CurrentStateKey => currentStateKey;
-    public Monster Monster => monster;
+    public MonsterAI Monster => monster;
     public NavMeshAgent Agent => monster.GetComponent<NavMeshAgent>();
     public float LightExposureTime => lightExposureTime;
 
@@ -38,7 +38,7 @@ public class MonsterStateManager : MonoBehaviour {
     public NavMeshSurface ChaseNavMeshSurface => chaseNavMeshSurface;
 
     [SerializeField]
-    private Monster monster;
+    private MonsterAI monster;
     [SerializeField, Range(0.2f, 1)]
     private float lightExposureTime = 0.5f;
 

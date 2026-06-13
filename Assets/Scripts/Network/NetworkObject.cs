@@ -6,11 +6,13 @@ public abstract class NetworkObject : MonoBehaviour {
     protected NetworkContext Context { private get; set; }
     protected bool AmIOwner { private get; set; }
     protected bool AmISender { private get; set; }
+    private Transform Transform { get; set; }
 
     protected void OnAwake(NetworkObject _this) {
-        AmIOwner = false;
-
         Context = NetworkScene.Register(_this);
+
+        AmIOwner = false;
+        Transform = transform;
     }
 
     protected void OnFixedUpdate() {
@@ -23,9 +25,10 @@ public abstract class NetworkObject : MonoBehaviour {
         }
     }
 
-    protected void SelectObject() {
+    protected void SelectObject(Transform _transform = null) {
         AmIOwner = true;
         AmISender = true;
+        Transform = _transform != null ? _transform : transform;
         SendMessage();
     }
 
@@ -43,7 +46,7 @@ public abstract class NetworkObject : MonoBehaviour {
     protected void SendMessage() {
         print("Send");
         MovementMessage message = new MovementMessage {
-            Position = Transforms.ToLocal(transform, Context.Scene.transform),
+            Position = Transforms.ToLocal(Transform, Context.Scene.transform),
             IsOwned = AmIOwner
         };
 

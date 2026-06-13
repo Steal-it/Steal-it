@@ -21,7 +21,7 @@ public class Torch : MonoBehaviour {
 
     private Battery battery;
     private bool emitLight;
-    private Monster monster;
+    private MonsterAI monster;
 
     void Start() {
         TorchManager.Instance.ControllerConfigurator.Enable(transform, OnTriggerPressed);
@@ -52,7 +52,7 @@ public class Torch : MonoBehaviour {
         RaycastHit[] hitArray = Physics.SphereCastAll(lightEmitPointTransform.position, lightRadius, lightEmitPointTransform.forward, maxLightDistance);
         bool isMonsterHit = false;
         foreach (RaycastHit hit in hitArray) {
-            if (hit.transform.TryGetComponent(out Monster _monster)) {
+            if (hit.transform.TryGetComponent(out MonsterAI _monster)) {
                 isMonsterHit = true;
 
                 // The first time the player illuminates the monster ...

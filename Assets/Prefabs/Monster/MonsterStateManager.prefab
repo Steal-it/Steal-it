@@ -52,6 +52,7 @@ MonoBehaviour:
   everythingButAvatarLayer:
     serializedVersion: 2
     m_Bits: 8183
+  monsterAnimator: {fileID: 0}
   stunnedMinDistanceDestination: 35
   wanderAndStunnedSpeed: 3
   wanderAndStunnedNavMeshSurface: {fileID: 0}

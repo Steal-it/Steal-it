@@ -5,7 +5,7 @@ public class WanderState : IMonsterState {
     public Transform Player => player;
 
     private MonsterStateManager monsterStateManager;
-    private Monster monster;
+    private MonsterAI monster;
     private NavMeshAgent agent;
     private Transform player;
     private bool isChangingState;
