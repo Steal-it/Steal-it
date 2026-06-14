@@ -10,13 +10,25 @@ public class RoomLobbyMenu : MonoBehaviour {
     [SerializeField]
     private Button exitButton;
 
+    private MsgHandler msgHandler;
+
     void Awake() {
         readyButton.onClick.AddListener(NotifyReady);
         exitButton.onClick.AddListener(ExitRoom);
     }
 
-    private void NotifyReady() {
+    void Start() {
+        msgHandler = NetworkReferenceManager.Instance.MsgHandler;
 
+        msgHandler.OnCounterRecoverFinished += OnCounterRecoverFinishedHandler;
+    }
+
+    private void OnCounterRecoverFinishedHandler(object _sender, EventArgs _event) {
+        readyButton.interactable = false;
+    }
+
+    private void NotifyReady() {
+        msgHandler.SendReadyMessage();
     }
 
     private void ExitRoom() {
@@ -31,5 +43,7 @@ public class RoomLobbyMenu : MonoBehaviour {
     void OnDestroy() {
         readyButton.onClick.RemoveAllListeners();
         exitButton.onClick.RemoveAllListeners();
+
+        msgHandler.OnCounterRecoverFinished -= OnCounterRecoverFinishedHandler;
     }
 }

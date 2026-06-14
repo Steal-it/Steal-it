@@ -4302,6 +4302,10 @@ PrefabInstance:
       propertyPath: localLobbyMenu
       value: 
       objectReference: {fileID: 1224107674}
+    - target: {fileID: 6934788661410911001, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: roomsListPanel
+      value: 
+      objectReference: {fileID: 422126321}
     - target: {fileID: 7913157992386734740, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1

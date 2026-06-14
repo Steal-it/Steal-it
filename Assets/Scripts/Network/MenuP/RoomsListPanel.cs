@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Ubiq.Rooms;
 using UnityEngine;
 
 public class RoomsListPanel : MonoBehaviour {
+    public event EventHandler OnRoomJoined;
+
     [SerializeField]
     private GameObject listElementTemplate;
 
@@ -85,11 +88,16 @@ public class RoomsListPanel : MonoBehaviour {
         // Hide the element list if it corresponds to the current room
         elementGameObject.SetActive(!_isCurrentRoom);
 
-        return elementGameObject.GetComponent<RoomsListElement>();
+        RoomsListElement roomsListElement = elementGameObject.GetComponent<RoomsListElement>();
+        roomsListElement.OnRoomJoined += (_sender, _event) => OnRoomJoined?.Invoke(this, EventArgs.Empty);
+
+        return roomsListElement;
     }
 
     void OnDestroy() {
-        roomClient.OnRooms.RemoveListener(OnRoomsDiscovered);
-        roomClient.OnJoinedRoom.RemoveListener(OnJoinedRoom);
+        if (roomClient != null) {
+            roomClient.OnRooms.RemoveListener(OnRoomsDiscovered);
+            roomClient.OnJoinedRoom.RemoveListener(OnJoinedRoom);
+        }
     }
 }

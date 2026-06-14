@@ -27,6 +27,7 @@ public class LevelManager : MonoBehaviour {
 
     private MsgHandler msgHandler;
     private LocalLobbyMenu localLobbyMenu;
+    private RoomsListPanel roomsListPanel;
     private RoomLobbyMenu roomLobbyMenu;
     private bool isClientAsServer;
 
@@ -36,11 +37,13 @@ public class LevelManager : MonoBehaviour {
     void Start() {
         msgHandler = NetworkReferenceManager.Instance.MsgHandler;
         localLobbyMenu = NetworkReferenceManager.Instance.LocalLobbyMenu;
+        roomsListPanel = NetworkReferenceManager.Instance.RoomsListPanel;
         roomLobbyMenu = NetworkReferenceManager.Instance.RoomLobbyMenu;
 
         msgHandler.OnAllPeersReadyForChange += LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished += UpdatePeerLoadingStatus;
         localLobbyMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
+        roomsListPanel.OnRoomJoined += RoomsListPanel_OnRoomJoined;
         roomLobbyMenu.OnRoomExited += RoomLobbyMenu_OnRoomExited;
 
         LoadLocalLobby();
@@ -99,6 +102,11 @@ public class LevelManager : MonoBehaviour {
         isClientAsServer = true;
     }
 
+    private void RoomsListPanel_OnRoomJoined(object _sender, EventArgs _event) {
+        LoadRoomLobby();
+        isClientAsServer = false;
+    }
+
     private void RoomLobbyMenu_OnRoomExited(object _sender, EventArgs _event) {
         LoadLocalLobby();
         isClientAsServer = false;
@@ -127,6 +135,7 @@ public class LevelManager : MonoBehaviour {
         msgHandler.OnAllPeersReadyForChange -= LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished -= UpdatePeerLoadingStatus;
         localLobbyMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
+        roomsListPanel.OnRoomJoined -= RoomsListPanel_OnRoomJoined;
         roomLobbyMenu.OnRoomExited -= RoomLobbyMenu_OnRoomExited;
     }
 }

@@ -1,9 +1,12 @@
+using System;
 using TMPro;
 using Ubiq.Rooms;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RoomsListElement : MonoBehaviour {
+    public event EventHandler OnRoomJoined;
+
     [SerializeField]
     private TMP_Text roomNameText;
     [SerializeField]
@@ -21,6 +24,8 @@ public class RoomsListElement : MonoBehaviour {
             return;
         }
         roomClient.Join(joincode: joinCode);
+
+        OnRoomJoined?.Invoke(this, EventArgs.Empty);
     }
 
     public void Bind(RoomClient _roomClient, IRoom _room) {
