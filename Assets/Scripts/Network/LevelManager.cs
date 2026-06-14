@@ -1,33 +1,51 @@
 using System;
+using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 
 public class LevelManager : MonoBehaviour {
     [SerializeField]
-    private Transform rigTransformer;
+    private XROrigin rig;
+    [SerializeField]
+    private LocomotionMediator rigLocomotor;
+    [SerializeField]
+    private Transform localLobbySpawnPoint;
+    [SerializeField]
+    private Transform roomLobbySpawnPoint;
     [SerializeField]
     private Transform gameSpawnPoint;
     [SerializeField]
     private GameObject loaderCanvas;
     [SerializeField]
-    private UnityEngine.UI.Image progressBar;
+    private Image progressBar;
 
     private MsgHandler msgHandler;
+    private LocalLobbyMenu localLobbyMenu;
+    private RoomLobbyMenu roomLobbyMenu;
+    private bool isClientAsServer;
 
     private float target;
     // private Boolean hadAllPeerLoadedScene;
 
     void Start() {
         msgHandler = NetworkReferenceManager.Instance.MsgHandler;
+        localLobbyMenu = NetworkReferenceManager.Instance.LocalLobbyMenu;
+        roomLobbyMenu = NetworkReferenceManager.Instance.RoomLobbyMenu;
 
         msgHandler.OnAllPeersReadyForChange += LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished += UpdatePeerLoadingStatus;
+        localLobbyMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
+        roomLobbyMenu.OnRoomExited += RoomLobbyMenu_OnRoomExited;
+
+        LoadLocalLobby();
     }
 
     void Update() {
         progressBar.fillAmount = Mathf.MoveTowards(progressBar.fillAmount, target, 3 * Time.deltaTime);
     }
 
-    public void LoadScreen(object _sender, MsgHandler.OnAllPeersReadyForChangeEventArgs _event) {
+    private void LoadScreen(object _sender, MsgHandler.OnAllPeersReadyForChangeEventArgs _event) {
         target = 0;
         progressBar.fillAmount = 0;
 
@@ -36,7 +54,7 @@ public class LevelManager : MonoBehaviour {
 
         switch (_event.levelName) {
             case "Test":
-                rigTransformer.position = gameSpawnPoint.position;
+                LoadGame();
                 break;
             default:
                 Debug.LogError("Attempt to switch to " + _event.levelName + " but it does not exists");
@@ -67,12 +85,39 @@ public class LevelManager : MonoBehaviour {
 
     }
 
-    public void UpdatePeerLoadingStatus(object _sender, EventArgs _event) {
+    private void UpdatePeerLoadingStatus(object _sender, EventArgs _event) {
         // hadAllPeerLoadedScene = true;
+    }
+
+    private void MainMenu_OnNewRoomCreated(object _sender, EventArgs _event) {
+        LoadRoomLobby();
+        isClientAsServer = true;
+    }
+
+    private void RoomLobbyMenu_OnRoomExited(object _sender, EventArgs _event) {
+        LoadLocalLobby();
+        isClientAsServer = false;
+    }
+
+    private void LoadLocalLobby() {
+        rig.transform.SetPositionAndRotation(localLobbySpawnPoint.position, localLobbySpawnPoint.rotation);
+        rigLocomotor.gameObject.SetActive(false);
+    }
+
+    private void LoadRoomLobby() {
+        rig.transform.SetPositionAndRotation(roomLobbySpawnPoint.position, roomLobbySpawnPoint.rotation);
+        rigLocomotor.gameObject.SetActive(true);
+    }
+
+    private void LoadGame() {
+        rig.transform.SetPositionAndRotation(gameSpawnPoint.position, gameSpawnPoint.rotation);
+        rigLocomotor.gameObject.SetActive(true);
     }
 
     void OnDestroy() {
         msgHandler.OnAllPeersReadyForChange -= LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished -= UpdatePeerLoadingStatus;
+        localLobbyMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
+        roomLobbyMenu.OnRoomExited -= RoomLobbyMenu_OnRoomExited;
     }
 }

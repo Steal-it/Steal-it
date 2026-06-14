@@ -7,14 +7,6 @@ public class MonsterAI : MonoBehaviour {
     private float lightExposureTimer;
     private int lightExposureCounter;
 
-    // void Awake() {
-    //     OnAwake(this);
-    // }
-
-    // void OnEnable() {
-    //     SelectObject();
-    // }
-
     void Update() {
         if (monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Stunned) return;
 
@@ -28,10 +20,6 @@ public class MonsterAI : MonoBehaviour {
             }
         }
     }
-
-    // void FixedUpdate() {
-    //     OnFixedUpdate();
-    // }
 
     public void StartLightExposureTimer() {
         if (lightExposureCounter == 0) {
@@ -47,18 +35,6 @@ public class MonsterAI : MonoBehaviour {
 
         lightExposureCounter--;
     }
-
-    // protected override void SendOnFixedUpdate() { }
-
-    // protected override void NotSendOnFixedUpdate() { }
-
-    // protected override void OwnedOnReceived() { }
-
-    // protected override void NotOwnedOnReceived() { }
-
-    // void OnDisable() {
-    //     DeselectObject();
-    // }
 
     void OnDrawGizmos() {
         if (monsterStateManager == null) return;

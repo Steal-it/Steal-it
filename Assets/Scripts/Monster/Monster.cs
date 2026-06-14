@@ -12,8 +12,8 @@ public class Monster : NetworkObject {
     }
 
     void Start() {
-        NetworkReferenceManager.Instance.MainMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
-        NetworkReferenceManager.Instance.MainMenu.OnRoomJoined += MainMenu_OnRoomJoined;
+        // NetworkReferenceManager.Instance.MainMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
+        // NetworkReferenceManager.Instance.MainMenu.OnRoomJoined += MainMenu_OnRoomJoined;
 
         monsterAI.gameObject.SetActive(false);
         monsterPlaceholder.gameObject.SetActive(false);
@@ -53,11 +53,6 @@ public class Monster : NetworkObject {
         // DeselectObject();
     }
 
-    void OnDestroy() {
-        NetworkReferenceManager.Instance.MainMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
-        NetworkReferenceManager.Instance.MainMenu.OnRoomJoined -= MainMenu_OnRoomJoined;
-    }
-
     protected override void SendOnFixedUpdate() { }
 
     protected override void NotSendOnFixedUpdate() { }
@@ -65,4 +60,9 @@ public class Monster : NetworkObject {
     protected override void OwnedOnReceived() { }
 
     protected override void NotOwnedOnReceived() { }
+
+    void OnDestroy() {
+        // NetworkReferenceManager.Instance.LocalLobbyMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
+        // NetworkReferenceManager.Instance.LocalLobbyMenu.OnRoomJoined -= MainMenu_OnRoomJoined;
+    }
 }

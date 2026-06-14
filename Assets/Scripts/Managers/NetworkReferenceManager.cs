@@ -8,8 +8,8 @@ public class NetworkReferenceManager : MonoBehaviour {
     public RoomClient RoomClient => roomClient;
     public AvatarManager AvatarManager => avatarManager;
     public MsgHandler MsgHandler => msgHandler;
-    public NewRoomButton NewRoomButton => newRoomButton;
-    public MainMenu MainMenu => mainMenu;
+    public LocalLobbyMenu LocalLobbyMenu => localLobbyMenu;
+    public RoomLobbyMenu RoomLobbyMenu => roomLobbyMenu;
 
     [SerializeField]
     private RoomClient roomClient;
@@ -18,9 +18,9 @@ public class NetworkReferenceManager : MonoBehaviour {
     [SerializeField]
     private MsgHandler msgHandler;
     [SerializeField]
-    private NewRoomButton newRoomButton;
+    private LocalLobbyMenu localLobbyMenu;
     [SerializeField]
-    private MainMenu mainMenu;
+    private RoomLobbyMenu roomLobbyMenu;
 
     void Awake() {
         if (Instance != null) {
