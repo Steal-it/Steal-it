@@ -108,6 +108,10 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void RoomLobbyMenu_OnRoomExited(object _sender, EventArgs _event) {
+        if (isClientAsServer) {
+            // TODO: The client who created the room left, so elect another client to take the server role
+        }
+
         LoadLocalLobby();
         isClientAsServer = false;
     }

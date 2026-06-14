@@ -20,11 +20,11 @@ public class RoomLobbyMenu : MonoBehaviour {
     void Start() {
         msgHandler = NetworkReferenceManager.Instance.MsgHandler;
 
-        msgHandler.OnCounterRecoverFinished += OnCounterRecoverFinishedHandler;
+        msgHandler.OnCounterRecoverFinished += MsgHandler_OnCounterRecoverFinished;
     }
 
-    private void OnCounterRecoverFinishedHandler(object _sender, EventArgs _event) {
-        readyButton.interactable = false;
+    private void MsgHandler_OnCounterRecoverFinished(object _sender, EventArgs _event) {
+        // readyButton.interactable = true;
     }
 
     private void NotifyReady() {
@@ -44,6 +44,6 @@ public class RoomLobbyMenu : MonoBehaviour {
         readyButton.onClick.RemoveAllListeners();
         exitButton.onClick.RemoveAllListeners();
 
-        msgHandler.OnCounterRecoverFinished -= OnCounterRecoverFinishedHandler;
+        msgHandler.OnCounterRecoverFinished -= MsgHandler_OnCounterRecoverFinished;
     }
 }

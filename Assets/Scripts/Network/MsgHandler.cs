@@ -6,9 +6,10 @@ using Ubiq.Rooms;
 using UnityEngine;
 using WebSocketSharp;
 
+#region Messages
 [Serializable]
 public class BaseMessage {
-    public string messageType; // Need to be public due to serialization
+    public string messageType;
 
     public BaseMessage(string msgType) {
         messageType = msgType;
@@ -32,11 +33,12 @@ public class RecoverCurrentCounterRequestMessage : BaseMessage {
 
 [Serializable]
 public class RecoverCurrentCounterReplyMessage : BaseMessage {
-    public int localCounter; //Need to be public due to serialization
+    public int localCounter;
     public RecoverCurrentCounterReplyMessage(int localCounter) : base("RecoverCurrentCounterReplyMsg") {
         this.localCounter = localCounter;
     }
 }
+#endregion
 
 public class MsgHandler : MonoBehaviour {
     public event EventHandler OnCounterRecoverFinished;
@@ -90,7 +92,7 @@ public class MsgHandler : MonoBehaviour {
             context.SendJson(new RecoverCurrentCounterReplyMessage(receiveReadyMsgCounter));
         } else {
             Debug.LogWarning("Network context is not available, retry send in one second");
-            await Task.Delay(1000); //Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
             RecoverCurrentCounterRequestMessageHandler();
         }
 
@@ -103,8 +105,7 @@ public class MsgHandler : MonoBehaviour {
     }
 
     private async void RecoverCurrentCounterProcessStatusChecker() {
-        //Check whether the recovery counter process has ended and signal registered handler
-
+        // Check whether the recovery counter process has ended and signal registered handler
         do {
             await Task.Delay(100);
         } while (receiveRecoverCurrentCounterReplyCounter == roomClient.Peers.Count());
@@ -122,7 +123,7 @@ public class MsgHandler : MonoBehaviour {
             }
         } else {
             Debug.LogWarning("Network context is not available, retry send in one second");
-            await Task.Delay(1000); //Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
             SendReadyMessage();
         }
     }
@@ -136,7 +137,7 @@ public class MsgHandler : MonoBehaviour {
             }
         } else {
             Debug.LogWarning("Network context is not available, retry send in one second");
-            await Task.Delay(1000); //Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
             SendLoadLevelCompletedMessage();
         }
     }
@@ -187,7 +188,7 @@ public class MsgHandler : MonoBehaviour {
             context.SendJson(new RecoverCurrentCounterRequestMessage());
         } else {
             Debug.LogWarning("Network context is not available, retry send in one second");
-            await Task.Delay(1000); //Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
             OnJoinedRoomHandler(_room);
         }
     }
