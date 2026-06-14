@@ -20,12 +20,16 @@ public class HandCollisionController : MonoBehaviour {
 
     [SerializeField]
     private LayerHandler pokeHandler;
+    [SerializeField]
+    private LayerHandler customActionHandler;
 
     public LayerHandler LadderHandler => ladderHandler;
     public LayerHandler PokeHandler => pokeHandler;
+    public LayerHandler CustomActionHandler => customActionHandler;
 
     public event Action<bool> OnLadder;
     public event Action<float, float> OnPoke;
+    public event Action<CustomAction> OnCustomAction;
 
 
     private SphereCollider detectorCollider;
@@ -33,10 +37,13 @@ public class HandCollisionController : MonoBehaviour {
 
     void Awake() {
         TryGetComponent(out detectorCollider);
+    }
 
+    void Start() {
         dispatch = new() {
             [ladderHandler] = HandleLadder,
             [pokeHandler] = HandlePoke,
+            [customActionHandler] = HandleCustomAction,
         };
     }
 
@@ -60,7 +67,7 @@ public class HandCollisionController : MonoBehaviour {
         }
     }
 
-    private void HandleLadder(Collider _other, Trigger_phase _phase) {
+    private void HandleLadder(Collider _, Trigger_phase _phase) {
         OnLadder?.Invoke(_phase == Trigger_phase.Enter);
     }
 
@@ -73,6 +80,12 @@ public class HandCollisionController : MonoBehaviour {
         Vector3 closest = _other.ClosestPoint(transform.position);
         float distance = Vector3.Distance(transform.position, closest);
         OnPoke?.Invoke(distance, detectorCollider.radius);
+    }
+
+    private void HandleCustomAction(Collider _other, Trigger_phase _phase) {
+        CustomAction action = _other.GetComponent<CustomAction>();
+        action.InputSetActive(_phase == Trigger_phase.Enter);
+        OnCustomAction?.Invoke(_phase == Trigger_phase.Enter ? action : null);
     }
 
     public void SetHandlerEnabled(LayerHandler _handler, bool _active)

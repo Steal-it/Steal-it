@@ -3,6 +3,11 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class HandInteractionController : MonoBehaviour {
+    [SerializeField]
+    private InputActionsAssociation torchInputAction;
+
+    public InputActionsAssociation TorchInputAction => torchInputAction;
+
     private NearFarInteractor nearFarInteractor;
 
     public void Init(Side _side) {
@@ -14,9 +19,17 @@ public class HandInteractionController : MonoBehaviour {
         }
     }
 
+    void Start() {
+        torchInputAction.Init();
+    }
+
     public void ToggleInteractions(bool _active) {
         nearFarInteractor.enableNearCasting = _active;
         nearFarInteractor.enableFarCasting = _active;
+        torchInputAction.primaryAction.InputSetActive(!_active);
     }
 
+    void OnDestroy() {
+        torchInputAction.Disable();
+    }
 }

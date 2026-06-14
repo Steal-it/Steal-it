@@ -72,8 +72,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hand
   playerSettings: {fileID: 11400000, guid: 9b522f323ae15ab4ca53102e529efb2c, type: 2}
   side: 1
-  torchObj: {fileID: 0}
-  torchActivateInputAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!114 &7124885932941053760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +100,14 @@ MonoBehaviour:
     fireOnStay: 1
     fireOnExit: 1
     enabled: 1
+  customActionHandler:
+    layer:
+      serializedVersion: 2
+      m_Bits: 32768
+    fireOnEnter: 1
+    fireOnStay: 0
+    fireOnExit: 1
+    enabled: 1
 --- !u!114 &859149492800240172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +120,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc447a7505b31349a3239e249d5a2e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandInteractionController
+  torchInputAction:
+    input: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    primaryAction: {fileID: 0}
+  googlesInputAction:
+    input: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    primaryAction: {fileID: 0}
 --- !u!114 &6933425539760233770
 MonoBehaviour:
   m_ObjectHideFlags: 0

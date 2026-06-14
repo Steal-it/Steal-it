@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class Torch : MonoBehaviour {
+public class Torch : CustomAction /*, IHandComponent*/ {
     public event EventHandler<OnTorchTurnedEventArgs> OnTorchTurned;
     public class OnTorchTurnedEventArgs : EventArgs {
         public bool isTurnedOn;
@@ -71,7 +71,22 @@ public class Torch : MonoBehaviour {
         socketInteractor.showInteractableHoverMeshes = true;
     }
 
-    public void OnTriggerPressed(InputAction.CallbackContext _) {
+    protected override void AfterInputSet(bool _active) {
+        gameObject.SetActive(_active);
+    }
+
+    private void ToggleLight() {
+        OnTorchTurned?.Invoke(this, new OnTorchTurnedEventArgs {
+            isTurnedOn = emitLight
+        });
+    }
+
+    void OnDestroy() {
+        socketInteractor.selectEntered.RemoveAllListeners();
+        socketInteractor.selectExited.RemoveAllListeners();
+    }
+
+    public override void OnInputFired(InputAction.CallbackContext _) {
         if (battery != null) {
             emitLight = !emitLight;
             ToggleLight();
@@ -87,14 +102,6 @@ public class Torch : MonoBehaviour {
         ToggleLight();
     }
 
-    private void ToggleLight() {
-        OnTorchTurned?.Invoke(this, new OnTorchTurnedEventArgs {
-            isTurnedOn = emitLight
-        });
-    }
-
-    void OnDestroy() {
-        socketInteractor.selectEntered.RemoveAllListeners();
-        socketInteractor.selectExited.RemoveAllListeners();
+    public override void OnInputStop(InputAction.CallbackContext _) {
     }
 }
