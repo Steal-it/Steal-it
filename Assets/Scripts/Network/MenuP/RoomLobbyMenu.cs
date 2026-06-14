@@ -32,6 +32,8 @@ public class RoomLobbyMenu : MonoBehaviour {
     }
 
     private void ExitRoom() {
+        msgHandler.SendNewClientAsServerElection();
+
         NetworkReferenceManager.Instance.RoomClient.Join(
             name: null,
             publish: false

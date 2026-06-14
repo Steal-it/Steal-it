@@ -11,8 +11,8 @@ using WebSocketSharp;
 public class BaseMessage {
     public string messageType;
 
-    public BaseMessage(string msgType) {
-        messageType = msgType;
+    public BaseMessage(string _messageType) {
+        messageType = _messageType;
     }
 }
 
@@ -34,8 +34,16 @@ public class RecoverCurrentCounterRequestMessage : BaseMessage {
 [Serializable]
 public class RecoverCurrentCounterReplyMessage : BaseMessage {
     public int localCounter;
-    public RecoverCurrentCounterReplyMessage(int localCounter) : base("RecoverCurrentCounterReplyMsg") {
-        this.localCounter = localCounter;
+    public RecoverCurrentCounterReplyMessage(int _localCounter) : base("RecoverCurrentCounterReplyMsg") {
+        this.localCounter = _localCounter;
+    }
+}
+
+[Serializable]
+public class NewClientAsServerElectionMessage : BaseMessage {
+    public string clientAsServerUuid;
+    public NewClientAsServerElectionMessage(string _clientAsServerUuid) : base("NewClientAsServerElectionMsg") {
+        clientAsServerUuid = _clientAsServerUuid;
     }
 }
 #endregion
@@ -47,6 +55,8 @@ public class MsgHandler : MonoBehaviour {
     public class OnAllPeersReadyForChangeEventArgs : EventArgs {
         public string levelName;
     }
+    public event EventHandler OnClientAsServerChanged;
+
 
     private RoomClient roomClient;
     private NetworkContext context;
@@ -142,35 +152,61 @@ public class MsgHandler : MonoBehaviour {
         }
     }
 
+    public async void SendNewClientAsServerElection() {
+        if (roomClient.Peers.Count() == 0) return;
+
+        if (context.Scene != null) {
+            // Elect the first peer in the list as the one to act as the server
+            IPeer peer = roomClient.Peers.First();
+            context.SendJson(new NewClientAsServerElectionMessage(peer.uuid));
+        } else {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendNewClientAsServerElection();
+        }
+    }
+
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _msg) {
         BaseMessage message = _msg.FromJson<BaseMessage>();
         switch (message.messageType) {
-            case "ReadyMsg":
-                Debug.Log("Received Ready Msg");
-                receiveReadyMsgCounter += 1;
-                if (receiveReadyMsgCounter == 1) {
-                    ChangeLevelHandler();
+            case "ReadyMsg": {
+                    Debug.Log("Received Ready Msg");
+                    receiveReadyMsgCounter += 1;
+                    if (receiveReadyMsgCounter == 1) {
+                        ChangeLevelHandler();
+                    }
                 }
                 break;
-            case "LoadLevelCompletedMsg":
-                Debug.Log("Received Load Msg");
-                receiveLoadCompleteMsgCounter += 1;
-                if (receiveLoadCompleteMsgCounter == 1) {
-                    PeerLoadingHandler();
+            case "LoadLevelCompletedMsg": {
+                    Debug.Log("Received Load Msg");
+                    receiveLoadCompleteMsgCounter += 1;
+                    if (receiveLoadCompleteMsgCounter == 1) {
+                        PeerLoadingHandler();
+                    }
                 }
                 break;
-            case "RecoverCurrentCounterRequestMsg":
-                wasCounterRequested = true;
-                Debug.Log("Received counter request");
-                RecoverCurrentCounterRequestMessageHandler();
+            case "RecoverCurrentCounterRequestMsg": {
+                    wasCounterRequested = true;
+                    Debug.Log("Received Counter Request");
+                    RecoverCurrentCounterRequestMessageHandler();
+                }
                 break;
-            case "RecoverCurrentCounterReplyMsg":
-                Debug.Log("Received counter reply");
-                RecoverCurrentCounterReplyMessage finalMessage = _msg.FromJson<RecoverCurrentCounterReplyMessage>();
-                RecoverCurrentCounterReplyMessageHandler(finalMessage);
-                receiveRecoverCurrentCounterReplyCounter += 1;
-                if (receiveRecoverCurrentCounterReplyCounter == 1) {
-                    RecoverCurrentCounterProcessStatusChecker();
+            case "RecoverCurrentCounterReplyMsg": {
+                    Debug.Log("Received Counter Reply");
+                    RecoverCurrentCounterReplyMessage finalMessage = _msg.FromJson<RecoverCurrentCounterReplyMessage>();
+                    RecoverCurrentCounterReplyMessageHandler(finalMessage);
+                    receiveRecoverCurrentCounterReplyCounter += 1;
+                    if (receiveRecoverCurrentCounterReplyCounter == 1) {
+                        RecoverCurrentCounterProcessStatusChecker();
+                    }
+                }
+                break;
+            case "NewClientAsServerElectionMsg": {
+                    Debug.Log("Received Client As Server Election Msg");
+                    NewClientAsServerElectionMessage finalMessage = _msg.FromJson<NewClientAsServerElectionMessage>();
+                    if (roomClient.Me.uuid == finalMessage.clientAsServerUuid) {
+                        OnClientAsServerChanged?.Invoke(this, EventArgs.Empty);
+                    }
                 }
                 break;
             default:

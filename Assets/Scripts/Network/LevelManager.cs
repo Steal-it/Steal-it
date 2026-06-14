@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour {
 
         msgHandler.OnAllPeersReadyForChange += LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished += UpdatePeerLoadingStatus;
+        msgHandler.OnClientAsServerChanged += MsgHandler_OnClientAsServerChanged;
         localLobbyMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
         roomsListPanel.OnRoomJoined += RoomsListPanel_OnRoomJoined;
         roomLobbyMenu.OnRoomExited += RoomLobbyMenu_OnRoomExited;
@@ -95,6 +96,11 @@ public class LevelManager : MonoBehaviour {
 
     private void UpdatePeerLoadingStatus(object _sender, EventArgs _event) {
         // hadAllPeerLoadedScene = true;
+    }
+
+
+    private void MsgHandler_OnClientAsServerChanged(object _sender, EventArgs _event) {
+        isClientAsServer = true;
     }
 
     private void MainMenu_OnNewRoomCreated(object _sender, EventArgs _event) {
