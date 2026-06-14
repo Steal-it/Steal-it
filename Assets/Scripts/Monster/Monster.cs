@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Monster : NetworkObject {
@@ -12,8 +11,7 @@ public class Monster : NetworkObject {
     }
 
     void Start() {
-        // NetworkReferenceManager.Instance.MainMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
-        // NetworkReferenceManager.Instance.MainMenu.OnRoomJoined += MainMenu_OnRoomJoined;
+        NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += LevelManager_OnGameLoaded;
 
         monsterAI.gameObject.SetActive(false);
         monsterPlaceholder.gameObject.SetActive(false);
@@ -23,12 +21,12 @@ public class Monster : NetworkObject {
         OnFixedUpdate();
     }
 
-    private void MainMenu_OnNewRoomCreated(object _sender, EventArgs _event) {
-        EnableServerMonster();
-    }
-
-    private void MainMenu_OnRoomJoined(object _sender, EventArgs _event) {
-        EnableClientMonster();
+    private void LevelManager_OnGameLoaded(object _sender, LevelManager.OnGameLoadedEventArgs _event) {
+        if (_event.IsClientAsServer) {
+            EnableServerMonster();
+        } else {
+            EnableClientMonster();
+        }
     }
 
     /// <summary>
@@ -50,7 +48,6 @@ public class Monster : NetworkObject {
         monsterPlaceholder.gameObject.SetActive(true);
 
         Transform = monsterPlaceholder.transform;
-        // DeselectObject();
     }
 
     protected override void SendOnFixedUpdate() { }
@@ -62,7 +59,6 @@ public class Monster : NetworkObject {
     protected override void NotOwnedOnReceived() { }
 
     void OnDestroy() {
-        // NetworkReferenceManager.Instance.LocalLobbyMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
-        // NetworkReferenceManager.Instance.LocalLobbyMenu.OnRoomJoined -= MainMenu_OnRoomJoined;
+        NetworkReferenceManager.Instance.LevelManager.OnGameLoaded -= LevelManager_OnGameLoaded;
     }
 }

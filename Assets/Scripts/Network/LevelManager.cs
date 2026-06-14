@@ -5,6 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 
 public class LevelManager : MonoBehaviour {
+    public event EventHandler<OnGameLoadedEventArgs> OnGameLoaded;
+    public class OnGameLoadedEventArgs : EventArgs {
+        public bool IsClientAsServer;
+    }
+
     [SerializeField]
     private XROrigin rig;
     [SerializeField]
@@ -112,6 +117,10 @@ public class LevelManager : MonoBehaviour {
     private void LoadGame() {
         rig.transform.SetPositionAndRotation(gameSpawnPoint.position, gameSpawnPoint.rotation);
         rigLocomotor.gameObject.SetActive(true);
+
+        OnGameLoaded?.Invoke(this, new OnGameLoadedEventArgs {
+            IsClientAsServer = isClientAsServer
+        });
     }
 
     void OnDestroy() {

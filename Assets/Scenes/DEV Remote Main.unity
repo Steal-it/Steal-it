@@ -3954,6 +3954,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125539128}
   m_CullTransparentMesh: 1
+--- !u!114 &1183661319 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6567683391160497850, guid: 092eb32917cc7c969b6df8e7d1575699, type: 3}
+  m_PrefabInstance: {fileID: 1637647120}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb832f29bb4b39994839e5dc7e9c8000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelManager
 --- !u!1 &1224107672
 GameObject:
   m_ObjectHideFlags: 0
@@ -4279,6 +4290,10 @@ PrefabInstance:
       propertyPath: mainMenu
       value: 
       objectReference: {fileID: 1224107674}
+    - target: {fileID: 6934788661410911001, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 1183661319}
     - target: {fileID: 6934788661410911001, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
       propertyPath: roomLobbyMenu
       value: 
@@ -5811,7 +5826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4597765539857285132, guid: 11f5ccb0f89d6c611bc843bef70be76a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5508822991182899412, guid: 11f5ccb0f89d6c611bc843bef70be76a, type: 3}
       propertyPath: m_AnchorMax.x
