@@ -37,6 +37,10 @@ public class RoomLobbyMenu : MonoBehaviour {
     }
 
     private void NotifyReady() {
+        // Once the ready button is pressed, the player can only wait for the others to set ready and play
+        readyButton.interactable = false;
+        exitButton.interactable = false;
+
         msgHandler.SendReadyMessage();
     }
 
