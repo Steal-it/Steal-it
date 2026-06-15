@@ -14,6 +14,12 @@ public class Googles : MonoBehaviour {
     private Coroutine seeCoroutine;
 
     public void DisableVisuals() {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+        rb.detectCollisions = false;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        Collider collider = GetComponent<BoxCollider>();
+        collider.enabled = false;
         visualsGameObject.SetActive(false);
     }
 
