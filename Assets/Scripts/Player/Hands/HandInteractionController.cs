@@ -19,13 +19,10 @@ public class HandInteractionController : MonoBehaviour {
         }
     }
 
-    void Start() {
-        torchInputAction.Init();
-    }
-
     public void ToggleInteractions(bool _active) {
         nearFarInteractor.enableNearCasting = _active;
         nearFarInteractor.enableFarCasting = _active;
+        torchInputAction.Init();
         torchInputAction.primaryAction.InputSetActive(!_active);
     }
 

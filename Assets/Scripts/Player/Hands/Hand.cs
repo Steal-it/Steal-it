@@ -35,10 +35,14 @@ public class Hand : MonoBehaviour {
 
     private void ChangeHandTorch(Side _side) {
         bool amITheTorchHand = side == _side;
+
+        handInteractionController.ToggleInteractions(!amITheTorchHand); // toggle the interactions on the free hand  
+
         handCollisionController.SetHandlerEnabled(handCollisionController.LadderHandler, amITheTorchHand); // toggle the collider for ladder on on the torchhand
         handCollisionController.SetHandlerEnabled(handCollisionController.PokeHandler, !amITheTorchHand); // toggle the collider for poke on the free hand
         handCollisionController.SetHandlerEnabled(handCollisionController.CustomActionHandler, !amITheTorchHand); // toggle the collider for goggle on the free hand
-        handInteractionController.ToggleInteractions(!amITheTorchHand); // toggle the interactions on the free hand  
+        handCollisionController.RecalculateCollisions();
+
         handAnimatorController.UpdateGripHand(side, !amITheTorchHand);
     }
 

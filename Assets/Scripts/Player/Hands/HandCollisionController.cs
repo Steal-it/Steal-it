@@ -88,6 +88,11 @@ public class HandCollisionController : MonoBehaviour {
         OnCustomAction?.Invoke(_phase == Trigger_phase.Enter ? action : null);
     }
 
+    public void RecalculateCollisions() {
+        detectorCollider.enabled = false;
+        detectorCollider.enabled = true;
+    }
+
     public void SetHandlerEnabled(LayerHandler _handler, bool _active)
             => _handler.enabled = _active;
 

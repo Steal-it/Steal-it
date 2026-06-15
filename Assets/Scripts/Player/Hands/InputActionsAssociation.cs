@@ -9,13 +9,14 @@ public sealed class InputActionsAssociation {
     private CustomAction activeAction;
 
     public void Init() {
+        Disable();
         activeAction = primaryAction;
         Enable();
     }
 
     public void ChangeCurrentAction(CustomAction _action) {
-        activeAction = _action ?? primaryAction;
         Disable();
+        activeAction = _action ?? primaryAction;
         Enable();
     }
 
@@ -25,6 +26,7 @@ public sealed class InputActionsAssociation {
     }
 
     public void Disable() {
+        if (activeAction == null) return;
         input.action.performed -= activeAction.InputFired;
         input.action.canceled -= activeAction.InputStop;
     }
