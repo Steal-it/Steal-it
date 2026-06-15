@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using Ubiq.Rooms;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +11,8 @@ public class LevelManager : MonoBehaviour {
     public class OnGameLoadedEventArgs : EventArgs {
         public bool IsClientAsServer;
     }
+    public event EventHandler OnMinPlayersNumberReached;
+    public event EventHandler OnMinPlayersNumberLost;
 
     public bool IsClientAsServer => isClientAsServer;
 
@@ -27,21 +31,27 @@ public class LevelManager : MonoBehaviour {
     [SerializeField]
     private Image progressBar;
 
+    private RoomClient roomClient;
     private MsgHandler msgHandler;
     private LocalLobbyMenu localLobbyMenu;
     private RoomsListPanel roomsListPanel;
     private RoomLobbyMenu roomLobbyMenu;
     private bool isClientAsServer;
+    private int minPlayersNumber = 2;
+    private bool isMinPlayerNumberReached;
 
     private float target;
     // private Boolean hadAllPeerLoadedScene;
 
     void Start() {
+        roomClient = NetworkReferenceManager.Instance.RoomClient;
         msgHandler = NetworkReferenceManager.Instance.MsgHandler;
         localLobbyMenu = NetworkReferenceManager.Instance.LocalLobbyMenu;
         roomsListPanel = NetworkReferenceManager.Instance.RoomsListPanel;
         roomLobbyMenu = NetworkReferenceManager.Instance.RoomLobbyMenu;
 
+        roomClient.OnPeerAdded.AddListener(RoomClient_OnPeerAdded);
+        roomClient.OnPeerRemoved.AddListener(RoomClient_OnPeerRemoved);
         msgHandler.OnAllPeersReadyForChange += LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished += UpdatePeerLoadingStatus;
         msgHandler.OnClientAsServerChanged += MsgHandler_OnClientAsServerChanged;
@@ -51,9 +61,22 @@ public class LevelManager : MonoBehaviour {
 
         LoadLocalLobby();
     }
-
     void Update() {
         progressBar.fillAmount = Mathf.MoveTowards(progressBar.fillAmount, target, 3 * Time.deltaTime);
+    }
+
+    private void RoomClient_OnPeerAdded(IPeer _peer) {
+        if (!isMinPlayerNumberReached && roomClient.Peers.Count() + 1 == minPlayersNumber) {
+            isMinPlayerNumberReached = true;
+            OnMinPlayersNumberReached?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void RoomClient_OnPeerRemoved(IPeer _peer) {
+        if (isMinPlayerNumberReached && roomClient.Peers.Count() + 1 == minPlayersNumber - 1) {
+            isMinPlayerNumberReached = false;
+            OnMinPlayersNumberLost?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void LoadScreen(object _sender, MsgHandler.OnAllPeersReadyForChangeEventArgs _event) {
@@ -100,7 +123,6 @@ public class LevelManager : MonoBehaviour {
         // hadAllPeerLoadedScene = true;
     }
 
-
     private void MsgHandler_OnClientAsServerChanged(object _sender, EventArgs _event) {
         isClientAsServer = true;
     }
@@ -140,6 +162,8 @@ public class LevelManager : MonoBehaviour {
     }
 
     void OnDestroy() {
+        roomClient.OnPeerAdded.RemoveListener(RoomClient_OnPeerAdded);
+        roomClient.OnPeerRemoved.RemoveListener(RoomClient_OnPeerRemoved);
         msgHandler.OnAllPeersReadyForChange -= LoadScreen;
         msgHandler.OnAllPeersLoadingLevelFinished -= UpdatePeerLoadingStatus;
         localLobbyMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;

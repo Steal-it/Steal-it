@@ -35,7 +35,7 @@ public class RecoverCurrentCounterRequestMessage : BaseMessage {
 public class RecoverCurrentCounterReplyMessage : BaseMessage {
     public int localCounter;
     public RecoverCurrentCounterReplyMessage(int _localCounter) : base("RecoverCurrentCounterReplyMsg") {
-        this.localCounter = _localCounter;
+        localCounter = _localCounter;
     }
 }
 
@@ -56,7 +56,6 @@ public class MsgHandler : MonoBehaviour {
         public string levelName;
     }
     public event EventHandler OnClientAsServerChanged;
-    public event EventHandler OnPeerCountUpdated;
 
     private RoomClient roomClient;
     private NetworkContext context;
@@ -120,7 +119,7 @@ public class MsgHandler : MonoBehaviour {
         } while (receiveRecoverCurrentCounterReplyCounter == roomClient.Peers.Count());
 
         receiveRecoverCurrentCounterReplyCounter = 0;
-        OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
+        // OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
     }
 
     public async void SendReadyMessage() {
@@ -219,7 +218,6 @@ public class MsgHandler : MonoBehaviour {
         await Task.Delay(100);
 
         if (roomClient.Peers.Count() == 0 && !_room.Name.IsNullOrEmpty()) {
-            // OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
             return;
         }
 

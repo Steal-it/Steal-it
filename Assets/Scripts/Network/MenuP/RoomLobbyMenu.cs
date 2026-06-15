@@ -11,6 +11,7 @@ public class RoomLobbyMenu : MonoBehaviour {
     private Button exitButton;
 
     private MsgHandler msgHandler;
+    private LevelManager levelManager;
 
     void Awake() {
         readyButton.onClick.AddListener(NotifyReady);
@@ -19,12 +20,20 @@ public class RoomLobbyMenu : MonoBehaviour {
 
     void Start() {
         msgHandler = NetworkReferenceManager.Instance.MsgHandler;
+        levelManager = NetworkReferenceManager.Instance.LevelManager;
 
-        msgHandler.OnCounterRecoverFinished += MsgHandler_OnCounterRecoverFinished;
+        levelManager.OnMinPlayersNumberReached += LevelManager_OnMinPlayersNumberReached;
+        levelManager.OnMinPlayersNumberLost += LevelManager_OnMinPlayersNumberLost;
+
+        readyButton.interactable = false;
     }
 
-    private void MsgHandler_OnCounterRecoverFinished(object _sender, EventArgs _event) {
-        // readyButton.interactable = true;
+    private void LevelManager_OnMinPlayersNumberReached(object sender, EventArgs e) {
+        readyButton.interactable = true;
+    }
+
+    private void LevelManager_OnMinPlayersNumberLost(object sender, EventArgs e) {
+        readyButton.interactable = false;
     }
 
     private void NotifyReady() {
@@ -49,6 +58,7 @@ public class RoomLobbyMenu : MonoBehaviour {
         readyButton.onClick.RemoveAllListeners();
         exitButton.onClick.RemoveAllListeners();
 
-        msgHandler.OnCounterRecoverFinished -= MsgHandler_OnCounterRecoverFinished;
+        levelManager.OnMinPlayersNumberReached -= LevelManager_OnMinPlayersNumberReached;
+        levelManager.OnMinPlayersNumberLost -= LevelManager_OnMinPlayersNumberLost;
     }
 }
