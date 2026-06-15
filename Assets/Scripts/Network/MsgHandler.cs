@@ -56,7 +56,7 @@ public class MsgHandler : MonoBehaviour {
         public string levelName;
     }
     public event EventHandler OnClientAsServerChanged;
-
+    public event EventHandler OnPeerCountUpdated;
 
     private RoomClient roomClient;
     private NetworkContext context;
@@ -105,7 +105,6 @@ public class MsgHandler : MonoBehaviour {
             await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
             RecoverCurrentCounterRequestMessageHandler();
         }
-
     }
 
     private void RecoverCurrentCounterReplyMessageHandler(RecoverCurrentCounterReplyMessage _msg) {
@@ -186,8 +185,8 @@ public class MsgHandler : MonoBehaviour {
                 }
                 break;
             case "RecoverCurrentCounterRequestMsg": {
-                    wasCounterRequested = true;
                     Debug.Log("Received Counter Request");
+                    wasCounterRequested = true;
                     RecoverCurrentCounterRequestMessageHandler();
                 }
                 break;
@@ -216,10 +215,14 @@ public class MsgHandler : MonoBehaviour {
     }
 
     private async void OnJoinedRoomHandler(IRoom _room) {
+        // Let Ubiq update Peers list
+        await Task.Delay(100);
+
         if (roomClient.Peers.Count() == 0 && !_room.Name.IsNullOrEmpty()) {
-            OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
+            // OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
             return;
         }
+
         if (context.Scene != null) {
             context.SendJson(new RecoverCurrentCounterRequestMessage());
         } else {

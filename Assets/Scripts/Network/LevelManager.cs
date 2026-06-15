@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour {
         public bool IsClientAsServer;
     }
 
+    public bool IsClientAsServer => isClientAsServer;
+
     [SerializeField]
     private XROrigin rig;
     [SerializeField]
@@ -114,10 +116,6 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void RoomLobbyMenu_OnRoomExited(object _sender, EventArgs _event) {
-        if (isClientAsServer) {
-            // TODO: The client who created the room left, so elect another client to take the server role
-        }
-
         LoadLocalLobby();
         isClientAsServer = false;
     }

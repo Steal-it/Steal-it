@@ -32,7 +32,10 @@ public class RoomLobbyMenu : MonoBehaviour {
     }
 
     private void ExitRoom() {
-        msgHandler.SendNewClientAsServerElection();
+        if (NetworkReferenceManager.Instance.LevelManager.IsClientAsServer) {
+            // The client who created the room exited, elect a new client that acts as the server
+            msgHandler.SendNewClientAsServerElection();
+        }
 
         NetworkReferenceManager.Instance.RoomClient.Join(
             name: null,

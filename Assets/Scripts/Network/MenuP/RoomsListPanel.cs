@@ -12,7 +12,7 @@ public class RoomsListPanel : MonoBehaviour {
     private RoomClient roomClient;
     private List<IRoom> lastRoomList;
     private List<RoomsListElement> elementList = new List<RoomsListElement>();
-    private float roomRefreshInterval = 2.0f;
+    private float roomRefreshInterval = 1;
     private float roomRefreshTime;
     private Transform listContentTransform;
 
