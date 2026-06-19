@@ -1,15 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractNetworkObjectMessage {
+[Serializable]
+public class BaseNetworkObjectMessage {
     public string Type;
 
-    public AbstractNetworkObjectMessage(string _type) {
+    public BaseNetworkObjectMessage(string _type) {
         Type = _type;
     }
 }
 
-public class MovementMessage : AbstractNetworkObjectMessage {
+[Serializable]
+public class MovementMessage : BaseNetworkObjectMessage {
     public const string TYPE = "MovementMessage";
 
     public Pose Pose;
@@ -21,7 +24,8 @@ public class MovementMessage : AbstractNetworkObjectMessage {
     }
 }
 
-public class AnimationMessage : AbstractNetworkObjectMessage {
+[Serializable]
+public class AnimationMessage : BaseNetworkObjectMessage {
     public const string TYPE = "AnimationMessage";
 
     public Dictionary<string, object> ParameterDictionary;

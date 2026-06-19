@@ -55,12 +55,12 @@ public abstract class AbstractNetworkObject : MonoBehaviour {
         SendMessage(message);
     }
 
-    protected void SendMessage(AbstractNetworkObjectMessage _message) {
+    protected void SendMessage(BaseNetworkObjectMessage _message) {
         Context.SendJson(_message);
     }
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
-        AbstractNetworkObjectMessage message = _message.FromJson<AbstractNetworkObjectMessage>();
+        BaseNetworkObjectMessage message = _message.FromJson<BaseNetworkObjectMessage>();
 
         switch (message.Type) {
             case MovementMessage.TYPE: {
@@ -86,6 +86,7 @@ public abstract class AbstractNetworkObject : MonoBehaviour {
 
                     AnimationMessage castedMessage = _message.FromJson<AnimationMessage>();
 
+                    // TODO: ParameterDictionary probably null or something like that
                     NetworkAnimator.SetParameterDictionary(castedMessage.ParameterDictionary);
                 }
                 break;
