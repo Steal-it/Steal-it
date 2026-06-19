@@ -1,4 +1,4 @@
-public class MonsterPlaceholder : NetworkObject {
+public class MonsterPlaceholder : AbstractNetworkObject {
     void Awake() {
         OnAwake(this);
     }

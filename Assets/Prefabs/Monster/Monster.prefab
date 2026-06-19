@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4212918262395633944}
+  - component: {fileID: 4736213548696606068}
   - component: {fileID: 6797356139077388598}
+  - component: {fileID: 2931577317039288719}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -32,8 +34,31 @@ Transform:
   m_Children:
   - {fileID: 8004292508174751233}
   - {fileID: 2177681331017293810}
+  - {fileID: 4256008496063383503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4736213548696606068
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639377919184963550}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a000360bd7547214a916b43e2e4bcd69, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &6797356139077388598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,6 +73,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Monster
   monsterAI: {fileID: 2317005374497049244}
   monsterPlaceholder: {fileID: 7114517630825867914}
+  visual: {fileID: 4256008496063383503}
+  monsterAnimator: {fileID: 2931577317039288719}
+--- !u!114 &2931577317039288719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639377919184963550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 187b5acadd48e6746924ee5973005c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterAnimator
+  animator: {fileID: 4736213548696606068}
+--- !u!1001 &3306250160460107156
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4212918262395633944}
+    m_Modifications:
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211278979278080049, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+      propertyPath: m_Name
+      value: MonsterVisual
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+--- !u!4 &4256008496063383503 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1653463373325175387, guid: 4f78c156fa75e7b4ba81cc235b01a53e, type: 3}
+  m_PrefabInstance: {fileID: 3306250160460107156}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3761195596278571657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59,6 +161,10 @@ PrefabInstance:
     - target: {fileID: 506387078646425554, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
       propertyPath: m_Name
       value: MonsterAI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2954893742755480266, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
+      propertyPath: animator
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6568085365530375304, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -105,25 +211,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2317005374497049244}
     - target: {fileID: 7378869976606434113, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
+      propertyPath: monsterAI
+      value: 
+      objectReference: {fileID: 2317005374497049244}
+    - target: {fileID: 7378869976606434113, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
       propertyPath: monsterAnimator
       value: 
-      objectReference: {fileID: 2104191767531593795}
-    m_RemovedComponents: []
+      objectReference: {fileID: 2931577317039288719}
+    - target: {fileID: 9192724586150669905, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 462200235526316127, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
---- !u!114 &2104191767531593795 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2954893742755480266, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
-  m_PrefabInstance: {fileID: 3761195596278571657}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 187b5acadd48e6746924ee5973005c1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MonsterAnimator
 --- !u!114 &2317005374497049244 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1447304108538325013, guid: 364fdc35e964533478ab24df0fb6049a, type: 3}
@@ -151,6 +255,10 @@ PrefabInstance:
     - target: {fileID: 4598977991551425741, guid: 98bff8b7c26b51b4dbf7cd68ee558ffc, type: 3}
       propertyPath: m_Name
       value: MonsterPlaceholder
+      objectReference: {fileID: 0}
+    - target: {fileID: 5136012390912021838, guid: 98bff8b7c26b51b4dbf7cd68ee558ffc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7202188841303887767, guid: 98bff8b7c26b51b4dbf7cd68ee558ffc, type: 3}
       propertyPath: m_LocalPosition.x

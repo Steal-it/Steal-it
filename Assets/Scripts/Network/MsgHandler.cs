@@ -208,7 +208,7 @@ public class MsgHandler : MonoBehaviour {
                 }
                 break;
             default:
-                Debug.LogError("Received unknown message!" + message.messageType);
+                Debug.LogWarning("Received unknown message!" + message.messageType);
                 break;
         }
     }

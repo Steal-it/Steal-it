@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-public class MovementMessage {
+public class TeoMovementMessage {
     public Pose Position;
     public bool IsOwned;
 }
@@ -62,7 +62,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
     private void OnRelease(SelectExitEventArgs _args) {
         Debug.Log("Object released");
         amIOwner = false;
-        var msg = new MovementMessage {
+        var msg = new TeoMovementMessage {
             Position = Transforms.ToLocal(transform, context.Scene.transform),
             IsOwned = false
         };
@@ -70,7 +70,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
     }
 
     private void SendMessage() {
-        var message = new MovementMessage {
+        var message = new TeoMovementMessage {
             Position = Transforms.ToLocal(transform, context.Scene.transform),
             IsOwned = amIOwner
         };
@@ -90,7 +90,7 @@ public class SphereManager : MonoBehaviour, INetworkSpawnable {
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
         Debug.Log("receiving");
-        var msg = _message.FromJson<MovementMessage>();
+        var msg = _message.FromJson<TeoMovementMessage>();
         var pose = Transforms.ToWorld(msg.Position, context.Scene.transform);
         transform.SetPositionAndRotation(pose.position, pose.rotation);
 

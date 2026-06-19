@@ -10,10 +10,12 @@ public class MonsterStateManager : MonoBehaviour {
         Stunned
     }
 
+    #region Public References
+    // TODO: return readonly values
     public Dictionary<StateKey, IMonsterState> StateDictionary => stateDictionary;
     public StateKey CurrentStateKey => currentStateKey;
-    public MonsterAI Monster => monster;
-    public NavMeshAgent Agent => monster.GetComponent<NavMeshAgent>();
+    public MonsterAI Monster => monsterAI;
+    public NavMeshAgent Agent => monsterAI.GetComponent<NavMeshAgent>();
     public float LightExposureTime => lightExposureTime;
 
     // Wander Mode
@@ -36,9 +38,11 @@ public class MonsterStateManager : MonoBehaviour {
     public float ChasingAcceleration => chasingAcceleration;
     public float KillDistance => killDistance;
     public NavMeshSurface ChaseNavMeshSurface => chaseNavMeshSurface;
+    #endregion
 
+    #region Properties
     [SerializeField]
-    private MonsterAI monster;
+    private MonsterAI monsterAI;
     [SerializeField, Range(0.2f, 1)]
     private float lightExposureTime = 0.5f;
 
@@ -75,6 +79,7 @@ public class MonsterStateManager : MonoBehaviour {
     private float killDistance = 1.5f;
     [SerializeField]
     private NavMeshSurface chaseNavMeshSurface;
+    #endregion
 
     private Dictionary<StateKey, IMonsterState> stateDictionary = new Dictionary<StateKey, IMonsterState>();
     private IMonsterState currentState;

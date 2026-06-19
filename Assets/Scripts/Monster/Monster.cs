@@ -1,24 +1,37 @@
+using System;
 using UnityEngine;
 
-public class Monster : NetworkObject {
+public class Monster : AbstractNetworkObject {
     [SerializeField]
     private MonsterAI monsterAI;
     [SerializeField]
     private MonsterPlaceholder monsterPlaceholder;
+    [SerializeField]
+    private Transform visual;
+    [SerializeField]
+    private MonsterAnimator monsterAnimator;
 
     void Awake() {
         OnAwake(this);
+
+        NetworkAnimator = monsterAnimator;
     }
 
     void Start() {
         NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += LevelManager_OnGameLoaded;
+        monsterAnimator.OnAnimationChanged += MonsterAnimator_OnAnimationChanged;
 
         monsterAI.gameObject.SetActive(false);
         monsterPlaceholder.gameObject.SetActive(false);
+        visual.gameObject.SetActive(false);
     }
 
     void FixedUpdate() {
         OnFixedUpdate();
+
+        if (Transform != null) {
+            visual.SetPositionAndRotation(Transform.position, Transform.rotation);
+        }
     }
 
     private void LevelManager_OnGameLoaded(object _sender, LevelManager.OnGameLoadedEventArgs _event) {
@@ -27,6 +40,14 @@ public class Monster : NetworkObject {
         } else {
             EnableClientMonster();
         }
+        visual.gameObject.SetActive(true);
+    }
+
+    private void MonsterAnimator_OnAnimationChanged(object _sender, MonsterAnimator.OnAnimationChangedEventArgs _event) {
+        AnimationMessage message = new AnimationMessage();
+        message.ParameterDictionary.Add("isStunned", _event.IsStunned);
+
+        SendMessage(message);
     }
 
     /// <summary>
@@ -60,5 +81,6 @@ public class Monster : NetworkObject {
 
     void OnDestroy() {
         NetworkReferenceManager.Instance.LevelManager.OnGameLoaded -= LevelManager_OnGameLoaded;
+        monsterAnimator.OnAnimationChanged -= MonsterAnimator_OnAnimationChanged;
     }
 }
