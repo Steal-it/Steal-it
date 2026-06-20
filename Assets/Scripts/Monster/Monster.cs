@@ -1,6 +1,10 @@
 using UnityEngine;
 
-public class Monster : AbstractNetworkObject {
+public class Monster : MonoBehaviour {
+    [SerializeField]
+    private NetworkMovement networkMovement;
+    [SerializeField]
+    private NetworkAnimation networkAnimation;
     [SerializeField]
     private MonsterAI monsterAI;
     [SerializeField]
@@ -10,15 +14,10 @@ public class Monster : AbstractNetworkObject {
     [SerializeField]
     private MonsterAnimator monsterAnimator;
 
-    void Awake() {
-        OnAwake(this);
-
-        NetworkAnimator = monsterAnimator;
-    }
-
     void Start() {
         NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += LevelManager_OnGameLoaded;
         monsterAnimator.OnAnimationChanged += MonsterAnimator_OnAnimationChanged;
+        networkAnimation.OnMessageReceived += NetworkAnimation_OnMessageReceived;
 
         monsterAI.gameObject.SetActive(false);
         monsterPlaceholder.gameObject.SetActive(false);
@@ -26,10 +25,8 @@ public class Monster : AbstractNetworkObject {
     }
 
     void FixedUpdate() {
-        OnFixedUpdate();
-
-        if (Transform != null) {
-            visual.SetPositionAndRotation(Transform.position, Transform.rotation);
+        if (networkMovement.Transform != null) {
+            visual.SetPositionAndRotation(networkMovement.Transform.position, networkMovement.Transform.rotation);
         }
     }
 
@@ -42,9 +39,12 @@ public class Monster : AbstractNetworkObject {
         visual.gameObject.SetActive(true);
     }
 
-    private void MonsterAnimator_OnAnimationChanged(object _sender, MonsterAnimator.OnAnimationChangedEventArgs _event) {
-        // print("monster: " + _event.ParameterDictionary.Count);
-        SendAnimationParameters(_event.ParameterDictionary);
+    private void MonsterAnimator_OnAnimationChanged(object _sender, AbstractNetworkAnimator.OnAnimationChangedEventArgs _event) {
+        networkAnimation.SendAnimationParameters(_event.ParameterDictionary);
+    }
+
+    private void NetworkAnimation_OnMessageReceived(object _sender, NetworkAnimation.OnMessageReceivedEventArgs _event) {
+        monsterAnimator.SetParameterDictionary(_event.ParameterDictionary);
     }
 
     /// <summary>
@@ -54,8 +54,8 @@ public class Monster : AbstractNetworkObject {
         monsterAI.gameObject.SetActive(true);
         monsterPlaceholder.gameObject.SetActive(false);
 
-        Transform = monsterAI.transform;
-        SelectObject();
+        networkMovement.Transform = monsterAI.transform;
+        networkMovement.SelectObject();
     }
 
     /// <summary>
@@ -65,16 +65,8 @@ public class Monster : AbstractNetworkObject {
         monsterAI.gameObject.SetActive(false);
         monsterPlaceholder.gameObject.SetActive(true);
 
-        Transform = monsterPlaceholder.transform;
+        networkMovement.Transform = monsterPlaceholder.transform;
     }
-
-    protected override void SendOnFixedUpdate() { }
-
-    protected override void NotSendOnFixedUpdate() { }
-
-    protected override void OwnedOnReceived() { }
-
-    protected override void NotOwnedOnReceived() { }
 
     void OnDestroy() {
         NetworkReferenceManager.Instance.LevelManager.OnGameLoaded -= LevelManager_OnGameLoaded;

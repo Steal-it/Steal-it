@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Ubiq.Dictionaries;
 using UnityEngine;
 
@@ -13,50 +12,21 @@ public class BaseNetworkObjectMessage {
 }
 
 [Serializable]
-public class MovementMessage : BaseNetworkObjectMessage {
-    public const string TYPE = "MovementMessage";
-
+public class MovementMessage {
     public Pose Pose;
     public bool IsOwned;
 
-    public MovementMessage(Pose _pose, bool _isOwned) : base(TYPE) {
+    public MovementMessage(Pose _pose, bool _isOwned) {
         Pose = _pose;
         IsOwned = _isOwned;
     }
 }
 
 [Serializable]
-public class AnimationMessage : BaseNetworkObjectMessage {
-    #region Animator Parameters
-    // [Serializable]
-    // public class AnimatorParameter {
-    //     public string Name;
+public class AnimationMessage {
+    public SerializableDictionary ParameterDictionary;
 
-    //     public AnimatorParameter(string _name) {
-    //         Name = _name;
-    //     }
-    // }
-    #endregion
-
-    public const string TYPE = "AnimationMessage";
-
-    public SerializableDictionary<KeyValuePair<string, string>> ParameterDictionary;
-    // public SerializableDictionary<string, bool> ParameterDictionary;
-
-    public AnimationMessage() : base(TYPE) {
-        ParameterDictionary = new SerializableDictionary<string, string>();
-        // ParameterDictionary = new SerializableDictionary<string, bool>();
-    }
-}
-
-[Serializable]
-public class AnimatorParameter { }
-
-[Serializable]
-public class AnimatorBoolParameter : AnimatorParameter {
-    public bool Value;
-
-    public AnimatorBoolParameter(bool _value) {
-        Value = _value;
+    public AnimationMessage(SerializableDictionary _parameterDictionary) {
+        ParameterDictionary = _parameterDictionary;
     }
 }

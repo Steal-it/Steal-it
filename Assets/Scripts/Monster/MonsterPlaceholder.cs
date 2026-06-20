@@ -1,13 +1,3 @@
-public class MonsterPlaceholder : AbstractNetworkObject {
-    void Awake() {
-        OnAwake(this);
-    }
+using UnityEngine;
 
-    protected override void SendOnFixedUpdate() { }
-
-    protected override void NotSendOnFixedUpdate() { }
-
-    protected override void OwnedOnReceived() { }
-
-    protected override void NotOwnedOnReceived() { }
-}
+public class MonsterPlaceholder : MonoBehaviour { }

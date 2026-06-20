@@ -11,8 +11,7 @@ public class MonsterStateManager : MonoBehaviour {
     }
 
     #region Public References
-    // TODO: return readonly values
-    public Dictionary<StateKey, IMonsterState> StateDictionary => stateDictionary;
+    public IReadOnlyDictionary<StateKey, IMonsterState> StateDictionary => stateDictionary;
     public StateKey CurrentStateKey => currentStateKey;
     public MonsterAI Monster => monsterAI;
     public NavMeshAgent Agent => monsterAI.GetComponent<NavMeshAgent>();

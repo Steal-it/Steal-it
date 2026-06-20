@@ -18,6 +18,7 @@ public class WanderState : IMonsterState {
 
         isChangingState = false;
         monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = true;
+        monsterStateManager.ChaseNavMeshSurface.enabled = false;
         agent.speed = monsterStateManager.WanderAndStunnedSpeed;
         agent.autoBraking = true;
         agent.destination = monster.transform.position;
