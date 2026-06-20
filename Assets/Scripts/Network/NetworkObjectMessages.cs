@@ -52,11 +52,11 @@ public class AnimationMessage : BaseNetworkObjectMessage {
 
     public const string TYPE = "AnimationMessage";
 
-    public SerializableDictionary<string, IAnimatorParameter> ParameterDictionary;
-    // public SerializableDictionary<string, object> ParameterDictionary;
+    // public SerializableDictionary<string, IAnimatorParameter> ParameterDictionary;
+    public SerializableDictionary<string, bool> ParameterDictionary;
 
     public AnimationMessage() : base(TYPE) {
-        ParameterDictionary = new SerializableDictionary<string, IAnimatorParameter>();
-        // ParameterDictionary = new SerializableDictionary<string, object>();
+        // ParameterDictionary = new SerializableDictionary<string, IAnimatorParameter>();
+        ParameterDictionary = new SerializableDictionary<string, bool>();
     }
 }

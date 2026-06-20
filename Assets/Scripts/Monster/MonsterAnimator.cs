@@ -5,8 +5,8 @@ using UnityEngine;
 public class MonsterAnimator : AbstractNetworkAnimator {
     public event EventHandler<OnAnimationChangedEventArgs> OnAnimationChanged;
     public class OnAnimationChangedEventArgs : EventArgs {
-        public Dictionary<string, AnimationMessage.IAnimatorParameter> ParameterDictionary;
-        // public Dictionary<string, object> ParameterDictionary;
+        // public Dictionary<string, AnimationMessage.IAnimatorParameter> ParameterDictionary;
+        public Dictionary<string, bool> ParameterDictionary;
     }
 
     [SerializeField]
@@ -25,12 +25,12 @@ public class MonsterAnimator : AbstractNetworkAnimator {
         animator.SetBool(IS_STUNNED_ANIM_VAR, _value);
 
         OnAnimationChanged?.Invoke(this, new OnAnimationChangedEventArgs {
-            ParameterDictionary = new Dictionary<string, AnimationMessage.IAnimatorParameter>() {
-                { IS_STUNNED_ANIM_VAR, new AnimationMessage.AnimatorBoolParameter(_value) }
+            //     ParameterDictionary = new Dictionary<string, AnimationMessage.IAnimatorParameter>() {
+            //         { IS_STUNNED_ANIM_VAR, new AnimationMessage.AnimatorBoolParameter(_value) }
+            //     }
+            ParameterDictionary = new Dictionary<string, bool>() {
+                { IS_STUNNED_ANIM_VAR, _value }
             }
-            // ParameterDictionary = new Dictionary<string, object>() {
-            //     { IS_STUNNED_ANIM_VAR, _value }
-            // }
         });
     }
 }
