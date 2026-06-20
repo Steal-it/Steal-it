@@ -56,12 +56,14 @@ public abstract class AbstractNetworkObject : MonoBehaviour {
         SendMessage(message);
     }
 
-    // protected void SendAnimationParameters(Dictionary<string, AnimationMessage.IAnimatorParameter> _parameterDictionary) {
-    protected void SendAnimationParameters(Dictionary<string, object> _parameterDictionary) {
+    protected void SendAnimationParameters(Dictionary<string, AnimationMessage.IAnimatorParameter> _parameterDictionary) {
+        // protected void SendAnimationParameters(Dictionary<string, object> _parameterDictionary) {
         AnimationMessage message = new AnimationMessage();
         foreach (var entry in _parameterDictionary) {
             message.ParameterDictionary.Add(entry.Key, entry.Value);
         }
+
+        print("send: " + message.ParameterDictionary.Count);
 
         SendMessage(message);
     }
@@ -96,6 +98,8 @@ public abstract class AbstractNetworkObject : MonoBehaviour {
                     }
 
                     AnimationMessage castedMessage = _message.FromJson<AnimationMessage>();
+
+                    print("receive: " + castedMessage.ParameterDictionary.Count);
 
                     // TODO: ParameterDictionary probably null or something like that
                     NetworkAnimator.SetParameterDictionary(castedMessage.ParameterDictionary);

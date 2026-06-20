@@ -43,6 +43,7 @@ public class Monster : AbstractNetworkObject {
     }
 
     private void MonsterAnimator_OnAnimationChanged(object _sender, MonsterAnimator.OnAnimationChangedEventArgs _event) {
+        print("monster: " + _event.ParameterDictionary.Count);
         SendAnimationParameters(_event.ParameterDictionary);
     }
 

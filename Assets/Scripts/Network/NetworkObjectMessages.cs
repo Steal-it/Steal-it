@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Ubiq.Dictionaries;
+using Unity.XR.CoreUtils.Collections;
 using UnityEngine;
 
 [Serializable]
@@ -36,25 +38,25 @@ public class AnimationMessage : BaseNetworkObjectMessage {
     //     }
     // }
 
-    // public interface IAnimatorParameter { }
+    public interface IAnimatorParameter { }
 
-    // [Serializable]
-    // public class AnimatorBoolParameter : IAnimatorParameter {
-    //     public bool Value;
+    [Serializable]
+    public class AnimatorBoolParameter : IAnimatorParameter {
+        public bool Value;
 
-    //     public AnimatorBoolParameter(bool _value) {
-    //         Value = _value;
-    //     }
-    // }
+        public AnimatorBoolParameter(bool _value) {
+            Value = _value;
+        }
+    }
     #endregion
 
     public const string TYPE = "AnimationMessage";
 
-    // public Dictionary<string, IAnimatorParameter> ParameterDictionary;
-    public Dictionary<string, object> ParameterDictionary;
+    public SerializableDictionary<string, IAnimatorParameter> ParameterDictionary;
+    // public SerializableDictionary<string, object> ParameterDictionary;
 
     public AnimationMessage() : base(TYPE) {
-        // ParameterDictionary = new Dictionary<string, IAnimatorParameter>();
-        ParameterDictionary = new Dictionary<string, object>();
+        ParameterDictionary = new SerializableDictionary<string, IAnimatorParameter>();
+        // ParameterDictionary = new SerializableDictionary<string, object>();
     }
 }
