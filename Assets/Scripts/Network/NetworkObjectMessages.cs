@@ -38,10 +38,11 @@ public class AnimationMessage : BaseNetworkObjectMessage {
     //     }
     // }
 
-    public interface IAnimatorParameter { }
+    [Serializable]
+    public class AnimatorParameter { }
 
     [Serializable]
-    public class AnimatorBoolParameter : IAnimatorParameter {
+    public class AnimatorBoolParameter : AnimatorParameter {
         public bool Value;
 
         public AnimatorBoolParameter(bool _value) {
@@ -52,11 +53,11 @@ public class AnimationMessage : BaseNetworkObjectMessage {
 
     public const string TYPE = "AnimationMessage";
 
-    // public SerializableDictionary<string, IAnimatorParameter> ParameterDictionary;
-    public SerializableDictionary<string, bool> ParameterDictionary;
+    public SerializableDictionary<string, AnimatorParameter> ParameterDictionary;
+    // public SerializableDictionary<string, bool> ParameterDictionary;
 
     public AnimationMessage() : base(TYPE) {
-        // ParameterDictionary = new SerializableDictionary<string, IAnimatorParameter>();
-        ParameterDictionary = new SerializableDictionary<string, bool>();
+        ParameterDictionary = new SerializableDictionary<string, AnimatorParameter>();
+        // ParameterDictionary = new SerializableDictionary<string, bool>();
     }
 }
