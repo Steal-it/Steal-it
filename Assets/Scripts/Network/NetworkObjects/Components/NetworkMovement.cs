@@ -54,7 +54,6 @@ public class NetworkMovement : MonoBehaviour {
         context.SendJson(message);
     }
 
-
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
         MovementMessage message = _message.FromJson<MovementMessage>();
 

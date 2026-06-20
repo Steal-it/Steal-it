@@ -3,15 +3,6 @@ using Ubiq.Dictionaries;
 using UnityEngine;
 
 [Serializable]
-public class BaseNetworkObjectMessage {
-    public string Type;
-
-    public BaseNetworkObjectMessage(string _type) {
-        Type = _type;
-    }
-}
-
-[Serializable]
 public class MovementMessage {
     public Pose Pose;
     public bool IsOwned;

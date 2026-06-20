@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4736213548696606068}
   - component: {fileID: 6797356139077388598}
   - component: {fileID: 2931577317039288719}
+  - component: {fileID: 9023482375328292216}
+  - component: {fileID: 8883732903149539695}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -71,6 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786209955ee708f4b80acef6bff3aa5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Monster
+  networkMovement: {fileID: 9023482375328292216}
+  networkAnimation: {fileID: 8883732903149539695}
   monsterAI: {fileID: 2317005374497049244}
   monsterPlaceholder: {fileID: 7114517630825867914}
   visual: {fileID: 4256008496063383503}
@@ -88,6 +92,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterAnimator
   animator: {fileID: 4736213548696606068}
+--- !u!114 &9023482375328292216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639377919184963550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feadb23490e2b9e4792e916c407a914d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkMovement
+--- !u!114 &8883732903149539695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639377919184963550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c1bed7c40d7224087700fe5f88b9d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkAnimation
 --- !u!1001 &3306250160460107156
 PrefabInstance:
   m_ObjectHideFlags: 0
