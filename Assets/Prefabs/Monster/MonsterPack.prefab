@@ -121,10 +121,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WanderAndStunned NavMesh Surface
       objectReference: {fileID: 0}
-    - target: {fileID: 5291697203110499603, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_NavMeshData
-      value: 
-      objectReference: {fileID: 23800000, guid: b56d9947fc15ceb4d8ed8ec5b0346a2b, type: 2}
     - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -271,10 +267,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chase NavMesh Surface
       objectReference: {fileID: 0}
-    - target: {fileID: 5291697203110499603, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_NavMeshData
-      value: 
-      objectReference: {fileID: 23800000, guid: 6c61cfb7e77505b4489e9299ad17ab60, type: 2}
     - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

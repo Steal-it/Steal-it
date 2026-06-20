@@ -134,9 +134,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NetworkReferenceManager
   roomClient: {fileID: 9130834755717229769}
   avatarManager: {fileID: 4211592653125914507}
-  msgHandler: {fileID: 1515164901610885669}
+  messageHandler: {fileID: 1515164901610885669}
   levelManager: {fileID: 0}
   localLobbyMenu: {fileID: 0}
+  roomsListPanel: {fileID: 0}
   roomLobbyMenu: {fileID: 0}
 --- !u!1 &5223570567972221472
 GameObject:

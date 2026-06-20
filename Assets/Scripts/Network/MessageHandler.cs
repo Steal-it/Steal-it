@@ -6,51 +6,7 @@ using Ubiq.Rooms;
 using UnityEngine;
 using WebSocketSharp;
 
-#region Messages
-[Serializable]
-public class BaseMessage {
-    public string messageType;
-
-    public BaseMessage(string _messageType) {
-        messageType = _messageType;
-    }
-}
-
-[Serializable]
-public class ReadyMessage : BaseMessage {
-    public ReadyMessage() : base("ReadyMsg") { }
-}
-
-[Serializable]
-public class LoadLevelCompletedMessage : BaseMessage {
-    public LoadLevelCompletedMessage() : base("LoadLevelCompletedMsg") { }
-}
-
-[Serializable]
-public class RecoverCurrentCounterRequestMessage : BaseMessage {
-    public RecoverCurrentCounterRequestMessage() : base("RecoverCurrentCounterRequestMsg") { }
-}
-
-[Serializable]
-public class RecoverCurrentCounterReplyMessage : BaseMessage {
-    public int localCounter;
-    public RecoverCurrentCounterReplyMessage(int _localCounter) : base("RecoverCurrentCounterReplyMsg") {
-        localCounter = _localCounter;
-    }
-}
-
-[Serializable]
-public class NewClientAsServerElectionMessage : BaseMessage {
-    public string clientAsServerUuid;
-    public NewClientAsServerElectionMessage(string _clientAsServerUuid) : base("NewClientAsServerElectionMsg") {
-        clientAsServerUuid = _clientAsServerUuid;
-    }
-}
-#endregion
-
-public class MsgHandler : MonoBehaviour {
-    public event EventHandler OnCounterRecoverFinished;
-    public event EventHandler OnAllPeersLoadingLevelFinished;
+public class MessageHandler : MonoBehaviour {
     public event EventHandler<OnAllPeersReadyForChangeEventArgs> OnAllPeersReadyForChange;
     public class OnAllPeersReadyForChangeEventArgs : EventArgs {
         public string levelName;
@@ -93,7 +49,6 @@ public class MsgHandler : MonoBehaviour {
 
         Debug.Log("All ready for unlocking!");
         receiveLoadCompleteMsgCounter = 0;
-        OnAllPeersLoadingLevelFinished?.Invoke(this, EventArgs.Empty);
     }
 
     private async void RecoverCurrentCounterRequestMessageHandler() {
@@ -166,8 +121,8 @@ public class MsgHandler : MonoBehaviour {
 
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _msg) {
         BaseMessage message = _msg.FromJson<BaseMessage>();
-        switch (message.messageType) {
-            case "ReadyMsg": {
+        switch (message.type) {
+            case ReadyMessage.TYPE: {
                     Debug.Log("Received Ready Msg");
                     receiveReadyMsgCounter += 1;
                     if (receiveReadyMsgCounter == 1) {
@@ -175,7 +130,7 @@ public class MsgHandler : MonoBehaviour {
                     }
                 }
                 break;
-            case "LoadLevelCompletedMsg": {
+            case LoadLevelCompletedMessage.TYPE: {
                     Debug.Log("Received Load Msg");
                     receiveLoadCompleteMsgCounter += 1;
                     if (receiveLoadCompleteMsgCounter == 1) {
@@ -183,13 +138,13 @@ public class MsgHandler : MonoBehaviour {
                     }
                 }
                 break;
-            case "RecoverCurrentCounterRequestMsg": {
+            case RecoverCurrentCounterRequestMessage.TYPE: {
                     Debug.Log("Received Counter Request");
                     wasCounterRequested = true;
                     RecoverCurrentCounterRequestMessageHandler();
                 }
                 break;
-            case "RecoverCurrentCounterReplyMsg": {
+            case RecoverCurrentCounterReplyMessage.TYPE: {
                     Debug.Log("Received Counter Reply");
                     RecoverCurrentCounterReplyMessage finalMessage = _msg.FromJson<RecoverCurrentCounterReplyMessage>();
                     RecoverCurrentCounterReplyMessageHandler(finalMessage);
@@ -199,7 +154,7 @@ public class MsgHandler : MonoBehaviour {
                     }
                 }
                 break;
-            case "NewClientAsServerElectionMsg": {
+            case NewClientAsServerElectionMessage.TYPE: {
                     Debug.Log("Received Client As Server Election Msg");
                     NewClientAsServerElectionMessage finalMessage = _msg.FromJson<NewClientAsServerElectionMessage>();
                     if (roomClient.Me.uuid == finalMessage.clientAsServerUuid) {
@@ -208,7 +163,7 @@ public class MsgHandler : MonoBehaviour {
                 }
                 break;
             default:
-                Debug.LogWarning("Received unknown message!" + message.messageType);
+                Debug.LogWarning("Received unknown message! " + message.type);
                 break;
         }
     }

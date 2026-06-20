@@ -10,7 +10,7 @@ public class RoomLobbyMenu : MonoBehaviour {
     [SerializeField]
     private Button exitButton;
 
-    private MsgHandler msgHandler;
+    private MessageHandler messageHandler;
     private LevelManager levelManager;
 
     void Awake() {
@@ -19,7 +19,7 @@ public class RoomLobbyMenu : MonoBehaviour {
     }
 
     void Start() {
-        msgHandler = NetworkReferenceManager.Instance.MsgHandler;
+        messageHandler = NetworkReferenceManager.Instance.MessageHandler;
         levelManager = NetworkReferenceManager.Instance.LevelManager;
 
         levelManager.OnMinPlayersNumberReached += LevelManager_OnMinPlayersNumberReached;
@@ -41,13 +41,13 @@ public class RoomLobbyMenu : MonoBehaviour {
         readyButton.interactable = false;
         exitButton.interactable = false;
 
-        msgHandler.SendReadyMessage();
+        messageHandler.SendReadyMessage();
     }
 
     private void ExitRoom() {
         if (NetworkReferenceManager.Instance.LevelManager.IsClientAsServer) {
             // The client who created the room exited, elect a new client that acts as the server
-            msgHandler.SendNewClientAsServerElection();
+            messageHandler.SendNewClientAsServerElection();
         }
 
         NetworkReferenceManager.Instance.RoomClient.Join(

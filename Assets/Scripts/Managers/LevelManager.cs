@@ -26,13 +26,9 @@ public class LevelManager : MonoBehaviour {
     private Transform roomLobbySpawnPoint;
     [SerializeField]
     private Transform gameSpawnPoint;
-    [SerializeField]
-    private GameObject loaderCanvas;
-    [SerializeField]
-    private Image progressBar;
 
     private RoomClient roomClient;
-    private MsgHandler msgHandler;
+    private MessageHandler messageHandler;
     private LocalLobbyMenu localLobbyMenu;
     private RoomsListPanel roomsListPanel;
     private RoomLobbyMenu roomLobbyMenu;
@@ -40,29 +36,22 @@ public class LevelManager : MonoBehaviour {
     private int minPlayersNumber = 2;
     private bool isMinPlayerNumberReached;
 
-    private float target;
-    // private Boolean hadAllPeerLoadedScene;
-
     void Start() {
         roomClient = NetworkReferenceManager.Instance.RoomClient;
-        msgHandler = NetworkReferenceManager.Instance.MsgHandler;
+        messageHandler = NetworkReferenceManager.Instance.MessageHandler;
         localLobbyMenu = NetworkReferenceManager.Instance.LocalLobbyMenu;
         roomsListPanel = NetworkReferenceManager.Instance.RoomsListPanel;
         roomLobbyMenu = NetworkReferenceManager.Instance.RoomLobbyMenu;
 
         roomClient.OnPeerAdded.AddListener(RoomClient_OnPeerAdded);
         roomClient.OnPeerRemoved.AddListener(RoomClient_OnPeerRemoved);
-        msgHandler.OnAllPeersReadyForChange += LoadScreen;
-        msgHandler.OnAllPeersLoadingLevelFinished += UpdatePeerLoadingStatus;
-        msgHandler.OnClientAsServerChanged += MsgHandler_OnClientAsServerChanged;
+        messageHandler.OnAllPeersReadyForChange += LoadScreen;
+        messageHandler.OnClientAsServerChanged += MessageHandler_OnClientAsServerChanged;
         localLobbyMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
         roomsListPanel.OnRoomJoined += RoomsListPanel_OnRoomJoined;
         roomLobbyMenu.OnRoomExited += RoomLobbyMenu_OnRoomExited;
 
         LoadLocalLobby();
-    }
-    void Update() {
-        progressBar.fillAmount = Mathf.MoveTowards(progressBar.fillAmount, target, 3 * Time.deltaTime);
     }
 
     private void RoomClient_OnPeerAdded(IPeer _peer) {
@@ -79,13 +68,7 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    private void LoadScreen(object _sender, MsgHandler.OnAllPeersReadyForChangeEventArgs _event) {
-        target = 0;
-        progressBar.fillAmount = 0;
-
-        //loaderCanvas.SetActive(true);
-        // hadAllPeerLoadedScene = false;
-
+    private void LoadScreen(object _sender, MessageHandler.OnAllPeersReadyForChangeEventArgs _event) {
         switch (_event.levelName) {
             case "Test":
                 LoadGame();
@@ -95,35 +78,10 @@ public class LevelManager : MonoBehaviour {
                 return;
         }
 
-
-        msgHandler.SendLoadLevelCompletedMessage();
-
-        /*int oldCounter = 0;
-        int totalNumberOfPeers = 0;
-        float increaseOf = 0;
-
-        do {
-            oldCounter = msgHandler.receiveLoadCompleteMsgCounter;
-            await Task.Delay(100);
-            totalNumberOfPeers = msgHandler.mainMenu.roomClient.Peers.Count()+1;
-            increaseOf = 1/totalNumberOfPeers;
-            if(oldCounter < msgHandler.receiveLoadCompleteMsgCounter)
-            {
-                target += increaseOf;
-            }
-        } while(!hadAllPeerLoadedScene);*/
-
-        // hadAllPeerLoadedScene = false;
-
-        loaderCanvas.SetActive(false);
-
+        messageHandler.SendLoadLevelCompletedMessage();
     }
 
-    private void UpdatePeerLoadingStatus(object _sender, EventArgs _event) {
-        // hadAllPeerLoadedScene = true;
-    }
-
-    private void MsgHandler_OnClientAsServerChanged(object _sender, EventArgs _event) {
+    private void MessageHandler_OnClientAsServerChanged(object _sender, EventArgs _event) {
         isClientAsServer = true;
     }
 
@@ -164,8 +122,8 @@ public class LevelManager : MonoBehaviour {
     void OnDestroy() {
         roomClient.OnPeerAdded.RemoveListener(RoomClient_OnPeerAdded);
         roomClient.OnPeerRemoved.RemoveListener(RoomClient_OnPeerRemoved);
-        msgHandler.OnAllPeersReadyForChange -= LoadScreen;
-        msgHandler.OnAllPeersLoadingLevelFinished -= UpdatePeerLoadingStatus;
+        messageHandler.OnAllPeersReadyForChange -= LoadScreen;
+        messageHandler.OnClientAsServerChanged -= MessageHandler_OnClientAsServerChanged;
         localLobbyMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
         roomsListPanel.OnRoomJoined -= RoomsListPanel_OnRoomJoined;
         roomLobbyMenu.OnRoomExited -= RoomLobbyMenu_OnRoomExited;
