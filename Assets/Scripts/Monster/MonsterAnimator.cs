@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterAnimator : AbstractNetworkAnimator {
     public event EventHandler<OnAnimationChangedEventArgs> OnAnimationChanged;
     public class OnAnimationChangedEventArgs : EventArgs {
-        public bool IsStunned;
+        // public Dictionary<string, AnimationMessage.IAnimatorParameter> ParameterDictionary;
+        public Dictionary<string, object> ParameterDictionary;
     }
 
     [SerializeField]
@@ -13,6 +15,7 @@ public class MonsterAnimator : AbstractNetworkAnimator {
     private const string IS_STUNNED_ANIM_VAR = "isStunned";
 
     protected override void OnParametersSet() {
+        // if (TryGetBool(IS_STUNNED_ANIM_VAR, out AnimationMessage.AnimatorBoolParameter value)) {
         if (TryGetBool(IS_STUNNED_ANIM_VAR, out bool value)) {
             SetIsStunned(value);
         }
@@ -22,7 +25,12 @@ public class MonsterAnimator : AbstractNetworkAnimator {
         animator.SetBool(IS_STUNNED_ANIM_VAR, _value);
 
         OnAnimationChanged?.Invoke(this, new OnAnimationChangedEventArgs {
-            IsStunned = _value
+            // ParameterDictionary = new Dictionary<string, AnimationMessage.IAnimatorParameter>() {
+            //     { IS_STUNNED_ANIM_VAR, new AnimationMessage.AnimatorBoolParameter(_value) }
+            // }
+            ParameterDictionary = new Dictionary<string, object>() {
+                { IS_STUNNED_ANIM_VAR, _value }
+            }
         });
     }
 }

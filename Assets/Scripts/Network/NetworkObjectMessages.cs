@@ -26,11 +26,35 @@ public class MovementMessage : BaseNetworkObjectMessage {
 
 [Serializable]
 public class AnimationMessage : BaseNetworkObjectMessage {
+    #region Animator Parameters
+    // [Serializable]
+    // public class AnimatorParameter {
+    //     public string Name;
+
+    //     public AnimatorParameter(string _name) {
+    //         Name = _name;
+    //     }
+    // }
+
+    // public interface IAnimatorParameter { }
+
+    // [Serializable]
+    // public class AnimatorBoolParameter : IAnimatorParameter {
+    //     public bool Value;
+
+    //     public AnimatorBoolParameter(bool _value) {
+    //         Value = _value;
+    //     }
+    // }
+    #endregion
+
     public const string TYPE = "AnimationMessage";
 
+    // public Dictionary<string, IAnimatorParameter> ParameterDictionary;
     public Dictionary<string, object> ParameterDictionary;
 
     public AnimationMessage() : base(TYPE) {
+        // ParameterDictionary = new Dictionary<string, IAnimatorParameter>();
         ParameterDictionary = new Dictionary<string, object>();
     }
 }

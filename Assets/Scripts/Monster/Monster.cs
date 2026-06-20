@@ -43,10 +43,7 @@ public class Monster : AbstractNetworkObject {
     }
 
     private void MonsterAnimator_OnAnimationChanged(object _sender, MonsterAnimator.OnAnimationChangedEventArgs _event) {
-        AnimationMessage message = new AnimationMessage();
-        message.ParameterDictionary.Add("isStunned", _event.IsStunned);
-
-        SendMessage(message);
+        SendAnimationParameters(_event.ParameterDictionary);
     }
 
     /// <summary>
