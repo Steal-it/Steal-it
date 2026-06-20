@@ -56,7 +56,7 @@ public abstract class AbstractNetworkObject : MonoBehaviour {
         SendMessage(message);
     }
 
-    protected void SendAnimationParameters(Dictionary<string, AnimationMessage.AnimatorParameter> _parameterDictionary) {
+    protected void SendAnimationParameters(Dictionary<string, AnimatorParameter> _parameterDictionary) {
         // protected void SendAnimationParameters(Dictionary<string, bool> _parameterDictionary) {
         AnimationMessage message = new AnimationMessage();
         foreach (var entry in _parameterDictionary) {

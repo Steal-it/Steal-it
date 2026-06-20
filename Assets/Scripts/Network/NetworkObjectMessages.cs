@@ -37,18 +37,6 @@ public class AnimationMessage : BaseNetworkObjectMessage {
     //         Name = _name;
     //     }
     // }
-
-    [Serializable]
-    public class AnimatorParameter { }
-
-    [Serializable]
-    public class AnimatorBoolParameter : AnimatorParameter {
-        public bool Value;
-
-        public AnimatorBoolParameter(bool _value) {
-            Value = _value;
-        }
-    }
     #endregion
 
     public const string TYPE = "AnimationMessage";
@@ -59,5 +47,17 @@ public class AnimationMessage : BaseNetworkObjectMessage {
     public AnimationMessage() : base(TYPE) {
         ParameterDictionary = new SerializableDictionary<string, AnimatorParameter>();
         // ParameterDictionary = new SerializableDictionary<string, bool>();
+    }
+}
+
+[Serializable]
+public class AnimatorParameter { }
+
+[Serializable]
+public class AnimatorBoolParameter : AnimatorParameter {
+    public bool Value;
+
+    public AnimatorBoolParameter(bool _value) {
+        Value = _value;
     }
 }

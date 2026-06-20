@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterAnimator : AbstractNetworkAnimator {
     public event EventHandler<OnAnimationChangedEventArgs> OnAnimationChanged;
     public class OnAnimationChangedEventArgs : EventArgs {
-        public Dictionary<string, AnimationMessage.AnimatorParameter> ParameterDictionary;
+        public Dictionary<string, AnimatorParameter> ParameterDictionary;
         // public Dictionary<string, bool> ParameterDictionary;
     }
 
@@ -25,8 +25,8 @@ public class MonsterAnimator : AbstractNetworkAnimator {
         animator.SetBool(IS_STUNNED_ANIM_VAR, _value);
 
         OnAnimationChanged?.Invoke(this, new OnAnimationChangedEventArgs {
-            ParameterDictionary = new Dictionary<string, AnimationMessage.AnimatorParameter>() {
-                    { IS_STUNNED_ANIM_VAR, new AnimationMessage.AnimatorBoolParameter(_value) }
+            ParameterDictionary = new Dictionary<string, AnimatorParameter>() {
+                    { IS_STUNNED_ANIM_VAR, new AnimatorBoolParameter(_value) }
                 }
             // ParameterDictionary = new Dictionary<string, bool>() {
             //     { IS_STUNNED_ANIM_VAR, _value }
