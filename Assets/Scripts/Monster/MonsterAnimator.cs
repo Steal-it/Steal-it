@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Ubiq.Dictionaries;
 using UnityEngine;
 
 public class MonsterAnimator : AbstractNetworkAnimator {
     public event EventHandler<OnAnimationChangedEventArgs> OnAnimationChanged;
     public class OnAnimationChangedEventArgs : EventArgs {
-        public Dictionary<string, AnimatorParameter> ParameterDictionary;
+        public SerializableDictionary ParameterDictionary;
         // public Dictionary<string, bool> ParameterDictionary;
     }
 
@@ -24,10 +25,15 @@ public class MonsterAnimator : AbstractNetworkAnimator {
     public void SetIsStunned(bool _value) {
         animator.SetBool(IS_STUNNED_ANIM_VAR, _value);
 
+        SerializableDictionary d = new SerializableDictionary();
+        d.Update(IS_STUNNED_ANIM_VAR, _value.ToString());
+
         OnAnimationChanged?.Invoke(this, new OnAnimationChangedEventArgs {
-            ParameterDictionary = new Dictionary<string, AnimatorParameter>() {
-                    { IS_STUNNED_ANIM_VAR, new AnimatorBoolParameter(_value) }
-                }
+            ParameterDictionary = d
+            // ParameterDictionary = new SerializableDictionary {
+            //         new KeyValuePair
+            //         { IS_STUNNED_ANIM_VAR, new AnimatorBoolParameter(_value) }
+            //     }
             // ParameterDictionary = new Dictionary<string, bool>() {
             //     { IS_STUNNED_ANIM_VAR, _value }
             // }

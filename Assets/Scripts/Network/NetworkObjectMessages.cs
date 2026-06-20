@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Ubiq.Dictionaries;
-using Unity.XR.CoreUtils.Collections;
 using UnityEngine;
 
 [Serializable]
@@ -41,11 +40,11 @@ public class AnimationMessage : BaseNetworkObjectMessage {
 
     public const string TYPE = "AnimationMessage";
 
-    public SerializableDictionary<string, AnimatorParameter> ParameterDictionary;
+    public SerializableDictionary<KeyValuePair<string, string>> ParameterDictionary;
     // public SerializableDictionary<string, bool> ParameterDictionary;
 
     public AnimationMessage() : base(TYPE) {
-        ParameterDictionary = new SerializableDictionary<string, AnimatorParameter>();
+        ParameterDictionary = new SerializableDictionary<string, string>();
         // ParameterDictionary = new SerializableDictionary<string, bool>();
     }
 }

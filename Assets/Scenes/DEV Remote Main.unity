@@ -2115,7 +2115,7 @@ Transform:
   m_GameObject: {fileID: 2105100658}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: -0, z: 55.7}
+  m_LocalPosition: {x: -5, y: -0, z: 108.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2457,6 +2457,14 @@ PrefabInstance:
     - target: {fileID: 7188994039087764817, guid: 597990aa2c67574478d0cf43b821ed0a, type: 3}
       propertyPath: m_Name
       value: LocalLobby
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146696942328974150, guid: 597990aa2c67574478d0cf43b821ed0a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146696942328974150, guid: 597990aa2c67574478d0cf43b821ed0a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

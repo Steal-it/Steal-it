@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ubiq.Dictionaries;
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using UnityEngine;
@@ -56,14 +57,14 @@ public abstract class AbstractNetworkObject : MonoBehaviour {
         SendMessage(message);
     }
 
-    protected void SendAnimationParameters(Dictionary<string, AnimatorParameter> _parameterDictionary) {
+    protected void SendAnimationParameters(SerializableDictionary _parameterDictionary) {
         // protected void SendAnimationParameters(Dictionary<string, bool> _parameterDictionary) {
         AnimationMessage message = new AnimationMessage();
         foreach (var entry in _parameterDictionary) {
-            message.ParameterDictionary.Add(entry.Key, entry.Value);
+            message.ParameterDictionary.Update(entry.Key, entry.Value);
         }
 
-        print("send: " + message.ParameterDictionary.Count);
+        // print("send: " + message.ParameterDictionary.Count);
 
         SendMessage(message);
     }
@@ -99,7 +100,7 @@ public abstract class AbstractNetworkObject : MonoBehaviour {
 
                     AnimationMessage castedMessage = _message.FromJson<AnimationMessage>();
 
-                    print("receive: " + castedMessage.ParameterDictionary.Count);
+                    // print("receive: " + castedMessage.ParameterDictionary.Count);
 
                     // TODO: ParameterDictionary probably null or something like that
                     NetworkAnimator.SetParameterDictionary(castedMessage.ParameterDictionary);
