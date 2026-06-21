@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: ed539b832c6b3fa42bb366e4721e7a46
+guid: 388d309388e9a994e944722c03414c17
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grid
+    second: {fileID: 2100000, guid: 5c9b7b04e7323684ea7ffec0b75b8842, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -31,8 +36,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|Grab
-      takeName: Armature|Grab
+      name: Grab-R
+      takeName: DX_Armature|Grab
       internalID: 3997614985018663949
       firstFrame: 0
       lastFrame: 9
@@ -60,8 +65,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Idle
-      takeName: Armature|Idle
+      name: Idle-R
+      takeName: DX_Armature|Idle
       internalID: -8945691123924629249
       firstFrame: 0
       lastFrame: 0
@@ -89,8 +94,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Poke
-      takeName: Armature|Poke
+      name: Poke-R
+      takeName: DX_Armature|Poke
       internalID: -5649985788578432690
       firstFrame: 0
       lastFrame: 9
@@ -118,8 +123,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Release
-      takeName: Armature|Release
+      name: Release-R
+      takeName: DX_Armature|Release
       internalID: -995887932071998991
       firstFrame: 0
       lastFrame: 9
@@ -147,9 +152,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Torch
-      takeName: Armature|Torch
-      internalID: -9126009165396508150
+      name: Lantern-R
+      takeName: DX_Armature|Lantern
+      internalID: -1367533655287243044
       firstFrame: 0
       lastFrame: 9
       wrapMode: 0
