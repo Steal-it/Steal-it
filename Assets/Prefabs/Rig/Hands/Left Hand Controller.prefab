@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Left Hand Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 6933425539760233770, guid: 794d0b50d1087ab40a4e3c0a5867b442, type: 3}
+      propertyPath: freeHandAnimator
+      value: 
+      objectReference: {fileID: 6024752734881204229}
     - target: {fileID: 8673866370313079070, guid: 794d0b50d1087ab40a4e3c0a5867b442, type: 3}
       propertyPath: side
       value: 0

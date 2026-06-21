@@ -131,7 +131,7 @@ PrefabInstance:
     - target: {fileID: 8661746244001222169, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
       propertyPath: leftHand
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7829579609524974232}
     - target: {fileID: 8661746244001222169, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
       propertyPath: rightHand
       value: 
@@ -139,11 +139,11 @@ PrefabInstance:
     - target: {fileID: 8661746244001222169, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
       propertyPath: leftHandRenderer
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 139463603987034083}
     - target: {fileID: 8661746244001222169, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
       propertyPath: rightHandRenderer
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5138752371067044247}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6772985964460040785, guid: 8a04e7feb110ef5d8838b2a06e3fd7e6, type: 3}
@@ -239,6 +239,11 @@ PrefabInstance:
 --- !u!4 &4232868163178074075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7807312431420105844, guid: 43c898efac2e3b64dbcb3777ab594697, type: 3}
+  m_PrefabInstance: {fileID: 6261989614274440111}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5138752371067044247 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1276641225778571832, guid: 43c898efac2e3b64dbcb3777ab594697, type: 3}
   m_PrefabInstance: {fileID: 6261989614274440111}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6938957294558895573
@@ -407,6 +412,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4909015189092936663}
     m_Modifications:
+    - target: {fileID: 2025387978248145528, guid: 407e6ef5376f2314987d96de81ff8670, type: 3}
+      propertyPath: torchAnimator
+      value: 
+      objectReference: {fileID: 2279285543370026025}
     - target: {fileID: 2143362494592155676, guid: 407e6ef5376f2314987d96de81ff8670, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
@@ -451,11 +460,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Left Hand
       objectReference: {fileID: 0}
+    - target: {fileID: 7977889078260522669, guid: 407e6ef5376f2314987d96de81ff8670, type: 3}
+      propertyPath: pocketAttachPoint
+      value: 
+      objectReference: {fileID: 4248101575231042863}
+    - target: {fileID: 8633305381646691710, guid: 407e6ef5376f2314987d96de81ff8670, type: 3}
+      propertyPath: torchInputAction.primaryAction
+      value: 
+      objectReference: {fileID: 674355887165493330}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 407e6ef5376f2314987d96de81ff8670, type: 3}
+--- !u!137 &139463603987034083 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8140811105717001575, guid: 407e6ef5376f2314987d96de81ff8670, type: 3}
+  m_PrefabInstance: {fileID: 8148843483116810884}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &674355887165493330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8668667194292200150, guid: 407e6ef5376f2314987d96de81ff8670, type: 3}
+  m_PrefabInstance: {fileID: 8148843483116810884}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae75d4e18e688ba49b05ac7697207f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Torch
+--- !u!114 &2279285543370026025 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7977889078260522669, guid: 407e6ef5376f2314987d96de81ff8670, type: 3}
+  m_PrefabInstance: {fileID: 8148843483116810884}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de8a0fabfe82aa4baf6e06586dd7080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TorchAnimator
 --- !u!4 &7829579609524974232 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2143362494592155676, guid: 407e6ef5376f2314987d96de81ff8670, type: 3}

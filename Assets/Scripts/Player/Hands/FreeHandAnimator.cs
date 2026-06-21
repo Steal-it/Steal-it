@@ -13,6 +13,7 @@ public class FreeHandAnimator : MonoBehaviour {
     public float TargetPoke { private get; set; }
     private float currentGrip;
     private float currentPoke;
+    private bool completeGrip;
     private bool torch = false;
 
     private static readonly int gripProperty = Animator.StringToHash("Grabbing");
@@ -30,12 +31,17 @@ public class FreeHandAnimator : MonoBehaviour {
         if (!Mathf.Approximately(currentGrip, TargetGrip)) {
             var delta = smoothingSpeed * Time.deltaTime;
             currentGrip = Mathf.MoveTowards(currentGrip, TargetGrip, delta);
-            animator.SetFloat(gripProperty, currentGrip);
+
             if (currentGrip == 1) {
+                completeGrip = true;
                 animator.SetBool(completedProperty, true);
-            } else {
+            }
+            if (completeGrip && currentGrip < 0.9f) {
+                completeGrip = false;
                 animator.SetBool(completedProperty, false);
             }
+            animator.SetFloat(gripProperty, currentGrip);
+
         }
         if (!Mathf.Approximately(currentPoke, TargetPoke)) {
             var delta = smoothingSpeed * Time.deltaTime;
