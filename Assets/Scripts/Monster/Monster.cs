@@ -8,9 +8,9 @@ public class Monster : MonoBehaviour {
     [SerializeField]
     private MonsterAI monsterAI;
     [SerializeField]
-    private MonsterPlaceholder monsterPlaceholder;
+    private Transform monsterPlaceholder;
     [SerializeField]
-    private Transform visual;
+    private Transform commonTransform;
     [SerializeField]
     private MonsterAnimator monsterAnimator;
 
@@ -21,12 +21,12 @@ public class Monster : MonoBehaviour {
 
         monsterAI.gameObject.SetActive(false);
         monsterPlaceholder.gameObject.SetActive(false);
-        visual.gameObject.SetActive(false);
+        commonTransform.gameObject.SetActive(false);
     }
 
     void FixedUpdate() {
         if (networkMovement.Transform != null) {
-            visual.SetPositionAndRotation(networkMovement.Transform.position, networkMovement.Transform.rotation);
+            commonTransform.SetPositionAndRotation(networkMovement.Transform.position, networkMovement.Transform.rotation);
         }
     }
 
@@ -36,7 +36,7 @@ public class Monster : MonoBehaviour {
         } else {
             EnableClientMonster();
         }
-        visual.gameObject.SetActive(true);
+        commonTransform.gameObject.SetActive(true);
     }
 
     private void MonsterAnimator_OnAnimationChanged(object _sender, AbstractNetworkAnimator.OnAnimationChangedEventArgs _event) {
