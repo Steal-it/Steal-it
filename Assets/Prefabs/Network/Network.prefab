@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 4777513008304640600}
   - component: {fileID: 9177465001169350331}
   - component: {fileID: 9130834755717229769}
+  - component: {fileID: 6934788661410911001}
   m_Layer: 0
   m_Name: Network
   m_TagString: Untagged
@@ -83,6 +84,7 @@ Transform:
   - {fileID: 4838729102975255147}
   - {fileID: 5483756232502481875}
   - {fileID: 8933259072129794536}
+  - {fileID: 819183573842633598}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9177465001169350331
@@ -116,8 +118,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Ubiq::Ubiq.Rooms.RoomClient
   servers:
-  - {fileID: -7849211376014683480, guid: 1c91df7c43c1dbe4fb0fb303e71a2790, type: 2}
+  - {fileID: -7849211376014683480, guid: 86f501a9e79ad224ca784616b9c07cd1, type: 2}
   timeoutBehaviour: 2
+--- !u!114 &6934788661410911001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4494900990588012476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f00ae77321d61246b2d47b10fe442e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkReferenceManager
+  roomClient: {fileID: 9130834755717229769}
+  avatarManager: {fileID: 4211592653125914507}
+  messageHandler: {fileID: 1515164901610885669}
+  levelManager: {fileID: 0}
+  localLobbyMenu: {fileID: 0}
+  roomsListPanel: {fileID: 0}
+  roomLobbyMenu: {fileID: 0}
 --- !u!1 &5223570567972221472
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0257e790ac76a58aeb9e1388b28be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MsgHandler
-  roomClient: {fileID: 9130834755717229769}
 --- !u!1 &6713240966359594687
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,8 +349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55f7ee17ed2876761a06d4a52f2cad97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ubiq.Avatars.AvatarManager
-  avatarManager: {fileID: 4211592653125914507}
-  roomClient: {fileID: 9130834755717229769}
 --- !u!1 &8410299998355878147
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,3 +413,65 @@ MonoBehaviour:
     - Rossi
     - Verdi
   delimiter: ' '
+--- !u!1001 &7681118895350566078
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4777513008304640600}
+    m_Modifications:
+    - target: {fileID: 2422494269782280735, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_Name
+      value: MonsterPack
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+--- !u!4 &819183573842633598 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7045463728083496896, guid: c72508d79ab19fc48b1f5726ee771c72, type: 3}
+  m_PrefabInstance: {fileID: 7681118895350566078}
+  m_PrefabAsset: {fileID: 0}
