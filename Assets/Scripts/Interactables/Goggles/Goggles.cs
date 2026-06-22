@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Googles : MonoBehaviour {
+public class Goggles : MonoBehaviour {
     [SerializeField]
     private float dischargeRate = 60;
     [SerializeField]
