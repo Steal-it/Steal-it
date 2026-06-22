@@ -51,7 +51,7 @@ public class BlockPlayerVision : MonoBehaviour {
                 OnBlockVisionExit?.Invoke();
             }
         } else if (playerHead.position.y > 0.1f && Physics.OverlapSphereNonAlloc(playerHead.position, detectionRadius, hitColiders, collisionLayers) > 0) {
-            float distance = ComputeClosesDistance(hitColiders);
+            float distance = ComputeClosestDistance(hitColiders);
             float alpha = Mathf.InverseLerp(detectionRadius, visionOffset, distance);
             isCurrentlyOverlapping = alpha == 1; // can overlap and if am close enough to the wall
 
@@ -69,7 +69,7 @@ public class BlockPlayerVision : MonoBehaviour {
         }
     }
 
-    private float ComputeClosesDistance(Collider[] colliders) {
+    private float ComputeClosestDistance(Collider[] colliders) {
         float closestDistance = float.MaxValue;
         foreach (var col in colliders) {
             if (col != null) {
