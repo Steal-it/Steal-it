@@ -71,10 +71,6 @@ public class Torch : CustomAction /*, IHandComponent*/ {
         socketInteractor.showInteractableHoverMeshes = true;
     }
 
-    protected override void AfterInputSet(bool _active) {
-        gameObject.SetActive(_active);
-    }
-
     private void ToggleLight() {
         OnTorchTurned?.Invoke(this, new OnTorchTurnedEventArgs {
             isTurnedOn = emitLight

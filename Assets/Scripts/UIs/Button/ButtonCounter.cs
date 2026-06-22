@@ -1,16 +1,23 @@
 using System.Diagnostics.Tracing;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ButtonCounter : MonoBehaviour {
 
     [SerializeField]
-    private TextMeshProUGUI text;
+    private short pressRequirement;
+    [Space(10f), SerializeField]
+    private UnityEvent<short> OnButtonPress;
+    [SerializeField]
+    private UnityEvent OnPressRequirementSatisfied;
 
-    short pressCount = 0;
+    private short pressCount = 0;
 
     public void IncrementCounter() {
-        pressCount++;
-        text.text = pressCount.ToString();
+        OnButtonPress?.Invoke(pressCount++);
+        if (pressCount >= pressRequirement) {
+            OnPressRequirementSatisfied?.Invoke();
+        }
     }
 }

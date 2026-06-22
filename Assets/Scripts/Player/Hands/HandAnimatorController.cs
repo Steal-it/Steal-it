@@ -16,7 +16,7 @@ public class HandAnimatorController : MonoBehaviour {
         headAndHandsAvatar = GetComponentInParent<HeadAndHandsAvatar>();
     }
 
-    public void ToggleLadderAnimation(bool _freeHand) {
+    public void ToggleHandStateAnimation(bool _freeHand) {
         freeHandAnimator.ToggleTorchPosition(!_freeHand); // position only on torchhand
         torchAnimator.ToggleTorchVisible(!_freeHand); // torch is visible only on torchhand
     }

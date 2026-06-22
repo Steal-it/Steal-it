@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class TorchAnimator : MonoBehaviour {
 
@@ -14,40 +15,24 @@ public class TorchAnimator : MonoBehaviour {
     [SerializeField]
     private float duration = 1f;
 
-    private Coroutine moveCoroutine;
+    private Tween moveTween;
+
 
     void Start() {
         transform.SetPositionAndRotation(torchAttachPoint.position, torchAttachPoint.rotation);
     }
 
     public void ToggleTorchVisible(bool _value) {
-        if (moveCoroutine != null) {
-            StopCoroutine(moveCoroutine);
-        }
+        moveTween?.Kill();
 
         torchLight.InPocket(!_value);
-
-        moveCoroutine = StartCoroutine(MoveTo(_value ? torchAttachPoint : pocketAttachPoint));
-    }
-
-    IEnumerator MoveTo(Transform _target) {
-        Vector3 startLocalPos = transform.localPosition;
-        Vector3 targetLocalPos = _target.localPosition;
-
-        float fullDistance = Vector3.Distance(torchAttachPoint.localPosition, pocketAttachPoint.localPosition);
-        float currentDistance = Vector3.Distance(startLocalPos, targetLocalPos);
-
-        float scaledDuration = duration * (currentDistance / fullDistance);
-        float elapsed = 0f;
-
-        while (elapsed < scaledDuration) {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / scaledDuration);
-            transform.localPosition = Vector3.Lerp(startLocalPos, targetLocalPos, curve.Evaluate(t));
-            yield return null;
+        if (_value) {
+            moveTween = transform.DOLocalMove(torchAttachPoint.localPosition, duration).SetSpeedBased().SetEase(curve)
+                        .OnStart(() => gameObject.SetActive(_value));
+        } else {
+            moveTween = transform.DOLocalMove(pocketAttachPoint.localPosition, duration).SetSpeedBased().SetEase(curve)
+                        .OnComplete(() => gameObject.SetActive(_value));
         }
-
-        transform.localPosition = targetLocalPos;
     }
 
 }

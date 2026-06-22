@@ -21,7 +21,8 @@ public class Hand : MonoBehaviour {
 
         handCollisionController.OnLadder += (_onLadder) => {
             handInteractionController.ToggleInteractions(_onLadder);
-            handAnimatorController.ToggleLadderAnimation(_onLadder);
+            handAnimatorController.ToggleHandStateAnimation(_onLadder);
+            handAnimatorController.UpdateGripHand(side, _onLadder);
         };
 
         handCollisionController.OnPoke += handAnimatorController.CalculatePoke;
@@ -43,6 +44,7 @@ public class Hand : MonoBehaviour {
         handCollisionController.SetHandlerEnabled(handCollisionController.CustomActionHandler, !amITheTorchHand); // toggle the collider for goggle on the free hand
         handCollisionController.RecalculateCollisions();
 
+        handAnimatorController.ToggleHandStateAnimation(!amITheTorchHand);
         handAnimatorController.UpdateGripHand(side, !amITheTorchHand);
     }
 

@@ -34,11 +34,11 @@ public class FreeHandAnimator : MonoBehaviour {
 
             if (currentGrip == 1) {
                 completeGrip = true;
-                animator.SetBool(completedProperty, true);
+                animator.SetBool(completedProperty, completeGrip);
             }
             if (completeGrip && currentGrip < 0.9f) {
                 completeGrip = false;
-                animator.SetBool(completedProperty, false);
+                animator.SetBool(completedProperty, completeGrip);
             }
             animator.SetFloat(gripProperty, currentGrip);
 
