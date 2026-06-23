@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
-
 public class Battery : MonoBehaviour {
     public event EventHandler OnBatteryRanOut;
 
@@ -12,58 +9,44 @@ public class Battery : MonoBehaviour {
     [SerializeField]
     private ParticleSystem runOutParticleSystem;
     [SerializeField]
-    private GameObject visualsGameObject;
-    [SerializeField]
-    private BatteryUI batteryUI;
+    private BatteryVisuals visuals;
 
-    private XRGrabInteractable grabInteractable;
-    private float chargeLevel = 1;
-    private bool isUsing;
+    public float chargeLevel { get; private set; } = 1;
+    private Rigidbody rb;
 
-    void Start() {
-        grabInteractable = GetComponent<XRGrabInteractable>();
+    private Coroutine useCoroutine;
 
-        grabInteractable.selectEntered.AddListener(EnableUI);
-        grabInteractable.selectExited.AddListener(DisableUI);
+    void Awake() {
+        TryGetComponent(out rb);
     }
 
     public void Use() {
-        EnableUI(null);
-
-        StartCoroutine(UseCO());
+        useCoroutine = StartCoroutine(UseCO());
     }
 
     public void StopUse() {
-        isUsing = false;
-    }
-
-    public void DisableUI(SelectExitEventArgs _event) {
-        batteryUI.ToggleDisplay(false);
-    }
-
-    private void EnableUI(SelectEnterEventArgs _event) {
-        batteryUI.ToggleDisplay(true);
+        if (useCoroutine != null) {
+            StopCoroutine(useCoroutine);
+        }
     }
 
     private IEnumerator UseCO() {
         if (chargeLevel == 0) yield break;
 
-        isUsing = true;
         // Stop updating chargeLevel if the battery ran out or it is not used anymore
-        while (chargeLevel > 0 && isUsing) {
+        while (chargeLevel > 0) {
             yield return new WaitForFixedUpdate();
 
             float decrementValue = Time.fixedDeltaTime / dischargeTime;
             chargeLevel = Mathf.Clamp01(chargeLevel - decrementValue);
 
-            batteryUI.UpdateBatteryDisplay(chargeLevel);
+            visuals.UpdateVisuals(chargeLevel);
         }
 
         if (chargeLevel == 0) {
             // Logically stop and visually destroy the battery
-            isUsing = false;
+            visuals.enabled = false;
             runOutParticleSystem.Play();
-            visualsGameObject.SetActive(false);
 
             OnBatteryRanOut?.Invoke(this, EventArgs.Empty);
 
@@ -72,8 +55,13 @@ public class Battery : MonoBehaviour {
         }
     }
 
-    void OnDestroy() {
-        grabInteractable.selectEntered.RemoveAllListeners();
-        grabInteractable.selectExited.RemoveAllListeners();
+    public void Drop(Vector3 _velocity) {
+        StopUse();
+        rb.useGravity = true;
+        rb.AddForce(_velocity.normalized, ForceMode.Impulse);
+    }
+
+    public void Recharge(float _amount) {
+        chargeLevel = _amount;
     }
 }

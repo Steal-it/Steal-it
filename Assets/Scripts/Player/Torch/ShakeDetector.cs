@@ -16,7 +16,7 @@ public class ShakeDetector : MonoBehaviour {
     private float antiJitterVelocity = 1;
     [Space(10)]
     [SerializeField]
-    private UnityEvent onShakeDetected;
+    private UnityEvent<Vector3> onShakeDetected;
     [SerializeField]
     private UnityEvent onShakeCancelled;
 
@@ -25,10 +25,6 @@ public class ShakeDetector : MonoBehaviour {
     private float timeRemaining;
     private int shakeCount;
     private float cooldown;
-
-    void Start() {
-        enabled = false;
-    }
 
     private void Update() {
         if (cooldown > 0) {
@@ -45,7 +41,7 @@ public class ShakeDetector : MonoBehaviour {
                     shakeCount++;
                     timeRemaining = shakeTimeWindow;
                     if (shakeCount == shakesToTrigger) {
-                        onShakeDetected?.Invoke();
+                        onShakeDetected?.Invoke(currentDirection);
                         cooldown = shakeCooldown;
                         ResetShake();
                     }
@@ -69,11 +65,5 @@ public class ShakeDetector : MonoBehaviour {
     private void ResetShake() {
         shakeCount = 0;
         timeRemaining = 0;
-    }
-
-    public void ToggleShake(bool _value) {
-        enabled = _value;
-        ResetShake();
-        previousPosition = transform.position;
     }
 }

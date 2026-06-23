@@ -23,9 +23,6 @@ public class KeyboardEventDebug : MonoBehaviour {
             }
         }
 
-        if (Keyboard.current[Key.X].wasPressedThisFrame) {
-            shake.ToggleShake(true);
-        }
         if (Keyboard.current[Key.Z].wasPressedThisFrame) {
             g = !g;
             if (g) {
