@@ -15,7 +15,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: WallXray
-    Event: 300
+    Event: 500
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -82,10 +82,10 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 57335
+    m_Bits: 188407
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 61431
+    m_Bits: 192503
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: RenderWalls
-    Event: 300
+    Event: 450
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -163,7 +163,7 @@ MonoBehaviour:
       RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
-        m_Bits: 4096
+        m_Bits: 69632
       PassNames: []
     overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: Mask
-    Event: 250
+    Event: 300
     filterSettings:
       RenderQueueType: 1
       LayerMask:
@@ -237,17 +237,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: RenderObjects
+  m_Name: Outline
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.RenderObjects
   m_Active: 1
   settings:
-    passTag: RenderObjects
+    passTag: Outline
     Event: 500
     filterSettings:
       RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
-        m_Bits: 4096
+        m_Bits: 69632
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 22797c5702e0f754aab133df836dea89, type: 2}
     overrideMaterialPassIndex: 0

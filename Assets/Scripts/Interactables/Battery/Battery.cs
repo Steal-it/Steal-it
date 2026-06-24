@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class Battery : MonoBehaviour {
     public event EventHandler OnBatteryRanOut;
 
@@ -10,14 +12,29 @@ public class Battery : MonoBehaviour {
     private ParticleSystem runOutParticleSystem;
     [SerializeField]
     private BatteryVisuals visuals;
+    [SerializeField]
+    private float spring;
+    [SerializeField]
+    private float damper;
+    [SerializeField]
+    private float restDistance;
+    [SerializeField]
+    private LayerMask hitMask;
 
     public float chargeLevel { get; private set; } = 1;
     private Rigidbody rb;
+    private XRGrabInteractable grabInteractable;
+    private bool canFloat = true;
 
     private Coroutine useCoroutine;
 
     void Awake() {
         TryGetComponent(out rb);
+        TryGetComponent(out grabInteractable);
+    }
+
+    void Start() {
+        grabInteractable.selectEntered.AddListener(DisableFloat);
     }
 
     public void Use() {
@@ -27,6 +44,16 @@ public class Battery : MonoBehaviour {
     public void StopUse() {
         if (useCoroutine != null) {
             StopCoroutine(useCoroutine);
+        }
+    }
+
+    void FixedUpdate() {
+        if (!canFloat) return;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, restDistance, hitMask)) {
+            float springForce = spring * (restDistance - hit.distance);
+            float dampingfactor = damper * rb.linearVelocity.y;
+            float force = springForce - dampingfactor;
+            rb.AddForce(Vector3.up * force);
         }
     }
 
@@ -55,13 +82,26 @@ public class Battery : MonoBehaviour {
         }
     }
 
+    private void DisableFloat(SelectEnterEventArgs _) {
+        canFloat = false;
+    }
+
     public void Drop(Vector3 _velocity) {
         StopUse();
         rb.useGravity = true;
+        canFloat = true;
         rb.AddForce(_velocity.normalized, ForceMode.Impulse);
     }
 
     public void Recharge(float _amount) {
-        chargeLevel = _amount;
+        chargeLevel = Mathf.Clamp01(chargeLevel + _amount);
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.DrawRay(transform.position, Vector3.down * restDistance);
+    }
+
+    void OnDestroy() {
+        grabInteractable.selectEntered.RemoveAllListeners();
     }
 }

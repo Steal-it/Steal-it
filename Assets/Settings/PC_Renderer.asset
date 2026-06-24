@@ -35,7 +35,7 @@ MonoBehaviour:
       RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
-        m_Bits: 4096
+        m_Bits: 69632
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 22797c5702e0f754aab133df836dea89, type: 2}
     overrideMaterialPassIndex: 0
@@ -157,10 +157,10 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 2684411895
+    m_Bits: 2684542967
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 61431
+    m_Bits: 192503
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 1
@@ -196,7 +196,7 @@ MonoBehaviour:
       RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
-        m_Bits: 4096
+        m_Bits: 69632
       PassNames: []
     overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0

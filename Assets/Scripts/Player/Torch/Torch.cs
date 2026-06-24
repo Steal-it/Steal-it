@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class Torch : CustomAction /*, IHandComponent*/ {
+public class Torch : CustomAction {
     public event EventHandler<OnTorchTurnedEventArgs> OnTorchTurned;
     public class OnTorchTurnedEventArgs : EventArgs {
         public bool isTurnedOn;
@@ -19,11 +19,10 @@ public class Torch : CustomAction /*, IHandComponent*/ {
 
     private Battery battery;
     private bool emitLight;
-    private XRInteractionManager interactionManager;
+    private bool canUpgrade;
 
     void Start() {
-
-        interactionManager = socketInteractor.interactionManager;
+        socketInteractor.hoverEntered.AddListener(OnNewBatteryInstalled);
         socketInteractor.selectEntered.AddListener(OnNewBatteryInstalled);
 
         OnTorchTurned += torchLight.ToggleLight;
@@ -33,38 +32,43 @@ public class Torch : CustomAction /*, IHandComponent*/ {
         ToggleLight();
     }
 
-    private void OnNewBatteryInstalled(SelectEnterEventArgs _event) {
-        if (battery) { // if a battery is already present i add recharge it
+    private void OnNewBatteryInstalled(HoverEnterEventArgs _event) {
+        if (battery && canUpgrade) { // if a battery is already present i add recharge it
             Battery additionalBattery = _event.interactableObject.transform.GetComponent<Battery>();
-            battery.Recharge(additionalBattery.chargeLevel);
-        } else {
-            battery = _event.interactableObject.transform.GetComponent<Battery>();
-            battery.OnBatteryRanOut += Battery_OnBatteryRanOut;
-
-            // Start discharging the battery
-            battery.Use();
-
-            // Turn on the light
-            emitLight = true;
-            ToggleLight();
-
-            // Disallow the socket of the battery to show the mesh of a new battery
-            socketInteractor.showInteractableHoverMeshes = false;
+            battery?.Recharge(additionalBattery.chargeLevel);
+            Destroy(additionalBattery.gameObject);
         }
+        if (!canUpgrade) {
+            canUpgrade = true;
+        }
+    }
+
+    private void OnNewBatteryInstalled(SelectEnterEventArgs _event) {
+        battery = _event.interactableObject.transform.GetComponent<Battery>();
+        battery.OnBatteryRanOut += Battery_OnBatteryRanOut;
+
+        // Start discharging the battery
+        battery.Use();
+
+        // Turn on the light
+        emitLight = true;
+        ToggleLight();
+
+        // Disallow the socket of the battery to show the mesh of a new battery
+        socketInteractor.showInteractableHoverMeshes = false;
+        canUpgrade = false;
     }
 
     public void RemoveBattery(Vector3 dropoutVelocity) {
         if (battery == null) return;
 
-        // if (socketInteractor != null) {
-        //     interactionManager.SelectExit(
-        //         (IXRSelectInteractor)socketInteractor,
-        //         battery.GetComponent<XRGrabInteractable>());
-        // }
+        emitLight = false;
+        ToggleLight();
 
         socketInteractor.enabled = false;
 
         battery.Drop(dropoutVelocity);
+        battery = null;
 
         StartCoroutine(WaitForSocketEnable());
     }
@@ -93,8 +97,7 @@ public class Torch : CustomAction /*, IHandComponent*/ {
     }
 
     void OnDestroy() {
-        socketInteractor.selectEntered.RemoveAllListeners();
-        socketInteractor.selectExited.RemoveAllListeners();
+        socketInteractor.hoverEntered.RemoveAllListeners();
     }
 
     public override void OnInputFired(InputAction.CallbackContext _) {

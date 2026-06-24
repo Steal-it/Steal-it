@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Goggles : MonoBehaviour {
     [SerializeField]
     private float dischargeRate = 60;
     [SerializeField]
-    private GameObject visualsGameObject;
+    private GameObject visuals;
     public Action<bool> OnGooglesToggle;
 
     private float chargeLevel = 1;
@@ -15,12 +16,18 @@ public class Goggles : MonoBehaviour {
 
     public void DisableVisuals() {
         Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-        rb.detectCollisions = false;
-        rb.constraints = RigidbodyConstraints.FreezeAll;
+        XRGrabInteractable grab = GetComponent<XRGrabInteractable>();
         Collider collider = GetComponent<BoxCollider>();
-        collider.enabled = false;
-        visualsGameObject.SetActive(false);
+        if (grab != null) {
+            Destroy(grab);
+        }
+        if (rb != null) {
+            Destroy(rb);
+        }
+        if (collider != null) {
+            Destroy(collider);
+        }
+        visuals.SetActive(false);
     }
 
     public void ToggleGlasses() {
