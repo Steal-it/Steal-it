@@ -5309,4 +5309,4 @@ MonoBehaviour:
   restDistance: 0.4
   hitMask:
     serializedVersion: 2
-    m_Bits: 126967
+    m_Bits: 131071
