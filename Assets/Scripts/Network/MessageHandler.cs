@@ -13,6 +13,12 @@ public class MessageHandler : MonoBehaviour {
     }
     public event EventHandler OnClientAsServerChanged;
 
+    public event EventHandler<OnApplySpectatorModeRequestEventArgs> OnApplySpectatorModeRequest;
+
+    public class OnApplySpectatorModeRequestEventArgs : EventArgs {
+        public string PlayerUUID;
+    }
+
     private RoomClient roomClient;
     private NetworkContext context;
     private bool wasCounterRequested;
@@ -119,6 +125,16 @@ public class MessageHandler : MonoBehaviour {
         }
     }
 
+    public async void SendActivateSpectatorModeMessage(string _playerUUID) {
+        if (context.Scene != null) {
+            context.SendJson(new ActivateSpectatorModeMessage(_playerUUID));
+        } else {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendNewClientAsServerElection();
+        }
+    }
+
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _msg) {
         BaseMessage message = _msg.FromJson<BaseMessage>();
         switch (message.type) {
@@ -160,6 +176,12 @@ public class MessageHandler : MonoBehaviour {
                     if (roomClient.Me.uuid == finalMessage.clientAsServerUuid) {
                         OnClientAsServerChanged?.Invoke(this, EventArgs.Empty);
                     }
+                }
+                break;
+            case ActivateSpectatorModeMessage.TYPE: {
+                    Debug.Log("Received Activate Spectator Mode Msg");
+                    ActivateSpectatorModeMessage msg = _msg.FromJson<ActivateSpectatorModeMessage>();
+                    OnApplySpectatorModeRequest?.Invoke(this, new OnApplySpectatorModeRequestEventArgs{PlayerUUID=msg.playerUUID});
                 }
                 break;
             default:
