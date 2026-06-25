@@ -301,6 +301,7 @@ GameObject:
   - component: {fileID: 8388091271253385329}
   - component: {fileID: 4211592653125914507}
   - component: {fileID: 832163624649917952}
+  - component: {fileID: 7065353455143333400}
   m_Layer: 0
   m_Name: Avatar Manager
   m_TagString: Untagged
@@ -349,6 +350,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55f7ee17ed2876761a06d4a52f2cad97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ubiq.Avatars.AvatarManager
+--- !u!114 &7065353455143333400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713240966359594687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d74efa534ffedbdbacfc6a46054833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpectatorModeManager
+  rig: {fileID: 0}
+  characterController: {fileID: 0}
+  gravityProvider: {fileID: 0}
+  height: 3
 --- !u!1 &8410299998355878147
 GameObject:
   m_ObjectHideFlags: 0

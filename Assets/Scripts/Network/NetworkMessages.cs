@@ -53,12 +53,12 @@ public class NewClientAsServerElectionMessage : BaseMessage {
 }
 
 [Serializable]
-public class ActivateSpectatorModeMessage: BaseMessage {
+public class ActivateSpectatorModeMessage : BaseMessage {
     public const string TYPE = "ActivateSpectatorModeMessage";
 
     public string playerUUID;
 
-    public ActivateSpectatorModeMessage(string _playerUUID): base(TYPE) {
+    public ActivateSpectatorModeMessage(string _playerUUID) : base(TYPE) {
         playerUUID = _playerUUID;
     }
 }

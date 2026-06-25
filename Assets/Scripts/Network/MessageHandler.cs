@@ -180,8 +180,8 @@ public class MessageHandler : MonoBehaviour {
                 break;
             case ActivateSpectatorModeMessage.TYPE: {
                     ActivateSpectatorModeMessage msg = _msg.FromJson<ActivateSpectatorModeMessage>();
-                    OnApplySpectatorModeRequest?.Invoke(this, new OnApplySpectatorModeRequestEventArgs{PlayerUUID=msg.playerUUID});
-                    Debug.Log("Received Activate Spectator Mode Msg "+msg.playerUUID);
+                    OnApplySpectatorModeRequest?.Invoke(this, new OnApplySpectatorModeRequestEventArgs { PlayerUUID = msg.playerUUID });
+                    Debug.Log("Received Activate Spectator Mode Msg " + msg.playerUUID);
                 }
                 break;
             default:

@@ -12,17 +12,21 @@ public class SpectatorModeManager : MonoBehaviour {
     }
     [SerializeField]
     private XROrigin rig;
+
+    [SerializeField]
+    private BlockPlayerVision blockPlayerVision;
+
     [SerializeField]
     private CharacterController characterController;
     [SerializeField]
     private GravityProvider gravityProvider;
-    [SerializeField, Range(2, 4)]
-    private float height = 3;
+    [SerializeField, Range(0, 4)]
+    private float height = 0;
 
     private bool enable;
 
     void updateVisibility() {
-        enable=!enable;
+        enable = !enable;
         if (enable) {
             Enable();
         } else {
@@ -31,11 +35,12 @@ public class SpectatorModeManager : MonoBehaviour {
     }
 
     private void Enable() {
+        // TODO ask And what to do to avoid monster recognition
         Vector3 position = rig.transform.position;
         position.y = height;
         rig.transform.position = position;
 
-        characterController.enabled = false;
+        characterController.enabled = false; // Do not collide
         gravityProvider.enabled = false;
     }
 
@@ -63,10 +68,18 @@ public class SpectatorModeManager : MonoBehaviour {
 
     public void changeSpectatorModeByPlayerUUID() {
         // Change spectator mode for local avatar and send a message to all players connected to the room
-        Debug.Log("Invoked");
+        blockPlayerVision.enabled = !blockPlayerVision.enabled;
+
         updateVisibility();
 
         string playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
+
+        //Send event: this will activate RSOD
+        OnSpectatorModeActivation?.Invoke(this, new OnSpectatorModeActivationEventArgs {
+            PlayerUUID = playerUUID
+        });
+
+
         NetworkReferenceManager.Instance.MessageHandler.SendActivateSpectatorModeMessage(playerUUID);
     }
 
@@ -74,7 +87,7 @@ public class SpectatorModeManager : MonoBehaviour {
     MessageHandler.OnApplySpectatorModeRequestEventArgs _args) {
         // Activate spectator mode for another peer
         OnSpectatorModeActivation?.Invoke(this, new OnSpectatorModeActivationEventArgs {
-           PlayerUUID=_args.PlayerUUID
+            PlayerUUID = _args.PlayerUUID
         });
     }
 

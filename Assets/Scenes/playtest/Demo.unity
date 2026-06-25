@@ -496,14 +496,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 353094229615468358, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881324885357342436, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4147547113549538503, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
       propertyPath: m_MoveSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067948187282095027, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+      propertyPath: m_text
+      value: You lost
       objectReference: {fileID: 0}
     - target: {fileID: 6652642035712390005, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
       propertyPath: handTorchController
       value: 
       objectReference: {fileID: 1021441178}
+    - target: {fileID: 6744775324371920200, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+      propertyPath: uiDistance
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 6836749399222160328, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -544,13 +560,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8148426689737277581, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8286631202458473279, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
       propertyPath: handTorchController
       value: 
       objectReference: {fileID: 157440431}
+    - target: {fileID: 8448798180235034950, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8534450353238203463, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
       propertyPath: m_Name
       value: XR Origin (XR Rig)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754794338529480678, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -811,7 +839,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1287379898}
+      - m_Target: {fileID: 1287379899}
         m_TargetAssemblyTypeName: SpectatorModeManager, Assembly-CSharp
         m_MethodName: changeSpectatorModeByPlayerUUID
         m_Mode: 1
@@ -1259,6 +1287,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c0ab812f601f44fbd8415834123871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerConfigurator
+--- !u!114 &937018571 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1337456057917761103, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+  m_PrefabInstance: {fileID: 397161253}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0eb5b869e7de594fba99c5f179b3fe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlockPlayerVision
 --- !u!1 &1011329583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1926,6 +1965,26 @@ PrefabInstance:
       propertyPath: roomsListPanel
       value: 
       objectReference: {fileID: 1917828336}
+    - target: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: rig
+      value: 
+      objectReference: {fileID: 397161254}
+    - target: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: height
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: gravityProvider
+      value: 
+      objectReference: {fileID: 397161256}
+    - target: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: blockPlayerVision
+      value: 
+      objectReference: {fileID: 937018571}
+    - target: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: characterController
+      value: 
+      objectReference: {fileID: 397161257}
     - target: {fileID: 7335320604801943227, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
       propertyPath: m_LayerMask.m_Bits
       value: 4294967295
@@ -1953,32 +2012,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6713240966359594687, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1287379898}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
---- !u!1 &1287379897 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6713240966359594687, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+--- !u!114 &1287379899 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
   m_PrefabInstance: {fileID: 1287379896}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1287379898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1287379897}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0d74efa534ffedbdbacfc6a46054833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpectatorModeManager
-  rig: {fileID: 397161254}
-  characterController: {fileID: 397161257}
-  gravityProvider: {fileID: 397161256}
-  height: 3
 --- !u!1 &1307160787
 GameObject:
   m_ObjectHideFlags: 0
