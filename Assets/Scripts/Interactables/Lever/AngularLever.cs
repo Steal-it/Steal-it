@@ -1,7 +1,4 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class AngularLever : Lever, ICollisionListener {
     [Space(10)]
@@ -13,9 +10,9 @@ public class AngularLever : Lever, ICollisionListener {
         topPosition = handleHingeJoint.limits.max;
     }
 
-    protected override void SetSpringPoint(float springPoint) {
+    protected override void SetSpringPoint(float _springPoint) {
         JointSpring spring = handleHingeJoint.spring;
-        spring.targetPosition = springPoint;
+        spring.targetPosition = _springPoint;
         handleHingeJoint.spring = spring;
     }
 

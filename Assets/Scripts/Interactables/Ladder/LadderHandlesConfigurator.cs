@@ -1,4 +1,4 @@
-#if (UNITY_EDITOR)
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
@@ -33,7 +33,7 @@ public class LadderHandlesConfigurator : MonoBehaviour {
 
         if (handlePrefab == null || ladder == null || handleCount < 1) return;
 
-#if (UNITY_EDITOR)
+#if UNITY_EDITOR
         if (previousHandleCount != handleCount || previousPadding != padding) {
             EditorApplication.delayCall -= () => DisplaceHandles();
             EditorApplication.delayCall += () => DisplaceHandles();
@@ -44,7 +44,7 @@ public class LadderHandlesConfigurator : MonoBehaviour {
         previousPadding = padding;
     }
 
-#if (UNITY_EDITOR)
+#if UNITY_EDITOR
     private void DisplaceHandles() {
         if (this == null) return;
 

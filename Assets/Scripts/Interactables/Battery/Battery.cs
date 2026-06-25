@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-
 public class Battery : MonoBehaviour {
     public event EventHandler OnBatteryRanOut;
 
@@ -12,58 +11,69 @@ public class Battery : MonoBehaviour {
     [SerializeField]
     private ParticleSystem runOutParticleSystem;
     [SerializeField]
-    private GameObject visualsGameObject;
+    private BatteryVisuals visuals;
     [SerializeField]
-    private BatteryUI batteryUI;
+    private float spring;
+    [SerializeField]
+    private float damper;
+    [SerializeField]
+    private float restDistance;
+    [SerializeField]
+    private LayerMask hitMask;
 
+    public float chargeLevel { get; private set; } = 1;
+    private Rigidbody rb;
     private XRGrabInteractable grabInteractable;
-    private float chargeLevel = 1;
-    private bool isUsing;
+    private bool canFloat = true;
+
+    private Coroutine useCoroutine;
+
+    void Awake() {
+        TryGetComponent(out rb);
+        TryGetComponent(out grabInteractable);
+    }
 
     void Start() {
-        grabInteractable = GetComponent<XRGrabInteractable>();
-
-        grabInteractable.selectEntered.AddListener(EnableUI);
-        grabInteractable.selectExited.AddListener(DisableUI);
+        grabInteractable.selectEntered.AddListener(DisableFloat);
     }
 
     public void Use() {
-        EnableUI(null);
-
-        StartCoroutine(UseCO());
+        useCoroutine = StartCoroutine(UseCO());
     }
 
     public void StopUse() {
-        isUsing = false;
+        if (useCoroutine != null) {
+            StopCoroutine(useCoroutine);
+        }
     }
 
-    public void DisableUI(SelectExitEventArgs _event) {
-        batteryUI.ToggleDisplay(false);
-    }
-
-    private void EnableUI(SelectEnterEventArgs _event) {
-        batteryUI.ToggleDisplay(true);
+    void FixedUpdate() {
+        if (!canFloat) return;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, restDistance, hitMask)) {
+            float springForce = spring * (restDistance - hit.distance);
+            float dampingfactor = damper * rb.linearVelocity.y;
+            float force = springForce - dampingfactor;
+            rb.AddForce(Vector3.up * force);
+        }
     }
 
     private IEnumerator UseCO() {
         if (chargeLevel == 0) yield break;
 
-        isUsing = true;
         // Stop updating chargeLevel if the battery ran out or it is not used anymore
-        while (chargeLevel > 0 && isUsing) {
+        while (chargeLevel > 0) {
             yield return new WaitForFixedUpdate();
 
             float decrementValue = Time.fixedDeltaTime / dischargeTime;
             chargeLevel = Mathf.Clamp01(chargeLevel - decrementValue);
 
-            batteryUI.UpdateBatteryDisplay(chargeLevel);
+            visuals.UpdateVisuals(chargeLevel);
         }
 
         if (chargeLevel == 0) {
             // Logically stop and visually destroy the battery
-            isUsing = false;
+            visuals.enabled = false;
             runOutParticleSystem.Play();
-            visualsGameObject.SetActive(false);
 
             OnBatteryRanOut?.Invoke(this, EventArgs.Empty);
 
@@ -72,8 +82,26 @@ public class Battery : MonoBehaviour {
         }
     }
 
+    private void DisableFloat(SelectEnterEventArgs _) {
+        canFloat = false;
+    }
+
+    public void Drop(Vector3 _velocity) {
+        StopUse();
+        rb.useGravity = true;
+        canFloat = true;
+        rb.AddForce(_velocity.normalized, ForceMode.Impulse);
+    }
+
+    public void Recharge(float _amount) {
+        chargeLevel = Mathf.Clamp01(chargeLevel + _amount);
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.DrawRay(transform.position, Vector3.down * restDistance);
+    }
+
     void OnDestroy() {
         grabInteractable.selectEntered.RemoveAllListeners();
-        grabInteractable.selectExited.RemoveAllListeners();
     }
 }

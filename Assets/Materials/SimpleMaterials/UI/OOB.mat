@@ -31,10 +31,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _GradientAngle: 90
-    - _GradientStop0: 0.354
+    - _GradientStop0: 0.2
     - _GradientStop1: 0.45
     - _GradientStop2: 0.55
-    - _GradientStop3: 0.633
+    - _GradientStop3: 0.8
     - _UseGradient: 1
     - _UseUIAlphaClip: 0
     m_Colors:

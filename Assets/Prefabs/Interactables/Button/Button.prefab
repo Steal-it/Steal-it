@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1205804060320054071}
   - component: {fileID: 9062779621258421781}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ButtonCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 5157029437930716033}
   - component: {fileID: 335759096291904778}
   - component: {fileID: 4452832351473418019}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 1679993776342786723}
   - component: {fileID: 8841042217578743393}
   - component: {fileID: 8475709178971423035}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3949328237616280954}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ButtonOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1888562204290339901}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,6 +441,10 @@ PrefabInstance:
       propertyPath: m_InteractableSource
       value: 
       objectReference: {fileID: 414013700262374491}
+    - target: {fileID: 909860151168095986, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1486022349532105341, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -484,6 +488,10 @@ PrefabInstance:
     - target: {fileID: 3454426630491097271, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
       propertyPath: m_Name
       value: DirectInteractionAffordance
+      objectReference: {fileID: 0}
+    - target: {fileID: 3454426630491097271, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8559399095067588744, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
       propertyPath: m_Renderer

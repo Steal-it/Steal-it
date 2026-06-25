@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -81,23 +80,23 @@ public abstract class Lever : MonoBehaviour, ICollisionListener {
         }
     }
 
-    public void OnCollisionEnterRec(Collision collision) {
+    public void OnCollisionEnterRec(Collision _collision) {
         return;
     }
 
-    public void OnCollisionExitRec(Collision collision) {
+    public void OnCollisionExitRec(Collision _collision) {
         return;
     }
 
-    public void OnTriggerEnterRec(Collider other) {
-        SetSpringPoint(System.Object.ReferenceEquals(topTrigger, other) ? topPosition : bottomPosition);
+    public void OnTriggerEnterRec(Collider _other) {
+        SetSpringPoint(ReferenceEquals(topTrigger, _other) ? topPosition : bottomPosition);
 
         if (eventsOnBoth) {
             bool isTopEventsEmpty = activationEventsOnBoth.onBottomActivated.GetPersistentEventCount() == 0;
             bool isBottomEventsEmpty = activationEventsOnBoth.onBottomActivated.GetPersistentEventCount() == 0;
-            if (System.Object.ReferenceEquals(topTrigger, other) && !isTopEventsEmpty) {
+            if (ReferenceEquals(topTrigger, _other) && !isTopEventsEmpty) {
                 activationEventsOnBoth.onTopActivated?.Invoke();
-            } else if (System.Object.ReferenceEquals(bottomTrigger, other) && !isBottomEventsEmpty) {
+            } else if (ReferenceEquals(bottomTrigger, _other) && !isBottomEventsEmpty) {
                 activationEventsOnBoth.onBottomActivated?.Invoke();
             } else {
                 onLeverActivation?.Invoke();
@@ -107,7 +106,7 @@ public abstract class Lever : MonoBehaviour, ICollisionListener {
         }
     }
 
-    public void OnTriggerExitRec(Collider other) {
+    public void OnTriggerExitRec(Collider _other) {
         if (leverActivationPoint == LeverActivationPoint.Both) {
             SetSpringPoint(0);
         } else {
@@ -117,9 +116,9 @@ public abstract class Lever : MonoBehaviour, ICollisionListener {
         if (eventsOnBoth) {
             bool isTopEventsEmpty = deactivationEventsOnBoth.onTopDeactivated.GetPersistentEventCount() == 0;
             bool isBottomEventsEmpty = deactivationEventsOnBoth.onBottomDeactivated.GetPersistentEventCount() == 0;
-            if (System.Object.ReferenceEquals(topTrigger, other) && !isTopEventsEmpty) {
+            if (ReferenceEquals(topTrigger, _other) && !isTopEventsEmpty) {
                 deactivationEventsOnBoth.onTopDeactivated?.Invoke();
-            } else if (System.Object.ReferenceEquals(bottomTrigger, other) && !isBottomEventsEmpty) {
+            } else if (ReferenceEquals(bottomTrigger, _other) && !isBottomEventsEmpty) {
                 deactivationEventsOnBoth.onBottomDeactivated?.Invoke();
             } else {
                 onLeverDeactivation?.Invoke();
@@ -131,6 +130,6 @@ public abstract class Lever : MonoBehaviour, ICollisionListener {
 
     protected abstract void Init();
 
-    protected abstract void SetSpringPoint(float springPoint);
+    protected abstract void SetSpringPoint(float _springPoint);
 
 }

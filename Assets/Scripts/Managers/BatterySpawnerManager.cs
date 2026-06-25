@@ -8,7 +8,6 @@ public class BatterySpawnerManager : MonoBehaviour {
         foreach (Transform spawner in transform) {
             if (spawner.gameObject.activeSelf) {
                 Battery battery = Instantiate(batteryPrefabGameObject, spawner.position, spawner.rotation, spawner).GetComponent<Battery>();
-                battery.DisableUI(null);
             }
         }
     }

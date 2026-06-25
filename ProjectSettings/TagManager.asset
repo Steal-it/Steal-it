@@ -18,11 +18,11 @@ TagManager:
   - IgnorePlayer
   - PokeInteraction
   - Floor
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Mask
+  - CustomAction
+  - Outline
+  - Hand
   - 
   - 
   - 

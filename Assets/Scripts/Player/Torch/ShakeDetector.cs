@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 public class ShakeDetector : MonoBehaviour {
     [SerializeField]
@@ -17,7 +16,7 @@ public class ShakeDetector : MonoBehaviour {
     private float antiJitterVelocity = 1;
     [Space(10)]
     [SerializeField]
-    private UnityEvent onShakeDetected;
+    private UnityEvent<Vector3> onShakeDetected;
     [SerializeField]
     private UnityEvent onShakeCancelled;
 
@@ -27,21 +26,7 @@ public class ShakeDetector : MonoBehaviour {
     private int shakeCount;
     private float cooldown;
 
-    #region TESTING
-    private bool enable;
-    #endregion
-
-
     private void Update() {
-        #region TESTING
-        if (Keyboard.current[Key.X].wasPressedThisFrame) {
-            enable = !enable;
-            previousPosition = transform.position;
-        }
-        #endregion
-
-        if (!enable) return;
-
         if (cooldown > 0) {
             cooldown -= Time.deltaTime;
         } else {
@@ -56,7 +41,7 @@ public class ShakeDetector : MonoBehaviour {
                     shakeCount++;
                     timeRemaining = shakeTimeWindow;
                     if (shakeCount == shakesToTrigger) {
-                        onShakeDetected?.Invoke();
+                        onShakeDetected?.Invoke(currentDirection);
                         cooldown = shakeCooldown;
                         ResetShake();
                     }
