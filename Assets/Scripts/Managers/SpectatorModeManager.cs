@@ -21,7 +21,7 @@ public class SpectatorModeManager : MonoBehaviour {
 
     public bool enable;
 
-    void Update() {
+    void updateVisibility() {
         if (enable) {
             Enable();
         } else {
@@ -63,7 +63,7 @@ public class SpectatorModeManager : MonoBehaviour {
     public void changeSpectatorModeByPlayerUUID() {
         // Change spectator mode for local avatar and send a message to all players connected to the room
         Debug.Log("Invoked");
-        Update();
+        updateVisibility();
 
         string playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
         NetworkReferenceManager.Instance.MessageHandler.SendActivateSpectatorModeMessage(playerUUID);

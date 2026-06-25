@@ -9,7 +9,7 @@ public class SpectatorMode : MonoBehaviour {
     void Start() {
         SpectatorModeManager.Instance.OnSpectatorModeActivation += SpectatorModeManager_OnSpectatorModeActivation;
     }
-    void Update() {
+    void updateVisibility() {
         if (enable) {
             Enable();
         } else {
@@ -30,7 +30,7 @@ public class SpectatorMode : MonoBehaviour {
         //Case of another avatar being killed by the monster
         string playerUUID = gameObject.name;
         if(_args.PlayerUUID == playerUUID) {
-            Update();
+            updateVisibility();
             return;
         }
     }
