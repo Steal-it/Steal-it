@@ -4,12 +4,13 @@ using UnityEngine.XR.Interaction.Toolkit.Locomotion.Gravity;
 
 public class SpectatorMode : MonoBehaviour {
 
-    public bool enable;
+    private bool enable;
 
     void Start() {
         SpectatorModeManager.Instance.OnSpectatorModeActivation += SpectatorModeManager_OnSpectatorModeActivation;
     }
     void updateVisibility() {
+        enable=!enable;
         if (enable) {
             Enable();
         } else {
@@ -18,17 +19,23 @@ public class SpectatorMode : MonoBehaviour {
     }
 
     private void Enable() {
-        gameObject.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     private void Disable() {
-        gameObject.SetActive(false);
+        gameObject.SetActive(true);
     }
 
     private void SpectatorModeManager_OnSpectatorModeActivation(object _sender,
     SpectatorModeManager.OnSpectatorModeActivationEventArgs _args) {
         //Case of another avatar being killed by the monster
         string playerUUID = gameObject.name;
+
+        if(playerUUID == "Local Avatar") {
+            return;
+        }
+
+        playerUUID = playerUUID.Split('#')[1];
         if(_args.PlayerUUID == playerUUID) {
             updateVisibility();
             return;

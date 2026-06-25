@@ -19,9 +19,10 @@ public class SpectatorModeManager : MonoBehaviour {
     [SerializeField, Range(2, 4)]
     private float height = 3;
 
-    public bool enable;
+    private bool enable;
 
     void updateVisibility() {
+        enable=!enable;
         if (enable) {
             Enable();
         } else {
@@ -71,9 +72,13 @@ public class SpectatorModeManager : MonoBehaviour {
 
     void MessageHandler_OnApplySpectatorModeRequest(object _sender,
     MessageHandler.OnApplySpectatorModeRequestEventArgs _args) {
-        // Activate spectator mode locally ONLY
+        // Activate spectator mode for another peer
         OnSpectatorModeActivation?.Invoke(this, new OnSpectatorModeActivationEventArgs {
            PlayerUUID=_args.PlayerUUID
         });
+    }
+
+    void OnDestroy() {
+        NetworkReferenceManager.Instance.MessageHandler.OnApplySpectatorModeRequest -= MessageHandler_OnApplySpectatorModeRequest;
     }
 }

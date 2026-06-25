@@ -1979,7 +1979,6 @@ MonoBehaviour:
   characterController: {fileID: 397161257}
   gravityProvider: {fileID: 397161256}
   height: 3
-  enable: 0
 --- !u!1 &1307160787
 GameObject:
   m_ObjectHideFlags: 0
