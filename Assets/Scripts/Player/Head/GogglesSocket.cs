@@ -6,6 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class GogglesSocket : CustomAction {
     [SerializeField]
     private GameObject goggleVisual;
+    [SerializeField]
+    private AvatarLocale avatar;
 
     private SeeThrough seeThrough;
     private XRSocketInteractor socketInteractor;
@@ -24,6 +26,10 @@ public class GogglesSocket : CustomAction {
     }
 
     void Start() {
+        if (!avatar.IsLocal()) {
+            socketInteractor.enabled = false;
+            return;
+        }
         socketInteractor.selectEntered.AddListener(OnGogglesInserted);
     }
 
@@ -31,7 +37,6 @@ public class GogglesSocket : CustomAction {
         currentGoogles = _event.interactableObject.transform.GetComponent<Goggles>();
         currentGoogles.OnGooglesToggle += ToggleSeeThrough;
         currentGoogles.DisableVisuals();
-        // goggleVisual.SetActive(true); // TODO: do this in networking
         socketInteractor.enabled = false;
     }
 

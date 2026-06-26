@@ -5,6 +5,7 @@ public class Hand : MonoBehaviour {
     private PlayerSettingsSO playerSettings;
     [SerializeField]
     private Side side;
+    private AvatarLocale avatar;
 
     private HandCollisionController handCollisionController;
     private HandInteractionController handInteractionController;
@@ -14,9 +15,12 @@ public class Hand : MonoBehaviour {
         TryGetComponent(out handCollisionController);
         TryGetComponent(out handInteractionController);
         TryGetComponent(out handAnimatorController);
+        TryGetComponent(out avatar);
     }
 
     void Start() {
+        if (!avatar.IsLocal()) return;
+
         handInteractionController.Init(side);
 
         handCollisionController.OnLadder += (_onLadder) => {
