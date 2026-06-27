@@ -839,9 +839,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1287379897}
+      - m_Target: {fileID: 1287379899}
         m_TargetAssemblyTypeName: SpectatorModeManager, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: test
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2014,11 +2014,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
---- !u!1 &1287379897 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6713240966359594687, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+--- !u!114 &1287379899 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
   m_PrefabInstance: {fileID: 1287379896}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d74efa534ffedbdbacfc6a46054833, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpectatorModeManager
 --- !u!1 &1307160787
 GameObject:
   m_ObjectHideFlags: 0
