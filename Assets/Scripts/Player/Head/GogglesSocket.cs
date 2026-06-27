@@ -1,0 +1,49 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+
+public class GogglesSocket : CustomAction {
+    [SerializeField]
+    private GameObject goggleVisual;
+
+    private SeeThrough seeThrough;
+    private XRSocketInteractor socketInteractor;
+    private Goggles currentGoogles;
+
+    public override void OnInputFired(InputAction.CallbackContext _) {
+        currentGoogles?.ToggleGlasses();
+    }
+
+    public override void OnInputStop(InputAction.CallbackContext _) {
+    }
+
+    void Awake() {
+        TryGetComponent(out socketInteractor);
+        seeThrough = FindFirstObjectByType<SeeThrough>();
+    }
+
+    void Start() {
+        socketInteractor.selectEntered.AddListener(OnGogglesInserted);
+    }
+
+    private void OnGogglesInserted(SelectEnterEventArgs _event) {
+        currentGoogles = _event.interactableObject.transform.GetComponent<Goggles>();
+        currentGoogles.OnGooglesToggle += ToggleSeeThrough;
+        currentGoogles.DisableVisuals();
+        // goggleVisual.SetActive(true); // TODO: do this in networking
+        socketInteractor.enabled = false;
+    }
+
+    private void ToggleSeeThrough(bool _active) {
+        if (_active) {
+            seeThrough.EnableSeeThrough();
+        } else {
+            seeThrough.DisableSeeThrough();
+        }
+    }
+
+    void OnDestroy() {
+        socketInteractor.selectEntered.RemoveAllListeners();
+    }
+}

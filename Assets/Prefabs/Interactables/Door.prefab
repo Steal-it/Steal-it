@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 336885071967505301}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1664440246584229955}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 234577581938079042}
   - component: {fileID: 5462386303933304003}
   - component: {fileID: 3807678663860493475}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 5367438975180750434}
   - component: {fileID: 5330355490478737774}
   - component: {fileID: 6265509725086979832}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4273133983898710820}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 5115809319745118088}
   - component: {fileID: 5904728119262050940}
   - component: {fileID: 2194578932923809084}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5316837635628137645}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7571519601678434914}
   - component: {fileID: 848938989626929168}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HandleFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1308685597585407490}
   - component: {fileID: 8339108418414485283}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: HandleBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -520,7 +520,7 @@ PrefabInstance:
       objectReference: {fileID: 1225068337444849399}
     - target: {fileID: 909860151168095986, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1486022349532105341, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
       propertyPath: m_LocalPosition.x
@@ -568,7 +568,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3454426630491097271, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8559399095067588744, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
       propertyPath: m_Renderer
@@ -702,7 +702,7 @@ PrefabInstance:
     - target: {fileID: 5643644621821948167, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       propertyPath: m_AttachTransform
       value: 
-      objectReference: {fileID: 7571519601678434914}
+      objectReference: {fileID: 3901430573520402540}
     - target: {fileID: 5643644621821948167, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       propertyPath: m_Colliders.Array.size
       value: 2

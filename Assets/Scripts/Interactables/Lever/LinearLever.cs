@@ -1,7 +1,4 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class LinearLever : Lever, ICollisionListener {
 
@@ -14,7 +11,7 @@ public class LinearLever : Lever, ICollisionListener {
         topPosition = -handleJoint.linearLimit.limit;
     }
 
-    protected override void SetSpringPoint(float springPoint) {
-        handleJoint.targetPosition = new Vector3(0, springPoint, 0);
+    protected override void SetSpringPoint(float _springPoint) {
+        handleJoint.targetPosition = new Vector3(0, _springPoint, 0);
     }
 }
