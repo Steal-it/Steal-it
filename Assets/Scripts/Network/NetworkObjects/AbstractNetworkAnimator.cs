@@ -32,7 +32,17 @@ public abstract class AbstractNetworkAnimator : MonoBehaviour {
         });
     }
 
+    protected void ResetAllTriggers() {
+        foreach (KeyValuePair<string, IAnimationParameter> entry in ParameterTypeDictionary) {
+            if ((entry.Value as AnimationTriggerParameter) != null) {
+                Animator.ResetTrigger(entry.Key);
+            }
+        }
+    }
+
     public void SetParameterDictionary(SerializableDictionary _parameterDictionary) {
+        ResetAllTriggers();
+
         foreach (KeyValuePair<string, string> entry in _parameterDictionary) {
             if (ParameterTypeDictionary.ContainsKey(entry.Key)) {
                 ParameterTypeDictionary[entry.Key].TrySet(entry.Key, entry.Value, Animator);

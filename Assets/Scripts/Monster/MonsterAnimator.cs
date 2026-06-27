@@ -20,12 +20,6 @@ public class MonsterAnimator : AbstractNetworkAnimator {
         };
     }
 
-    private void ResetAllTriggers() {
-        foreach (string parameterName in ParameterTypeDictionary.Keys) {
-            animator.ResetTrigger(parameterName);
-        }
-    }
-
     public void SetChase() {
         ResetAllTriggers();
         animator.SetTrigger(CHASE_PARAM);

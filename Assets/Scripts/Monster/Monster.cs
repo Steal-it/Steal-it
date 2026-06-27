@@ -71,5 +71,6 @@ public class Monster : MonoBehaviour {
     void OnDestroy() {
         NetworkReferenceManager.Instance.LevelManager.OnGameLoaded -= LevelManager_OnGameLoaded;
         monsterAnimator.OnAnimationChanged -= MonsterAnimator_OnAnimationChanged;
+        networkAnimation.OnMessageReceived -= NetworkAnimation_OnMessageReceived;
     }
 }

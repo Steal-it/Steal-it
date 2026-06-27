@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ChaseState : IMonsterState, IMonsterStateVisitor {
+    public event EventHandler OnPlayerKilled;
+
     public Transform Player => player;
 
     private MonsterStateManager monsterStateManager;
@@ -40,7 +43,8 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
         if (Vector3.Distance(monster.transform.position, player.position) < monsterStateManager.KillDistance) {
             isChangingState = true;
 
-            Debug.Log($"PLAYER KILLED");
+            OnPlayerKilled?.Invoke(this, EventArgs.Empty);
+
             monsterStateManager.ChangeState(MonsterStateManager.StateKey.Murder);
         }
     }
