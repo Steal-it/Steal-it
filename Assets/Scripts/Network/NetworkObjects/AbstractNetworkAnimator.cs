@@ -12,7 +12,7 @@ public abstract class AbstractNetworkAnimator : MonoBehaviour {
     protected Animator Animator { get; set; }
     protected Dictionary<string, IAnimationParameter> ParameterTypeDictionary { get; set; }
 
-    protected void NotifyParameterSet(string _name, string _value) {
+    protected void NotifyParameterSet(string _name, string _value = "") {
         SerializableDictionary parameterDictionary = new SerializableDictionary();
         parameterDictionary.Update(_name, _value.ToString());
 

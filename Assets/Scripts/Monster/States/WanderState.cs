@@ -22,6 +22,7 @@ public class WanderState : IMonsterState {
         agent.speed = monsterStateManager.WanderAndStunnedSpeed;
         agent.autoBraking = true;
         agent.destination = monster.transform.position;
+        monsterStateManager.MonsterAnimator.SetWander();
     }
 
     public void UpdateState() {

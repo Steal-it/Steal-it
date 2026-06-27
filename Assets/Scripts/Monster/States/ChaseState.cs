@@ -17,9 +17,11 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
         agent = monsterStateManager.Agent;
 
         isChangingState = false;
+        monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = false;
         monsterStateManager.ChaseNavMeshSurface.enabled = true;
         agent.speed = monsterStateManager.MinChasingSpeed;
         agent.autoBraking = false;
+        monsterStateManager.MonsterAnimator.SetChase();
 
         IMonsterState wanderState = monsterStateManager.StateDictionary[MonsterStateManager.StateKey.Wander];
         wanderState.Accept(this);
@@ -39,7 +41,7 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
             isChangingState = true;
 
             Debug.Log($"PLAYER KILLED");
-            monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
+            monsterStateManager.ChangeState(MonsterStateManager.StateKey.Murder);
         }
     }
 

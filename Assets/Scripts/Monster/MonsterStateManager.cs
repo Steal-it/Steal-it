@@ -7,7 +7,8 @@ public class MonsterStateManager : MonoBehaviour {
     public enum StateKey {
         Wander,
         Chase,
-        Stunned
+        Murder,
+        Flashed
     }
 
     #region Public References
@@ -93,7 +94,8 @@ public class MonsterStateManager : MonoBehaviour {
     void Start() {
         stateDictionary.Add(StateKey.Wander, new WanderState());
         stateDictionary.Add(StateKey.Chase, new ChaseState());
-        stateDictionary.Add(StateKey.Stunned, new StunnedState());
+        stateDictionary.Add(StateKey.Murder, new MurderState());
+        stateDictionary.Add(StateKey.Flashed, new FlashedState());
 
         currentState = stateDictionary[StateKey.Wander];
         currentState.EnterState(this);
