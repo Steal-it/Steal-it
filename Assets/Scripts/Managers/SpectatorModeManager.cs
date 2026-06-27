@@ -5,9 +5,9 @@ using UnityEngine.XR.Interaction.Toolkit.Locomotion.Gravity;
 
 public class SpectatorModeManager : MonoBehaviour {
     public static SpectatorModeManager Instance { get; private set; }
-    public event EventHandler<OnSpectatorModeActivationEventArgs> OnSpectatorModeActivation;
+    public event EventHandler<OnSpectatorModeChangeEventArgs> OnSpectatorModeChange;
 
-    public class OnSpectatorModeActivationEventArgs : EventArgs {
+    public class OnSpectatorModeChangeEventArgs : EventArgs {
         public string PlayerUUID;
     }
     [SerializeField]
@@ -66,29 +66,39 @@ public class SpectatorModeManager : MonoBehaviour {
         Instance = this;
     }
 
-    public void changeSpectatorModeByPlayerUUID() {
-        // Change spectator mode for local avatar and send a message to all players connected to the room
-        blockPlayerVision.enabled = !blockPlayerVision.enabled;
-
-        updateVisibility();
-
+    // Main change handler: invoke when the monster made someone lose. Invoke with true if the message should be propagated. The only player that should invoke this function is the one attached to the monster, all of the other player will manage spectator mode upon receiving the appropriate message (that automatically won't propagate)
+    public void changeSpectatorModeByPlayerUUID(string _playerUUID, bool _sendToOtherPeer) {
+        // Ubiq does not guarantee the uuid will not change after connection/disconnection/room change, therefore, it is necessary to obtain it each time
         string playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
 
-        //Send event: this will activate RSOD
-        OnSpectatorModeActivation?.Invoke(this, new OnSpectatorModeActivationEventArgs {
-            PlayerUUID = playerUUID
+        //The event is invoked both when another peer lost or another peer lost. However, locally the spectator mode should be activated only if this local peer lost
+        if (_playerUUID == playerUUID) {
+            // Disbale the oob collision detection
+            blockPlayerVision.enabled = !blockPlayerVision.enabled;
+
+            // Update visibility
+            updateVisibility();
+        }
+
+        // Activate spectator mode for another peer (this will also invoked the RSOD if the local peer lost)
+        OnSpectatorModeChange?.Invoke(this, new OnSpectatorModeChangeEventArgs {
+            PlayerUUID = _playerUUID
         });
 
-
-        NetworkReferenceManager.Instance.MessageHandler.SendActivateSpectatorModeMessage(playerUUID);
+        if (_sendToOtherPeer) {
+            NetworkReferenceManager.Instance.MessageHandler.SendActivateSpectatorModeMessage(playerUUID);
+        }
     }
 
+    // TODO remove before merging, here just for testing with button on scene
+    public void test() {
+        changeSpectatorModeByPlayerUUID(NetworkReferenceManager.Instance.RoomClient.Me.uuid, true);
+    }
+
+    // Invoked when the local peer receives a message that requires the spectator mode of someone to be activated
     void MessageHandler_OnApplySpectatorModeRequest(object _sender,
     MessageHandler.OnApplySpectatorModeRequestEventArgs _args) {
-        // Activate spectator mode for another peer
-        OnSpectatorModeActivation?.Invoke(this, new OnSpectatorModeActivationEventArgs {
-            PlayerUUID = _args.PlayerUUID
-        });
+        changeSpectatorModeByPlayerUUID(_args.PlayerUUID, false);
     }
 
     void OnDestroy() {

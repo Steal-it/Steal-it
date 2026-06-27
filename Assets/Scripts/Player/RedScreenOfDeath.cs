@@ -17,11 +17,11 @@ public class RedScreenOfDeath : MonoBehaviour {
         localCanvas.worldCamera = Camera.main;
         localCanvas.planeDistance = uiDistance;
 
-        SpectatorModeManager.Instance.OnSpectatorModeActivation += SpectatorModeManager_OnSpectatorModeActivation;
+        SpectatorModeManager.Instance.OnSpectatorModeChange += SpectatorModeManager_OnSpectatorModeChange;
     }
 
-    private void SpectatorModeManager_OnSpectatorModeActivation(object _sender,
-    SpectatorModeManager.OnSpectatorModeActivationEventArgs _args) {
+    private void SpectatorModeManager_OnSpectatorModeChange(object _sender,
+    SpectatorModeManager.OnSpectatorModeChangeEventArgs _args) {
         enable = !enable;
 
         // Ubiq does not guarantee the uuid will not change after connection/disconnection/room change, therefore, it is necessary to obtain it each time
@@ -34,6 +34,6 @@ public class RedScreenOfDeath : MonoBehaviour {
     }
 
     void OnDestroy() {
-        SpectatorModeManager.Instance.OnSpectatorModeActivation -= SpectatorModeManager_OnSpectatorModeActivation;
+        SpectatorModeManager.Instance.OnSpectatorModeChange -= SpectatorModeManager_OnSpectatorModeChange;
     }
 }

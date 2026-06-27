@@ -9,7 +9,7 @@ public class SpectatorMode : MonoBehaviour {
     private TorsoIdentifier torso;
 
     void Start() {
-        SpectatorModeManager.Instance.OnSpectatorModeActivation += SpectatorModeManager_OnSpectatorModeActivation;
+        SpectatorModeManager.Instance.OnSpectatorModeChange += SpectatorModeManager_OnSpectatorModeChange;
         playerUUID = gameObject.name;
         if (playerUUID != "Local Avatar") {
             playerUUID = playerUUID.Split('#')[1];
@@ -44,8 +44,8 @@ public class SpectatorMode : MonoBehaviour {
         }
     }
 
-    private void SpectatorModeManager_OnSpectatorModeActivation(object _sender,
-    SpectatorModeManager.OnSpectatorModeActivationEventArgs _args) {
+    private void SpectatorModeManager_OnSpectatorModeChange(object _sender,
+    SpectatorModeManager.OnSpectatorModeChangeEventArgs _args) {
         //Case of another avatar being killed by the monster
 
         if (_args.PlayerUUID == playerUUID) {
@@ -55,6 +55,6 @@ public class SpectatorMode : MonoBehaviour {
     }
 
     void OnDestroy() {
-        SpectatorModeManager.Instance.OnSpectatorModeActivation -= SpectatorModeManager_OnSpectatorModeActivation;
+        SpectatorModeManager.Instance.OnSpectatorModeChange -= SpectatorModeManager_OnSpectatorModeChange;
     }
 }
