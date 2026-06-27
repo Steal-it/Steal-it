@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Goggles : MonoBehaviour {
@@ -13,20 +14,45 @@ public class Goggles : MonoBehaviour {
     private float chargeLevel = 1;
     private bool isActive = false;
     private Coroutine seeCoroutine;
+    private NetworkMovement networkMovement;
+    private NetworkObjectEnabler networkObjectEnabler;
+    private XRGrabInteractable grabInteractable;
+
+    void Awake() {
+        TryGetComponent(out grabInteractable);
+        TryGetComponent(out networkMovement);
+        TryGetComponent(out networkObjectEnabler);
+    }
+
+    void Start() {
+        networkObjectEnabler.OnMessageReceived += EnableGogglesVisual;
+        grabInteractable.selectEntered.AddListener(Grab);
+        grabInteractable.selectExited.AddListener(Release);
+    }
+
+    private void EnableGogglesVisual(bool _isActive) {
+        visuals.SetActive(_isActive);
+    }
+
+    private void Release(SelectExitEventArgs arg0) {
+        networkMovement.DeselectObject();
+    }
+
+    private void Grab(SelectEnterEventArgs arg0) {
+        networkMovement.SelectObject();
+    }
 
     public void DisableVisuals() {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        XRGrabInteractable grab = GetComponent<XRGrabInteractable>();
-        Collider collider = GetComponent<BoxCollider>();
-        if (grab != null) {
-            Destroy(grab);
+        if (grabInteractable != null) {
+            Destroy(grabInteractable);
         }
-        if (rb != null) {
+        if (TryGetComponent(out Rigidbody rb)) {
             Destroy(rb);
         }
-        if (collider != null) {
+        if (TryGetComponent(out BoxCollider collider)) {
             Destroy(collider);
         }
+        networkObjectEnabler.SendEnableParameters(false);
         visuals.SetActive(false);
     }
 
@@ -60,5 +86,10 @@ public class Goggles : MonoBehaviour {
         if (chargeLevel == 0) {
             OnGooglesToggle?.Invoke(false);
         }
+    }
+
+    void OnDisable() {
+        grabInteractable.selectEntered.RemoveAllListeners();
+        grabInteractable.selectExited.RemoveAllListeners();
     }
 }

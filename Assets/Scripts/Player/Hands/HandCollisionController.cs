@@ -86,6 +86,7 @@ public class HandCollisionController : MonoBehaviour {
         CustomAction action = _other.GetComponent<CustomAction>();
         action.InputSetActive(_phase == Trigger_phase.Enter);
         OnCustomAction?.Invoke(_phase == Trigger_phase.Enter ? action : null);
+        print("sds");
     }
 
     public void RecalculateCollisions() {
