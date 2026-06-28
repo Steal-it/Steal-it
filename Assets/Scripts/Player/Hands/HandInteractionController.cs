@@ -23,6 +23,7 @@ public class HandInteractionController : MonoBehaviour {
     }
 
     void Update() {
+        if (!nearFarInteractor) return;
         if (nearFarInteractor.hasSelection) {
             IXRSelectInteractable genericInteractable = nearFarInteractor.interactablesSelected[0];
             if (genericInteractable is XRGrabInteractable grabInteractable && grabInteractable.TryGetComponent(out NetworkMovement netmov)) {
