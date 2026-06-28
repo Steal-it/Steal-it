@@ -1,6 +1,7 @@
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 /// <summary>
 /// In order make a NetworkObject working, it has to be child of the Ubiq Network GameObject.
@@ -11,10 +12,12 @@ public class NetworkMovement : MonoBehaviour {
     private NetworkContext context;
     private bool amIOwner;
     private bool amISender;
+    private XRBaseInteractable interactable;
 
     void Awake() {
         context = NetworkScene.Register(this);
 
+        TryGetComponent(out interactable);
         amIOwner = false;
         Transform = transform;
     }
@@ -63,6 +66,13 @@ public class NetworkMovement : MonoBehaviour {
         if (message.IsOwned) {
             // If object is taken by another, the current player is no longer the amISender
             amISender = false;
+        }
+    }
+
+    void OnDestroy() {
+        if (interactable) {
+            interactable.selectEntered.RemoveAllListeners();
+            interactable.selectExited.RemoveAllListeners();
         }
     }
 }

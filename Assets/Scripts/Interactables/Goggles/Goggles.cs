@@ -26,20 +26,10 @@ public class Goggles : MonoBehaviour {
 
     void Start() {
         networkObjectEnabler.OnMessageReceived += EnableGogglesVisual;
-        grabInteractable.selectEntered.AddListener(Grab);
-        grabInteractable.selectExited.AddListener(Release);
     }
 
     private void EnableGogglesVisual(bool _isActive) {
         visuals.SetActive(_isActive);
-    }
-
-    private void Release(SelectExitEventArgs arg0) {
-        networkMovement.DeselectObject();
-    }
-
-    private void Grab(SelectEnterEventArgs arg0) {
-        networkMovement.SelectObject();
     }
 
     public void DisableVisuals() {

@@ -1,5 +1,8 @@
+using System;
 using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class HandInteractionController : MonoBehaviour {
@@ -16,6 +19,16 @@ public class HandInteractionController : MonoBehaviour {
             nearFarInteractor = origin.transform.Find("Camera Offset/Left Controller").GetComponentInChildren<NearFarInteractor>();
         } else {
             nearFarInteractor = origin.transform.Find("Camera Offset/Right Controller").GetComponentInChildren<NearFarInteractor>();
+        }
+    }
+
+    void Update() {
+        if (nearFarInteractor.hasSelection) {
+            IXRSelectInteractable genericInteractable = nearFarInteractor.interactablesSelected[0];
+            if (genericInteractable is XRGrabInteractable grabInteractable && grabInteractable.TryGetComponent(out NetworkMovement netmov)) {
+                netmov.SelectObject();
+                grabInteractable.selectExited.AddListener(_ => { netmov.DeselectObject(); });
+            }
         }
     }
 
