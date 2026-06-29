@@ -28,7 +28,7 @@ public class RedScreenOfDeath : MonoBehaviour {
         string playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
 
         //The event is invoked both when another peer lost or another peer lost. However, the screen should be activated only if this local peer lost
-        if (_args.PlayerUUID == playerUUID || _args.PlayerUUID == "Local Avatar") {
+        if (_args.PlayerUUID == playerUUID) {
             canvas.SetActive(enable);
         } else {
             Debug.Log("No RSOD " + _args.PlayerUUID + " " + playerUUID);

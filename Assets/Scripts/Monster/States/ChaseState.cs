@@ -49,6 +49,8 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
 
             if (playerUUID != "Local Avatar") {
                 playerUUID = playerUUID.Split('#')[1];
+            } else {
+                playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
             }
 
             SpectatorModeManager.Instance.ChangeSpectatorModeByPlayerUUID(playerUUID, true);
