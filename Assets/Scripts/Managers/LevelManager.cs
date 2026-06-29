@@ -71,13 +71,13 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void LoadScreen(object _sender, MessageHandler.OnAllPeersReadyForChangeEventArgs _event) {
-        switch (_event.levelName) {
+        switch (_event.LevelName) {
             // TODO: huh?
             case "Test":
                 LoadGame();
                 break;
             default:
-                Debug.LogError("Attempt to switch to " + _event.levelName + " but it does not exists");
+                Debug.LogError("Attempt to switch to " + _event.LevelName + " but it does not exists");
                 return;
         }
 
@@ -125,22 +125,29 @@ public class LevelManager : MonoBehaviour {
     }
 
     private (Vector3 position, Quaternion rotation) GetSpawnPoint(bool _isGameSpwanPoint) {
-        // Sort UUIDs so every client agrees on the same order
         RoomClient roomClient = NetworkReferenceManager.Instance.RoomClient;
-        List<string> uuidSortedList = new List<string>();
-        foreach (IPeer peer in roomClient.Peers) {
-            uuidSortedList.Add(peer.uuid);
-        }
-        uuidSortedList = uuidSortedList.OrderBy(id => id).ToList();
-
-        int index = uuidSortedList.IndexOf(roomClient.Me.uuid);
         Transform centerPoint = _isGameSpwanPoint ? gameSpawnPointCenter : roomLobbySpawnPointCenter;
 
-        float angle = index * (360f / uuidSortedList.Count) * Mathf.Deg2Rad;
-        Vector3 position = centerPoint.position + new Vector3(Mathf.Cos(angle) * spawnPointRadius, 0, Mathf.Sin(angle) * spawnPointRadius);
+        int hash = roomClient.Me.uuid.GetHashCode();
+        float angle = (hash & 0x7FFFFFFF) % 360 * Mathf.Deg2Rad;
+        Vector3 candidatePosition = centerPoint.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * spawnPointRadius;
+
+        // Nudge if too close to an already-assigned point
+        foreach (IPeer peer in roomClient.Peers) {
+            int otherHash = peer.uuid.GetHashCode();
+            float otherAngle = (otherHash & 0x7FFFFFFF) % 360 * Mathf.Deg2Rad;
+            Vector3 otherPosition = centerPoint.position + new Vector3(Mathf.Cos(otherAngle), 0, Mathf.Sin(otherAngle)) * spawnPointRadius;
+
+            if (Vector3.Distance(candidatePosition, otherPosition) < 0.5f) {
+                // Nudge 45 degrees away
+                angle += 45 * Mathf.Deg2Rad;
+            }
+            candidatePosition = centerPoint.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * spawnPointRadius;
+        }
+
         Quaternion rotation = centerPoint.rotation;
 
-        return (position, rotation);
+        return (candidatePosition, rotation);
     }
 
     void OnDestroy() {
