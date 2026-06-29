@@ -134,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NetworkReferenceManager
   roomClient: {fileID: 9130834755717229769}
   avatarManager: {fileID: 4211592653125914507}
+  spectatorModeManager: {fileID: 7065353455143333400}
   messageHandler: {fileID: 1515164901610885669}
   levelManager: {fileID: 0}
   localLobbyMenu: {fileID: 0}
@@ -363,6 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpectatorModeManager
   rig: {fileID: 0}
+  blockPlayerVision: {fileID: 0}
   characterController: {fileID: 0}
   gravityProvider: {fileID: 0}
   height: 3

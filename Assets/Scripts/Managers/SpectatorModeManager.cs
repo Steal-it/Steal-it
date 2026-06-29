@@ -4,7 +4,6 @@ using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Gravity;
 
 public class SpectatorModeManager : MonoBehaviour {
-    public static SpectatorModeManager Instance { get; private set; }
     public event EventHandler<OnSpectatorModeChangeEventArgs> OnSpectatorModeChange;
 
     public class OnSpectatorModeChangeEventArgs : EventArgs {
@@ -58,12 +57,6 @@ public class SpectatorModeManager : MonoBehaviour {
     }
 
     void Awake() {
-        if (Instance != null) {
-            Debug.LogError($"An instance of {nameof(SpectatorModeManager)} already exists!");
-            return;
-        }
-
-        Instance = this;
         enable = false;
     }
 

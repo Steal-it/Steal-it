@@ -53,7 +53,7 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
                 playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
             }
 
-            SpectatorModeManager.Instance.ChangeSpectatorModeByPlayerUUID(playerUUID, true);
+            NetworkReferenceManager.Instance.SpectatorModeManager.ChangeSpectatorModeByPlayerUUID(playerUUID, true);
 
             monsterStateManager.ChangeState(MonsterStateManager.StateKey.Murder);
         }

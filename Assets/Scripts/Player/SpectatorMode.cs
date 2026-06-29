@@ -9,7 +9,7 @@ public class SpectatorMode : MonoBehaviour {
     private TorsoIdentifier torso;
 
     void Start() {
-        SpectatorModeManager.Instance.OnSpectatorModeChange += SpectatorModeManager_OnSpectatorModeChange;
+        NetworkReferenceManager.Instance.SpectatorModeManager.OnSpectatorModeChange += SpectatorModeManager_OnSpectatorModeChange;
         playerUUID = gameObject.name;
         if (playerUUID != "Local Avatar") {
             playerUUID = playerUUID.Split('#')[1];
@@ -56,6 +56,6 @@ public class SpectatorMode : MonoBehaviour {
     }
 
     void OnDestroy() {
-        SpectatorModeManager.Instance.OnSpectatorModeChange -= SpectatorModeManager_OnSpectatorModeChange;
+        NetworkReferenceManager.Instance.SpectatorModeManager.OnSpectatorModeChange -= SpectatorModeManager_OnSpectatorModeChange;
     }
 }

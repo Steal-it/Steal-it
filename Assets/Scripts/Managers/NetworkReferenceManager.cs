@@ -7,6 +7,7 @@ public class NetworkReferenceManager : MonoBehaviour {
 
     public RoomClient RoomClient => roomClient;
     public AvatarManager AvatarManager => avatarManager;
+    public SpectatorModeManager SpectatorModeManager => spectatorModeManager;
     public MessageHandler MessageHandler => messageHandler;
     public LevelManager LevelManager => levelManager;
     public LocalLobbyMenu LocalLobbyMenu => localLobbyMenu;
@@ -17,6 +18,8 @@ public class NetworkReferenceManager : MonoBehaviour {
     private RoomClient roomClient;
     [SerializeField]
     private AvatarManager avatarManager;
+    [SerializeField]
+    private SpectatorModeManager spectatorModeManager;
     [SerializeField]
     private MessageHandler messageHandler;
     [SerializeField]
