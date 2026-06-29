@@ -49,7 +49,7 @@ public class SpectatorMode : MonoBehaviour {
     SpectatorModeManager.OnSpectatorModeChangeEventArgs _args) {
         //Case of an avatar being killed by the monster
 
-        if (_args.PlayerUUID == playerUUID || _args.PlayerUUID == NetworkReferenceManager.Instance.RoomClient.Me.uuid) {
+        if (_args.PlayerUUID == playerUUID || (playerUUID == "Local Avatar" && _args.PlayerUUID == NetworkReferenceManager.Instance.RoomClient.Me.uuid)) {
             updateVisibility();
             return;
         }
