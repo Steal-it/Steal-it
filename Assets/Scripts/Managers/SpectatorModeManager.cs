@@ -96,7 +96,6 @@ public class SpectatorModeManager : MonoBehaviour {
     // Invoked when the local peer receives a message that requires the spectator mode of someone to be activated
     void MessageHandler_OnApplySpectatorModeRequest(object _sender,
     MessageHandler.OnApplySpectatorModeRequestEventArgs _args) {
-        Debug.Log("Received " + _args.PlayerUUID);
         ChangeSpectatorModeByPlayerUUID(_args.PlayerUUID, false);
     }
 
