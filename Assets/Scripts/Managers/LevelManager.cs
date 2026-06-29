@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Ubiq.Rooms;
 using Unity.XR.CoreUtils;
@@ -22,9 +23,11 @@ public class LevelManager : MonoBehaviour {
     [SerializeField]
     private Transform localLobbySpawnPoint;
     [SerializeField]
-    private Transform roomLobbySpawnPoint;
+    private Transform roomLobbySpawnPointCenter;
     [SerializeField]
-    private Transform gameSpawnPoint;
+    private Transform gameSpawnPointCenter;
+    [SerializeField, Range(0.5f, 2)]
+    private float spawnPointRadius = 1;
 
     private RoomClient roomClient;
     private MessageHandler messageHandler;
@@ -106,17 +109,38 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void LoadRoomLobby() {
-        rig.transform.SetPositionAndRotation(roomLobbySpawnPoint.position, roomLobbySpawnPoint.rotation);
+        (Vector3 position, Quaternion rotation) = GetSpawnPoint(false);
+        rig.transform.SetPositionAndRotation(position, rotation);
         rigLocomotor.gameObject.SetActive(true);
     }
 
     private void LoadGame() {
-        rig.transform.SetPositionAndRotation(gameSpawnPoint.position, gameSpawnPoint.rotation);
+        (Vector3 position, Quaternion rotation) = GetSpawnPoint(true);
+        rig.transform.SetPositionAndRotation(position, rotation);
         rigLocomotor.gameObject.SetActive(true);
 
         OnGameLoaded?.Invoke(this, new OnGameLoadedEventArgs {
             IsClientAsServer = isClientAsServer
         });
+    }
+
+    private (Vector3 position, Quaternion rotation) GetSpawnPoint(bool _isGameSpwanPoint) {
+        // Sort UUIDs so every client agrees on the same order
+        RoomClient roomClient = NetworkReferenceManager.Instance.RoomClient;
+        List<string> uuidSortedList = new List<string>();
+        foreach (IPeer peer in roomClient.Peers) {
+            uuidSortedList.Add(peer.uuid);
+        }
+        uuidSortedList = uuidSortedList.OrderBy(id => id).ToList();
+
+        int index = uuidSortedList.IndexOf(roomClient.Me.uuid);
+        Transform centerPoint = _isGameSpwanPoint ? gameSpawnPointCenter : roomLobbySpawnPointCenter;
+
+        float angle = index * (360f / uuidSortedList.Count) * Mathf.Deg2Rad;
+        Vector3 position = centerPoint.position + new Vector3(Mathf.Cos(angle) * spawnPointRadius, 0, Mathf.Sin(angle) * spawnPointRadius);
+        Quaternion rotation = centerPoint.rotation;
+
+        return (position, rotation);
     }
 
     void OnDestroy() {
@@ -127,5 +151,10 @@ public class LevelManager : MonoBehaviour {
         localLobbyMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
         roomsListPanel.OnRoomJoined -= RoomsListPanel_OnRoomJoined;
         roomLobbyMenu.OnRoomExited -= RoomLobbyMenu_OnRoomExited;
+    }
+
+    void OnDrawGizmosSelected() {
+        Gizmos.DrawWireSphere(roomLobbySpawnPointCenter.position, spawnPointRadius);
+        Gizmos.DrawWireSphere(gameSpawnPointCenter.position, spawnPointRadius);
     }
 }
