@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &87660597 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1337456057917761103, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+  m_PrefabInstance: {fileID: 397161253}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0eb5b869e7de594fba99c5f179b3fe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlockPlayerVision
 --- !u!1 &212858195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,6 +1097,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085564536}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1092879864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7324515406595318022, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+  m_PrefabInstance: {fileID: 397161253}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b46d3c2f9f9a9849840e47b9ddef1b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1183661319 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6567683391160497850, guid: 092eb32917cc7c969b6df8e7d1575699, type: 3}
@@ -1314,6 +1336,22 @@ PrefabInstance:
       propertyPath: roomsListPanel
       value: 
       objectReference: {fileID: 1917828336}
+    - target: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: rig
+      value: 
+      objectReference: {fileID: 397161254}
+    - target: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: gravityProvider
+      value: 
+      objectReference: {fileID: 1092879864}
+    - target: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: blockPlayerVision
+      value: 
+      objectReference: {fileID: 87660597}
+    - target: {fileID: 7065353455143333400, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: characterController
+      value: 
+      objectReference: {fileID: 1583115125}
     - target: {fileID: 7335320604801943227, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
       propertyPath: m_NavMeshData
       value: 
@@ -1486,6 +1524,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &1583115125 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 514114019668781597, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+  m_PrefabInstance: {fileID: 397161253}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1637647120
 PrefabInstance:
   m_ObjectHideFlags: 0

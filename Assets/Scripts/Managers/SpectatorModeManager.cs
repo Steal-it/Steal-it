@@ -36,12 +36,14 @@ public class SpectatorModeManager : MonoBehaviour {
 
     private void Enable() {
         // TODO ask And what to do to avoid monster recognition
+        Debug.Log("test0.3");
         Vector3 position = rig.transform.position;
         position.y = height;
         rig.transform.position = position;
 
         characterController.enabled = false; // Do not collide
         gravityProvider.enabled = false;
+        Debug.Log("test0.5");
     }
 
     private void Disable() {
@@ -64,6 +66,7 @@ public class SpectatorModeManager : MonoBehaviour {
         }
 
         Instance = this;
+        enable = false;
     }
 
     // Main change handler: invoke when the monster made someone lose. Invoke with true if the message should be propagated. The only player that should invoke this function is the one attached to the monster, all of the other player will manage spectator mode upon receiving the appropriate message (that automatically won't propagate)
@@ -75,7 +78,6 @@ public class SpectatorModeManager : MonoBehaviour {
         if (_playerUUID == playerUUID || _playerUUID == "Local Avatar") {
             // Disbale the oob collision detection
             blockPlayerVision.enabled = !blockPlayerVision.enabled;
-
             // Update visibility
             updateVisibility();
         }
