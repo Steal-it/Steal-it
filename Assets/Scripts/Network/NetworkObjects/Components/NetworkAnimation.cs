@@ -1,21 +1,15 @@
 using System;
 using Ubiq.Dictionaries;
 using Ubiq.Messaging;
-using UnityEngine;
 
-/// <summary>
-/// In order make a NetworkObject working, it has to be child of the Ubiq Network GameObject.
-/// </summary>
 public class NetworkAnimation : NetworkComponent {
     public event EventHandler<OnMessageReceivedEventArgs> OnMessageReceived;
     public class OnMessageReceivedEventArgs : EventArgs {
         public SerializableDictionary ParameterDictionary;
     }
 
-    // private NetworkContext context;
-
     void Awake() {
-        // context = NetworkScene.Register(this);
+        RegisterContext(this);
     }
 
     public void SendAnimationParameters(SerializableDictionary _parameterDictionary) {

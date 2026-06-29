@@ -2,18 +2,14 @@ using Ubiq.Geometry;
 using Ubiq.Messaging;
 using UnityEngine;
 
-/// <summary>
-/// In order make a NetworkObject working, it has to be child of the Ubiq Network GameObject.
-/// </summary>
 public class NetworkMovement : NetworkComponent {
     public Transform Transform { get; set; }
 
-    // private NetworkContext context;
     private bool amIOwner;
     private bool amISender;
 
     void Awake() {
-        // context = NetworkScene.Register(this);
+        RegisterContext(this);
 
         amIOwner = false;
         Transform = transform;
