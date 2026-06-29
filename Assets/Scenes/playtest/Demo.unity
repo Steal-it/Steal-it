@@ -2206,6 +2206,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5688360433971990977, guid: fb8e4b65c8f0e6f4b89ab5dc98ee33c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 6108862244178956169, guid: fb8e4b65c8f0e6f4b89ab5dc98ee33c8, type: 3}
       propertyPath: m_Name
       value: RoomLobby

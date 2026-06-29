@@ -73,7 +73,7 @@ public class LevelManager : MonoBehaviour {
     private void LoadScreen(object _sender, MessageHandler.OnAllPeersReadyForChangeEventArgs _event) {
         switch (_event.LevelName) {
             // TODO: huh?
-            case "Test":
+            case "Level1":
                 LoadGame();
                 break;
             default:
@@ -127,6 +127,7 @@ public class LevelManager : MonoBehaviour {
     private (Vector3 position, Quaternion rotation) GetSpawnPoint(bool _isGameSpwanPoint) {
         RoomClient roomClient = NetworkReferenceManager.Instance.RoomClient;
         Transform centerPoint = _isGameSpwanPoint ? gameSpawnPointCenter : roomLobbySpawnPointCenter;
+        Quaternion rotation = centerPoint.rotation;
 
         int hash = roomClient.Me.uuid.GetHashCode();
         float angle = (hash & 0x7FFFFFFF) % 360 * Mathf.Deg2Rad;
@@ -144,8 +145,6 @@ public class LevelManager : MonoBehaviour {
             }
             candidatePosition = centerPoint.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * spawnPointRadius;
         }
-
-        Quaternion rotation = centerPoint.rotation;
 
         return (candidatePosition, rotation);
     }

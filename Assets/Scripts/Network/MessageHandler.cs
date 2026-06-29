@@ -40,7 +40,7 @@ public class MessageHandler : MonoBehaviour {
         wasCounterRequested = false;
 
         OnAllPeersReadyForChange?.Invoke(this, new OnAllPeersReadyForChangeEventArgs {
-            LevelName = "Test"
+            LevelName = "Level1"
         });
     }
 
