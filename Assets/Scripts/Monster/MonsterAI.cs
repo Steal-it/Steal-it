@@ -8,7 +8,10 @@ public class MonsterAI : MonoBehaviour {
     private int lightExposureCounter;
 
     void Update() {
-        if (monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Stunned) return;
+        if (
+            monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Murder ||
+            monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Flashed
+        ) return;
 
         // If at least one player is flashing the monster, start light exposure timer
         if (lightExposureCounter > 0) {
@@ -16,7 +19,7 @@ public class MonsterAI : MonoBehaviour {
             print(lightExposureTimer);
 
             if (lightExposureTimer <= 0) {
-                monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
+                monsterStateManager.ChangeState(MonsterStateManager.StateKey.Flashed);
             }
         }
     }

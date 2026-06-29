@@ -5,18 +5,46 @@ public class MonsterAnimator : AbstractNetworkAnimator {
     [SerializeField]
     private Animator animator;
 
-    private const string IS_STUNNED_ANIM_VAR = "isStunned";
+    private const string CHASE_PARAM = "chase";
+    private const string FLASHED_PARAM = "flashed";
+    private const string MURDER_PARAM = "murder";
+    private const string WANDER_PARAM = "wander";
 
     void Awake() {
         Animator = animator;
         ParameterTypeDictionary = new Dictionary<string, IAnimationParameter>() {
-            { IS_STUNNED_ANIM_VAR, new AnimationBoolParameter() }
+            { CHASE_PARAM, new AnimationTriggerParameter() },
+            { FLASHED_PARAM, new AnimationTriggerParameter() },
+            { MURDER_PARAM, new AnimationTriggerParameter() },
+            { WANDER_PARAM, new AnimationTriggerParameter() },
         };
     }
 
-    public void SetIsStunned(bool _value) {
-        animator.SetBool(IS_STUNNED_ANIM_VAR, _value);
+    public void SetChase() {
+        ResetAllTriggers();
+        animator.SetTrigger(CHASE_PARAM);
 
-        NotifyParameterSet(IS_STUNNED_ANIM_VAR, _value.ToString());
+        NotifyParameterSet(CHASE_PARAM);
+    }
+
+    public void SetFlashed() {
+        ResetAllTriggers();
+        animator.SetTrigger(FLASHED_PARAM);
+
+        NotifyParameterSet(FLASHED_PARAM);
+    }
+
+    public void SetMurder() {
+        ResetAllTriggers();
+        animator.SetTrigger(MURDER_PARAM);
+
+        NotifyParameterSet(MURDER_PARAM);
+    }
+
+    public void SetWander() {
+        ResetAllTriggers();
+        animator.SetTrigger(WANDER_PARAM);
+
+        NotifyParameterSet(WANDER_PARAM);
     }
 }

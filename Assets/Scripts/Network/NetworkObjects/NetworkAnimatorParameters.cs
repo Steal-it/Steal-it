@@ -42,6 +42,7 @@ public class AnimationFloatParameter : IAnimationParameter {
 
 public class AnimationTriggerParameter : IAnimationParameter {
     public bool TrySet(string _name, string _value, Animator _animator) {
+        Debug.Log(_name);
         _animator.SetTrigger(_name);
 
         return true;

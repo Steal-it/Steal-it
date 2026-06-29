@@ -3,7 +3,6 @@ using System.Linq;
 using Ubiq.Rooms;
 using Unity.XR.CoreUtils;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 
 public class LevelManager : MonoBehaviour {
@@ -70,6 +69,7 @@ public class LevelManager : MonoBehaviour {
 
     private void LoadScreen(object _sender, MessageHandler.OnAllPeersReadyForChangeEventArgs _event) {
         switch (_event.levelName) {
+            // TODO: huh?
             case "Test":
                 LoadGame();
                 break;

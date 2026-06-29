@@ -12,9 +12,10 @@ public abstract class AbstractNetworkAnimator : MonoBehaviour {
     protected Animator Animator { get; set; }
     protected Dictionary<string, IAnimationParameter> ParameterTypeDictionary { get; set; }
 
-    protected void NotifyParameterSet(string _name, string _value) {
-        SerializableDictionary parameterDictionary = new SerializableDictionary();
-        parameterDictionary.Update(_name, _value.ToString());
+    protected void NotifyParameterSet(string _name, string _value = "") {
+        SerializableDictionary parameterDictionary = new SerializableDictionary(new Dictionary<string, string> {
+            { _name, _value }
+        });
 
         OnAnimationChanged?.Invoke(this, new OnAnimationChangedEventArgs {
             ParameterDictionary = parameterDictionary
@@ -22,17 +23,24 @@ public abstract class AbstractNetworkAnimator : MonoBehaviour {
     }
 
     protected void NotifyParameterSet(Dictionary<string, string> _parameterDictionary) {
-        SerializableDictionary parameterDictionary = new SerializableDictionary();
-        foreach (KeyValuePair<string, string> entry in _parameterDictionary) {
-            parameterDictionary.Update(entry.Key, entry.Value.ToString());
-        }
+        SerializableDictionary parameterDictionary = new SerializableDictionary(_parameterDictionary);
 
         OnAnimationChanged?.Invoke(this, new OnAnimationChangedEventArgs {
             ParameterDictionary = parameterDictionary
         });
     }
 
+    protected void ResetAllTriggers() {
+        foreach (KeyValuePair<string, IAnimationParameter> entry in ParameterTypeDictionary) {
+            if ((entry.Value as AnimationTriggerParameter) != null) {
+                Animator.ResetTrigger(entry.Key);
+            }
+        }
+    }
+
     public void SetParameterDictionary(SerializableDictionary _parameterDictionary) {
+        ResetAllTriggers();
+
         foreach (KeyValuePair<string, string> entry in _parameterDictionary) {
             if (ParameterTypeDictionary.ContainsKey(entry.Key)) {
                 ParameterTypeDictionary[entry.Key].TrySet(entry.Key, entry.Value, Animator);

@@ -44,14 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5515af31f685eff459e3cbb8e263398c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterStateManager
-  monster: {fileID: 0}
+  monsterAI: {fileID: 0}
   lightExposureTime: 0.5
   monsterWanderModeManager: {fileID: 0}
-  viewRadius: 20
-  viewAngle: 150
-  everythingButAvatarLayer:
+  viewRadius: 25
+  viewAngle: 190
+  wallLayer:
     serializedVersion: 2
-    m_Bits: 8183
+    m_Bits: 8192
   monsterAnimator: {fileID: 0}
   stunnedMinDistanceDestination: 35
   wanderAndStunnedSpeed: 3

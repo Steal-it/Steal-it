@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ChaseState : IMonsterState, IMonsterStateVisitor {
+    public event EventHandler OnPlayerKilled;
+
     public Transform Player => player;
 
     private MonsterStateManager monsterStateManager;
@@ -13,13 +16,15 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
     public void EnterState(MonsterStateManager _monsterStateManager) {
         monsterStateManager = _monsterStateManager;
 
-        monster = monsterStateManager.Monster;
+        monster = monsterStateManager.MonsterAI;
         agent = monsterStateManager.Agent;
 
         isChangingState = false;
+        monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = false;
         monsterStateManager.ChaseNavMeshSurface.enabled = true;
         agent.speed = monsterStateManager.MinChasingSpeed;
         agent.autoBraking = false;
+        monsterStateManager.MonsterAnimator.SetChase();
 
         IMonsterState wanderState = monsterStateManager.StateDictionary[MonsterStateManager.StateKey.Wander];
         wanderState.Accept(this);
@@ -38,8 +43,9 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
         if (Vector3.Distance(monster.transform.position, player.position) < monsterStateManager.KillDistance) {
             isChangingState = true;
 
-            Debug.Log($"PLAYER KILLED");
-            monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
+            OnPlayerKilled?.Invoke(this, EventArgs.Empty);
+
+            monsterStateManager.ChangeState(MonsterStateManager.StateKey.Murder);
         }
     }
 
