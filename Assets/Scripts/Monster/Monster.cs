@@ -65,6 +65,7 @@ public class Monster : MonoBehaviour {
         monsterAI.gameObject.SetActive(false);
         monsterPlaceholder.gameObject.SetActive(true);
 
+        // TODO: use common only
         networkMovement.Transform = monsterPlaceholder.transform;
     }
 

@@ -49,9 +49,9 @@ MonoBehaviour:
   monsterWanderModeManager: {fileID: 0}
   viewRadius: 25
   viewAngle: 190
-  everythingButAvatarLayer:
+  wallLayer:
     serializedVersion: 2
-    m_Bits: 8183
+    m_Bits: 8192
   monsterAnimator: {fileID: 0}
   stunnedMinDistanceDestination: 35
   wanderAndStunnedSpeed: 3

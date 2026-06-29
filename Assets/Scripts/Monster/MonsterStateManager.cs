@@ -21,7 +21,7 @@ public class MonsterStateManager : MonoBehaviour {
     // Wander Mode
     public float ViewRadius => viewRadius;
     public float ViewAngle => viewAngle;
-    public LayerMask EverythingButAvatarLayer => everythingButAvatarLayer;
+    public LayerMask WallLayer => wallLayer;
     public MonsterRandomDestinationManager MonsterRandomDestinationManager => monsterWanderModeManager;
 
     // Stunned Mode
@@ -54,7 +54,7 @@ public class MonsterStateManager : MonoBehaviour {
     [SerializeField, Range(0, 360)]
     private float viewAngle = 150;
     [SerializeField]
-    private LayerMask everythingButAvatarLayer;
+    private LayerMask wallLayer;
 
     [Header("Stunned Mode")]
     [SerializeField]
