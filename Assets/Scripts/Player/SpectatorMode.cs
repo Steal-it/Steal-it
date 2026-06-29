@@ -16,7 +16,6 @@ public class SpectatorMode : MonoBehaviour {
         }
 
         torso = gameObject.GetComponentInChildren<TorsoIdentifier>();
-        Debug.Log("registered");
     }
 
     void updateVisibility() {
@@ -59,7 +58,6 @@ public class SpectatorMode : MonoBehaviour {
     }
 
     void OnDestroy() {
-        Debug.Log("Unregistered");
         SpectatorModeManager.Instance.OnSpectatorModeChange -= SpectatorModeManager_OnSpectatorModeChange;
     }
 }

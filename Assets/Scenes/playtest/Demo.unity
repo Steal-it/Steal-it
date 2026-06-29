@@ -442,6 +442,10 @@ PrefabInstance:
       propertyPath: m_MoveSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6067948187282095027, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+      propertyPath: m_text
+      value: YOU LOST
+      objectReference: {fileID: 0}
     - target: {fileID: 6652642035712390005, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
       propertyPath: handTorchController
       value: 
