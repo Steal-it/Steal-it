@@ -6,16 +6,16 @@ using UnityEngine;
 /// <summary>
 /// In order make a NetworkObject working, it has to be child of the Ubiq Network GameObject.
 /// </summary>
-public class NetworkAnimation : MonoBehaviour {
+public class NetworkAnimation : NetworkComponent {
     public event EventHandler<OnMessageReceivedEventArgs> OnMessageReceived;
     public class OnMessageReceivedEventArgs : EventArgs {
         public SerializableDictionary ParameterDictionary;
     }
 
-    private NetworkContext context;
+    // private NetworkContext context;
 
     void Awake() {
-        context = NetworkScene.Register(this);
+        // context = NetworkScene.Register(this);
     }
 
     public void SendAnimationParameters(SerializableDictionary _parameterDictionary) {
@@ -23,10 +23,10 @@ public class NetworkAnimation : MonoBehaviour {
             _parameterDictionary
         );
 
-        context.SendJson(message);
+        Context.SendJson(message);
     }
 
-    public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
+    public override void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
         AnimationMessage message = _message.FromJson<AnimationMessage>();
 
         OnMessageReceived?.Invoke(this, new OnMessageReceivedEventArgs {

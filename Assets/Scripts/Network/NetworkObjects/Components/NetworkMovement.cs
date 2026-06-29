@@ -5,15 +5,15 @@ using UnityEngine;
 /// <summary>
 /// In order make a NetworkObject working, it has to be child of the Ubiq Network GameObject.
 /// </summary>
-public class NetworkMovement : MonoBehaviour {
+public class NetworkMovement : NetworkComponent {
     public Transform Transform { get; set; }
 
-    private NetworkContext context;
+    // private NetworkContext context;
     private bool amIOwner;
     private bool amISender;
 
     void Awake() {
-        context = NetworkScene.Register(this);
+        // context = NetworkScene.Register(this);
 
         amIOwner = false;
         Transform = transform;
@@ -47,17 +47,17 @@ public class NetworkMovement : MonoBehaviour {
         if (Transform == null) return;
 
         MovementMessage message = new MovementMessage(
-            Transforms.ToLocal(Transform, context.Scene.transform),
+            Transforms.ToLocal(Transform, Context.Scene.transform),
             amIOwner
         );
 
-        context.SendJson(message);
+        Context.SendJson(message);
     }
 
-    public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
+    public override void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
         MovementMessage message = _message.FromJson<MovementMessage>();
 
-        Pose pose = Transforms.ToWorld(message.Pose, context.Scene.transform);
+        Pose pose = Transforms.ToWorld(message.Pose, Context.Scene.transform);
         Transform.SetPositionAndRotation(pose.position, pose.rotation);
 
         if (message.IsOwned) {
