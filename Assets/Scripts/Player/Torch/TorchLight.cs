@@ -11,7 +11,7 @@ public class TorchLight : MonoBehaviour {
     private float maxLightDistance = 5;
 
     private bool power;
-    private MonsterAI monster;
+    private MonsterLightDetector monsterLightDetector;
 
     void OnValidate() {
         torchLight.range = maxLightDistance;
@@ -22,13 +22,13 @@ public class TorchLight : MonoBehaviour {
     void Update() {
         if (!power) {
             // If the torch is off and the player was flashing the monster ...
-            if (monster != null) {
+            if (monsterLightDetector != null) {
                 // ... stop the monster light exposure
-                monster.StopLightExposureTimer();
+                monsterLightDetector.StopLightExposureTimer();
             }
 
             // The monster is not flashed anymore by the player
-            monster = null;
+            monsterLightDetector = null;
 
             return;
         }
@@ -37,23 +37,23 @@ public class TorchLight : MonoBehaviour {
         RaycastHit[] hitArray = Physics.SphereCastAll(lightEmitPointTransform.position, lightRadius, lightEmitPointTransform.forward, maxLightDistance);
         bool isMonsterHit = false;
         foreach (RaycastHit hit in hitArray) {
-            if (hit.transform.TryGetComponent(out MonsterAI _monster)) {
+            if (hit.transform.TryGetComponent(out MonsterLightDetector _monsterLightDetector)) {
                 isMonsterHit = true;
 
                 // The first time the player illuminates the monster ...
-                if (monster == null) {
+                if (monsterLightDetector == null) {
                     // ... start its light exposure time ...
-                    monster = _monster;
-                    monster.StartLightExposureTimer();
+                    monsterLightDetector = _monsterLightDetector;
+                    monsterLightDetector.StartLightExposureTimer();
                 }
             }
         }
 
         // ... otherwise, stop it if the monster was flashed (the torch is on but it is not illuminating the monster anymore)
         if (!isMonsterHit) {
-            if (monster != null) {
-                monster.StopLightExposureTimer();
-                monster = null;
+            if (monsterLightDetector != null) {
+                monsterLightDetector.StopLightExposureTimer();
+                monsterLightDetector = null;
             }
         }
     }

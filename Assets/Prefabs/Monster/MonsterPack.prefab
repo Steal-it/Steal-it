@@ -1,5 +1,69 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8125416240330260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8807600080255390127}
+  - component: {fileID: 6629758645203494182}
+  m_Layer: 0
+  m_Name: WanderAndStunned NavMesh Surface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8807600080255390127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8125416240330260}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7045463728083496896}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6629758645203494182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8125416240330260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.26666668
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1 &2422494269782280735
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,6 +99,116 @@ Transform:
   - {fileID: 2985842635471945356}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3334694550338180543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7238867764981598293}
+  - component: {fileID: 6349183751830036906}
+  m_Layer: 0
+  m_Name: MonsterRandomDestinationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7238867764981598293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3334694550338180543}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7045463728083496896}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6349183751830036906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3334694550338180543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55403bdc816b8da4e9e30adedd3176d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawnerManager
+  width: 50
+  height: 50
+--- !u!1 &6001582588227901751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2985842635471945356}
+  - component: {fileID: 1104679099160037893}
+  m_Layer: 0
+  m_Name: Chase NavMesh Surface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2985842635471945356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6001582588227901751}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7045463728083496896}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1104679099160037893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6001582588227901751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 12288
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.26666668
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 1cd20b78e3b96494e9d1bfae106b556b, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1001 &289025997397087310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,223 +282,4 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4212918262395633944, guid: e650a430438a4844889c36cde7d65208, type: 3}
   m_PrefabInstance: {fileID: 289025997397087310}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1544242973388681269
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 7045463728083496896}
-    m_Modifications:
-    - target: {fileID: 1545472206506657313, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_Name
-      value: WanderAndStunned NavMesh Surface
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
---- !u!114 &6629758645203494182 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5291697203110499603, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-  m_PrefabInstance: {fileID: 1544242973388681269}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
---- !u!4 &8807600080255390127 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8022214230363775386, guid: 85f22ec8602b77b409db6e617d671c88, type: 3}
-  m_PrefabInstance: {fileID: 1544242973388681269}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &4067927556837888298
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 7045463728083496896}
-    m_Modifications:
-    - target: {fileID: 1599650372841817237, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_Name
-      value: MonsterRandomDestinationManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
---- !u!114 &6349183751830036906 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6947077805517222016, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-  m_PrefabInstance: {fileID: 4067927556837888298}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55403bdc816b8da4e9e30adedd3176d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawnerManager
---- !u!4 &7238867764981598293 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6629775214326143359, guid: 8dfb93d1d59883e4bbaa5883bfd9fd3e, type: 3}
-  m_PrefabInstance: {fileID: 4067927556837888298}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &5060772026796465942
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 7045463728083496896}
-    m_Modifications:
-    - target: {fileID: 1545472206506657313, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_Name
-      value: Chase NavMesh Surface
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
---- !u!114 &1104679099160037893 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5291697203110499603, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-  m_PrefabInstance: {fileID: 5060772026796465942}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
---- !u!4 &2985842635471945356 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8022214230363775386, guid: b19b76f19be371148998fbb35a340cbb, type: 3}
-  m_PrefabInstance: {fileID: 5060772026796465942}
   m_PrefabAsset: {fileID: 0}

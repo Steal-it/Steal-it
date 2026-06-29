@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Monster : MonoBehaviour {
     [SerializeField]
@@ -8,7 +9,7 @@ public class Monster : MonoBehaviour {
     [SerializeField]
     private NetworkAudio networkAudio;
     [SerializeField]
-    private MonsterAI monsterAI;
+    private NavMeshAgent monsterAgent;
     [SerializeField]
     private Transform commonTransform;
     [SerializeField]
@@ -23,7 +24,7 @@ public class Monster : MonoBehaviour {
         monsterSFXManager.OnSFXChanged += MonsterSFXManager_OnSFXChanged;
         networkAudio.OnMessageReceived += NetworkAudio_OnMessageReceived;
 
-        monsterAI.gameObject.SetActive(false);
+        monsterAgent.gameObject.SetActive(false);
         commonTransform.gameObject.SetActive(false);
     }
 
@@ -62,9 +63,9 @@ public class Monster : MonoBehaviour {
     /// Enables the monster with its logic, used for the client that created the room, acting as a server.
     /// </summary>
     private void EnableServerMonster() {
-        monsterAI.gameObject.SetActive(true);
+        monsterAgent.gameObject.SetActive(true);
 
-        networkMovement.Transform = monsterAI.transform;
+        networkMovement.Transform = monsterAgent.transform;
         networkMovement.SelectObject();
     }
 
@@ -72,7 +73,7 @@ public class Monster : MonoBehaviour {
     /// Disable the monster and its logic to use the placeholder, used for the clients that did not created the room.
     /// </summary>
     private void EnableClientMonster() {
-        monsterAI.gameObject.SetActive(false);
+        monsterAgent.gameObject.SetActive(false);
 
         networkMovement.Transform = commonTransform;
     }

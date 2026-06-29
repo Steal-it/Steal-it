@@ -53,6 +53,20 @@ public class NewClientAsServerElectionMessage : BaseMessage {
 }
 
 [Serializable]
+public class StartMonsterLightExposure : BaseMessage {
+    public const string TYPE = "StartMonsterLightExposureMessage";
+
+    public StartMonsterLightExposure() : base(TYPE) { }
+}
+
+[Serializable]
+public class StopMonsterLightExposure : BaseMessage {
+    public const string TYPE = "StopMonsterLightExposureMessage";
+
+    public StopMonsterLightExposure() : base(TYPE) { }
+}
+
+[Serializable]
 public class ActivateSpectatorModeMessage : BaseMessage {
     public const string TYPE = "ActivateSpectatorModeMessage";
 
