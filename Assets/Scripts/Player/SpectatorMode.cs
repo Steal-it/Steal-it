@@ -16,7 +16,9 @@ public class SpectatorMode : MonoBehaviour {
         }
 
         torso = gameObject.GetComponentInChildren<TorsoIdentifier>();
+        Debug.Log("registered");
     }
+
     void updateVisibility() {
         enable = !enable;
         if (enable) {
@@ -51,10 +53,13 @@ public class SpectatorMode : MonoBehaviour {
         if (_args.PlayerUUID == playerUUID) {
             updateVisibility();
             return;
+        } else {
+            Debug.Log("no " + _args.PlayerUUID + " " + playerUUID);
         }
     }
 
     void OnDestroy() {
+        Debug.Log("Unregistered");
         SpectatorModeManager.Instance.OnSpectatorModeChange -= SpectatorModeManager_OnSpectatorModeChange;
     }
 }

@@ -36,14 +36,12 @@ public class SpectatorModeManager : MonoBehaviour {
 
     private void Enable() {
         // TODO ask And what to do to avoid monster recognition
-        Debug.Log("test0.3");
         Vector3 position = rig.transform.position;
         position.y = height;
         rig.transform.position = position;
 
         characterController.enabled = false; // Do not collide
         gravityProvider.enabled = false;
-        Debug.Log("test0.5");
     }
 
     private void Disable() {

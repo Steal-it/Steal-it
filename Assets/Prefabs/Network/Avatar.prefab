@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 2075108970}
   - component: {fileID: 2075108969}
   - component: {fileID: 6305583007509887283}
+  - component: {fileID: 5456510215409577339}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Untagged
@@ -128,6 +129,18 @@ MonoBehaviour:
   OnTextureChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5456510215409577339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3172939939781028348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2c289d99cca034478437722fa3e7431, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpectatorMode
 --- !u!1 &3235195513187403095
 GameObject:
   m_ObjectHideFlags: 0

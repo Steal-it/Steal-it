@@ -14,7 +14,7 @@ public class RedScreenOfDeath : MonoBehaviour {
         if (Camera.main == null) {
             Debug.LogWarning("Main camera not found");
         }
-        localCanvas.worldCamera = Camera.main;
+
         localCanvas.planeDistance = uiDistance;
 
         SpectatorModeManager.Instance.OnSpectatorModeChange += SpectatorModeManager_OnSpectatorModeChange;
@@ -28,7 +28,7 @@ public class RedScreenOfDeath : MonoBehaviour {
         string playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
 
         //The event is invoked both when another peer lost or another peer lost. However, the screen should be activated only if this local peer lost
-        if (_args.PlayerUUID == playerUUID) {
+        if (_args.PlayerUUID == playerUUID || _args.PlayerUUID == "Local Avatar") {
             canvas.SetActive(enable);
         }
     }
