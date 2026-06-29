@@ -45,6 +45,14 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
 
             OnPlayerKilled?.Invoke(this, EventArgs.Empty);
 
+            string playerUUID = player.parent.parent.gameObject.name;
+
+            if (playerUUID != "Local Avatar") {
+                playerUUID = playerUUID.Split('#')[1];
+            }
+
+            SpectatorModeManager.Instance.ChangeSpectatorModeByPlayerUUID(playerUUID, true);
+
             monsterStateManager.ChangeState(MonsterStateManager.StateKey.Murder);
         }
     }

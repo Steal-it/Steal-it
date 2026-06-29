@@ -67,12 +67,12 @@ public class SpectatorModeManager : MonoBehaviour {
     }
 
     // Main change handler: invoke when the monster made someone lose. Invoke with true if the message should be propagated. The only player that should invoke this function is the one attached to the monster, all of the other player will manage spectator mode upon receiving the appropriate message (that automatically won't propagate)
-    public void changeSpectatorModeByPlayerUUID(string _playerUUID, bool _sendToOtherPeer) {
+    public void ChangeSpectatorModeByPlayerUUID(string _playerUUID, bool _sendToOtherPeer) {
         // Ubiq does not guarantee the uuid will not change after connection/disconnection/room change, therefore, it is necessary to obtain it each time
         string playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
 
         //The event is invoked both when another peer lost or another peer lost. However, locally the spectator mode should be activated only if this local peer lost
-        if (_playerUUID == playerUUID) {
+        if (_playerUUID == playerUUID || _playerUUID == "Local Avatar") {
             // Disbale the oob collision detection
             blockPlayerVision.enabled = !blockPlayerVision.enabled;
 
@@ -90,15 +90,10 @@ public class SpectatorModeManager : MonoBehaviour {
         }
     }
 
-    // TODO remove before merging, here just for testing with button on scene
-    public void test() {
-        changeSpectatorModeByPlayerUUID(NetworkReferenceManager.Instance.RoomClient.Me.uuid, true);
-    }
-
     // Invoked when the local peer receives a message that requires the spectator mode of someone to be activated
     void MessageHandler_OnApplySpectatorModeRequest(object _sender,
     MessageHandler.OnApplySpectatorModeRequestEventArgs _args) {
-        changeSpectatorModeByPlayerUUID(_args.PlayerUUID, false);
+        ChangeSpectatorModeByPlayerUUID(_args.PlayerUUID, false);
     }
 
     void OnDestroy() {
