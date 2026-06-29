@@ -4,7 +4,7 @@ using System.Linq;
 using Ubiq.Dictionaries;
 using UnityEngine;
 
-public abstract class AbstractNetworkSFXManager : MonoBehaviour {
+public abstract class SFXManagerNetworkExtension : MonoBehaviour {
     public event EventHandler<OnSFXChangedEventArgs> OnSFXChanged;
     public class OnSFXChangedEventArgs : EventArgs {
         public SerializableDictionary SFXDictionary;
@@ -51,7 +51,7 @@ public abstract class AbstractNetworkSFXManager : MonoBehaviour {
                 bool.TryParse(entry.Value, out bool isActive)
             ) {
                 AudioSource audioSource = SFXDictionary.Keys.ElementAt(index);
-                SFXDictionary[audioSource] = isActive;
+                SetActiveAudioSource(audioSource, isActive);
             }
         }
     }

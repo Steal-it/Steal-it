@@ -10,8 +10,6 @@ public class Monster : MonoBehaviour {
     [SerializeField]
     private MonsterAI monsterAI;
     [SerializeField]
-    private Transform monsterPlaceholder;
-    [SerializeField]
     private Transform commonTransform;
     [SerializeField]
     private MonsterAnimator monsterAnimator;
@@ -26,7 +24,6 @@ public class Monster : MonoBehaviour {
         networkAudio.OnMessageReceived += NetworkAudio_OnMessageReceived;
 
         monsterAI.gameObject.SetActive(false);
-        monsterPlaceholder.gameObject.SetActive(false);
         commonTransform.gameObject.SetActive(false);
     }
 
@@ -45,7 +42,7 @@ public class Monster : MonoBehaviour {
         commonTransform.gameObject.SetActive(true);
     }
 
-    private void MonsterAnimator_OnAnimationChanged(object _sender, AbstractNetworkAnimator.OnAnimationChangedEventArgs _event) {
+    private void MonsterAnimator_OnAnimationChanged(object _sender, AnimatorNetworkExtension.OnAnimationChangedEventArgs _event) {
         networkAnimation.SendAnimationParameters(_event.ParameterDictionary);
     }
 
@@ -53,7 +50,7 @@ public class Monster : MonoBehaviour {
         monsterAnimator.SetParameterDictionary(_event.ParameterDictionary);
     }
 
-    private void MonsterSFXManager_OnSFXChanged(object _sender, AbstractNetworkSFXManager.OnSFXChangedEventArgs _event) {
+    private void MonsterSFXManager_OnSFXChanged(object _sender, SFXManagerNetworkExtension.OnSFXChangedEventArgs _event) {
         networkAudio.SendSFXs(_event.SFXDictionary);
     }
 
@@ -66,7 +63,6 @@ public class Monster : MonoBehaviour {
     /// </summary>
     private void EnableServerMonster() {
         monsterAI.gameObject.SetActive(true);
-        monsterPlaceholder.gameObject.SetActive(false);
 
         networkMovement.Transform = monsterAI.transform;
         networkMovement.SelectObject();
@@ -77,10 +73,8 @@ public class Monster : MonoBehaviour {
     /// </summary>
     private void EnableClientMonster() {
         monsterAI.gameObject.SetActive(false);
-        monsterPlaceholder.gameObject.SetActive(true);
 
-        // TODO: use common only
-        networkMovement.Transform = monsterPlaceholder.transform;
+        networkMovement.Transform = commonTransform;
     }
 
     void OnDestroy() {

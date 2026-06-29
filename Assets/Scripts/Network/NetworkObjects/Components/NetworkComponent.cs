@@ -7,8 +7,8 @@ using UnityEngine;
 public abstract class NetworkComponent : MonoBehaviour {
     protected NetworkContext Context { get; private set; }
 
-    void Awake() {
-        Context = NetworkScene.Register(this);
+    protected void RegisterContext(NetworkComponent _networkComponent) {
+        Context = NetworkScene.Register(_networkComponent);
     }
 
     public abstract void ProcessMessage(ReferenceCountedSceneGraphMessage _message);

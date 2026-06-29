@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterSFXManager : AbstractNetworkSFXManager {
+public class MonsterSFXManager : SFXManagerNetworkExtension {
     [SerializeField]
     private AudioSource wanderSFX;
 
