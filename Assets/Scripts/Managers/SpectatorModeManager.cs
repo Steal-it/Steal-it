@@ -86,8 +86,10 @@ public class SpectatorModeManager : MonoBehaviour {
         });
 
         if (_sendToOtherPeer) {
-            Debug.Log("Sending " + playerUUID);
-            NetworkReferenceManager.Instance.MessageHandler.SendActivateSpectatorModeMessage(playerUUID);
+            if (_playerUUID == "Local Avatar") {
+                _playerUUID = playerUUID;
+            }
+            NetworkReferenceManager.Instance.MessageHandler.SendActivateSpectatorModeMessage(_playerUUID);
         }
     }
 
