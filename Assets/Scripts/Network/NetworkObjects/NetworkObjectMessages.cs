@@ -21,3 +21,12 @@ public class AnimationMessage {
         ParameterDictionary = _parameterDictionary;
     }
 }
+
+[Serializable]
+public class AudioMessage {
+    public SerializableDictionary SFXDictionary;
+
+    public AudioMessage(SerializableDictionary _SFXDictionary) {
+        SFXDictionary = _SFXDictionary;
+    }
+}

@@ -35,7 +35,7 @@ public abstract class StunnedState : IMonsterState {
     public void EnterState(MonsterStateManager _monsterStateManager) {
         MonsterStateManager = _monsterStateManager;
 
-        monster = MonsterStateManager.Monster;
+        monster = MonsterStateManager.MonsterAI;
         agent = MonsterStateManager.Agent;
 
         isChangingState = false;

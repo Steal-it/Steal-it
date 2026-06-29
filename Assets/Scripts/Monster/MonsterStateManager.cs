@@ -14,7 +14,9 @@ public class MonsterStateManager : MonoBehaviour {
     #region Public References
     public IReadOnlyDictionary<StateKey, IMonsterState> StateDictionary => stateDictionary;
     public StateKey CurrentStateKey => currentStateKey;
-    public MonsterAI Monster => monsterAI;
+    public MonsterAnimator MonsterAnimator => monsterAnimator;
+    public MonsterSFXManager MonsterSFXManager => monsterSFXManager;
+    public MonsterAI MonsterAI => monsterAI;
     public NavMeshAgent Agent => monsterAI.GetComponent<NavMeshAgent>();
     public float LightExposureTime => lightExposureTime;
 
@@ -25,7 +27,6 @@ public class MonsterStateManager : MonoBehaviour {
     public MonsterRandomDestinationManager MonsterRandomDestinationManager => monsterWanderModeManager;
 
     // Stunned Mode
-    public MonsterAnimator MonsterAnimator => monsterAnimator;
     public float StunnedMinDistanceDestination => stunnedMinDistanceDestination;
 
     // Wander and Stunned Mode
@@ -42,6 +43,10 @@ public class MonsterStateManager : MonoBehaviour {
 
     #region Properties
     [SerializeField]
+    private MonsterAnimator monsterAnimator;
+    [SerializeField]
+    private MonsterSFXManager monsterSFXManager;
+    [SerializeField]
     private MonsterAI monsterAI;
     [SerializeField, Range(0.2f, 1)]
     private float lightExposureTime = 0.5f;
@@ -57,8 +62,6 @@ public class MonsterStateManager : MonoBehaviour {
     private LayerMask wallLayer;
 
     [Header("Stunned Mode")]
-    [SerializeField]
-    private MonsterAnimator monsterAnimator;
     [SerializeField, Range(20, 50)]
     private float stunnedMinDistanceDestination = 30;
 

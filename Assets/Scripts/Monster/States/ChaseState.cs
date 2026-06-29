@@ -16,7 +16,7 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
     public void EnterState(MonsterStateManager _monsterStateManager) {
         monsterStateManager = _monsterStateManager;
 
-        monster = monsterStateManager.Monster;
+        monster = monsterStateManager.MonsterAI;
         agent = monsterStateManager.Agent;
 
         isChangingState = false;

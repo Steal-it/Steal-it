@@ -13,7 +13,7 @@ public class WanderState : IMonsterState {
     public void EnterState(MonsterStateManager _monsterStateManager) {
         monsterStateManager = _monsterStateManager;
 
-        monster = monsterStateManager.Monster;
+        monster = monsterStateManager.MonsterAI;
         agent = monsterStateManager.Agent;
 
         isChangingState = false;
@@ -23,6 +23,7 @@ public class WanderState : IMonsterState {
         agent.autoBraking = true;
         agent.destination = monster.transform.position;
         monsterStateManager.MonsterAnimator.SetWander();
+        monsterStateManager.MonsterSFXManager.SetWander(true);
     }
 
     public void UpdateState() {
@@ -80,6 +81,7 @@ public class WanderState : IMonsterState {
 
     public void ExitState() {
         monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = false;
+        monsterStateManager.MonsterSFXManager.SetWander(false);
     }
 
     public void Accept(IMonsterStateVisitor _stateVisitor) {

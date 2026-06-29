@@ -6,6 +6,8 @@ public class Monster : MonoBehaviour {
     [SerializeField]
     private NetworkAnimation networkAnimation;
     [SerializeField]
+    private NetworkAudio networkAudio;
+    [SerializeField]
     private MonsterAI monsterAI;
     [SerializeField]
     private Transform monsterPlaceholder;
@@ -13,11 +15,15 @@ public class Monster : MonoBehaviour {
     private Transform commonTransform;
     [SerializeField]
     private MonsterAnimator monsterAnimator;
+    [SerializeField]
+    private MonsterSFXManager monsterSFXManager;
 
     void Start() {
         NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += LevelManager_OnGameLoaded;
         monsterAnimator.OnAnimationChanged += MonsterAnimator_OnAnimationChanged;
         networkAnimation.OnMessageReceived += NetworkAnimation_OnMessageReceived;
+        monsterSFXManager.OnSFXChanged += MonsterSFXManager_OnSFXChanged;
+        networkAudio.OnMessageReceived += NetworkAudio_OnMessageReceived;
 
         monsterAI.gameObject.SetActive(false);
         monsterPlaceholder.gameObject.SetActive(false);
@@ -47,6 +53,14 @@ public class Monster : MonoBehaviour {
         monsterAnimator.SetParameterDictionary(_event.ParameterDictionary);
     }
 
+    private void MonsterSFXManager_OnSFXChanged(object _sender, AbstractNetworkSFXManager.OnSFXChangedEventArgs _event) {
+        networkAudio.SendSFXs(_event.SFXDictionary);
+    }
+
+    private void NetworkAudio_OnMessageReceived(object _sender, NetworkAudio.OnMessageReceivedEventArgs _event) {
+        monsterSFXManager.SetSFXDictionary(_event.SFXDictionary);
+    }
+
     /// <summary>
     /// Enables the monster with its logic, used for the client that created the room, acting as a server.
     /// </summary>
@@ -73,5 +87,6 @@ public class Monster : MonoBehaviour {
         NetworkReferenceManager.Instance.LevelManager.OnGameLoaded -= LevelManager_OnGameLoaded;
         monsterAnimator.OnAnimationChanged -= MonsterAnimator_OnAnimationChanged;
         networkAnimation.OnMessageReceived -= NetworkAnimation_OnMessageReceived;
+        monsterSFXManager.OnSFXChanged -= MonsterSFXManager_OnSFXChanged;
     }
 }
