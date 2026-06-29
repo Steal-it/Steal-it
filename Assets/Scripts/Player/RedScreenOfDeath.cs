@@ -22,13 +22,12 @@ public class RedScreenOfDeath : MonoBehaviour {
 
     private void SpectatorModeManager_OnSpectatorModeChange(object _sender,
     SpectatorModeManager.OnSpectatorModeChangeEventArgs _args) {
-        enable = !enable;
-
         // Ubiq does not guarantee the uuid will not change after connection/disconnection/room change, therefore, it is necessary to obtain it each time
         string playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
 
         //The event is invoked both when another peer lost or another peer lost. However, the screen should be activated only if this local peer lost
         if (_args.PlayerUUID == playerUUID) {
+            enable = !enable;
             canvas.SetActive(enable);
         }
     }

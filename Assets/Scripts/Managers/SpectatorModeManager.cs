@@ -74,7 +74,7 @@ public class SpectatorModeManager : MonoBehaviour {
 
         //The event is invoked both when another peer lost or another peer lost. However, locally the spectator mode should be activated only if this local peer lost
         if (_playerUUID == playerUUID) {
-            // Disbale the oob collision detection
+            // Disable the oob collision detection
             blockPlayerVision.enabled = !blockPlayerVision.enabled;
             // Update visibility
             updateVisibility();
@@ -86,7 +86,6 @@ public class SpectatorModeManager : MonoBehaviour {
         });
 
         if (_sendToOtherPeer) {
-            Debug.Log("Sending " + _playerUUID);
             NetworkReferenceManager.Instance.MessageHandler.SendActivateSpectatorModeMessage(_playerUUID);
         }
     }
