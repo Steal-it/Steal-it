@@ -83,9 +83,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Torch
   socketInteractor: {fileID: 134499350542177033}
   torchLight: {fileID: 3784376561341393229}
-  lightEmitPointTransform: {fileID: 2412402678146971633}
-  lightRadius: 0.3
-  maxLightDistance: 5
 --- !u!114 &2730187307731094353
 MonoBehaviour:
   m_ObjectHideFlags: 0
