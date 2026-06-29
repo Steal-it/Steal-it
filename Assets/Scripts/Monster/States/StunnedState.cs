@@ -3,8 +3,7 @@ using UnityEngine.AI;
 
 public abstract class StunnedState : IMonsterState {
     protected MonsterStateManager MonsterStateManager { get; private set; }
-    private MonsterAI monster;
-    private NavMeshAgent agent;
+    private NavMeshAgent monsterAgent;
     private bool isAnimationFinished;
     private bool isChangingState;
 
@@ -22,9 +21,9 @@ public abstract class StunnedState : IMonsterState {
             do {
                 randomDestination = MonsterStateManager.MonsterRandomDestinationManager.GenerateRandomDestination();
 
-                isFarEnough = Vector3.Distance(randomDestination, monster.transform.position) > MonsterStateManager.StunnedMinDistanceDestination;
+                isFarEnough = Vector3.Distance(randomDestination, monsterAgent.transform.position) > MonsterStateManager.StunnedMinDistanceDestination;
             } while (!isFarEnough);
-            agent.destination = randomDestination;
+            monsterAgent.destination = randomDestination;
 
             isAnimationFinished = true;
         }
@@ -35,15 +34,14 @@ public abstract class StunnedState : IMonsterState {
     public void EnterState(MonsterStateManager _monsterStateManager) {
         MonsterStateManager = _monsterStateManager;
 
-        monster = MonsterStateManager.MonsterAI;
-        agent = MonsterStateManager.Agent;
+        monsterAgent = MonsterStateManager.MonsterAgent;
 
         isChangingState = false;
         isAnimationFinished = false;
         MonsterStateManager.WanderAndStunnedNavMeshSurface.enabled = true;
         MonsterStateManager.ChaseNavMeshSurface.enabled = false;
-        agent.speed = MonsterStateManager.WanderAndStunnedSpeed;
-        agent.autoBraking = true;
+        monsterAgent.speed = MonsterStateManager.WanderAndStunnedSpeed;
+        monsterAgent.autoBraking = true;
         PlayAnimation();
     }
 
@@ -52,7 +50,7 @@ public abstract class StunnedState : IMonsterState {
 
         if (!isAnimationFinished) return;
 
-        if (Vector3.Distance(agent.destination, monster.transform.position) < agent.stoppingDistance) {
+        if (Vector3.Distance(monsterAgent.destination, monsterAgent.transform.position) < monsterAgent.stoppingDistance) {
             isChangingState = true;
 
             MonsterStateManager.ChangeState(MonsterStateManager.StateKey.Wander);
@@ -60,7 +58,7 @@ public abstract class StunnedState : IMonsterState {
     }
 
     public void ExitState() {
-        agent.destination = monster.transform.position;
+        monsterAgent.destination = monsterAgent.transform.position;
     }
 
     public void Accept(IMonsterStateVisitor _stateVisitor) { }
