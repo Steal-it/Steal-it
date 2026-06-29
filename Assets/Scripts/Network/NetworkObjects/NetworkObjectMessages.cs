@@ -30,3 +30,12 @@ public class AudioMessage {
         SFXDictionary = _SFXDictionary;
     }
 }
+
+[Serializable]
+public class ParticlesMessage {
+    public SerializableDictionary VFXDictionary;
+
+    public ParticlesMessage(SerializableDictionary _VFXDictionary) {
+        VFXDictionary = _VFXDictionary;
+    }
+}
