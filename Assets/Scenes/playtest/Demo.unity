@@ -1622,9 +1622,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2071043144}
     - target: {fileID: 6567683391160497850, guid: 092eb32917cc7c969b6df8e7d1575699, type: 3}
+      propertyPath: gameSpawnPointCenter
+      value: 
+      objectReference: {fileID: 2105100659}
+    - target: {fileID: 6567683391160497850, guid: 092eb32917cc7c969b6df8e7d1575699, type: 3}
       propertyPath: localLobbySpawnPoint
       value: 
       objectReference: {fileID: 1785373228}
+    - target: {fileID: 6567683391160497850, guid: 092eb32917cc7c969b6df8e7d1575699, type: 3}
+      propertyPath: roomLobbySpawnPointCenter
+      value: 
+      objectReference: {fileID: 2071043144}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3971785779285935713, guid: 092eb32917cc7c969b6df8e7d1575699, type: 3}
@@ -2256,6 +2264,10 @@ PrefabInstance:
     - target: {fileID: 4261416448081536078, guid: fb8e4b65c8f0e6f4b89ab5dc98ee33c8, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688360433971990977, guid: fb8e4b65c8f0e6f4b89ab5dc98ee33c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 6108862244178956169, guid: fb8e4b65c8f0e6f4b89ab5dc98ee33c8, type: 3}
       propertyPath: m_Name

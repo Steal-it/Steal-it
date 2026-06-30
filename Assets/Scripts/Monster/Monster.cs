@@ -83,5 +83,6 @@ public class Monster : MonoBehaviour {
         monsterAnimator.OnAnimationChanged -= MonsterAnimator_OnAnimationChanged;
         networkAnimation.OnMessageReceived -= NetworkAnimation_OnMessageReceived;
         monsterSFXManager.OnSFXChanged -= MonsterSFXManager_OnSFXChanged;
+        networkAudio.OnMessageReceived -= NetworkAudio_OnMessageReceived;
     }
 }

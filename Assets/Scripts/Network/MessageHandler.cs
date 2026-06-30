@@ -9,7 +9,7 @@ using WebSocketSharp;
 public class MessageHandler : MonoBehaviour {
     public event EventHandler<OnAllPeersReadyForChangeEventArgs> OnAllPeersReadyForChange;
     public class OnAllPeersReadyForChangeEventArgs : EventArgs {
-        public string levelName;
+        public string LevelName;
     }
     public event EventHandler OnClientAsServerChanged;
 
@@ -45,7 +45,9 @@ public class MessageHandler : MonoBehaviour {
         receiveReadyMsgCounter = 0;
         wasCounterRequested = false;
 
-        OnAllPeersReadyForChange?.Invoke(this, new OnAllPeersReadyForChangeEventArgs { levelName = "Test" });
+        OnAllPeersReadyForChange?.Invoke(this, new OnAllPeersReadyForChangeEventArgs {
+            LevelName = "Level1"
+        });
     }
 
     private async void PeerLoadingHandler() {
