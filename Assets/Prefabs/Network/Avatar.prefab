@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 2075108970}
   - component: {fileID: 2075108969}
   - component: {fileID: 6305583007509887283}
-  - component: {fileID: 5456510215409577339}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Untagged
@@ -66,6 +65,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5699393896365292582}
   - {fileID: 6524766736450995788}
   - {fileID: 859667447524133017}
   m_Father: {fileID: 0}
@@ -129,18 +129,6 @@ MonoBehaviour:
   OnTextureChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5456510215409577339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3172939939781028348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2c289d99cca034478437722fa3e7431, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpectatorMode
 --- !u!1 &3235195513187403095
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,6 +395,68 @@ SkinnedMeshRenderer:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7807312431420105844, guid: 43c898efac2e3b64dbcb3777ab594697, type: 3}
   m_PrefabInstance: {fileID: 3436499135094148394}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3630360434504633683
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3444175152561107260}
+    m_Modifications:
+    - target: {fileID: 5210556510831049831, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_Name
+      value: AvatarSpectatorModePlugin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.15852
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.05287
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.10916
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+--- !u!4 &5699393896365292582 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
+  m_PrefabInstance: {fileID: 3630360434504633683}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4612383522062077060
 PrefabInstance:
