@@ -8,19 +8,10 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class HandInteractionController : MonoBehaviour {
     [SerializeField]
     private InputActionsAssociation torchInputAction;
-
-    public InputActionsAssociation TorchInputAction => torchInputAction;
-
+    [SerializeField]
     private NearFarInteractor nearFarInteractor;
 
-    public void Init(Side _side) {
-        XROrigin origin = FindFirstObjectByType<XROrigin>();
-        if (_side == Side.Left) {
-            nearFarInteractor = origin.transform.Find("Camera Offset/Left Controller").GetComponentInChildren<NearFarInteractor>();
-        } else {
-            nearFarInteractor = origin.transform.Find("Camera Offset/Right Controller").GetComponentInChildren<NearFarInteractor>();
-        }
-    }
+    public InputActionsAssociation TorchInputAction => torchInputAction;
 
     void Update() {
         if (!nearFarInteractor) return;

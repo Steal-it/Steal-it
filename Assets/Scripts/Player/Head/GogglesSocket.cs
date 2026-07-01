@@ -8,9 +8,6 @@ public class GogglesSocket : CustomAction {
     [SerializeField]
     private GameObject goggleVisual;
 
-    private AvatarLocale avatar;
-    private NetworkObjectEnabler networkObjectEnabler;
-
     private SeeThrough seeThrough;
     private XRSocketInteractor socketInteractor;
     private Goggles currentGoogles;
@@ -24,22 +21,11 @@ public class GogglesSocket : CustomAction {
 
     void Awake() {
         TryGetComponent(out socketInteractor);
-        TryGetComponent(out networkObjectEnabler);
-        TryGetComponent(out avatar);
         seeThrough = FindFirstObjectByType<SeeThrough>();
     }
 
     void Start() {
-        if (!avatar.IsLocal()) {
-            networkObjectEnabler.OnMessageReceived += EnableGogglesAvatarVisual;
-            socketInteractor.gameObject.SetActive(false);
-            return;
-        }
         socketInteractor.selectEntered.AddListener(OnGogglesInserted);
-    }
-
-    private void EnableGogglesAvatarVisual(bool _isActive) {
-        goggleVisual.SetActive(_isActive);
     }
 
     private void OnGogglesInserted(SelectEnterEventArgs _event) {
@@ -47,7 +33,6 @@ public class GogglesSocket : CustomAction {
         currentGoogles.OnGooglesToggle += ToggleSeeThrough;
         currentGoogles.transform.SetParent(transform, false);
         currentGoogles.DisableVisuals();
-        networkObjectEnabler.SendEnableParameters(true);
         socketInteractor.enabled = false;
     }
 

@@ -1,14 +1,15 @@
+using Unity.XR.CoreUtils;
 using UnityEngine;
 
 public class FreeHandAnimator : MonoBehaviour {
+    [SerializeField]
+    private Animator animator;
     [SerializeField]
     [Tooltip("Speed at which the hand model will change grip strength in units/second. A speed of 2 will change from 0 (no grip) to 1 (full grip) in 0.5 seconds, for example. Set to 0 to disable smoothing")]
     private float smoothingSpeed = 4;
     [SerializeField]
     private float pokeAnimationOffset;
 
-
-    private Animator animator;
     public float TargetGrip { private get; set; }
     public float TargetPoke { private get; set; }
     private float currentGrip;
@@ -20,10 +21,6 @@ public class FreeHandAnimator : MonoBehaviour {
     private static readonly int pokeProperty = Animator.StringToHash("Pokeing");
     private static readonly int completedProperty = Animator.StringToHash("CompletedGrab");
     private static readonly int torchProperty = Animator.StringToHash("InTorchPosition");
-
-    void Awake() {
-        TryGetComponent(out animator);
-    }
 
     private void Update() {
         if (torch) return;

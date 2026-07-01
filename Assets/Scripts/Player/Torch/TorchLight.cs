@@ -2,21 +2,16 @@ using UnityEngine;
 
 public class TorchLight : MonoBehaviour {
     [SerializeField]
-    private Light torchLight;
-    [SerializeField]
     private Transform lightEmitPointTransform;
-    [SerializeField, Range(0.05f, 0.5f)]
-    private float lightRadius = 0.3f;
+    [SerializeField]
+    private float lightRadius = 10;
     [SerializeField, Range(3, 10)]
     private float maxLightDistance = 5;
     private bool power;
     private MonsterAI monster;
 
-    void OnValidate() {
-        torchLight.range = maxLightDistance;
-        torchLight.innerSpotAngle = lightRadius * 20;
-        torchLight.spotAngle = lightRadius * 20;
-    }
+    public float MaxLightDistance { get => maxLightDistance; }
+    public float LightRadius { get => lightRadius; }
 
     void Update() {
         if (!power) {
@@ -58,24 +53,24 @@ public class TorchLight : MonoBehaviour {
     }
 
     void OnDrawGizmos() {
-        int sphereCount = 5;
-        float sphereOffset = maxLightDistance / sphereCount;
-        for (int i = 1; i < sphereCount + 1; i++) {
-            Gizmos.DrawWireSphere(lightEmitPointTransform.position + lightEmitPointTransform.forward * sphereOffset * i, lightRadius);
-        }
+        if (!power) return;
+        var transformData = lightEmitPointTransform;
+        var gizmoStart = transformData.position;
+        var coneRadius = Mathf.Tan(lightRadius * Mathf.Deg2Rad * 0.5f) * maxLightDistance;
+        var gizmoEnd = gizmoStart + (transformData.forward * (maxLightDistance - coneRadius));
+        var gizmoUp = transformData.up * coneRadius;
+        var gizmoSide = transformData.right * coneRadius;
+        Gizmos.DrawLine(gizmoStart, gizmoEnd);
+        Gizmos.DrawLine(gizmoStart, gizmoEnd + gizmoSide);
+        Gizmos.DrawLine(gizmoStart, gizmoEnd - gizmoSide);
+        Gizmos.DrawLine(gizmoStart, gizmoEnd + gizmoUp);
+        Gizmos.DrawLine(gizmoStart, gizmoEnd - gizmoUp);
+        Gizmos.DrawWireSphere(gizmoEnd, coneRadius);
     }
 
     public void ToggleLight(object _, Torch.OnTorchTurnedEventArgs _eventArgs) {
-        torchLight.enabled = _eventArgs.isTurnedOn;
-        power = torchLight.enabled;
+        power = _eventArgs.isTurnedOn;
     }
 
-    public void InPocket(bool _isInPocket) {
-        if (_isInPocket) {
-            torchLight.enabled = false;
-        } else {
-            torchLight.enabled = power;
-        }
-    }
 
 }
