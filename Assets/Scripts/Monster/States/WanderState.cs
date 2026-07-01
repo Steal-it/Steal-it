@@ -5,35 +5,38 @@ public class WanderState : IMonsterState {
     public Transform Player => player;
 
     private MonsterStateManager monsterStateManager;
-    private MonsterAI monster;
-    private NavMeshAgent agent;
+    private NavMeshAgent monsterAgent;
     private Transform player;
     private bool isChangingState;
 
     public void EnterState(MonsterStateManager _monsterStateManager) {
         monsterStateManager = _monsterStateManager;
 
-        monster = monsterStateManager.Monster;
-        agent = monsterStateManager.Agent;
+        monsterAgent = monsterStateManager.MonsterAgent;
 
         isChangingState = false;
         monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = true;
         monsterStateManager.ChaseNavMeshSurface.enabled = false;
-        agent.speed = monsterStateManager.WanderAndStunnedSpeed;
-        agent.autoBraking = true;
-        agent.destination = monster.transform.position;
+        monsterAgent.speed = monsterStateManager.WanderAndStunnedSpeed;
+        monsterAgent.autoBraking = true;
+        monsterAgent.destination = monsterAgent.transform.position;
+        monsterStateManager.MonsterAnimator.SetWander();
+        monsterStateManager.MonsterSFXManager.SetWander(true);
     }
 
     public void UpdateState() {
         if (isChangingState) return;
 
-        if (Vector3.Distance(agent.destination, monster.transform.position) < agent.stoppingDistance) {
+        if (Vector3.Distance(monsterAgent.destination, monsterAgent.transform.position) < monsterAgent.stoppingDistance) {
             Vector3 randomDestination = monsterStateManager.MonsterRandomDestinationManager.GenerateRandomDestination();
-            agent.destination = randomDestination;
+            monsterAgent.destination = randomDestination;
         }
 
         // Loop over all players (children of avatar manager)
         foreach (Transform avatar in NetworkReferenceManager.Instance.AvatarManager.transform) {
+            // Skip the checks if the avatar is not visible (player in spectator mode)
+            if (!avatar.gameObject.activeInHierarchy) continue;
+
             TorsoIdentifier torso = avatar.GetComponentInChildren<TorsoIdentifier>();
             if (IsInFOV(torso.transform.position)) {
                 isChangingState = true;
@@ -49,7 +52,7 @@ public class WanderState : IMonsterState {
 
 
     private bool IsInFOV(Vector3 _targetPosition) {
-        Vector3 dirToTarget = _targetPosition - monster.transform.position;
+        Vector3 dirToTarget = _targetPosition - monsterAgent.transform.position;
 
         // Check distance (outside the arc)
         if (dirToTarget.magnitude > monsterStateManager.ViewRadius) {
@@ -57,15 +60,17 @@ public class WanderState : IMonsterState {
         }
 
         // Check angle (outside the cone)
-        float angle = Vector3.Angle(monster.transform.forward, dirToTarget);
+        float angle = Vector3.Angle(monsterAgent.transform.forward, dirToTarget);
         if (angle > monsterStateManager.ViewAngle / 2f) {
             return false;
         }
 
-        // Check avatar (not hidden by anything)
-        Vector3 playerCenter = _targetPosition + Vector3.up;
-        Vector3 monsterCenter = monster.transform.position + Vector3.up;
-        if (Physics.Raycast(monsterCenter, playerCenter - monsterCenter, monsterStateManager.ViewRadius, monsterStateManager.EverythingButAvatarLayer)) {
+        // Check avatar (not hidden by a wall)
+        // Offsetting the origin of the ray a bit behind the monster ensures that, even when the monster pops out from a wall,
+        // it fully crosses the wall before targeting the player, so the NavMesh Surface change looks smooth
+        Vector3 origin = monsterAgent.transform.position + dirToTarget.normalized * -1.5f + Vector3.up;
+        float playerDistance = Vector3.Distance(origin, _targetPosition + Vector3.up);
+        if (Physics.Raycast(origin, dirToTarget, playerDistance, monsterStateManager.WallLayer)) {
             return false;
         }
 
@@ -74,6 +79,7 @@ public class WanderState : IMonsterState {
 
     public void ExitState() {
         monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = false;
+        monsterStateManager.MonsterSFXManager.SetWander(false);
     }
 
     public void Accept(IMonsterStateVisitor _stateVisitor) {

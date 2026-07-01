@@ -1,25 +1,28 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ChaseState : IMonsterState, IMonsterStateVisitor {
+    public event EventHandler OnPlayerKilled;
+
     public Transform Player => player;
 
     private MonsterStateManager monsterStateManager;
-    private MonsterAI monster;
-    private NavMeshAgent agent;
+    private NavMeshAgent monsterAgent;
     private Transform player;
     private bool isChangingState;
 
     public void EnterState(MonsterStateManager _monsterStateManager) {
         monsterStateManager = _monsterStateManager;
 
-        monster = monsterStateManager.Monster;
-        agent = monsterStateManager.Agent;
+        monsterAgent = monsterStateManager.MonsterAgent;
 
         isChangingState = false;
+        monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = false;
         monsterStateManager.ChaseNavMeshSurface.enabled = true;
-        agent.speed = monsterStateManager.MinChasingSpeed;
-        agent.autoBraking = false;
+        monsterAgent.speed = monsterStateManager.MinChasingSpeed;
+        monsterAgent.autoBraking = false;
+        monsterStateManager.MonsterAnimator.SetChase();
 
         IMonsterState wanderState = monsterStateManager.StateDictionary[MonsterStateManager.StateKey.Wander];
         wanderState.Accept(this);
@@ -30,21 +33,22 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
 
         if (player == null) return;
 
-        agent.destination = player.position;
+        monsterAgent.destination = player.position;
         // Increase speed over time when chasing the player
-        float newSpeed = agent.speed + Time.deltaTime / monsterStateManager.ChasingAcceleration;
-        agent.speed = newSpeed > monsterStateManager.MaxChasingSpeed ? monsterStateManager.MaxChasingSpeed : newSpeed;
+        float newSpeed = monsterAgent.speed + Time.deltaTime / monsterStateManager.ChasingAcceleration;
+        monsterAgent.speed = newSpeed > monsterStateManager.MaxChasingSpeed ? monsterStateManager.MaxChasingSpeed : newSpeed;
 
-        if (Vector3.Distance(monster.transform.position, player.position) < monsterStateManager.KillDistance) {
+        if (Vector3.Distance(monsterAgent.transform.position, player.position) < monsterStateManager.KillDistance) {
             isChangingState = true;
 
-            Debug.Log($"PLAYER KILLED");
-            monsterStateManager.ChangeState(MonsterStateManager.StateKey.Stunned);
+            OnPlayerKilled?.Invoke(this, EventArgs.Empty);
+
+            monsterStateManager.ChangeState(MonsterStateManager.StateKey.Murder);
         }
     }
 
     public void ExitState() {
-        agent.destination = monster.transform.position;
+        monsterAgent.destination = monsterAgent.transform.position;
         monsterStateManager.ChaseNavMeshSurface.enabled = false;
     }
 

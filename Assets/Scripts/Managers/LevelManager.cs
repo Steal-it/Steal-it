@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Ubiq.Rooms;
 using Unity.XR.CoreUtils;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 
 public class LevelManager : MonoBehaviour {
@@ -23,9 +23,11 @@ public class LevelManager : MonoBehaviour {
     [SerializeField]
     private Transform localLobbySpawnPoint;
     [SerializeField]
-    private Transform roomLobbySpawnPoint;
+    private Transform roomLobbySpawnPointCenter;
     [SerializeField]
-    private Transform gameSpawnPoint;
+    private Transform gameSpawnPointCenter;
+    [SerializeField, Range(0.5f, 2)]
+    private float spawnPointRadius = 1;
 
     private RoomClient roomClient;
     private MessageHandler messageHandler;
@@ -69,12 +71,13 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void LoadScreen(object _sender, MessageHandler.OnAllPeersReadyForChangeEventArgs _event) {
-        switch (_event.levelName) {
-            case "Test":
+        switch (_event.LevelName) {
+            // TODO: huh?
+            case "Level1":
                 LoadGame();
                 break;
             default:
-                Debug.LogError("Attempt to switch to " + _event.levelName + " but it does not exists");
+                Debug.LogError("Attempt to switch to " + _event.LevelName + " but it does not exists");
                 return;
         }
 
@@ -106,17 +109,44 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void LoadRoomLobby() {
-        rig.transform.SetPositionAndRotation(roomLobbySpawnPoint.position, roomLobbySpawnPoint.rotation);
+        (Vector3 position, Quaternion rotation) = GetSpawnPoint(false);
+        rig.transform.SetPositionAndRotation(position, rotation);
         rigLocomotor.gameObject.SetActive(true);
     }
 
     private void LoadGame() {
-        rig.transform.SetPositionAndRotation(gameSpawnPoint.position, gameSpawnPoint.rotation);
+        (Vector3 position, Quaternion rotation) = GetSpawnPoint(true);
+        rig.transform.SetPositionAndRotation(position, rotation);
         rigLocomotor.gameObject.SetActive(true);
 
         OnGameLoaded?.Invoke(this, new OnGameLoadedEventArgs {
             IsClientAsServer = isClientAsServer
         });
+    }
+
+    private (Vector3 position, Quaternion rotation) GetSpawnPoint(bool _isGameSpwanPoint) {
+        RoomClient roomClient = NetworkReferenceManager.Instance.RoomClient;
+        Transform centerPoint = _isGameSpwanPoint ? gameSpawnPointCenter : roomLobbySpawnPointCenter;
+        Quaternion rotation = centerPoint.rotation;
+
+        int hash = roomClient.Me.uuid.GetHashCode();
+        float angle = (hash & 0x7FFFFFFF) % 360 * Mathf.Deg2Rad;
+        Vector3 candidatePosition = centerPoint.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * spawnPointRadius;
+
+        // Nudge if too close to an already-assigned point
+        foreach (IPeer peer in roomClient.Peers) {
+            int otherHash = peer.uuid.GetHashCode();
+            float otherAngle = (otherHash & 0x7FFFFFFF) % 360 * Mathf.Deg2Rad;
+            Vector3 otherPosition = centerPoint.position + new Vector3(Mathf.Cos(otherAngle), 0, Mathf.Sin(otherAngle)) * spawnPointRadius;
+
+            if (Vector3.Distance(candidatePosition, otherPosition) < 0.5f) {
+                // Nudge 45 degrees away
+                angle += 45 * Mathf.Deg2Rad;
+            }
+            candidatePosition = centerPoint.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * spawnPointRadius;
+        }
+
+        return (candidatePosition, rotation);
     }
 
     void OnDestroy() {
@@ -127,5 +157,10 @@ public class LevelManager : MonoBehaviour {
         localLobbyMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
         roomsListPanel.OnRoomJoined -= RoomsListPanel_OnRoomJoined;
         roomLobbyMenu.OnRoomExited -= RoomLobbyMenu_OnRoomExited;
+    }
+
+    void OnDrawGizmosSelected() {
+        Gizmos.DrawWireSphere(roomLobbySpawnPointCenter.position, spawnPointRadius);
+        Gizmos.DrawWireSphere(gameSpawnPointCenter.position, spawnPointRadius);
     }
 }

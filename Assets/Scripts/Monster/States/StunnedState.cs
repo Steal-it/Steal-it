@@ -1,46 +1,47 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class StunnedState : IMonsterState {
-    private MonsterStateManager monsterStateManager;
-    private MonsterAI monster;
-    private NavMeshAgent agent;
+public abstract class StunnedState : IMonsterState {
+    protected MonsterStateManager MonsterStateManager { get; private set; }
+    private NavMeshAgent monsterAgent;
     private bool isAnimationFinished;
     private bool isChangingState;
 
     private void PlayAnimation() {
-        monsterStateManager.StartCoroutine(FakeAnim());
+        MonsterStateManager.StartCoroutine(FakeAnim());
 
         System.Collections.IEnumerator FakeAnim() {
-            monsterStateManager.MonsterAnimator.SetIsStunned(true);
+            SetAnimation();
 
-            yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(3);
 
             // Look for a random destination no earlier than the minimum StunnedMinDistanceDestination
             Vector3 randomDestination;
             bool isFarEnough;
             do {
-                randomDestination = monsterStateManager.MonsterRandomDestinationManager.GenerateRandomDestination();
+                randomDestination = MonsterStateManager.MonsterRandomDestinationManager.GenerateRandomDestination();
 
-                isFarEnough = Vector3.Distance(randomDestination, monster.transform.position) > monsterStateManager.StunnedMinDistanceDestination;
+                isFarEnough = Vector3.Distance(randomDestination, monsterAgent.transform.position) > MonsterStateManager.StunnedMinDistanceDestination;
             } while (!isFarEnough);
-            agent.destination = randomDestination;
+            monsterAgent.destination = randomDestination;
 
             isAnimationFinished = true;
         }
     }
 
-    public void EnterState(MonsterStateManager _monsterStateManager) {
-        monsterStateManager = _monsterStateManager;
+    protected abstract void SetAnimation();
 
-        monster = monsterStateManager.Monster;
-        agent = monsterStateManager.Agent;
+    public void EnterState(MonsterStateManager _monsterStateManager) {
+        MonsterStateManager = _monsterStateManager;
+
+        monsterAgent = MonsterStateManager.MonsterAgent;
 
         isChangingState = false;
         isAnimationFinished = false;
-        monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = true;
-        agent.speed = monsterStateManager.WanderAndStunnedSpeed;
-        agent.autoBraking = true;
+        MonsterStateManager.WanderAndStunnedNavMeshSurface.enabled = true;
+        MonsterStateManager.ChaseNavMeshSurface.enabled = false;
+        monsterAgent.speed = MonsterStateManager.WanderAndStunnedSpeed;
+        monsterAgent.autoBraking = true;
         PlayAnimation();
     }
 
@@ -49,16 +50,15 @@ public class StunnedState : IMonsterState {
 
         if (!isAnimationFinished) return;
 
-        if (Vector3.Distance(agent.destination, monster.transform.position) < agent.stoppingDistance) {
+        if (Vector3.Distance(monsterAgent.destination, monsterAgent.transform.position) < monsterAgent.stoppingDistance) {
             isChangingState = true;
 
-            monsterStateManager.ChangeState(MonsterStateManager.StateKey.Wander);
+            MonsterStateManager.ChangeState(MonsterStateManager.StateKey.Wander);
         }
     }
 
     public void ExitState() {
-        agent.destination = monster.transform.position;
-        monsterStateManager.MonsterAnimator.SetIsStunned(false);
+        monsterAgent.destination = monsterAgent.transform.position;
     }
 
     public void Accept(IMonsterStateVisitor _stateVisitor) { }

@@ -51,3 +51,17 @@ public class NewClientAsServerElectionMessage : BaseMessage {
         clientAsServerUuid = _clientAsServerUuid;
     }
 }
+
+[Serializable]
+public class StartMonsterLightExposure : BaseMessage {
+    public const string TYPE = "StartMonsterLightExposureMessage";
+
+    public StartMonsterLightExposure() : base(TYPE) { }
+}
+
+[Serializable]
+public class StopMonsterLightExposure : BaseMessage {
+    public const string TYPE = "StopMonsterLightExposureMessage";
+
+    public StopMonsterLightExposure() : base(TYPE) { }
+}

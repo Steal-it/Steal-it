@@ -345,10 +345,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb832f29bb4b39994839e5dc7e9c8000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  rigTransformer: {fileID: 0}
-  loaderCanvas: {fileID: 7101632690519264109}
-  progressBar: {fileID: 8961247844266090294}
-  msgHandler: {fileID: 0}
+  rig: {fileID: 0}
+  rigLocomotor: {fileID: 0}
+  localLobbySpawnPoint: {fileID: 0}
+  roomLobbySpawnPointCenter: {fileID: 0}
+  gameSpawnPointCenter: {fileID: 0}
+  spawnPointRadius: 1
 --- !u!1 &5319537447249488302
 GameObject:
   m_ObjectHideFlags: 0

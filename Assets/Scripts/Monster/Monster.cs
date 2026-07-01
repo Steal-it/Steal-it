@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Monster : MonoBehaviour {
     [SerializeField]
@@ -6,21 +7,24 @@ public class Monster : MonoBehaviour {
     [SerializeField]
     private NetworkAnimation networkAnimation;
     [SerializeField]
-    private MonsterAI monsterAI;
+    private NetworkAudio networkAudio;
     [SerializeField]
-    private Transform monsterPlaceholder;
+    private NavMeshAgent monsterAgent;
     [SerializeField]
     private Transform commonTransform;
     [SerializeField]
     private MonsterAnimator monsterAnimator;
+    [SerializeField]
+    private MonsterSFXManager monsterSFXManager;
 
     void Start() {
         NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += LevelManager_OnGameLoaded;
         monsterAnimator.OnAnimationChanged += MonsterAnimator_OnAnimationChanged;
         networkAnimation.OnMessageReceived += NetworkAnimation_OnMessageReceived;
+        monsterSFXManager.OnSFXChanged += MonsterSFXManager_OnSFXChanged;
+        networkAudio.OnMessageReceived += NetworkAudio_OnMessageReceived;
 
-        monsterAI.gameObject.SetActive(false);
-        monsterPlaceholder.gameObject.SetActive(false);
+        monsterAgent.gameObject.SetActive(false);
         commonTransform.gameObject.SetActive(false);
     }
 
@@ -39,7 +43,7 @@ public class Monster : MonoBehaviour {
         commonTransform.gameObject.SetActive(true);
     }
 
-    private void MonsterAnimator_OnAnimationChanged(object _sender, AbstractNetworkAnimator.OnAnimationChangedEventArgs _event) {
+    private void MonsterAnimator_OnAnimationChanged(object _sender, AnimatorNetworkExtension.OnAnimationChangedEventArgs _event) {
         networkAnimation.SendAnimationParameters(_event.ParameterDictionary);
     }
 
@@ -47,14 +51,21 @@ public class Monster : MonoBehaviour {
         monsterAnimator.SetParameterDictionary(_event.ParameterDictionary);
     }
 
+    private void MonsterSFXManager_OnSFXChanged(object _sender, SFXManagerNetworkExtension.OnSFXChangedEventArgs _event) {
+        networkAudio.SendSFXs(_event.SFXDictionary);
+    }
+
+    private void NetworkAudio_OnMessageReceived(object _sender, NetworkAudio.OnMessageReceivedEventArgs _event) {
+        monsterSFXManager.SetSFXDictionary(_event.SFXDictionary);
+    }
+
     /// <summary>
     /// Enables the monster with its logic, used for the client that created the room, acting as a server.
     /// </summary>
     private void EnableServerMonster() {
-        monsterAI.gameObject.SetActive(true);
-        monsterPlaceholder.gameObject.SetActive(false);
+        monsterAgent.gameObject.SetActive(true);
 
-        networkMovement.Transform = monsterAI.transform;
+        networkMovement.Transform = monsterAgent.transform;
         networkMovement.SelectObject();
     }
 
@@ -62,14 +73,16 @@ public class Monster : MonoBehaviour {
     /// Disable the monster and its logic to use the placeholder, used for the clients that did not created the room.
     /// </summary>
     private void EnableClientMonster() {
-        monsterAI.gameObject.SetActive(false);
-        monsterPlaceholder.gameObject.SetActive(true);
+        monsterAgent.gameObject.SetActive(false);
 
-        networkMovement.Transform = monsterPlaceholder.transform;
+        networkMovement.Transform = commonTransform;
     }
 
     void OnDestroy() {
         NetworkReferenceManager.Instance.LevelManager.OnGameLoaded -= LevelManager_OnGameLoaded;
         monsterAnimator.OnAnimationChanged -= MonsterAnimator_OnAnimationChanged;
+        networkAnimation.OnMessageReceived -= NetworkAnimation_OnMessageReceived;
+        monsterSFXManager.OnSFXChanged -= MonsterSFXManager_OnSFXChanged;
+        networkAudio.OnMessageReceived -= NetworkAudio_OnMessageReceived;
     }
 }

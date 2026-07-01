@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class Torch : CustomAction {
@@ -33,7 +32,8 @@ public class Torch : CustomAction {
     }
 
     private void OnNewBatteryInstalled(HoverEnterEventArgs _event) {
-        if (battery && canUpgrade) { // if a battery is already present i add recharge it
+        if (battery && canUpgrade) {
+            // If a battery is already present I add recharge it
             Battery additionalBattery = _event.interactableObject.transform.GetComponent<Battery>();
             battery?.Recharge(additionalBattery.chargeLevel);
             Destroy(additionalBattery.gameObject);
@@ -113,6 +113,5 @@ public class Torch : CustomAction {
         }
     }
 
-    public override void OnInputStop(InputAction.CallbackContext _) {
-    }
+    public override void OnInputStop(InputAction.CallbackContext _) { }
 }

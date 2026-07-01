@@ -8,7 +8,7 @@ public class TorchLight : MonoBehaviour {
     [SerializeField, Range(3, 10)]
     private float maxLightDistance = 5;
     private bool power;
-    private MonsterAI monster;
+    private MonsterLightDetector monster;
 
     public float MaxLightDistance { get => maxLightDistance; }
     public float LightRadius { get => lightRadius; }
@@ -31,7 +31,7 @@ public class TorchLight : MonoBehaviour {
         RaycastHit[] hitArray = Physics.SphereCastAll(lightEmitPointTransform.position, lightRadius, lightEmitPointTransform.forward, maxLightDistance);
         bool isMonsterHit = false;
         foreach (RaycastHit hit in hitArray) {
-            if (hit.transform.TryGetComponent(out MonsterAI _monster)) {
+            if (hit.transform.TryGetComponent(out MonsterLightDetector _monster)) {
                 isMonsterHit = true;
 
                 // The first time the player illuminates the monster ...

@@ -7,24 +7,24 @@ public class MonsterStateManager : MonoBehaviour {
     public enum StateKey {
         Wander,
         Chase,
-        Stunned
+        Murder,
+        Flashed
     }
 
     #region Public References
     public IReadOnlyDictionary<StateKey, IMonsterState> StateDictionary => stateDictionary;
     public StateKey CurrentStateKey => currentStateKey;
-    public MonsterAI Monster => monsterAI;
-    public NavMeshAgent Agent => monsterAI.GetComponent<NavMeshAgent>();
-    public float LightExposureTime => lightExposureTime;
+    public NavMeshAgent MonsterAgent => monsterAgent;
+    public MonsterAnimator MonsterAnimator => monsterAnimator;
+    public MonsterSFXManager MonsterSFXManager => monsterSFXManager;
 
     // Wander Mode
     public float ViewRadius => viewRadius;
     public float ViewAngle => viewAngle;
-    public LayerMask EverythingButAvatarLayer => everythingButAvatarLayer;
+    public LayerMask WallLayer => wallLayer;
     public MonsterRandomDestinationManager MonsterRandomDestinationManager => monsterWanderModeManager;
 
     // Stunned Mode
-    public MonsterAnimator MonsterAnimator => monsterAnimator;
     public float StunnedMinDistanceDestination => stunnedMinDistanceDestination;
 
     // Wander and Stunned Mode
@@ -41,9 +41,11 @@ public class MonsterStateManager : MonoBehaviour {
 
     #region Properties
     [SerializeField]
-    private MonsterAI monsterAI;
-    [SerializeField, Range(0.2f, 1)]
-    private float lightExposureTime = 0.5f;
+    private NavMeshAgent monsterAgent;
+    [SerializeField]
+    private MonsterAnimator monsterAnimator;
+    [SerializeField]
+    private MonsterSFXManager monsterSFXManager;
 
     [Header("Wander Mode")]
     [SerializeField]
@@ -53,11 +55,9 @@ public class MonsterStateManager : MonoBehaviour {
     [SerializeField, Range(0, 360)]
     private float viewAngle = 150;
     [SerializeField]
-    private LayerMask everythingButAvatarLayer;
+    private LayerMask wallLayer;
 
     [Header("Stunned Mode")]
-    [SerializeField]
-    private MonsterAnimator monsterAnimator;
     [SerializeField, Range(20, 50)]
     private float stunnedMinDistanceDestination = 30;
 
@@ -93,7 +93,8 @@ public class MonsterStateManager : MonoBehaviour {
     void Start() {
         stateDictionary.Add(StateKey.Wander, new WanderState());
         stateDictionary.Add(StateKey.Chase, new ChaseState());
-        stateDictionary.Add(StateKey.Stunned, new StunnedState());
+        stateDictionary.Add(StateKey.Murder, new MurderState());
+        stateDictionary.Add(StateKey.Flashed, new FlashedState());
 
         currentState = stateDictionary[StateKey.Wander];
         currentState.EnterState(this);

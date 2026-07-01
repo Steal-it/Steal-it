@@ -2,29 +2,29 @@ using System;
 using Ubiq.Dictionaries;
 using Ubiq.Messaging;
 
-public class NetworkAnimation : NetworkComponent {
+public class NetworkParticles : NetworkComponent {
     public event EventHandler<OnMessageReceivedEventArgs> OnMessageReceived;
     public class OnMessageReceivedEventArgs : EventArgs {
-        public SerializableDictionary ParameterDictionary;
+        public SerializableDictionary VFXDictionary;
     }
 
     void Awake() {
         RegisterContext(this);
     }
 
-    public void SendAnimationParameters(SerializableDictionary _parameterDictionary) {
-        AnimationMessage message = new AnimationMessage(
-            _parameterDictionary
+    public void SendVFXs(SerializableDictionary _VFXDictionary) {
+        AudioMessage message = new AudioMessage(
+            _VFXDictionary
         );
 
         Context.SendJson(message);
     }
 
     public override void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
-        AnimationMessage message = _message.FromJson<AnimationMessage>();
+        ParticlesMessage message = _message.FromJson<ParticlesMessage>();
 
         OnMessageReceived?.Invoke(this, new OnMessageReceivedEventArgs {
-            ParameterDictionary = message.ParameterDictionary
+            VFXDictionary = message.VFXDictionary
         });
     }
 }
