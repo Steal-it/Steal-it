@@ -2,33 +2,27 @@ using UnityEngine;
 
 public class TorchLight : MonoBehaviour {
     [SerializeField]
-    private Light torchLight;
-    [SerializeField]
     private Transform lightEmitPointTransform;
-    [SerializeField, Range(0.05f, 0.5f)]
-    private float lightRadius = 0.3f;
+    [SerializeField]
+    private float lightRadius = 10;
     [SerializeField, Range(3, 10)]
     private float maxLightDistance = 5;
-
     private bool power;
-    private MonsterLightDetector monsterLightDetector;
+    private MonsterLightDetector monster;
 
-    void OnValidate() {
-        torchLight.range = maxLightDistance;
-        torchLight.innerSpotAngle = lightRadius * 20;
-        torchLight.spotAngle = lightRadius * 20;
-    }
+    public float MaxLightDistance { get => maxLightDistance; }
+    public float LightRadius { get => lightRadius; }
 
     void Update() {
         if (!power) {
             // If the torch is off and the player was flashing the monster ...
-            if (monsterLightDetector != null) {
+            if (monster != null) {
                 // ... stop the monster light exposure
-                monsterLightDetector.StopLightExposureTimer();
+                monster.StopLightExposureTimer();
             }
 
             // The monster is not flashed anymore by the player
-            monsterLightDetector = null;
+            monster = null;
 
             return;
         }
@@ -37,45 +31,46 @@ public class TorchLight : MonoBehaviour {
         RaycastHit[] hitArray = Physics.SphereCastAll(lightEmitPointTransform.position, lightRadius, lightEmitPointTransform.forward, maxLightDistance);
         bool isMonsterHit = false;
         foreach (RaycastHit hit in hitArray) {
-            if (hit.transform.TryGetComponent(out MonsterLightDetector _monsterLightDetector)) {
+            if (hit.transform.TryGetComponent(out MonsterLightDetector _monster)) {
                 isMonsterHit = true;
 
                 // The first time the player illuminates the monster ...
-                if (monsterLightDetector == null) {
+                if (monster == null) {
                     // ... start its light exposure time ...
-                    monsterLightDetector = _monsterLightDetector;
-                    monsterLightDetector.StartLightExposureTimer();
+                    monster = _monster;
+                    monster.StartLightExposureTimer();
                 }
             }
         }
 
         // ... otherwise, stop it if the monster was flashed (the torch is on but it is not illuminating the monster anymore)
         if (!isMonsterHit) {
-            if (monsterLightDetector != null) {
-                monsterLightDetector.StopLightExposureTimer();
-                monsterLightDetector = null;
+            if (monster != null) {
+                monster.StopLightExposureTimer();
+                monster = null;
             }
         }
     }
 
     void OnDrawGizmos() {
-        int sphereCount = 5;
-        float sphereOffset = maxLightDistance / sphereCount;
-        for (int i = 1; i < sphereCount + 1; i++) {
-            Gizmos.DrawWireSphere(lightEmitPointTransform.position + lightEmitPointTransform.forward * sphereOffset * i, lightRadius);
-        }
+        if (!power) return;
+        var transformData = lightEmitPointTransform;
+        var gizmoStart = transformData.position;
+        var coneRadius = Mathf.Tan(lightRadius * Mathf.Deg2Rad * 0.5f) * maxLightDistance;
+        var gizmoEnd = gizmoStart + (transformData.forward * (maxLightDistance - coneRadius));
+        var gizmoUp = transformData.up * coneRadius;
+        var gizmoSide = transformData.right * coneRadius;
+        Gizmos.DrawLine(gizmoStart, gizmoEnd);
+        Gizmos.DrawLine(gizmoStart, gizmoEnd + gizmoSide);
+        Gizmos.DrawLine(gizmoStart, gizmoEnd - gizmoSide);
+        Gizmos.DrawLine(gizmoStart, gizmoEnd + gizmoUp);
+        Gizmos.DrawLine(gizmoStart, gizmoEnd - gizmoUp);
+        Gizmos.DrawWireSphere(gizmoEnd, coneRadius);
     }
 
     public void ToggleLight(object _, Torch.OnTorchTurnedEventArgs _eventArgs) {
-        torchLight.enabled = _eventArgs.isTurnedOn;
-        power = torchLight.enabled;
+        power = _eventArgs.isTurnedOn;
     }
 
-    public void InPocket(bool _isInPocket) {
-        if (_isInPocket) {
-            torchLight.enabled = false;
-        } else {
-            torchLight.enabled = power;
-        }
-    }
+
 }

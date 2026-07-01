@@ -2,38 +2,32 @@ using Ubiq;
 using UnityEngine;
 
 public class HandAnimatorController : MonoBehaviour {
-    [SerializeField]
-    private FreeHandAnimator freeHandAnimator;
-    [SerializeField]
-    private TorchAnimator torchAnimator;
 
     [SerializeField]
     private float pokeAnimationOffset;
 
-    private HeadAndHandsAvatar headAndHandsAvatar;
-
-    void Awake() {
-        headAndHandsAvatar = GetComponentInParent<HeadAndHandsAvatar>();
-    }
+    public FreeHandAnimator FreeHandAnimator { private get; set; }
+    public TorchAnimator TorchAnimator { private get; set; }
+    public HeadAndHandsAvatar HeadAndHandsAvatar { private get; set; }
 
     public void ToggleHandStateAnimation(bool _freeHand) {
-        freeHandAnimator.ToggleTorchPosition(!_freeHand); // position only on torchhand
-        torchAnimator.ToggleTorchVisible(!_freeHand); // torch is visible only on torchhand
+        FreeHandAnimator.ToggleTorchPosition(!_freeHand); // position only on torchhand
+        TorchAnimator.ToggleTorchVisible(!_freeHand); // torch is visible only on torchhand
     }
 
     public void UpdateGripHand(Side side, bool _isThisHandFree) {
-        freeHandAnimator.ToggleTorchPosition(!_isThisHandFree);
+        FreeHandAnimator.ToggleTorchPosition(!_isThisHandFree);
         if (_isThisHandFree) {
             if (side == Side.Left) {
-                headAndHandsAvatar.OnLeftGripUpdate.AddListener(OnGripUpdate);
+                HeadAndHandsAvatar.OnLeftGripUpdate.AddListener(OnGripUpdate);
             } else {
-                headAndHandsAvatar.OnRightGripUpdate.AddListener(OnGripUpdate);
+                HeadAndHandsAvatar.OnRightGripUpdate.AddListener(OnGripUpdate);
             }
         } else {
             if (side == Side.Left) {
-                headAndHandsAvatar.OnLeftGripUpdate?.RemoveListener(OnGripUpdate);
+                HeadAndHandsAvatar.OnLeftGripUpdate?.RemoveListener(OnGripUpdate);
             } else {
-                headAndHandsAvatar.OnRightGripUpdate?.RemoveListener(OnGripUpdate);
+                HeadAndHandsAvatar.OnRightGripUpdate?.RemoveListener(OnGripUpdate);
             }
         }
     }
@@ -42,17 +36,18 @@ public class HandAnimatorController : MonoBehaviour {
         if (_distance >= 0) {
             float pokeDistance = _distance - pokeAnimationOffset;
             float targetPoke = Mathf.InverseLerp(_maxDistance, 0, pokeDistance);
-            freeHandAnimator.TargetPoke = targetPoke;
+            FreeHandAnimator.TargetPoke = targetPoke;
         } else {
-            freeHandAnimator.TargetPoke = 0;
+            FreeHandAnimator.TargetPoke = 0;
         }
     }
 
+
     private void OnGripUpdate(InputVar<float> _grip) {
         if (!_grip.valid) {
-            freeHandAnimator.TargetGrip = 0;
+            FreeHandAnimator.TargetGrip = 0;
             return;
         }
-        freeHandAnimator.TargetGrip = _grip.value;
+        FreeHandAnimator.TargetGrip = _grip.value;
     }
 }

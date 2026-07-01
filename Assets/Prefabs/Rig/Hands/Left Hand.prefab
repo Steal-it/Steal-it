@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2143362494592155676}
     m_Modifications:
+    - target: {fileID: 490427052402560940, guid: e646a089d56862d42bc36e0bef4933dd, type: 3}
+      propertyPath: torchInputAction.primaryAction
+      value: 
+      objectReference: {fileID: 8668667194292200150}
     - target: {fileID: 639575084543440191, guid: e646a089d56862d42bc36e0bef4933dd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -52,8 +56,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Left Hand Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 7861718059552434346, guid: e646a089d56862d42bc36e0bef4933dd, type: 3}
+      propertyPath: freeHandAnimator
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1644488107832495405, guid: e646a089d56862d42bc36e0bef4933dd, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e646a089d56862d42bc36e0bef4933dd, type: 3}
@@ -121,6 +130,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7441168337307877466, guid: 43c898efac2e3b64dbcb3777ab594697, type: 3}
+    - {fileID: 6865532006955064460, guid: 43c898efac2e3b64dbcb3777ab594697, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7807312431420105844, guid: 43c898efac2e3b64dbcb3777ab594697, type: 3}
       insertIndex: 0
@@ -132,3 +142,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7807312431420105844, guid: 43c898efac2e3b64dbcb3777ab594697, type: 3}
   m_PrefabInstance: {fileID: 8207781319892460648}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8668667194292200150 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 696562047438587582, guid: 43c898efac2e3b64dbcb3777ab594697, type: 3}
+  m_PrefabInstance: {fileID: 8207781319892460648}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae75d4e18e688ba49b05ac7697207f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Torch

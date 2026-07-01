@@ -1,21 +1,26 @@
+using System;
 using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class HandInteractionController : MonoBehaviour {
     [SerializeField]
     private InputActionsAssociation torchInputAction;
+    [SerializeField]
+    private NearFarInteractor nearFarInteractor;
 
     public InputActionsAssociation TorchInputAction => torchInputAction;
 
-    private NearFarInteractor nearFarInteractor;
-
-    public void Init(Side _side) {
-        XROrigin origin = FindFirstObjectByType<XROrigin>();
-        if (_side == Side.Left) {
-            nearFarInteractor = origin.transform.Find("Camera Offset/Left Controller").GetComponentInChildren<NearFarInteractor>();
-        } else {
-            nearFarInteractor = origin.transform.Find("Camera Offset/Right Controller").GetComponentInChildren<NearFarInteractor>();
+    void Update() {
+        if (!nearFarInteractor) return;
+        if (nearFarInteractor.hasSelection) {
+            IXRSelectInteractable genericInteractable = nearFarInteractor.interactablesSelected[0];
+            if (genericInteractable is XRGrabInteractable grabInteractable && grabInteractable.TryGetComponent(out NetworkMovement netmov)) {
+                netmov.SelectObject();
+                grabInteractable.selectExited.AddListener(_ => { netmov.DeselectObject(); });
+            }
         }
     }
 

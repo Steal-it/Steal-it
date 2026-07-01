@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Ubiq.Dictionaries;
 using UnityEngine;
 
@@ -19,6 +20,15 @@ public class AnimationMessage {
 
     public AnimationMessage(SerializableDictionary _parameterDictionary) {
         ParameterDictionary = _parameterDictionary;
+    }
+}
+
+[Serializable]
+public class EnabledMessage {
+    public bool isActive;
+
+    public EnabledMessage(bool _isActive) {
+        isActive = _isActive;
     }
 }
 

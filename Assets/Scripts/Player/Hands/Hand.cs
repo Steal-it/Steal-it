@@ -13,11 +13,10 @@ public class Hand : MonoBehaviour {
     void Awake() {
         TryGetComponent(out handCollisionController);
         TryGetComponent(out handInteractionController);
-        TryGetComponent(out handAnimatorController);
+        TryGetComponent(out handAnimatorController); ;
     }
 
     void Start() {
-        handInteractionController.Init(side);
 
         handCollisionController.OnLadder += (_onLadder) => {
             handInteractionController.ToggleInteractions(_onLadder);

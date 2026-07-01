@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -30,8 +31,8 @@ public class GogglesSocket : CustomAction {
     private void OnGogglesInserted(SelectEnterEventArgs _event) {
         currentGoogles = _event.interactableObject.transform.GetComponent<Goggles>();
         currentGoogles.OnGooglesToggle += ToggleSeeThrough;
+        currentGoogles.transform.SetParent(transform, false);
         currentGoogles.DisableVisuals();
-        // goggleVisual.SetActive(true); // TODO: do this in networking
         socketInteractor.enabled = false;
     }
 

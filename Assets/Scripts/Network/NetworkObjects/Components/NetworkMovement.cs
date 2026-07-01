@@ -1,16 +1,19 @@
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class NetworkMovement : NetworkComponent {
     public Transform Transform { get; set; }
 
     private bool amIOwner;
     private bool amISender;
+    private XRBaseInteractable interactable;
 
     void Awake() {
         RegisterContext(this);
 
+        TryGetComponent(out interactable);
         amIOwner = false;
         Transform = transform;
     }
@@ -59,6 +62,13 @@ public class NetworkMovement : NetworkComponent {
         if (message.IsOwned) {
             // If object is taken by another, the current player is no longer the amISender
             amISender = false;
+        }
+    }
+
+    void OnDestroy() {
+        if (interactable) {
+            interactable.selectEntered.RemoveAllListeners();
+            interactable.selectExited.RemoveAllListeners();
         }
     }
 }
