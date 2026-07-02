@@ -1,26 +1,86 @@
 using System;
+using System.Collections;
 using Ubiq;
+using Ubiq.Rooms;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 
-public class AvatarHand : MonoBehaviour {
+[RequireComponent(typeof(NetworkHandSide))]
+
+public class AvatarHand : LocalAvatar {
+    [SerializeField]
+    private PlayerSettingsSO playerSettings;
     [SerializeField]
     private Side side;
 
+    private NetworkHandSide networkHandSide;
+
+    protected override void Awake() {
+        base.Awake();
+        TryGetComponent(out networkHandSide);
+    }
+
     private void Start() {
-        XROrigin origin = FindFirstObjectByType<XROrigin>();
-        if (side == Side.Left) {
-            origin.transform.Find("Camera Offset/Left Controller").GetComponentInChildren<HandAnimatorController>().FreeHandAnimator = GetComponent<FreeHandAnimator>();
-            origin.transform.Find("Camera Offset/Left Controller").GetComponentInChildren<HandAnimatorController>().TorchAnimator = GetComponent<TorchAnimator>();
-            origin.transform.Find("Camera Offset/Left Controller").GetComponentInChildren<HandAnimatorController>().HeadAndHandsAvatar = GetComponentInParent<HeadAndHandsAvatar>();
-            origin.transform.Find("Camera Offset/Left Controller").GetComponentInChildren<Torch>().OnTorchTurned += GetComponent<TorchAnimator>().ToggleLightVisual;
-            GetComponent<TorchAnimator>().SetupTorch(origin.transform.Find("Camera Offset/Left Controller").GetComponentInChildren<TorchLight>());
+        if (IsLocal) {
+            XROrigin origin = FindFirstObjectByType<XROrigin>();
+            HandAnimatorController animatorController = GetComponent<HandAnimatorController>();
+            TorchAnimator torchAnimator = GetComponentInChildren<TorchAnimator>();
+
+            if (side == Side.Left) {
+                Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
+                leftHand.GetComponentInChildren<HandCollisionController>().OnLadder += (_onLadder) => {
+                    animatorController.ToggleHandStateAnimation(_onLadder);
+                    animatorController.UpdateGripHand(side, _onLadder);
+                };
+                leftHand.GetComponentInChildren<HandCollisionController>().OnPoke += animatorController.CalculatePoke;
+                leftHand.GetComponentInChildren<Torch>().OnTorchTurned += torchAnimator.ToggleLightVisual;
+                torchAnimator.SetupTorch(leftHand.GetComponentInChildren<TorchLight>());
+            } else {
+                Transform rightHand = origin.transform.Find("Camera Offset/Right Controller");
+                rightHand.GetComponentInChildren<HandCollisionController>().OnLadder += (_onLadder) => {
+                    animatorController.ToggleHandStateAnimation(_onLadder);
+                    animatorController.UpdateGripHand(side, _onLadder);
+                };
+                rightHand.GetComponentInChildren<HandCollisionController>().OnPoke += animatorController.CalculatePoke;
+
+                rightHand.GetComponentInChildren<Torch>().OnTorchTurned += torchAnimator.ToggleLightVisual;
+                torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
+            }
+            playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);
+            ChangeHandTorch(playerSettings.playerTorchHand);
+            NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.AddListener(SendSidePeer);
         } else {
-            origin.transform.Find("Camera Offset/Right Controller").GetComponentInChildren<HandAnimatorController>().FreeHandAnimator = GetComponent<FreeHandAnimator>();
-            origin.transform.Find("Camera Offset/Right Controller").GetComponentInChildren<HandAnimatorController>().TorchAnimator = GetComponent<TorchAnimator>();
-            origin.transform.Find("Camera Offset/Right Controller").GetComponentInChildren<HandAnimatorController>().HeadAndHandsAvatar = GetComponentInParent<HeadAndHandsAvatar>();
-            origin.transform.Find("Camera Offset/Right Controller").GetComponentInChildren<Torch>().OnTorchTurned += GetComponent<TorchAnimator>().ToggleLightVisual;
-            GetComponent<TorchAnimator>().SetupTorch(origin.transform.Find("Camera Offset/Right Controller").GetComponentInChildren<TorchLight>());
+            networkHandSide.OnMessageReceived += ChangeHandTorch;
         }
+
+    }
+
+    private void SendSidePeer(IPeer _) {
+        StartCoroutine(SendDelayedMessageCoroutine());
+    }
+    private IEnumerator SendDelayedMessageCoroutine() {
+        // Wait for the end of the frame or a couple of frames 
+        // to guarantee the joining client has run Awake/Start/Register
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.1f);
+
+        networkHandSide.SendSideParameters(playerSettings.playerTorchHand);
+    }
+
+    private void ChangeHandTorch(Side _side) {
+        if (IsLocal) {
+            networkHandSide.SendSideParameters(_side);
+        } else {
+            print("recived " + _side + " to " + gameObject.name);
+
+        }
+        bool amITheTorchHand = side == _side;
+        GetComponent<HandAnimatorController>().ToggleHandStateAnimation(!amITheTorchHand);
+        GetComponent<HandAnimatorController>().UpdateGripHand(side, !amITheTorchHand);
+    }
+
+    void OnDestroy() {
+        playerSettings.OnPlayerTorchChanged.Unregister(ChangeHandTorch);
+        NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.RemoveListener(SendSidePeer);
     }
 }

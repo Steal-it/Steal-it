@@ -5,30 +5,31 @@ public class Hand : MonoBehaviour {
     private PlayerSettingsSO playerSettings;
     [SerializeField]
     private Side side;
-
     private HandCollisionController handCollisionController;
     private HandInteractionController handInteractionController;
-    private HandAnimatorController handAnimatorController;
+    // private HandAnimatorController HandAnimatorController;
+
+    // public HandCollisionController HandCollisionController => handCollisionController;
+    // public HandInteractionController HandInteractionController => handInteractionController;
 
     void Awake() {
         TryGetComponent(out handCollisionController);
         TryGetComponent(out handInteractionController);
-        TryGetComponent(out handAnimatorController); ;
+        // TryGetComponent(out HandAnimatorController); ;
     }
 
     void Start() {
-
         handCollisionController.OnLadder += (_onLadder) => {
             handInteractionController.ToggleInteractions(_onLadder);
-            handAnimatorController.ToggleHandStateAnimation(_onLadder);
-            handAnimatorController.UpdateGripHand(side, _onLadder);
+            // HandAnimatorController.ToggleHandStateAnimation(_onLadder);
+            // HandAnimatorController.UpdateGripHand(side, _onLadder);
         };
 
-        handCollisionController.OnPoke += handAnimatorController.CalculatePoke;
 
         handCollisionController.OnCustomAction += handInteractionController.TorchInputAction.ChangeCurrentAction;
 
         playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);
+        // handCollisionController.OnPoke += HandAnimatorController.CalculatePoke;
 
         ChangeHandTorch(playerSettings.playerTorchHand);
     }
@@ -43,8 +44,8 @@ public class Hand : MonoBehaviour {
         handCollisionController.SetHandlerEnabled(handCollisionController.CustomActionHandler, !amITheTorchHand); // toggle the collider for goggle on the free hand
         handCollisionController.RecalculateCollisions();
 
-        handAnimatorController.ToggleHandStateAnimation(!amITheTorchHand);
-        handAnimatorController.UpdateGripHand(side, !amITheTorchHand);
+        // HandAnimatorController.ToggleHandStateAnimation(!amITheTorchHand);
+        // HandAnimatorController.UpdateGripHand(side, !amITheTorchHand);
     }
 
     void OnDestroy() {

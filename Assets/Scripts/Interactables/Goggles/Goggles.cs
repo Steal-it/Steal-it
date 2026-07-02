@@ -14,22 +14,10 @@ public class Goggles : MonoBehaviour {
     private float chargeLevel = 1;
     private bool isActive = false;
     private Coroutine seeCoroutine;
-    private NetworkMovement networkMovement;
-    private NetworkObjectEnabler networkObjectEnabler;
     private XRGrabInteractable grabInteractable;
 
     void Awake() {
         TryGetComponent(out grabInteractable);
-        TryGetComponent(out networkMovement);
-        TryGetComponent(out networkObjectEnabler);
-    }
-
-    void Start() {
-        networkObjectEnabler.OnMessageReceived += EnableGogglesVisual;
-    }
-
-    private void EnableGogglesVisual(bool _isActive) {
-        visuals.SetActive(_isActive);
     }
 
     public void DisableVisuals() {
@@ -42,7 +30,6 @@ public class Goggles : MonoBehaviour {
         if (TryGetComponent(out BoxCollider collider)) {
             Destroy(collider);
         }
-        networkObjectEnabler.SendEnableParameters(false);
         visuals.SetActive(false);
     }
 
