@@ -13,8 +13,7 @@ public class MessageHandler : MonoBehaviour {
     }
     public event EventHandler OnClientAsServerChanged;
 
-    public event EventHandler<OnApplySpectatorModeRequestEventArgs> OnApplySpectatorModeRequest;
-
+    public event EventHandler<OnApplySpectatorModeRequestEventArgs> OnApplySpectatorModeRequested;
     public class OnApplySpectatorModeRequestEventArgs : EventArgs {
         public string PlayerUUID;
     }
@@ -182,7 +181,7 @@ public class MessageHandler : MonoBehaviour {
                 break;
             case ActivateSpectatorModeMessage.TYPE: {
                     ActivateSpectatorModeMessage msg = _msg.FromJson<ActivateSpectatorModeMessage>();
-                    OnApplySpectatorModeRequest?.Invoke(this, new OnApplySpectatorModeRequestEventArgs { PlayerUUID = msg.playerUUID });
+                    OnApplySpectatorModeRequested?.Invoke(this, new OnApplySpectatorModeRequestEventArgs { PlayerUUID = msg.playerUUID });
                     Debug.Log("Received Activate Spectator Mode Msg " + msg.playerUUID);
                 }
                 break;
