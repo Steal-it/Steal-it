@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Ubiq;
+using Ubiq.Dictionaries;
 using Ubiq.Rooms;
 using Unity.XR.CoreUtils;
 using UnityEngine;
@@ -70,9 +72,6 @@ public class AvatarHand : LocalAvatar {
     private void ChangeHandTorch(Side _side) {
         if (IsLocal) {
             networkHandSide.SendSideParameters(_side);
-        } else {
-            print("recived " + _side + " to " + gameObject.name);
-
         }
         bool amITheTorchHand = side == _side;
         GetComponent<HandAnimatorController>().ToggleHandStateAnimation(!amITheTorchHand);

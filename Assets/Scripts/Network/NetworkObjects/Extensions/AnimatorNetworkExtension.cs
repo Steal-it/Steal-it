@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Ubiq.Dictionaries;
 using UnityEngine;
 
-public abstract class AnimatorNetworkExtension : MonoBehaviour {
+public abstract class AnimatorNetworkExtension : LocalAvatar {
     public event EventHandler<OnAnimationChangedEventArgs> OnAnimationChanged;
     public class OnAnimationChangedEventArgs : EventArgs {
         public SerializableDictionary ParameterDictionary;
