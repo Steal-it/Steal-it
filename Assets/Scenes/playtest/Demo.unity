@@ -1388,6 +1388,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8593682061500304507, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9082975151469896656, guid: 1134ab68b07e451fbb273f34ace05b88, type: 3}
       propertyPath: m_IsActive
       value: 0
