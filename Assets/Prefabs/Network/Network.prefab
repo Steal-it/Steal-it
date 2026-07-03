@@ -367,7 +367,7 @@ MonoBehaviour:
   blockPlayerVision: {fileID: 0}
   characterController: {fileID: 0}
   gravityProvider: {fileID: 0}
-  height: 3
+  height: 0
 --- !u!1 &8410299998355878147
 GameObject:
   m_ObjectHideFlags: 0

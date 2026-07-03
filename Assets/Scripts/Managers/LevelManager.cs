@@ -160,7 +160,11 @@ public class LevelManager : MonoBehaviour {
     }
 
     void OnDrawGizmosSelected() {
-        Gizmos.DrawWireSphere(roomLobbySpawnPointCenter.position, spawnPointRadius);
-        Gizmos.DrawWireSphere(gameSpawnPointCenter.position, spawnPointRadius);
+        if (roomLobbySpawnPointCenter != null) {
+            Gizmos.DrawWireSphere(roomLobbySpawnPointCenter.position, spawnPointRadius);
+        }
+        if (gameSpawnPointCenter != null) {
+            Gizmos.DrawWireSphere(gameSpawnPointCenter.position, spawnPointRadius);
+        }
     }
 }
