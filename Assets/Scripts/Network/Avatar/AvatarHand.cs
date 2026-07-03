@@ -44,7 +44,6 @@ public class AvatarHand : LocalAvatar {
                     animatorController.UpdateGripHand(side, _onLadder);
                 };
                 rightHand.GetComponentInChildren<HandCollisionController>().OnPoke += animatorController.CalculatePoke;
-
                 rightHand.GetComponentInChildren<Torch>().OnTorchTurned += torchAnimator.ToggleLightVisual;
                 torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
             }
@@ -52,9 +51,18 @@ public class AvatarHand : LocalAvatar {
             ChangeHandTorch(playerSettings.playerTorchHand);
             NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.AddListener(SendSidePeer);
         } else {
+            XROrigin origin = FindFirstObjectByType<XROrigin>();
+            TorchAnimator torchAnimator = GetComponentInChildren<TorchAnimator>();
+
+            if (side == Side.Left) {
+                Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
+                torchAnimator.SetupTorch(leftHand.GetComponentInChildren<TorchLight>());
+            } else {
+                Transform rightHand = origin.transform.Find("Camera Offset/Right Controller");
+                torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
+            }
             networkHandSide.OnMessageReceived += ChangeHandTorch;
         }
-
     }
 
     private void SendSidePeer(IPeer _) {

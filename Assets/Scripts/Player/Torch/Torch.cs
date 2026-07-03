@@ -111,6 +111,9 @@ public class Torch : CustomAction {
                 battery.StopUse();
             }
         }
+
+        emitLight = !emitLight;
+        ToggleLight();
     }
 
     public override void OnInputStop(InputAction.CallbackContext _) { }
