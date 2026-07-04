@@ -104,7 +104,11 @@ public class SpectatorModeManager : MonoBehaviour {
             (maxDeadPlayersCount != -1 && deadPlayersCounter > maxDeadPlayersCount)
         ) {
             // GameOver if too many players died
-            GameOver.Quit();
+            if (isEnabled) {
+                GameOver.Instance.Loser();
+            } else {
+                GameOver.Instance.Winner();
+            }
         }
     }
 

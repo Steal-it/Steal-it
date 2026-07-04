@@ -41,7 +41,11 @@ public class Exit : MonoBehaviour {
         int alivePlayersCount = playersCount - deadPlayersCounter;
         if (exitedPlayersCounter == alivePlayersCount) {
             // All alive players exited the maze
-            GameOver.Quit();
+            if (spectatorModeManager.IsEnabled) {
+                GameOver.Instance.Loser();
+            } else {
+                GameOver.Instance.Winner();
+            }
         }
     }
 
