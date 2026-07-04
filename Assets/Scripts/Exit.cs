@@ -7,40 +7,46 @@ public class Exit : MonoBehaviour {
     private MessageHandler messageHandler;
     private SpectatorModeManager spectatorModeManager;
     private int exitedPlayersCounter;
+    private int deadPlayersCounter;
 
     void Start() {
         messageHandler = NetworkReferenceManager.Instance.MessageHandler;
         spectatorModeManager = NetworkReferenceManager.Instance.SpectatorModeManager;
 
         messageHandler.OnPlayerExited += MessageHandler_OnPlayerExited;
+        spectatorModeManager.OnSpectatorModeChanged += SpectatorModeManager_OnSpectatorModeChanged;
     }
 
     void OnTriggerEnter(Collider _other) {
         if (_other.TryGetComponent<XROrigin>(out var _) && !spectatorModeManager.IsEnabled) {
             messageHandler.SendPlayerExited();
 
-            UpdateCounter();
+            exitedPlayersCounter++;
+            CheckForAllPlayerExited();
         }
     }
 
     private void MessageHandler_OnPlayerExited(object _sender, EventArgs _event) {
-        UpdateCounter();
+        exitedPlayersCounter++;
+        CheckForAllPlayerExited();
     }
 
-    private void UpdateCounter() {
-        exitedPlayersCounter++;
+    private void SpectatorModeManager_OnSpectatorModeChanged(object _sender, SpectatorModeManager.OnSpectatorModeChangeEventArgs _event) {
+        deadPlayersCounter++;
+        CheckForAllPlayerExited();
+    }
 
+    private void CheckForAllPlayerExited() {
         int playersCount = NetworkReferenceManager.Instance.RoomClient.Peers.Count() + 1;
-        int alivePlayersCount = playersCount - spectatorModeManager.DeadPlayersCounter;
+        int alivePlayersCount = playersCount - deadPlayersCounter;
         if (exitedPlayersCounter == alivePlayersCount) {
-            Debug.Log("QUIT");
-
             // All alive players exited the maze
-            Application.Quit();
+            GameOver.Quit();
         }
     }
 
     void OnDestroy() {
         messageHandler.OnPlayerExited -= MessageHandler_OnPlayerExited;
+        spectatorModeManager.OnSpectatorModeChanged -= SpectatorModeManager_OnSpectatorModeChanged;
     }
 }

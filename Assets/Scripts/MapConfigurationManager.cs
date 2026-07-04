@@ -4,7 +4,7 @@ using Ubiq.Rooms;
 using UnityEngine;
 
 public class MapConfigurationManager : MonoBehaviour {
-    private MapConfiguration[] mapConfigurationArray;
+    private List<MapConfiguration> mapConfigurationArray;
 
     [SerializeField]
     private Transform playersSpawnPoint;
@@ -14,9 +14,11 @@ public class MapConfigurationManager : MonoBehaviour {
     private Transform keys;
 
     void Start() {
-        mapConfigurationArray = new MapConfiguration[transform.childCount];
-        for (int i = 0; i < mapConfigurationArray.Length; i++) {
-            mapConfigurationArray[i] = transform.GetChild(i).GetComponent<MapConfiguration>();
+        mapConfigurationArray = new List<MapConfiguration>();
+        foreach (Transform child in transform) {
+            if (child.gameObject.activeInHierarchy) {
+                mapConfigurationArray.Add(child.GetComponent<MapConfiguration>());
+            }
         }
     }
 
@@ -43,7 +45,7 @@ public class MapConfigurationManager : MonoBehaviour {
         int seed = UuidToSeed(agreedUuid);
 
         System.Random random = new System.Random(seed);
-        int mapConfigurationIndex = random.Next() % mapConfigurationArray.Length;
+        int mapConfigurationIndex = random.Next() % mapConfigurationArray.Count;
         mapConfigurationArray[mapConfigurationIndex].Apply(
             playersSpawnPoint,
             monster.transform,

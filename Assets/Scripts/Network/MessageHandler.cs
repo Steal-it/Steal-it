@@ -77,7 +77,7 @@ public class MessageHandler : MonoBehaviour {
         } while (receiveRecoverCurrentCounterReplyCounter == roomClient.Peers.Count());
 
         receiveRecoverCurrentCounterReplyCounter = 0;
-        // OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
+        // TODO: OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
     }
 
     public async void SendReadyMessage() {
@@ -187,7 +187,9 @@ public class MessageHandler : MonoBehaviour {
                 break;
             case ActivateSpectatorModeMessage.TYPE: {
                     ActivateSpectatorModeMessage msg = _message.FromJson<ActivateSpectatorModeMessage>();
-                    OnApplySpectatorModeRequested?.Invoke(this, new OnApplySpectatorModeRequestEventArgs { PlayerUUID = msg.playerUUID });
+                    OnApplySpectatorModeRequested?.Invoke(this, new OnApplySpectatorModeRequestEventArgs {
+                        PlayerUUID = msg.playerUUID
+                    });
                     Debug.Log($"Received {ActivateSpectatorModeMessage.TYPE}: {msg.playerUUID}");
                 }
                 break;

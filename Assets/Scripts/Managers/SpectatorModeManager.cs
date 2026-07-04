@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Gravity;
+using System.Linq;
 
 public class SpectatorModeManager : MonoBehaviour {
     public event EventHandler<OnSpectatorModeChangeEventArgs> OnSpectatorModeChanged;
@@ -10,7 +11,6 @@ public class SpectatorModeManager : MonoBehaviour {
     }
 
     public bool IsEnabled => isEnabled;
-    public int DeadPlayersCounter => deadPlayersCounter;
 
     [SerializeField]
     private XROrigin rig;
@@ -22,9 +22,17 @@ public class SpectatorModeManager : MonoBehaviour {
     private GravityProvider gravityProvider;
     [SerializeField, Range(0, 4)]
     private float height = 0;
+    [SerializeField, Tooltip("Maximum number of players allowed to die to continue to play. Set -1 for no limit (all players have to die for GameOver).")]
+    private int maxDeadPlayersCount = -1;
 
     private bool isEnabled;
     private int deadPlayersCounter;
+
+    void OnValidate() {
+        if (maxDeadPlayersCount < -1) {
+            maxDeadPlayersCount = -1;
+        }
+    }
 
     void Start() {
         NetworkReferenceManager.Instance.MessageHandler.OnApplySpectatorModeRequested += MessageHandler_OnApplySpectatorModeRequest;
@@ -71,7 +79,7 @@ public class SpectatorModeManager : MonoBehaviour {
         // Ubiq does not guarantee the uuid will not change after connection/disconnection/room change, therefore, it is necessary to obtain it each time
         string playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
 
-        // The event is invoked both when another peer lost or another peer lost. However, locally the spectator mode should be activated only if this local peer lost
+        // Update visibility for local player (XR rig) if he lost
         if (_playerUUID == playerUUID) {
             // Disable the oob collision detection
             blockPlayerVision.enabled = !blockPlayerVision.enabled;
@@ -79,15 +87,24 @@ public class SpectatorModeManager : MonoBehaviour {
             UpdateVisibility();
         }
 
-        deadPlayersCounter++;
-
-        // Activate spectator mode for another peer (this will also invoked the RSOD if the local peer lost)
+        // Activate spectator mode for another peer (this will also invoke the RSOD if the local peer lost)
         OnSpectatorModeChanged?.Invoke(this, new OnSpectatorModeChangeEventArgs {
             PlayerUUID = _playerUUID
         });
 
         if (_sendToOtherPeers) {
             NetworkReferenceManager.Instance.MessageHandler.SendActivateSpectatorModeMessage(_playerUUID);
+        }
+
+        deadPlayersCounter++;
+
+        int playersCount = NetworkReferenceManager.Instance.RoomClient.Peers.Count() + 1;
+        if (
+            (maxDeadPlayersCount == -1 && deadPlayersCounter == playersCount) ||
+            (maxDeadPlayersCount != -1 && deadPlayersCounter > maxDeadPlayersCount)
+        ) {
+            // GameOver if too many players died
+            GameOver.Quit();
         }
     }
 

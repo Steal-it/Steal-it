@@ -228,6 +228,7 @@ MonoBehaviour:
   characterController: {fileID: 7238434022614160789}
   gravityProvider: {fileID: 6267901477592489829}
   height: 0
+  maxDeadPlayersCount: -1
 --- !u!1 &3514659417767780319
 GameObject:
   m_ObjectHideFlags: 0
