@@ -14,6 +14,7 @@ public class MessageHandler : MonoBehaviour {
     public class OnApplySpectatorModeRequestEventArgs : EventArgs {
         public string PlayerUUID;
     }
+    public event EventHandler OnPlayerExited;
 
     private RoomClient roomClient;
     private NetworkContext context;
@@ -127,15 +128,25 @@ public class MessageHandler : MonoBehaviour {
         } else {
             Debug.LogWarning("Network context is not available, retry send in one second");
             await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
-            SendNewClientAsServerElection();
+            SendActivateSpectatorModeMessage(_playerUUID);
         }
     }
 
-    public void ProcessMessage(ReferenceCountedSceneGraphMessage _msg) {
-        BaseMessage message = _msg.FromJson<BaseMessage>();
+    public async void SendPlayerExited() {
+        if (context.Scene != null) {
+            context.SendJson(new PlayerExited());
+        } else {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendPlayerExited();
+        }
+    }
+
+    public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
+        BaseMessage message = _message.FromJson<BaseMessage>();
         switch (message.type) {
             case ReadyMessage.TYPE: {
-                    Debug.Log("Received Ready Msg");
+                    Debug.Log($"Received {ReadyMessage.TYPE}");
                     receiveReadyMsgCounter += 1;
                     if (receiveReadyMsgCounter == 1) {
                         ChangeLevelHandler();
@@ -143,7 +154,7 @@ public class MessageHandler : MonoBehaviour {
                 }
                 break;
             case LoadLevelCompletedMessage.TYPE: {
-                    Debug.Log("Received Load Msg");
+                    Debug.Log($"Received {LoadLevelCompletedMessage.TYPE}");
                     receiveLoadCompleteMsgCounter += 1;
                     if (receiveLoadCompleteMsgCounter == 1) {
                         PeerLoadingHandler();
@@ -151,14 +162,14 @@ public class MessageHandler : MonoBehaviour {
                 }
                 break;
             case RecoverCurrentCounterRequestMessage.TYPE: {
-                    Debug.Log("Received Counter Request");
+                    Debug.Log($"Received {RecoverCurrentCounterRequestMessage.TYPE}");
                     wasCounterRequested = true;
                     RecoverCurrentCounterRequestMessageHandler();
                 }
                 break;
             case RecoverCurrentCounterReplyMessage.TYPE: {
-                    Debug.Log("Received Counter Reply");
-                    RecoverCurrentCounterReplyMessage finalMessage = _msg.FromJson<RecoverCurrentCounterReplyMessage>();
+                    Debug.Log($"Received {RecoverCurrentCounterReplyMessage.TYPE}");
+                    RecoverCurrentCounterReplyMessage finalMessage = _message.FromJson<RecoverCurrentCounterReplyMessage>();
                     RecoverCurrentCounterReplyMessageHandler(finalMessage);
                     receiveRecoverCurrentCounterReplyCounter += 1;
                     if (receiveRecoverCurrentCounterReplyCounter == 1) {
@@ -167,17 +178,22 @@ public class MessageHandler : MonoBehaviour {
                 }
                 break;
             case NewClientAsServerElectionMessage.TYPE: {
-                    Debug.Log("Received Client As Server Election Msg");
-                    NewClientAsServerElectionMessage finalMessage = _msg.FromJson<NewClientAsServerElectionMessage>();
+                    Debug.Log($"Received {NewClientAsServerElectionMessage.TYPE}");
+                    NewClientAsServerElectionMessage finalMessage = _message.FromJson<NewClientAsServerElectionMessage>();
                     if (roomClient.Me.uuid == finalMessage.clientAsServerUuid) {
                         OnClientAsServerChanged?.Invoke(this, EventArgs.Empty);
                     }
                 }
                 break;
             case ActivateSpectatorModeMessage.TYPE: {
-                    ActivateSpectatorModeMessage msg = _msg.FromJson<ActivateSpectatorModeMessage>();
+                    ActivateSpectatorModeMessage msg = _message.FromJson<ActivateSpectatorModeMessage>();
                     OnApplySpectatorModeRequested?.Invoke(this, new OnApplySpectatorModeRequestEventArgs { PlayerUUID = msg.playerUUID });
-                    Debug.Log("Received Activate Spectator Mode Msg " + msg.playerUUID);
+                    Debug.Log($"Received {ActivateSpectatorModeMessage.TYPE}: {msg.playerUUID}");
+                }
+                break;
+            case PlayerExited.TYPE: {
+                    OnPlayerExited?.Invoke(this, EventArgs.Empty);
+                    Debug.Log($"Received {PlayerExited.TYPE}");
                 }
                 break;
             default:

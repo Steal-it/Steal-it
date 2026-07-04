@@ -9,6 +9,9 @@ public class SpectatorModeManager : MonoBehaviour {
         public string PlayerUUID;
     }
 
+    public bool IsEnabled => isEnabled;
+    public int DeadPlayersCounter => deadPlayersCounter;
+
     [SerializeField]
     private XROrigin rig;
     [SerializeField]
@@ -20,11 +23,8 @@ public class SpectatorModeManager : MonoBehaviour {
     [SerializeField, Range(0, 4)]
     private float height = 0;
 
-    private bool enable;
-
-    void Awake() {
-        enable = false;
-    }
+    private bool isEnabled;
+    private int deadPlayersCounter;
 
     void Start() {
         NetworkReferenceManager.Instance.MessageHandler.OnApplySpectatorModeRequested += MessageHandler_OnApplySpectatorModeRequest;
@@ -38,8 +38,8 @@ public class SpectatorModeManager : MonoBehaviour {
     }
 
     private void UpdateVisibility() {
-        enable = !enable;
-        if (enable) {
+        isEnabled = !isEnabled;
+        if (isEnabled) {
             Enable();
         } else {
             Disable();
@@ -78,6 +78,8 @@ public class SpectatorModeManager : MonoBehaviour {
             // Update visibility
             UpdateVisibility();
         }
+
+        deadPlayersCounter++;
 
         // Activate spectator mode for another peer (this will also invoked the RSOD if the local peer lost)
         OnSpectatorModeChanged?.Invoke(this, new OnSpectatorModeChangeEventArgs {

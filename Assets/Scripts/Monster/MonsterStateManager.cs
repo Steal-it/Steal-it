@@ -105,7 +105,7 @@ public class MonsterStateManager : MonoBehaviour {
     }
 
     public void ChangeState(StateKey _stateKey) {
-        print(currentStateKey + " -> " + _stateKey);
+        Debug.Log(currentStateKey + " -> " + _stateKey);
 
         currentState.ExitState();
 
