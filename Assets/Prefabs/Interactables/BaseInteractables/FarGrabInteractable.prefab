@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6343990730656476095}
   - component: {fileID: 8921990950895260790}
   - component: {fileID: 5643644621821948167}
+  - component: {fileID: 8041550956489741832}
+  - component: {fileID: 4674616971138324678}
   m_Layer: 7
   m_Name: FarGrabInteractable
   m_TagString: Untagged
@@ -215,6 +217,30 @@ MonoBehaviour:
   m_LimitAngularVelocity: 0
   m_MaxLinearVelocityDelta: 10
   m_MaxAngularVelocityDelta: 20
+--- !u!114 &8041550956489741832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68615080635505177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feadb23490e2b9e4792e916c407a914d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkMovement
+--- !u!114 &4674616971138324678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68615080635505177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1868d5d991202925b214161f6c2a2b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkInteractable
 --- !u!1 &3109453518150836662
 GameObject:
   m_ObjectHideFlags: 0

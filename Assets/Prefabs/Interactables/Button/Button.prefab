@@ -360,6 +360,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6343990730656476095, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+    - {fileID: 96973434715973501, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+    - {fileID: 3086079677186475954, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4370025486125874954, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
     - {fileID: 3109453518150836662, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
@@ -376,7 +378,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 68615080635505177, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1280456179888630901}
+      addedObject: {fileID: 4158874682116285358}
+    - targetCorrespondingSourceObject: {fileID: 68615080635505177, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3326758356872085064}
   m_SourcePrefab: {fileID: 100100000, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
 --- !u!114 &375560707047682025 stripped
 MonoBehaviour:
@@ -405,7 +410,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 68615080635505177, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
   m_PrefabInstance: {fileID: 3432171262734425810}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1280456179888630901
+--- !u!114 &4158874682116285358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -416,7 +421,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07b3638c2f5db5b479ff24c2859713d4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit.Samples.StarterAssets::UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.XRPokeFollowAffordance
   m_PokeFollowTransform: {fileID: 3949328237616280954}
   m_SmoothingSpeed: 16
   m_ReturnToInitialPosition: 1
@@ -424,6 +429,19 @@ MonoBehaviour:
   m_ClampToMaxDistance: 1
   m_MaxDistance: 0.1
   m_PokeFilter: {fileID: 375560707047682025}
+--- !u!114 &3326758356872085064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3409858895224849611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feadb23490e2b9e4792e916c407a914d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkMovement
+  Transform: {fileID: 1679993776342786723}
 --- !u!4 &5104617095670911310 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7599467750495293340, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}

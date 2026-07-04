@@ -1,13 +1,17 @@
+using SIPSorcery.Net;
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class NetworkMovement : NetworkComponent {
-    public Transform Transform { get; set; }
+
+    [SerializeField]
+    public Transform Transform;
 
     private bool amIOwner;
     private bool amISender;
+
     private XRBaseInteractable interactable;
 
     void Awake() {
@@ -15,7 +19,10 @@ public class NetworkMovement : NetworkComponent {
 
         TryGetComponent(out interactable);
         amIOwner = false;
-        Transform = transform;
+
+        if (Transform == null) {
+            Transform = gameObject.transform;
+        }
     }
 
     void FixedUpdate() {
@@ -43,7 +50,11 @@ public class NetworkMovement : NetworkComponent {
     }
 
     private void SendMovementMessage() {
-        if (Transform == null) return;
+
+        if (Transform == null) {
+            Debug.LogError("Error: cannot send transform info, transform is null");
+            return;
+        }
 
         MovementMessage message = new MovementMessage(
             Transforms.ToLocal(Transform, Context.Scene.transform),
@@ -55,6 +66,11 @@ public class NetworkMovement : NetworkComponent {
 
     public override void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
         MovementMessage message = _message.FromJson<MovementMessage>();
+
+        if (interactable != null) {
+            // If an interactable is present and owner is set a true the interactable has to be disabled and viceversa
+            interactable.enabled = !message.IsOwned;
+        }
 
         Pose pose = Transforms.ToWorld(message.Pose, Context.Scene.transform);
         Transform.SetPositionAndRotation(pose.position, pose.rotation);

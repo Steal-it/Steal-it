@@ -157,6 +157,8 @@ GameObject:
   - component: {fileID: 1393371104074446212}
   - component: {fileID: 6811455417977952291}
   - component: {fileID: 6582532289878465241}
+  - component: {fileID: 3111364478338694918}
+  - component: {fileID: 4974127233995861679}
   m_Layer: 8
   m_Name: Handle
   m_TagString: Untagged
@@ -472,6 +474,30 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &3111364478338694918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702290196759754069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feadb23490e2b9e4792e916c407a914d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkMovement
+--- !u!114 &4974127233995861679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702290196759754069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1868d5d991202925b214161f6c2a2b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkInteractable
 --- !u!1 &2869466021394360902
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,6 +805,8 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5643644621821948167, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
     - {fileID: 8921990950895260790, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+    - {fileID: 3452425879354952918, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+    - {fileID: 2995329255751517851, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4370025486125874954, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
     - {fileID: 3109453518150836662, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
