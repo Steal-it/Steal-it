@@ -7,10 +7,7 @@ using UnityEngine;
 using WebSocketSharp;
 
 public class MessageHandler : MonoBehaviour {
-    public event EventHandler<OnAllPeersReadyForChangeEventArgs> OnAllPeersReadyForChange;
-    public class OnAllPeersReadyForChangeEventArgs : EventArgs {
-        public string LevelName;
-    }
+    public event EventHandler OnAllPeersReadyForChange;
     public event EventHandler OnClientAsServerChanged;
 
     public event EventHandler<OnApplySpectatorModeRequestEventArgs> OnApplySpectatorModeRequested;
@@ -44,9 +41,7 @@ public class MessageHandler : MonoBehaviour {
         receiveReadyMsgCounter = 0;
         wasCounterRequested = false;
 
-        OnAllPeersReadyForChange?.Invoke(this, new OnAllPeersReadyForChangeEventArgs {
-            LevelName = "Level1"
-        });
+        OnAllPeersReadyForChange?.Invoke(this, EventArgs.Empty);
     }
 
     private async void PeerLoadingHandler() {

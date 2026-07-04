@@ -21,6 +21,8 @@ public class LevelManager : MonoBehaviour {
     [SerializeField]
     private LocomotionMediator rigLocomotor;
     [SerializeField]
+    private MapConfigurationManager mapConfigurationManager;
+    [SerializeField]
     private Transform localLobbySpawnPoint;
     [SerializeField]
     private Transform roomLobbySpawnPointCenter;
@@ -70,16 +72,10 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    private void LoadScreen(object _sender, MessageHandler.OnAllPeersReadyForChangeEventArgs _event) {
-        switch (_event.LevelName) {
-            // TODO: huh?
-            case "Level1":
-                LoadGame();
-                break;
-            default:
-                Debug.LogError("Attempt to switch to " + _event.LevelName + " but it does not exists");
-                return;
-        }
+    private void LoadScreen(object _sender, EventArgs _event) {
+        mapConfigurationManager.ApplyRandomConfiguration();
+
+        LoadGame();
 
         messageHandler.SendLoadLevelCompletedMessage();
     }

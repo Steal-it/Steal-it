@@ -252,6 +252,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa7b4195685c3846be746c74f0ab2f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4858430458569375320 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8278587040899791398, guid: 6a9146bb51c753c4483fdb1687844c6a, type: 3}
+  m_PrefabInstance: {fileID: 3571336704382780542}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7f43d6c513d7b3499755d1ab8058066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConfigurationManager
 --- !u!114 &6554098464150922924 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7744847877950333650, guid: 6a9146bb51c753c4483fdb1687844c6a, type: 3}
@@ -336,6 +347,10 @@ PrefabInstance:
       propertyPath: localLobbySpawnPoint
       value: 
       objectReference: {fileID: 4038685602384537033}
+    - target: {fileID: 6567683391160497850, guid: 092eb32917cc7c969b6df8e7d1575699, type: 3}
+      propertyPath: mapConfigurationManager
+      value: 
+      objectReference: {fileID: 4858430458569375320}
     - target: {fileID: 6567683391160497850, guid: 092eb32917cc7c969b6df8e7d1575699, type: 3}
       propertyPath: roomLobbySpawnPointCenter
       value: 
