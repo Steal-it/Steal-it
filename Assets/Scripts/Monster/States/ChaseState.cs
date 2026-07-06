@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class ChaseState : IMonsterState, IMonsterStateVisitor {
-    public event EventHandler OnPlayerKilled;
 
     public Transform Player => player;
 
@@ -41,7 +40,15 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
         if (Vector3.Distance(monsterAgent.transform.position, player.position) < monsterStateManager.KillDistance) {
             isChangingState = true;
 
-            OnPlayerKilled?.Invoke(this, EventArgs.Empty);
+            string playerUUID = player.parent.parent.gameObject.name;
+
+            if (playerUUID != "Local Avatar") {
+                playerUUID = playerUUID.Split('#')[1];
+            } else {
+                playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
+            }
+
+            NetworkReferenceManager.Instance.SpectatorModeManager.ChangeSpectatorModeByPlayerUUID(playerUUID, true);
 
             monsterStateManager.ChangeState(MonsterStateManager.StateKey.Murder);
         }
