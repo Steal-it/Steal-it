@@ -346,6 +346,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShakeDetector
       objectReference: {fileID: 0}
+    - target: {fileID: 2692647228281862142, guid: 2281e2e6c60f3e1458b3bf3c68a0be98, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5648700233965942423, guid: 2281e2e6c60f3e1458b3bf3c68a0be98, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.13

@@ -9,6 +9,7 @@ public class BatteryVisuals : MonoBehaviour {
 
     private Renderer orb;
     private float initialIntensity;
+    private float initialRange;
     void Awake() {
         orb = gameObject.GetComponentInChildren<Renderer>();
     }
@@ -19,6 +20,11 @@ public class BatteryVisuals : MonoBehaviour {
         orbLight.color = chargeColor;
 
         initialIntensity = orbLight.intensity;
+        initialRange = orbLight.range;
+    }
+
+    public void ChangeLightRange(float? lightRange) {
+        orbLight.range = lightRange ?? initialRange;
     }
 
     public void UpdateVisuals(float _chargeAmount) {

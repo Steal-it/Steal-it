@@ -23,6 +23,7 @@ public class Torch : CustomAction {
     void Start() {
         socketInteractor.hoverEntered.AddListener(OnNewBatteryInstalled);
         socketInteractor.selectEntered.AddListener(OnNewBatteryInstalled);
+        socketInteractor.selectExited.AddListener(RemoveBattery);
 
         OnTorchTurned += torchLight.ToggleLight;
 
@@ -49,6 +50,7 @@ public class Torch : CustomAction {
 
         // Start discharging the battery
         battery.Use();
+        battery.BatteryInserted();
 
         // Turn on the light
         emitLight = true;
@@ -59,6 +61,19 @@ public class Torch : CustomAction {
         canUpgrade = false;
     }
 
+    private void RemoveBattery(SelectExitEventArgs _) {
+        emitLight = false;
+        ToggleLight();
+
+        battery.StopUse();
+        battery.BatteryRemoved();
+        battery = null;
+
+        // Allow the socket of the battery to show the mesh of a new battery
+        socketInteractor.showInteractableHoverMeshes = true;
+    }
+
+    // UNUSED METHOD FOR SHAKE REMOVE   
     public void RemoveBattery(Vector3 dropoutVelocity) {
         if (battery == null) return;
 
@@ -85,9 +100,6 @@ public class Torch : CustomAction {
         // Turn off the light
         emitLight = false;
         ToggleLight();
-
-        // Allow the socket of the battery to show the mesh of a new battery
-        socketInteractor.showInteractableHoverMeshes = true;
     }
 
     private void ToggleLight() {

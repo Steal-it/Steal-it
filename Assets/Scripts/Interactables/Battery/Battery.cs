@@ -9,10 +9,13 @@ public class Battery : MonoBehaviour {
     [SerializeField]
     private float dischargeTime = 120;
     [SerializeField]
+    private float lightRangeWhenInserted;
+    [SerializeField]
     private ParticleSystem runOutParticleSystem;
     [SerializeField]
     private BatteryVisuals visuals;
-    [SerializeField]
+    [Space(5f), Header("Spring/Float Settings")]
+    [Space(5f), SerializeField]
     private float spring;
     [SerializeField]
     private float damper;
@@ -25,6 +28,7 @@ public class Battery : MonoBehaviour {
     private Rigidbody rb;
     private XRGrabInteractable grabInteractable;
     private bool canFloat = true;
+    private bool isInserted = true;
 
     private Coroutine useCoroutine;
 
@@ -41,16 +45,18 @@ public class Battery : MonoBehaviour {
 
     public void Use() {
         useCoroutine = StartCoroutine(UseCO());
+        visuals.ChangeLightRange(lightRangeWhenInserted);
     }
 
     public void StopUse() {
+        visuals.ChangeLightRange(null);
         if (useCoroutine != null) {
             StopCoroutine(useCoroutine);
         }
     }
 
     void FixedUpdate() {
-        if (!canFloat) return;
+        if (!canFloat || isInserted) return;
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, restDistance, hitMask)) {
             float springForce = spring * (restDistance - hit.distance);
             float dampingfactor = damper * rb.linearVelocity.y;
@@ -92,9 +98,18 @@ public class Battery : MonoBehaviour {
         canFloat = true;
     }
 
+    public void BatteryInserted() {
+        rb.useGravity = false;
+        isInserted = true;
+    }
+
+    public void BatteryRemoved() {
+        rb.useGravity = true;
+        isInserted = false;
+    }
+
     public void Drop(Vector3 _velocity) {
         StopUse();
-        rb.useGravity = true;
         canFloat = true;
         rb.AddForce(_velocity.normalized, ForceMode.Impulse);
     }
