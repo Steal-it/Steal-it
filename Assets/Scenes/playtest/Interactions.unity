@@ -6337,6 +6337,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 729066621}
     m_Modifications:
+    - target: {fileID: 375560707047682025, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
+      propertyPath: m_PokeConfiguration.m_ConstantValue.m_PokeDirection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3409858895224849611, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
       propertyPath: m_Name
       value: Button
