@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7599467750495293340}
   - component: {fileID: 6343990730656476095}
   - component: {fileID: 3035244525080441481}
+  - component: {fileID: 8621620261422393078}
+  - component: {fileID: 265550502497572240}
   m_Layer: 8
   m_Name: GazeSimpleInteractable
   m_TagString: Untagged
@@ -130,6 +132,30 @@ MonoBehaviour:
   m_StartingInteractionStrengthFilters: []
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
+--- !u!114 &8621620261422393078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68615080635505177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1868d5d991202925b214161f6c2a2b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkInteractable
+--- !u!114 &265550502497572240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68615080635505177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feadb23490e2b9e4792e916c407a914d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkMovement
 --- !u!1 &3109453518150836662
 GameObject:
   m_ObjectHideFlags: 0

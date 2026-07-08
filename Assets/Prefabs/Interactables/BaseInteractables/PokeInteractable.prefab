@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1618463519759121810}
   - component: {fileID: 3035244525080441481}
   - component: {fileID: 3069141492279619899}
+  - component: {fileID: 96973434715973501}
+  - component: {fileID: 657107904587412649}
   m_Layer: 11
   m_Name: PokeInteractable
   m_TagString: Untagged
@@ -181,6 +183,30 @@ MonoBehaviour:
       m_EnablePokeAngleThreshold: 1
       m_PokeAngleThreshold: 45
     m_Variable: {fileID: 0}
+--- !u!114 &96973434715973501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68615080635505177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feadb23490e2b9e4792e916c407a914d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkMovement
+--- !u!114 &657107904587412649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68615080635505177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd1958a04dff6efc3b2f03bc54020674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PokeNetworkInteractable
 --- !u!1 &3109453518150836662
 GameObject:
   m_ObjectHideFlags: 0

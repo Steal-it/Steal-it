@@ -385,6 +385,10 @@ PrefabInstance:
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3326758356872085064, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
+      propertyPath: Transform
+      value: 
+      objectReference: {fileID: 2937906849567592553}
     - target: {fileID: 3409858895224849611, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
       propertyPath: m_Name
       value: ButtonCounter
@@ -433,7 +437,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5104617095670911310, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
@@ -480,6 +485,11 @@ MonoBehaviour:
   OnPressRequirementSatisfied:
     m_PersistentCalls:
       m_Calls: []
+--- !u!4 &2937906849567592553 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1679993776342786723, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
+  m_PrefabInstance: {fileID: 4581572347012494026}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8737614351637635972 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5104617095670911310, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}

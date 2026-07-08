@@ -24,6 +24,15 @@ public class AnimationMessage {
 }
 
 [Serializable]
+public class IncrementCounterMessage {
+    public short newCounterValue;
+
+    public IncrementCounterMessage(short _newCounterValue) {
+        newCounterValue = _newCounterValue;
+    }
+}
+
+[Serializable]
 public class EnabledMessage {
     public bool isActive;
 
