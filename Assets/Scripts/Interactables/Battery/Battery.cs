@@ -35,7 +35,9 @@ public class Battery : MonoBehaviour {
 
     void Start() {
         grabInteractable.selectEntered.AddListener(DisableFloat);
+        grabInteractable.selectExited.AddListener(EnableFloat);
     }
+
 
     public void Use() {
         useCoroutine = StartCoroutine(UseCO());
@@ -84,6 +86,10 @@ public class Battery : MonoBehaviour {
 
     private void DisableFloat(SelectEnterEventArgs _) {
         canFloat = false;
+    }
+
+    private void EnableFloat(SelectExitEventArgs _) {
+        canFloat = true;
     }
 
     public void Drop(Vector3 _velocity) {

@@ -100,6 +100,10 @@ public class Torch : CustomAction {
         socketInteractor.hoverEntered.RemoveAllListeners();
     }
 
+    protected override void AfterInputSet(bool _isActive) {
+        gameObject.SetActive(_isActive);
+    }
+
     public override void OnInputFired(InputAction.CallbackContext _) {
         if (battery != null) {
             emitLight = !emitLight;
@@ -111,9 +115,6 @@ public class Torch : CustomAction {
                 battery.StopUse();
             }
         }
-
-        emitLight = !emitLight;
-        ToggleLight();
     }
 
     public override void OnInputStop(InputAction.CallbackContext _) { }

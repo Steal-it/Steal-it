@@ -73,9 +73,6 @@ public class TorchAnimator : LocalAvatar {
         } else {
             torchLight.enabled = active;
         }
-        // if (IsLocal) {
-        //     networkObjectEnabler.SendEnableParameters(torchLight.enabled);
-        // }
     }
 
 }

@@ -13,17 +13,6 @@ public class HandInteractionController : MonoBehaviour {
 
     public InputActionsAssociation TorchInputAction => torchInputAction;
 
-    void Update() {
-        if (!nearFarInteractor) return;
-        if (nearFarInteractor.hasSelection) {
-            IXRSelectInteractable genericInteractable = nearFarInteractor.interactablesSelected[0];
-            if (genericInteractable is XRGrabInteractable grabInteractable && grabInteractable.TryGetComponent(out NetworkMovement netmov)) {
-                netmov.SelectObject();
-                grabInteractable.selectExited.AddListener(_ => { netmov.DeselectObject(); });
-            }
-        }
-    }
-
     public void ToggleInteractions(bool _active) {
         nearFarInteractor.enableNearCasting = _active;
         nearFarInteractor.enableFarCasting = _active;
