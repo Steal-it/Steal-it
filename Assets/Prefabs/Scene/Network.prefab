@@ -226,6 +226,9 @@ MonoBehaviour:
   rig: {fileID: 7744847877950333650}
   blockPlayerVision: {fileID: 5291535301211082951}
   characterController: {fileID: 7238434022614160789}
+  controllers:
+  - {fileID: 7593950054451955375}
+  - {fileID: 7700119887665134787}
   gravityProvider: {fileID: 6267901477592489829}
   height: 0
   maxDeadPlayersCount: -1
@@ -585,6 +588,28 @@ CharacterController:
   m_CorrespondingSourceObject: {fileID: 1483392810960829965, guid: d2be2864766836d47bd6785cd4c1f4b1, type: 3}
   m_PrefabInstance: {fileID: 8134068835519359896}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7593950054451955375 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1837791721616715063, guid: d2be2864766836d47bd6785cd4c1f4b1, type: 3}
+  m_PrefabInstance: {fileID: 8134068835519359896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4a50d88b55b45648927679791f472de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7700119887665134787 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1891044275496916827, guid: d2be2864766836d47bd6785cd4c1f4b1, type: 3}
+  m_PrefabInstance: {fileID: 8134068835519359896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4a50d88b55b45648927679791f472de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7744847877950333650 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1988689559107275082, guid: d2be2864766836d47bd6785cd4c1f4b1, type: 3}
