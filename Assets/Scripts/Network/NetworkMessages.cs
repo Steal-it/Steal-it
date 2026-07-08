@@ -76,3 +76,10 @@ public class ActivateSpectatorModeMessage : BaseMessage {
         playerUUID = _playerUUID;
     }
 }
+
+[Serializable]
+public class PlayerExited : BaseMessage {
+    public const string TYPE = "PlayerExitedMessage";
+
+    public PlayerExited() : base(TYPE) { }
+}

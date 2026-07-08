@@ -2,15 +2,18 @@ using System;
 using UnityEngine;
 using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Gravity;
+using System.Linq;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using System.Collections.Generic;
 
 public class SpectatorModeManager : MonoBehaviour {
-    public event EventHandler<OnSpectatorModeChangeEventArgs> OnSpectatorModeChange;
-
+    public event EventHandler<OnSpectatorModeChangeEventArgs> OnSpectatorModeChanged;
     public class OnSpectatorModeChangeEventArgs : EventArgs {
         public string PlayerUUID;
     }
+
+    public bool IsEnabled => isEnabled;
+
     [SerializeField]
     private XROrigin rig;
     [SerializeField]
@@ -23,12 +26,32 @@ public class SpectatorModeManager : MonoBehaviour {
     private GravityProvider gravityProvider;
     [SerializeField, Range(0, 4)]
     private float height = 0;
+    [SerializeField, Tooltip("Maximum number of players allowed to die to continue to play. Set -1 for no limit (all players have to die for GameOver).")]
+    private int maxDeadPlayersCount = -1;
 
-    private bool enable;
+    private bool isEnabled;
+    private int deadPlayersCounter;
 
-    void updateVisibility() {
-        enable = !enable;
-        if (enable) {
+    void OnValidate() {
+        if (maxDeadPlayersCount < -1) {
+            maxDeadPlayersCount = -1;
+        }
+    }
+
+    void Start() {
+        NetworkReferenceManager.Instance.MessageHandler.OnApplySpectatorModeRequested += MessageHandler_OnApplySpectatorModeRequest;
+    }
+
+    /// <summary>
+    /// Invoked when the local peer receives a message that requires the spectator mode of someone to be activated
+    /// </summary>
+    void MessageHandler_OnApplySpectatorModeRequest(object _sender, MessageHandler.OnApplySpectatorModeRequestEventArgs _event) {
+        ChangeSpectatorModeByPlayerUUID(_event.PlayerUUID, false);
+    }
+
+    private void UpdateVisibility() {
+        isEnabled = !isEnabled;
+        if (isEnabled) {
             Enable();
         } else {
             Disable();
@@ -61,44 +84,47 @@ public class SpectatorModeManager : MonoBehaviour {
         });
     }
 
-    void Start() {
-        NetworkReferenceManager.Instance.MessageHandler.OnApplySpectatorModeRequest += MessageHandler_OnApplySpectatorModeRequest;
-    }
-
-    void Awake() {
-        enable = false;
-    }
-
-    // Main change handler: invoke when the monster made someone lose. Invoke with true if the message should be propagated. The only player that should invoke this function is the one attached to the monster, all of the other player will manage spectator mode upon receiving the appropriate message (that automatically won't propagate)
-    public void ChangeSpectatorModeByPlayerUUID(string _playerUUID, bool _sendToOtherPeer) {
+    /// <summary>
+    /// Main change handler: invoke when the monster made someone lose. Invoke with true if the message should be propagated. The only player that should invoke this function is the one attached to the monster, all of the other player will manage spectator mode upon receiving the appropriate message (that automatically won't propagate)
+    /// </summary>
+    public void ChangeSpectatorModeByPlayerUUID(string _playerUUID, bool _sendToOtherPeers) {
         // Ubiq does not guarantee the uuid will not change after connection/disconnection/room change, therefore, it is necessary to obtain it each time
         string playerUUID = NetworkReferenceManager.Instance.RoomClient.Me.uuid;
 
-        //The event is invoked both when another peer lost or another peer lost. However, locally the spectator mode should be activated only if this local peer lost
+        // Update visibility for local player (XR rig) if he lost
         if (_playerUUID == playerUUID) {
             // Disable the oob collision detection
             blockPlayerVision.enabled = !blockPlayerVision.enabled;
             // Update visibility
-            updateVisibility();
+            UpdateVisibility();
         }
 
-        // Activate spectator mode for another peer (this will also invoked the RSOD if the local peer lost)
-        OnSpectatorModeChange?.Invoke(this, new OnSpectatorModeChangeEventArgs {
+        // Activate spectator mode for another peer (this will also invoke the RSOD if the local peer lost)
+        OnSpectatorModeChanged?.Invoke(this, new OnSpectatorModeChangeEventArgs {
             PlayerUUID = _playerUUID
         });
 
-        if (_sendToOtherPeer) {
+        if (_sendToOtherPeers) {
             NetworkReferenceManager.Instance.MessageHandler.SendActivateSpectatorModeMessage(_playerUUID);
+        }
+
+        deadPlayersCounter++;
+
+        int playersCount = NetworkReferenceManager.Instance.RoomClient.Peers.Count() + 1;
+        if (
+            (maxDeadPlayersCount == -1 && deadPlayersCounter == playersCount) ||
+            (maxDeadPlayersCount != -1 && deadPlayersCounter > maxDeadPlayersCount)
+        ) {
+            // GameOver if too many players died
+            if (isEnabled) {
+                GameOver.Instance.Loser();
+            } else {
+                GameOver.Instance.Winner();
+            }
         }
     }
 
-    // Invoked when the local peer receives a message that requires the spectator mode of someone to be activated
-    void MessageHandler_OnApplySpectatorModeRequest(object _sender,
-    MessageHandler.OnApplySpectatorModeRequestEventArgs _args) {
-        ChangeSpectatorModeByPlayerUUID(_args.PlayerUUID, false);
-    }
-
     void OnDestroy() {
-        NetworkReferenceManager.Instance.MessageHandler.OnApplySpectatorModeRequest -= MessageHandler_OnApplySpectatorModeRequest;
+        NetworkReferenceManager.Instance.MessageHandler.OnApplySpectatorModeRequested -= MessageHandler_OnApplySpectatorModeRequest;
     }
 }

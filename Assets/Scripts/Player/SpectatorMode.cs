@@ -2,17 +2,13 @@ using System.Collections;
 using UnityEngine;
 
 public class SpectatorMode : MonoBehaviour {
-
     private bool enable;
-
     private string playerUUID;
-
     private AudioSource lostAudioSource;
-
     private TorsoIdentifier torso;
 
     void Start() {
-        NetworkReferenceManager.Instance.SpectatorModeManager.OnSpectatorModeChange += SpectatorModeManager_OnSpectatorModeChange;
+        NetworkReferenceManager.Instance.SpectatorModeManager.OnSpectatorModeChanged += SpectatorModeManager_OnSpectatorModeChange;
         playerUUID = transform.parent.name;
         lostAudioSource = GetComponent<AudioSource>();
 
@@ -23,7 +19,7 @@ public class SpectatorMode : MonoBehaviour {
         torso = gameObject.transform.parent.gameObject.GetComponentInChildren<TorsoIdentifier>();
     }
 
-    void updateVisibility() {
+    private void UpdateVisibility() {
         enable = !enable;
         if (enable) {
             Enable();
@@ -50,12 +46,11 @@ public class SpectatorMode : MonoBehaviour {
         }
     }
 
-    private void SpectatorModeManager_OnSpectatorModeChange(object _sender,
-    SpectatorModeManager.OnSpectatorModeChangeEventArgs _args) {
-        //Case of an avatar being killed by the monster
-        //The coroutine allow for the sound to play when the Local Avatar is dead, otherwise it will stop since the avatar is deactivated
+    private void SpectatorModeManager_OnSpectatorModeChange(object _sender, SpectatorModeManager.OnSpectatorModeChangeEventArgs _event) {
+        // Case of an avatar being killed by the monster
+        // The coroutine allow for the sound to play when the Local Avatar is dead, otherwise it will stop since the avatar is deactivated
 
-        StartCoroutine(HandleSpectatorChange(_args.PlayerUUID));
+        StartCoroutine(HandleSpectatorChange(_event.PlayerUUID));
     }
 
     private IEnumerator HandleSpectatorChange(string receivedPlayerUUID) {
@@ -68,11 +63,11 @@ public class SpectatorMode : MonoBehaviour {
         }
 
         if (receivedPlayerUUID == playerUUID || (playerUUID == "Local Avatar" && receivedPlayerUUID == NetworkReferenceManager.Instance.RoomClient.Me.uuid)) {
-            updateVisibility();
+            UpdateVisibility();
         }
     }
 
     void OnDestroy() {
-        NetworkReferenceManager.Instance.SpectatorModeManager.OnSpectatorModeChange -= SpectatorModeManager_OnSpectatorModeChange;
+        NetworkReferenceManager.Instance.SpectatorModeManager.OnSpectatorModeChanged -= SpectatorModeManager_OnSpectatorModeChange;
     }
 }
