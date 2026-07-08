@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Gravity;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using System.Collections.Generic;
 
 public class SpectatorModeManager : MonoBehaviour {
     public event EventHandler<OnSpectatorModeChangeEventArgs> OnSpectatorModeChange;
@@ -11,12 +13,12 @@ public class SpectatorModeManager : MonoBehaviour {
     }
     [SerializeField]
     private XROrigin rig;
-
     [SerializeField]
     private BlockPlayerVision blockPlayerVision;
-
     [SerializeField]
     private CharacterController characterController;
+    [SerializeField]
+    private List<XRInteractionGroup> controllers;
     [SerializeField]
     private GravityProvider gravityProvider;
     [SerializeField, Range(0, 4)]
@@ -34,13 +36,16 @@ public class SpectatorModeManager : MonoBehaviour {
     }
 
     private void Enable() {
-        // TODO ask And what to do to avoid monster recognition
         Vector3 position = rig.transform.position;
         position.y = height;
         rig.transform.position = position;
 
         characterController.enabled = false; // Do not collide
         gravityProvider.enabled = false;
+
+        controllers.ForEach((controller) => {
+            controller.gameObject.SetActive(false);
+        });
     }
 
     private void Disable() {
@@ -50,6 +55,10 @@ public class SpectatorModeManager : MonoBehaviour {
 
         characterController.enabled = true;
         gravityProvider.enabled = true;
+
+        controllers.ForEach((controller) => {
+            controller.gameObject.SetActive(true);
+        });
     }
 
     void Start() {

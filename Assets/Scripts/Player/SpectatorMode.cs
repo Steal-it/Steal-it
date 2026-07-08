@@ -59,7 +59,9 @@ public class SpectatorMode : MonoBehaviour {
     }
 
     private IEnumerator HandleSpectatorChange(string receivedPlayerUUID) {
-        if (playerUUID == "Local Avatar") {
+        if (playerUUID == "Local Avatar" && !enable) {
+            //If a player lost play the lost sound. Since this function can be called both when spectator mode is to be activated (enable = false -> true) and deactivated (enable = true -> false), the sound has to play only when the spectator mode is being activated (enable = false -> true)
+
             lostAudioSource.Play();
 
             yield return new WaitUntil(() => !lostAudioSource.isPlaying);
