@@ -7,10 +7,12 @@ public class NetworkInteractable : MonoBehaviour {
     private XRBaseInteractable interactable;
     private NetworkMovement networkMovement;
 
-    public void Start() {
+    void Awake() {
         interactable = gameObject.GetComponent<XRBaseInteractable>();
         networkMovement = gameObject.GetComponent<NetworkMovement>();
+    }
 
+    public void Start() {
         if (interactable is XRGrabInteractable grabInteractable) { // it is a grab interactor
             interactable.selectEntered.AddListener(OnObjectGrabbed);
             interactable.selectExited.AddListener(OnObjectReleased);
@@ -21,19 +23,19 @@ public class NetworkInteractable : MonoBehaviour {
 
     }
 
-    void OnObjectHovered(HoverEnterEventArgs _args) {
+    private void OnObjectHovered(HoverEnterEventArgs _args) {
         networkMovement.SelectObject();
     }
 
-    void OnObjectReleased(HoverExitEventArgs _args) {
+    private void OnObjectReleased(HoverExitEventArgs _args) {
         networkMovement.DeselectObject();
     }
 
-    void OnObjectGrabbed(SelectEnterEventArgs _args) {
+    private void OnObjectGrabbed(SelectEnterEventArgs _args) {
         networkMovement.SelectObject();
     }
 
-    void OnObjectReleased(SelectExitEventArgs _args) {
+    private void OnObjectReleased(SelectExitEventArgs _args) {
         networkMovement.DeselectObject();
     }
 }

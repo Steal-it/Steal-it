@@ -49,7 +49,7 @@ public class Torch : CustomAction {
         battery.OnBatteryRanOut += Battery_OnBatteryRanOut;
 
         // Start discharging the battery
-        battery.Use();
+        // battery.Use();
         battery.BatteryInserted();
 
         // Turn on the light
@@ -59,21 +59,26 @@ public class Torch : CustomAction {
         // Disallow the socket of the battery to show the mesh of a new battery
         socketInteractor.showInteractableHoverMeshes = false;
         canUpgrade = false;
+
+        battery.GetComponent<NetworkMovement>().SelectObject(); // become owner and sender of the battery
     }
 
     private void RemoveBattery(SelectExitEventArgs _) {
         emitLight = false;
         ToggleLight();
 
-        battery.StopUse();
+        // battery.StopUse();
         battery.BatteryRemoved();
+
+        battery.GetComponent<NetworkMovement>().DeselectObject(); // remove ownership and sendership(??) of the battery
+
         battery = null;
 
         // Allow the socket of the battery to show the mesh of a new battery
         socketInteractor.showInteractableHoverMeshes = true;
     }
 
-    // UNUSED METHOD FOR SHAKE REMOVE   
+    // UNUSED METHOD FOR SHAKE   
     public void RemoveBattery(Vector3 dropoutVelocity) {
         if (battery == null) return;
 

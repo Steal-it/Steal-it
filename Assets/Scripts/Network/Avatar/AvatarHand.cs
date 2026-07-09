@@ -55,12 +55,12 @@ public class AvatarHand : LocalAvatar {
                 torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
             }
             playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);
-            // ChangeHandTorch(playerSettings.playerTorchHand);
-            FreeHand();
-            // NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.AddListener(SendSidePeer);
-            NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += UpdateHandsVisual;
+            // FreeHand();
+            ChangeHandTorch(playerSettings.playerTorchHand);
+            NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.AddListener(SendSidePeer);
+            // NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += UpdateHandsVisual;
         } else {
-            FreeHand();
+            // FreeHand();
             if (side == Side.Left) {
                 Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
                 torchAnimator.SetupTorch(leftTorchLight);
@@ -79,7 +79,8 @@ public class AvatarHand : LocalAvatar {
 
     private void UpdateHandsVisual(object _, LevelManager.OnGameLoadedEventArgs __) {
         ChangeHandTorch(playerSettings.playerTorchHand);
-        StartCoroutine(SendDelayedMessageCoroutine());
+        networkHandSide.SendSideParameters(playerSettings.playerTorchHand);
+        // StartCoroutine(SendDelayedMessageCoroutine());
     }
 
     private void SendSidePeer(IPeer _) {

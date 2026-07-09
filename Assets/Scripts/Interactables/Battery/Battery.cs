@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+
+[RequireComponent(typeof(NetworkObjectEnabler))]
 public class Battery : MonoBehaviour {
     public event EventHandler OnBatteryRanOut;
 
@@ -28,31 +30,47 @@ public class Battery : MonoBehaviour {
     private Rigidbody rb;
     private XRGrabInteractable grabInteractable;
     private bool canFloat = true;
-    private bool isInserted = true;
+    private bool isInserted = false;
+    private NetworkObjectEnabler networkObjectEnabler;
 
     private Coroutine useCoroutine;
 
     void Awake() {
         TryGetComponent(out rb);
         TryGetComponent(out grabInteractable);
+        TryGetComponent(out networkObjectEnabler);
     }
 
     void Start() {
         grabInteractable.selectEntered.AddListener(DisableFloat);
         grabInteractable.selectExited.AddListener(EnableFloat);
+        networkObjectEnabler.OnMessageReceived += UsgeBatteryRecived;
     }
 
+    private void UsgeBatteryRecived(bool _isActive) {
+        ToggleBatteryUsage(_isActive);
+    }
+
+    private void ToggleBatteryUsage(bool _use) {
+        if (_use) {
+            useCoroutine = StartCoroutine(UseCO());
+            visuals.ChangeLightRange(lightRangeWhenInserted);
+        } else {
+            visuals.ChangeLightRange(null);
+            if (useCoroutine != null) {
+                StopCoroutine(useCoroutine);
+            }
+        }
+    }
 
     public void Use() {
-        useCoroutine = StartCoroutine(UseCO());
-        visuals.ChangeLightRange(lightRangeWhenInserted);
+        ToggleBatteryUsage(true);
+        networkObjectEnabler.SendEnableParameters(true);
     }
 
     public void StopUse() {
-        visuals.ChangeLightRange(null);
-        if (useCoroutine != null) {
-            StopCoroutine(useCoroutine);
-        }
+        ToggleBatteryUsage(false);
+        networkObjectEnabler.SendEnableParameters(false);
     }
 
     void FixedUpdate() {
@@ -101,11 +119,13 @@ public class Battery : MonoBehaviour {
     public void BatteryInserted() {
         rb.useGravity = false;
         isInserted = true;
+        Use();
     }
 
     public void BatteryRemoved() {
         rb.useGravity = true;
         isInserted = false;
+        StopUse();
     }
 
     public void Drop(Vector3 _velocity) {

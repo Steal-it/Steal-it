@@ -4021,10 +4021,6 @@ PrefabInstance:
       propertyPath: m_FarAttachMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4144576257554562322, guid: 48a97144d953e4d4884433058aab9be0, type: 3}
-      propertyPath: m_Colliders.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7560925777712958583, guid: 48a97144d953e4d4884433058aab9be0, type: 3}
       propertyPath: above
       value: 0.3
