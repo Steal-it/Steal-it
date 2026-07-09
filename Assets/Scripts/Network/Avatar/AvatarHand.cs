@@ -55,12 +55,12 @@ public class AvatarHand : LocalAvatar {
                 torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
             }
             playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);
-            // FreeHand();
-            ChangeHandTorch(playerSettings.playerTorchHand);
-            NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.AddListener(SendSidePeer);
-            // NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += UpdateHandsVisual;
+            FreeHand();
+            // ChangeHandTorch(playerSettings.playerTorchHand);
+            // NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.AddListener(SendSidePeer);
+            NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += UpdateHandsVisual;
         } else {
-            // FreeHand();
+            FreeHand();
             if (side == Side.Left) {
                 Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
                 torchAnimator.SetupTorch(leftTorchLight);
@@ -83,17 +83,18 @@ public class AvatarHand : LocalAvatar {
         // StartCoroutine(SendDelayedMessageCoroutine());
     }
 
-    private void SendSidePeer(IPeer _) {
-        StartCoroutine(SendDelayedMessageCoroutine());
-    }
-    private IEnumerator SendDelayedMessageCoroutine() {
-        // Wait for the end of the frame or a couple of frames 
-        // to guarantee the joining client has run Awake/Start/Register
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForSeconds(0.1f);
+    // private void SendSidePeer(IPeer _) {
+    //     StartCoroutine(SendDelayedMessageCoroutine());
+    // }
 
-        networkHandSide.SendSideParameters(playerSettings.playerTorchHand);
-    }
+    // private IEnumerator SendDelayedMessageCoroutine() {
+    //     // Wait for the end of the frame or a couple of frames 
+    //     // to guarantee the joining client has run Awake/Start/Register
+    //     yield return new WaitForEndOfFrame();
+    //     yield return new WaitForSeconds(0.1f);
+
+    //     networkHandSide.SendSideParameters(playerSettings.playerTorchHand);
+    // }
 
     private void ChangeHandTorch(Side _side) {
         if (IsLocal) {
@@ -106,6 +107,6 @@ public class AvatarHand : LocalAvatar {
 
     void OnDestroy() {
         playerSettings.OnPlayerTorchChanged.Unregister(ChangeHandTorch);
-        NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.RemoveListener(SendSidePeer);
+        // NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.RemoveListener(SendSidePeer);
     }
 }
