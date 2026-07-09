@@ -44,7 +44,7 @@ Light:
   serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.9339623, g: 0.83589923, b: 0, a: 1}
-  m_Intensity: 50
+  m_Intensity: 80
   m_Range: 5.97
   m_SpotAngle: 10
   m_InnerSpotAngle: 10
@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 3229537954020281372}
   - component: {fileID: 2341703584659952000}
   - component: {fileID: 220254884047723097}
+  - component: {fileID: 4404629505503163663}
   m_Layer: 10
   m_Name: RightHand
   m_TagString: Untagged
@@ -207,6 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c7cf2eab0ac9de428b85f44c236d092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AvatarHand
+  avatar: {fileID: 0}
   playerSettings: {fileID: 11400000, guid: 9b522f323ae15ab4ca53102e529efb2c, type: 2}
   side: 1
 --- !u!114 &220254884047723097
@@ -225,6 +227,18 @@ MonoBehaviour:
   FreeHandAnimator: {fileID: 5463577511871268176}
   TorchAnimator: {fileID: 7363847314977762753}
   HeadAndHandsAvatar: {fileID: 0}
+--- !u!114 &4404629505503163663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4955177540980254969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1fe528878dded24088c450c0e7e77ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkHandSide
 --- !u!1001 &5297676191439584747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -284,6 +298,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1614640634933947183, guid: a85031156f259c84bbd0648aa4025bac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5463577511871268176}
+    - targetCorrespondingSourceObject: {fileID: 1614640634933947183, guid: a85031156f259c84bbd0648aa4025bac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9158058025460711852}
   m_SourcePrefab: {fileID: 100100000, guid: a85031156f259c84bbd0648aa4025bac, type: 3}
 --- !u!4 &6099751703787768958 stripped
 Transform:
@@ -307,9 +324,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf74cc6966204934bb5ae6435aa15196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FreeHandAnimator
+  avatar: {fileID: 0}
   animator: {fileID: 0}
   smoothingSpeed: 4
   pokeAnimationOffset: 0
+--- !u!114 &9158058025460711852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6912316757485737668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c1bed7c40d7224087700fe5f88b9d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkAnimation
 --- !u!1001 &9159598046838578048
 PrefabInstance:
   m_ObjectHideFlags: 0

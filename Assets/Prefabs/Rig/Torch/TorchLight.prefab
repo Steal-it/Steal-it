@@ -174,4 +174,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TorchLight
   lightEmitPointTransform: {fileID: 5085928542221236015}
   lightRadius: 25
-  maxLightDistance: 5.97
+  maxLightDistance: 7

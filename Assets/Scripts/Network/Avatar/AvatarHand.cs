@@ -15,6 +15,8 @@ public class AvatarHand : LocalAvatar {
     [SerializeField]
     private Side side;
 
+    private HandAnimatorController animatorController;
+
     private NetworkHandSide networkHandSide;
 
     private static TorchLight leftTorchLight;
@@ -28,8 +30,8 @@ public class AvatarHand : LocalAvatar {
     private void Start() {
         XROrigin origin = FindFirstObjectByType<XROrigin>();
         TorchAnimator torchAnimator = GetComponentInChildren<TorchAnimator>();
+        animatorController = GetComponent<HandAnimatorController>();
         if (IsLocal) {
-            HandAnimatorController animatorController = GetComponent<HandAnimatorController>();
 
             if (side == Side.Left) {
                 Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
@@ -53,9 +55,12 @@ public class AvatarHand : LocalAvatar {
                 torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
             }
             playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);
-            ChangeHandTorch(playerSettings.playerTorchHand);
-            NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.AddListener(SendSidePeer);
+            // ChangeHandTorch(playerSettings.playerTorchHand);
+            FreeHand();
+            // NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.AddListener(SendSidePeer);
+            NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += UpdateHandsVisual;
         } else {
+            FreeHand();
             if (side == Side.Left) {
                 Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
                 torchAnimator.SetupTorch(leftTorchLight);
@@ -65,6 +70,16 @@ public class AvatarHand : LocalAvatar {
             }
             networkHandSide.OnMessageReceived += ChangeHandTorch;
         }
+    }
+
+    private void FreeHand() {
+        animatorController.ToggleHandStateAnimation(true);
+        animatorController.UpdateGripHand(side, true);
+    }
+
+    private void UpdateHandsVisual(object _, LevelManager.OnGameLoadedEventArgs __) {
+        ChangeHandTorch(playerSettings.playerTorchHand);
+        StartCoroutine(SendDelayedMessageCoroutine());
     }
 
     private void SendSidePeer(IPeer _) {
@@ -84,8 +99,8 @@ public class AvatarHand : LocalAvatar {
             networkHandSide.SendSideParameters(_side);
         }
         bool amITheTorchHand = side == _side;
-        GetComponent<HandAnimatorController>().ToggleHandStateAnimation(!amITheTorchHand);
-        GetComponent<HandAnimatorController>().UpdateGripHand(side, !amITheTorchHand);
+        animatorController.ToggleHandStateAnimation(!amITheTorchHand);
+        animatorController.UpdateGripHand(side, !amITheTorchHand);
     }
 
     void OnDestroy() {
