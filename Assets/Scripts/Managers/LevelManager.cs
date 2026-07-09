@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Ubiq.Rooms;
 using Unity.XR.CoreUtils;
@@ -20,6 +19,8 @@ public class LevelManager : MonoBehaviour {
     private XROrigin rig;
     [SerializeField]
     private LocomotionMediator rigLocomotor;
+    [SerializeField]
+    private MapConfigurationManager mapConfigurationManager;
     [SerializeField]
     private Transform localLobbySpawnPoint;
     [SerializeField]
@@ -70,16 +71,10 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    private void LoadScreen(object _sender, MessageHandler.OnAllPeersReadyForChangeEventArgs _event) {
-        switch (_event.LevelName) {
-            // TODO: huh?
-            case "Level1":
-                LoadGame();
-                break;
-            default:
-                Debug.LogError("Attempt to switch to " + _event.LevelName + " but it does not exists");
-                return;
-        }
+    private void LoadScreen(object _sender, EventArgs _event) {
+        mapConfigurationManager.ApplyRandomConfiguration();
+
+        LoadGame();
 
         messageHandler.SendLoadLevelCompletedMessage();
     }
@@ -160,7 +155,11 @@ public class LevelManager : MonoBehaviour {
     }
 
     void OnDrawGizmosSelected() {
-        Gizmos.DrawWireSphere(roomLobbySpawnPointCenter.position, spawnPointRadius);
-        Gizmos.DrawWireSphere(gameSpawnPointCenter.position, spawnPointRadius);
+        if (roomLobbySpawnPointCenter != null) {
+            Gizmos.DrawWireSphere(roomLobbySpawnPointCenter.position, spawnPointRadius);
+        }
+        if (gameSpawnPointCenter != null) {
+            Gizmos.DrawWireSphere(gameSpawnPointCenter.position, spawnPointRadius);
+        }
     }
 }
