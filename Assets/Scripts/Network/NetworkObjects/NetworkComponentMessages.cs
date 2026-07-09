@@ -42,6 +42,15 @@ public class EnabledMessage {
 }
 
 [Serializable]
+public class HandSideMessage {
+    public Side side;
+
+    public HandSideMessage(Side _side) {
+        side = _side;
+    }
+}
+
+[Serializable]
 public class AudioMessage {
     public SerializableDictionary SFXDictionary;
 

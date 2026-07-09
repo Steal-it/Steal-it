@@ -10,7 +10,8 @@ public class MonsterAnimator : AnimatorNetworkExtension {
     private const string MURDER_PARAM = "murder";
     private const string WANDER_PARAM = "wander";
 
-    void Awake() {
+    protected override void Awake() {
+        base.Awake();
         Animator = animator;
         ParameterTypeDictionary = new Dictionary<string, IAnimationParameter>() {
             { CHASE_PARAM, new AnimationTriggerParameter() },

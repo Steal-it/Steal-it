@@ -9,8 +9,8 @@ public class NetworkMovement : NetworkComponent {
     [SerializeField]
     public Transform Transform;
 
-    private bool amIOwner;
-    private bool amISender;
+    public bool AmIOwner { get; private set; }
+    public bool AmISender { get; private set; }
 
     private XRBaseInteractable interactable;
 
@@ -18,7 +18,7 @@ public class NetworkMovement : NetworkComponent {
         RegisterContext(this);
 
         TryGetComponent(out interactable);
-        amIOwner = false;
+        AmIOwner = false;
 
         if (Transform == null) {
             Transform = gameObject.transform;
@@ -27,25 +27,25 @@ public class NetworkMovement : NetworkComponent {
 
     void FixedUpdate() {
         // Only if I am the sender I transmit the position
-        if (amISender) {
+        if (AmISender) {
             SendMovementMessage();
         }
     }
 
     public void SelectObject() {
-        amIOwner = true;
-        amISender = true;
+        AmIOwner = true;
+        AmISender = true;
         SendMovementMessage();
     }
 
     public void ReleaseObject() {
-        amIOwner = false;
+        AmIOwner = false;
         SendMovementMessage();
     }
 
     public void DeselectObject() {
-        amIOwner = false;
-        amISender = false;
+        AmIOwner = false;
+        AmISender = false;
         SendMovementMessage();
     }
 
@@ -58,7 +58,7 @@ public class NetworkMovement : NetworkComponent {
 
         MovementMessage message = new MovementMessage(
             Transforms.ToLocal(Transform, Context.Scene.transform),
-            amIOwner
+            AmIOwner
         );
 
         Context.SendJson(message);
@@ -75,9 +75,13 @@ public class NetworkMovement : NetworkComponent {
         Pose pose = Transforms.ToWorld(message.Pose, Context.Scene.transform);
         Transform.SetPositionAndRotation(pose.position, pose.rotation);
 
+        if (TryGetComponent(out Rigidbody rb)) { // disable gravity if rigidbody is present
+            rb.useGravity = !message.IsOwned;
+        }
+
         if (message.IsOwned) {
             // If object is taken by another, the current player is no longer the amISender
-            amISender = false;
+            AmISender = false;
         }
     }
 

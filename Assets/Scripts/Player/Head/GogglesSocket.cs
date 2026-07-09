@@ -5,9 +5,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class GogglesSocket : CustomAction {
-    [SerializeField]
-    private GameObject goggleVisual;
-
     private SeeThrough seeThrough;
     private XRSocketInteractor socketInteractor;
     private Goggles currentGoogles;

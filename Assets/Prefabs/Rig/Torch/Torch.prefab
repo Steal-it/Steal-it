@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 789744708745715033}
   - component: {fileID: 3682255504792762154}
   - component: {fileID: 2730187307731094353}
+  - component: {fileID: 5383602655285083932}
   m_Layer: 10
   m_Name: Torch
   m_TagString: Untagged
@@ -62,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de8a0fabfe82aa4baf6e06586dd7080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TorchAnimator
+  avatar: {fileID: 0}
   torchTransform: {fileID: 0}
   torchAttachPoint: {fileID: 0}
   pocketAttachPoint: {fileID: 0}
@@ -91,6 +93,18 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   duration: 1
+--- !u!114 &5383602655285083932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7584281403679133123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b5f6a6082c01841beb5e531b22a068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkObjectEnabler
 --- !u!1001 &2622814769296964923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -331,6 +345,10 @@ PrefabInstance:
     - target: {fileID: 2692647228281862142, guid: 2281e2e6c60f3e1458b3bf3c68a0be98, type: 3}
       propertyPath: m_Name
       value: ShakeDetector
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692647228281862142, guid: 2281e2e6c60f3e1458b3bf3c68a0be98, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5648700233965942423, guid: 2281e2e6c60f3e1458b3bf3c68a0be98, type: 3}
       propertyPath: m_LocalScale.x

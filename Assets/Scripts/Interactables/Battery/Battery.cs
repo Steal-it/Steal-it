@@ -3,16 +3,21 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+
+[RequireComponent(typeof(NetworkObjectEnabler))]
 public class Battery : MonoBehaviour {
     public event EventHandler OnBatteryRanOut;
 
     [SerializeField]
     private float dischargeTime = 120;
     [SerializeField]
+    private float lightRangeWhenInserted;
+    [SerializeField]
     private ParticleSystem runOutParticleSystem;
     [SerializeField]
     private BatteryVisuals visuals;
-    [SerializeField]
+    [Space(5f), Header("Spring/Float Settings")]
+    [Space(5f), SerializeField]
     private float spring;
     [SerializeField]
     private float damper;
@@ -25,30 +30,51 @@ public class Battery : MonoBehaviour {
     private Rigidbody rb;
     private XRGrabInteractable grabInteractable;
     private bool canFloat = true;
+    private bool isInserted = false;
+    private NetworkObjectEnabler networkObjectEnabler;
 
     private Coroutine useCoroutine;
 
     void Awake() {
         TryGetComponent(out rb);
         TryGetComponent(out grabInteractable);
+        TryGetComponent(out networkObjectEnabler);
     }
 
     void Start() {
         grabInteractable.selectEntered.AddListener(DisableFloat);
+        grabInteractable.selectExited.AddListener(EnableFloat);
+        networkObjectEnabler.OnMessageReceived += UsgeBatteryRecived;
     }
 
-    public void Use() {
-        useCoroutine = StartCoroutine(UseCO());
+    private void UsgeBatteryRecived(bool _isActive) {
+        ToggleBatteryUsage(_isActive);
     }
 
-    public void StopUse() {
-        if (useCoroutine != null) {
-            StopCoroutine(useCoroutine);
+    private void ToggleBatteryUsage(bool _use) {
+        if (_use) {
+            useCoroutine = StartCoroutine(UseCO());
+            visuals.ChangeLightRange(lightRangeWhenInserted);
+        } else {
+            visuals.ChangeLightRange(null);
+            if (useCoroutine != null) {
+                StopCoroutine(useCoroutine);
+            }
         }
     }
 
+    public void Use() {
+        ToggleBatteryUsage(true);
+        networkObjectEnabler.SendEnableParameters(true);
+    }
+
+    public void StopUse() {
+        ToggleBatteryUsage(false);
+        networkObjectEnabler.SendEnableParameters(false);
+    }
+
     void FixedUpdate() {
-        if (!canFloat) return;
+        if (!canFloat || isInserted) return;
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, restDistance, hitMask)) {
             float springForce = spring * (restDistance - hit.distance);
             float dampingfactor = damper * rb.linearVelocity.y;
@@ -86,9 +112,24 @@ public class Battery : MonoBehaviour {
         canFloat = false;
     }
 
+    private void EnableFloat(SelectExitEventArgs _) {
+        canFloat = true;
+    }
+
+    public void BatteryInserted() {
+        rb.useGravity = false;
+        isInserted = true;
+        Use();
+    }
+
+    public void BatteryRemoved() {
+        rb.useGravity = true;
+        isInserted = false;
+        StopUse();
+    }
+
     public void Drop(Vector3 _velocity) {
         StopUse();
-        rb.useGravity = true;
         canFloat = true;
         rb.AddForce(_velocity.normalized, ForceMode.Impulse);
     }

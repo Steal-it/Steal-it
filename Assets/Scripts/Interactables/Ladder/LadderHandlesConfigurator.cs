@@ -24,24 +24,13 @@ public class LadderHandlesConfigurator : MonoBehaviour {
     private XRInteractableAffordanceStateProvider affordanceProvider;
 #pragma warning restore CS0618 // Type or member is obsolete
 
-    private int previousHandleCount;
-    private float previousPadding;
-
-    private void OnValidate() {
-
-        if (Application.isPlaying) return;
-
+    [ContextMenu("Generate Handles")]
+    public void GenerateHandlesButton() {
         if (handlePrefab == null || ladder == null || handleCount < 1) return;
 
 #if UNITY_EDITOR
-        if (previousHandleCount != handleCount || previousPadding != padding) {
-            EditorApplication.delayCall -= () => DisplaceHandles();
-            EditorApplication.delayCall += () => DisplaceHandles();
-        }
+        DisplaceHandles();
 #endif
-
-        previousHandleCount = handleCount;
-        previousPadding = padding;
     }
 
 #if UNITY_EDITOR
@@ -67,6 +56,8 @@ public class LadderHandlesConfigurator : MonoBehaviour {
                 instance.transform.position = pos;
             }
         }
+        Undo.RegisterCreatedObjectUndo(gameObject, "Genera Maniglie");
+        EditorUtility.SetDirty(gameObject);
     }
 #endif
 

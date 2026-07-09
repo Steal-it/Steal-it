@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 
-public class FreeHandAnimator : MonoBehaviour {
+[RequireComponent(typeof(NetworkAnimation))]
+public class FreeHandAnimator : AnimatorNetworkExtension {
     [SerializeField]
     private Animator animator;
     [SerializeField]
@@ -10,6 +13,8 @@ public class FreeHandAnimator : MonoBehaviour {
     [SerializeField]
     private float pokeAnimationOffset;
 
+    private NetworkAnimation networkAnimation;
+
     public float TargetGrip { private get; set; }
     public float TargetPoke { private get; set; }
     private float currentGrip;
@@ -17,10 +22,38 @@ public class FreeHandAnimator : MonoBehaviour {
     private bool completeGrip;
     private bool torch = false;
 
-    private static readonly int gripProperty = Animator.StringToHash("Grabbing");
-    private static readonly int pokeProperty = Animator.StringToHash("Pokeing");
-    private static readonly int completedProperty = Animator.StringToHash("CompletedGrab");
-    private static readonly int torchProperty = Animator.StringToHash("InTorchPosition");
+    private const string GRIP = "Grabbing";
+    private const string POKE = "Pokeing";
+    private const string COMPLETED = "CompletedGrab";
+    private const string TORCH = "InTorchPosition";
+
+    protected override void Awake() {
+        base.Awake();
+        Animator = animator;
+        ParameterTypeDictionary = new Dictionary<string, IAnimationParameter>() {
+            { GRIP, new AnimationFloatParameter() },
+            { POKE, new AnimationFloatParameter() },
+            { COMPLETED, new AnimationBoolParameter() },
+            { TORCH, new AnimationBoolParameter() },
+        };
+        TryGetComponent(out networkAnimation);
+    }
+
+    void Start() {
+        if (IsLocal) {
+            OnAnimationChanged += SendAnimation;
+        } else {
+            networkAnimation.OnMessageReceived += ReciveAnimation;
+        }
+    }
+
+    private void SendAnimation(object sender, OnAnimationChangedEventArgs _event) {
+        networkAnimation.SendAnimationParameters(_event.ParameterDictionary);
+    }
+
+    private void ReciveAnimation(object sender, NetworkAnimation.OnMessageReceivedEventArgs _event) {
+        SetParameterDictionary(_event.ParameterDictionary);
+    }
 
     private void Update() {
         if (torch) return;
@@ -31,25 +64,33 @@ public class FreeHandAnimator : MonoBehaviour {
 
             if (currentGrip == 1) {
                 completeGrip = true;
-                animator.SetBool(completedProperty, completeGrip);
+                animator.SetBool(COMPLETED, completeGrip);
             }
             if (completeGrip && currentGrip < 0.9f) {
                 completeGrip = false;
-                animator.SetBool(completedProperty, completeGrip);
+                animator.SetBool(COMPLETED, completeGrip);
             }
-            animator.SetFloat(gripProperty, currentGrip);
+            animator.SetFloat(GRIP, currentGrip);
 
         }
         if (!Mathf.Approximately(currentPoke, TargetPoke)) {
-            var delta = smoothingSpeed * Time.deltaTime;
-            currentPoke = Mathf.MoveTowards(currentPoke, TargetPoke, delta);
-            animator.SetFloat(pokeProperty, currentPoke);
+            if (IsLocal) {
+                var delta = smoothingSpeed * Time.deltaTime;
+                currentPoke = Mathf.MoveTowards(currentPoke, TargetPoke, delta);
+                animator.SetFloat(POKE, currentPoke);
+                NotifyParameterSet(POKE, currentPoke.ToString());
+            }
         }
     }
 
+
     public void ToggleTorchPosition(bool _value) {
-        animator.SetBool(torchProperty, _value);
+        animator.SetBool(TORCH, _value);
         torch = _value;
+    }
+
+    void OnDestroy() {
+        networkAnimation.OnMessageReceived -= ReciveAnimation;
     }
 
 }

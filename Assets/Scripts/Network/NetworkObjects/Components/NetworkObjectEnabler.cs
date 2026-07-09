@@ -1,13 +1,11 @@
 using System;
 using Ubiq.Messaging;
-using UnityEngine;
 
-public class NetworkObjectEnabler : MonoBehaviour {
+public class NetworkObjectEnabler : NetworkComponent {
     public event Action<bool> OnMessageReceived;
-    private NetworkContext context;
 
     void Awake() {
-        context = NetworkScene.Register(this);
+        RegisterContext(this);
     }
 
     public void SendEnableParameters(bool _isActive) {
@@ -15,10 +13,10 @@ public class NetworkObjectEnabler : MonoBehaviour {
             _isActive
         );
 
-        context.SendJson(message);
+        Context.SendJson(message);
     }
 
-    public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
+    public override void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
         EnabledMessage message = _message.FromJson<EnabledMessage>();
 
         OnMessageReceived?.Invoke(message.isActive);

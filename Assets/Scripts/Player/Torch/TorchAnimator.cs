@@ -2,7 +2,9 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 
-public class TorchAnimator : MonoBehaviour {
+
+[RequireComponent(typeof(NetworkObjectEnabler))]
+public class TorchAnimator : LocalAvatar {
     [SerializeField]
     private Transform torchTransform;
     [SerializeField]
@@ -18,7 +20,12 @@ public class TorchAnimator : MonoBehaviour {
     private bool active;
 
     private Tween moveTween;
+    private NetworkObjectEnabler networkObjectEnabler;
 
+    protected override void Awake() {
+        base.Awake();
+        TryGetComponent(out networkObjectEnabler);
+    }
 
     void Start() {
         if (!torchTransform) {
@@ -26,6 +33,13 @@ public class TorchAnimator : MonoBehaviour {
         }
 
         torchTransform.SetPositionAndRotation(torchAttachPoint.position, torchAttachPoint.rotation);
+
+        if (!IsLocal) {
+            networkObjectEnabler.OnMessageReceived += (_active) => {
+                torchLight.enabled = _active;
+                active = _active;
+            };
+        }
     }
 
     public void ToggleTorchVisible(bool _value) {
@@ -50,6 +64,7 @@ public class TorchAnimator : MonoBehaviour {
     public void ToggleLightVisual(object sender, Torch.OnTorchTurnedEventArgs _eventArgs) {
         torchLight.enabled = _eventArgs.isTurnedOn;
         active = _eventArgs.isTurnedOn;
+        networkObjectEnabler.SendEnableParameters(torchLight.enabled);
     }
 
     private void InPocket(bool _isInPocket) {

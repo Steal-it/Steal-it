@@ -5,10 +5,12 @@ public class HandAnimatorController : MonoBehaviour {
 
     [SerializeField]
     private float pokeAnimationOffset;
-
-    public FreeHandAnimator FreeHandAnimator { private get; set; }
-    public TorchAnimator TorchAnimator { private get; set; }
-    public HeadAndHandsAvatar HeadAndHandsAvatar { private get; set; }
+    [SerializeField]
+    private FreeHandAnimator FreeHandAnimator;
+    [SerializeField]
+    private TorchAnimator TorchAnimator;
+    [SerializeField]
+    private HeadAndHandsAvatar HeadAndHandsAvatar;
 
     public void ToggleHandStateAnimation(bool _freeHand) {
         FreeHandAnimator.ToggleTorchPosition(!_freeHand); // position only on torchhand

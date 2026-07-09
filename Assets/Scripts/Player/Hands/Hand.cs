@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Hand : MonoBehaviour {
@@ -5,31 +6,23 @@ public class Hand : MonoBehaviour {
     private PlayerSettingsSO playerSettings;
     [SerializeField]
     private Side side;
-
     private HandCollisionController handCollisionController;
     private HandInteractionController handInteractionController;
-    private HandAnimatorController handAnimatorController;
 
     void Awake() {
         TryGetComponent(out handCollisionController);
         TryGetComponent(out handInteractionController);
-        TryGetComponent(out handAnimatorController); ;
     }
 
     void Start() {
-
         handCollisionController.OnLadder += (_onLadder) => {
             handInteractionController.ToggleInteractions(_onLadder);
-            handAnimatorController.ToggleHandStateAnimation(_onLadder);
-            handAnimatorController.UpdateGripHand(side, _onLadder);
         };
 
-        handCollisionController.OnPoke += handAnimatorController.CalculatePoke;
 
         handCollisionController.OnCustomAction += handInteractionController.TorchInputAction.ChangeCurrentAction;
 
         playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);
-
         ChangeHandTorch(playerSettings.playerTorchHand);
     }
 
@@ -42,9 +35,6 @@ public class Hand : MonoBehaviour {
         handCollisionController.SetHandlerEnabled(handCollisionController.PokeHandler, !amITheTorchHand); // toggle the collider for poke on the free hand
         handCollisionController.SetHandlerEnabled(handCollisionController.CustomActionHandler, !amITheTorchHand); // toggle the collider for goggle on the free hand
         handCollisionController.RecalculateCollisions();
-
-        handAnimatorController.ToggleHandStateAnimation(!amITheTorchHand);
-        handAnimatorController.UpdateGripHand(side, !amITheTorchHand);
     }
 
     void OnDestroy() {
