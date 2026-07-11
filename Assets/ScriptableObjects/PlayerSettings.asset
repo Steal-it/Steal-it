@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00fc2081c329e6e41b46280cc8aafdbd, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSettings
-  playerTorchHand: 1
+  playerTorchHand: 0
