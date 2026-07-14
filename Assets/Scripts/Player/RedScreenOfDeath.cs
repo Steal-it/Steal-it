@@ -5,18 +5,20 @@ public class RedScreenOfDeath : MonoBehaviour {
     private float uiDistance;
 
     private bool enable;
-    private GameObject canvas;
+    private Canvas canvas;
 
     void Start() {
-        enable = false;
-        canvas = transform.GetChild(0).gameObject;
-        canvas.TryGetComponent<Canvas>(out var localCanvas);
-
-        localCanvas.planeDistance = uiDistance;
-
         NetworkReferenceManager.Instance.SpectatorModeManager.OnSpectatorModeChanged += SpectatorModeManager_OnSpectatorModeChange;
 
-        canvas.SetActive(false);
+        if (transform.GetChild(0).TryGetComponent(out canvas)) {
+            if (Camera.main == null) {
+                Debug.LogWarning("Main camera not found");
+            }
+
+            canvas.worldCamera = Camera.main;
+            canvas.planeDistance = uiDistance;
+            canvas.gameObject.SetActive(false);
+        }
     }
 
     private void SpectatorModeManager_OnSpectatorModeChange(object _sender, SpectatorModeManager.OnSpectatorModeChangeEventArgs _event) {
@@ -26,7 +28,7 @@ public class RedScreenOfDeath : MonoBehaviour {
         //The event is invoked both when another peer lost or another peer lost. However, the screen should be activated only if this local peer lost
         if (_event.PlayerUUID == playerUUID) {
             enable = !enable;
-            canvas.SetActive(enable);
+            canvas.gameObject.SetActive(enable);
         }
     }
 

@@ -768,6 +768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOver
   gameOverUI: {fileID: 8580607898484523996}
+  uiDistance: 0.4
 --- !u!1001 &1587058831798238571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -970,6 +971,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7723423145559604819, guid: c5d536c2f9f8bf9cebf7211b4ec0415d, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8241868511703362309, guid: c5d536c2f9f8bf9cebf7211b4ec0415d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8241868511703362309, guid: c5d536c2f9f8bf9cebf7211b4ec0415d, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8766172306705623252, guid: c5d536c2f9f8bf9cebf7211b4ec0415d, type: 3}
