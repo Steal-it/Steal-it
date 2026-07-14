@@ -8,7 +8,7 @@ public class NetworkAnimation : NetworkComponent {
         public SerializableDictionary ParameterDictionary;
     }
 
-    void Awake() {
+    void Start() {
         RegisterContext(this);
     }
 

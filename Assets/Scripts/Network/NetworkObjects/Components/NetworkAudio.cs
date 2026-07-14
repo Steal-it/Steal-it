@@ -8,7 +8,7 @@ public class NetworkAudio : NetworkComponent {
         public SerializableDictionary SFXDictionary;
     }
 
-    void Awake() {
+    void Start() {
         RegisterContext(this);
     }
 

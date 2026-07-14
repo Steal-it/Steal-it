@@ -8,7 +8,7 @@ public class NetworkParticles : NetworkComponent {
         public SerializableDictionary VFXDictionary;
     }
 
-    void Awake() {
+    void Start() {
         RegisterContext(this);
     }
 

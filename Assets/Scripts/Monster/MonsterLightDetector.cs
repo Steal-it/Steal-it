@@ -11,7 +11,7 @@ public class MonsterLightDetector : NetworkComponent {
     private float lightExposureTimer;
     private int lightExposureCounter;
 
-    void Awake() {
+    void Start() {
         RegisterContext(this);
 
         levelManager = NetworkReferenceManager.Instance.LevelManager;

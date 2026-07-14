@@ -4,7 +4,7 @@ using Ubiq.Messaging;
 public class NetworkObjectEnabler : NetworkComponent {
     public event Action<bool> OnMessageReceived;
 
-    void Awake() {
+    void Start() {
         RegisterContext(this);
     }
 

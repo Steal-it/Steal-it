@@ -4,7 +4,7 @@ using Ubiq.Messaging;
 public class NetworkHandSide : NetworkComponent {
     public event Action<Side> OnMessageReceived;
 
-    void Awake() {
+    void Start() {
         RegisterContext(this);
     }
 
