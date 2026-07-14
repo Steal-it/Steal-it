@@ -8,5 +8,4 @@ public class LocalAvatar : MonoBehaviour {
     protected virtual void Awake() {
         avatar = transform.root.GetComponent<Avatar>();
     }
-
 }

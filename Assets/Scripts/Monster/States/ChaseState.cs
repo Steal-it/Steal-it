@@ -32,6 +32,7 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
 
         if (player == null) return;
 
+        // TODO: player might not be reachable because out of navmesh surface
         monsterAgent.destination = player.position;
         // Increase speed over time when chasing the player
         float newSpeed = monsterAgent.speed + Time.deltaTime / monsterStateManager.ChasingAcceleration;

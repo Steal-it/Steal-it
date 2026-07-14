@@ -14,7 +14,11 @@ public class MessageHandler : MonoBehaviour {
     public class OnApplySpectatorModeRequestEventArgs : EventArgs {
         public string PlayerUUID;
     }
-    public event EventHandler OnPlayerExited;
+    public event EventHandler<OnPlayerExitedOrNotExitedEventArgs> OnPlayerExited;
+    public event EventHandler<OnPlayerExitedOrNotExitedEventArgs> OnPlayerNotExited;
+    public class OnPlayerExitedOrNotExitedEventArgs : EventArgs {
+        public string PlayerUUID;
+    }
 
     private RoomClient roomClient;
     private NetworkContext context;
@@ -132,13 +136,23 @@ public class MessageHandler : MonoBehaviour {
         }
     }
 
-    public async void SendPlayerExited() {
+    public async void SendPlayerExited(string _playerUUID) {
         if (context.Scene != null) {
-            context.SendJson(new PlayerExited());
+            context.SendJson(new PlayerExited(_playerUUID));
         } else {
             Debug.LogWarning("Network context is not available, retry send in one second");
             await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
-            SendPlayerExited();
+            SendPlayerExited(_playerUUID);
+        }
+    }
+
+    public async void SendPlayerNotExited(string _playerUUID) {
+        if (context.Scene != null) {
+            context.SendJson(new PlayerNotExited(_playerUUID));
+        } else {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendPlayerNotExited(_playerUUID);
         }
     }
 
@@ -188,14 +202,25 @@ public class MessageHandler : MonoBehaviour {
             case ActivateSpectatorModeMessage.TYPE: {
                     ActivateSpectatorModeMessage msg = _message.FromJson<ActivateSpectatorModeMessage>();
                     OnApplySpectatorModeRequested?.Invoke(this, new OnApplySpectatorModeRequestEventArgs {
-                        PlayerUUID = msg.playerUUID
+                        PlayerUUID = msg.PlayerUUID
                     });
-                    Debug.Log($"Received {ActivateSpectatorModeMessage.TYPE}: {msg.playerUUID}");
+                    Debug.Log($"Received {ActivateSpectatorModeMessage.TYPE}: {msg.PlayerUUID}");
                 }
                 break;
             case PlayerExited.TYPE: {
-                    OnPlayerExited?.Invoke(this, EventArgs.Empty);
+                    PlayerExited msg = _message.FromJson<PlayerExited>();
+                    OnPlayerExited?.Invoke(this, new OnPlayerExitedOrNotExitedEventArgs {
+                        PlayerUUID = msg.PlayerUUID
+                    });
                     Debug.Log($"Received {PlayerExited.TYPE}");
+                }
+                break;
+            case PlayerNotExited.TYPE: {
+                    PlayerNotExited msg = _message.FromJson<PlayerNotExited>();
+                    OnPlayerNotExited?.Invoke(this, new OnPlayerExitedOrNotExitedEventArgs {
+                        PlayerUUID = msg.PlayerUUID
+                    });
+                    Debug.Log($"Received {PlayerNotExited.TYPE}");
                 }
                 break;
             default:

@@ -566,7 +566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOverUI
   canvas: {fileID: 4970274865709861882}
   animator: {fileID: 4861436648518878660}
-  redScreenOfDeath: {fileID: 0}
+  redScreenOfDeath: {fileID: 6131494642028510083}
   winnerText: {fileID: 6545565655173574524}
   loserText: {fileID: 2349414907892893362}
   uiDistance: 0.4
@@ -1626,6 +1626,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a50d88b55b45648927679791f472de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6131494642028510083 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3280490240134071472, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}
+  m_PrefabInstance: {fileID: 8687960013777551155}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54643fc2415432543a587bb14faa2273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RedScreenOfDeath
 --- !u!114 &7646633505499371900 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1337456057917761103, guid: 798eabc1fa571cf46af2e95cf5ef31ab, type: 3}

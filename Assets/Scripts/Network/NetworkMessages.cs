@@ -70,10 +70,10 @@ public class StopMonsterLightExposure : BaseMessage {
 public class ActivateSpectatorModeMessage : BaseMessage {
     public const string TYPE = "ActivateSpectatorModeMessage";
 
-    public string playerUUID;
+    public string PlayerUUID;
 
     public ActivateSpectatorModeMessage(string _playerUUID) : base(TYPE) {
-        playerUUID = _playerUUID;
+        PlayerUUID = _playerUUID;
     }
 }
 
@@ -81,5 +81,20 @@ public class ActivateSpectatorModeMessage : BaseMessage {
 public class PlayerExited : BaseMessage {
     public const string TYPE = "PlayerExitedMessage";
 
-    public PlayerExited() : base(TYPE) { }
+    public string PlayerUUID;
+
+    public PlayerExited(string _playerUUID) : base(TYPE) {
+        PlayerUUID = _playerUUID;
+    }
+}
+
+[Serializable]
+public class PlayerNotExited : BaseMessage {
+    public const string TYPE = "PlayerNotExitedMessage";
+
+    public string PlayerUUID;
+
+    public PlayerNotExited(string _playerUUID) : base(TYPE) {
+        PlayerUUID = _playerUUID;
+    }
 }

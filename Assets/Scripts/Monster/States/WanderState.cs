@@ -19,7 +19,7 @@ public class WanderState : IMonsterState {
         monsterStateManager.ChaseNavMeshSurface.enabled = false;
         monsterAgent.speed = monsterStateManager.WanderAndStunnedSpeed;
         monsterAgent.autoBraking = true;
-        monsterAgent.destination = monsterAgent.transform.position;
+        SetRandomDestination();
         monsterStateManager.MonsterAnimator.SetWander();
         monsterStateManager.MonsterSFXManager.SetWander(true);
     }
@@ -28,8 +28,7 @@ public class WanderState : IMonsterState {
         if (isChangingState) return;
 
         if (Vector3.Distance(monsterAgent.destination, monsterAgent.transform.position) < monsterAgent.stoppingDistance) {
-            Vector3 randomDestination = monsterStateManager.MonsterRandomDestinationManager.GenerateRandomDestination();
-            monsterAgent.destination = randomDestination;
+            SetRandomDestination();
         }
 
         // Loop over all players (children of avatar manager)
@@ -50,6 +49,10 @@ public class WanderState : IMonsterState {
         }
     }
 
+    private void SetRandomDestination() {
+        Vector3 randomDestination = monsterStateManager.MonsterRandomDestinationManager.GenerateRandomDestination();
+        monsterAgent.destination = randomDestination;
+    }
 
     private bool IsInFOV(Vector3 _targetPosition) {
         Vector3 dirToTarget = _targetPosition - monsterAgent.transform.position;

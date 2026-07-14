@@ -134,7 +134,7 @@ public class LevelManager : MonoBehaviour {
             float otherAngle = (otherHash & 0x7FFFFFFF) % 360 * Mathf.Deg2Rad;
             Vector3 otherPosition = centerPoint.position + new Vector3(Mathf.Cos(otherAngle), 0, Mathf.Sin(otherAngle)) * spawnPointRadius;
 
-            if (Vector3.Distance(candidatePosition, otherPosition) < 0.5f) {
+            if (Vector3.Distance(candidatePosition, otherPosition) < 0.8f) {
                 // Nudge 45 degrees away
                 angle += 45 * Mathf.Deg2Rad;
             }

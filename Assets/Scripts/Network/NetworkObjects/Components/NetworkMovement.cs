@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class NetworkMovement : NetworkComponent {
-
     [SerializeField]
     public Transform Transform;
 
@@ -13,14 +12,14 @@ public class NetworkMovement : NetworkComponent {
 
     private XRBaseInteractable interactable;
 
-    void Awake() {
+    void Start() {
         RegisterContext(this);
 
         TryGetComponent(out interactable);
         AmIOwner = false;
 
         if (Transform == null) {
-            Transform = gameObject.transform;
+            Transform = transform;
         }
     }
 
@@ -49,9 +48,8 @@ public class NetworkMovement : NetworkComponent {
     }
 
     private void SendMovementMessage() {
-
         if (Transform == null) {
-            Debug.LogError("Error: cannot send transform info, transform is null");
+            Debug.LogWarning("Error: cannot send transform info, transform is null");
             return;
         }
 
