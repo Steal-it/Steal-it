@@ -35,6 +35,7 @@ public class LevelManager : MonoBehaviour {
     private LocalLobbyMenu localLobbyMenu;
     private RoomsListPanel roomsListPanel;
     private RoomLobbyMenu roomLobbyMenu;
+    private RoomLobby roomLobby;
     private bool isClientAsServer;
     private int minPlayersNumber = 2;
     private bool isMinPlayerNumberReached;
@@ -45,6 +46,7 @@ public class LevelManager : MonoBehaviour {
         localLobbyMenu = NetworkReferenceManager.Instance.LocalLobbyMenu;
         roomsListPanel = NetworkReferenceManager.Instance.RoomsListPanel;
         roomLobbyMenu = NetworkReferenceManager.Instance.RoomLobbyMenu;
+        roomLobby = NetworkReferenceManager.Instance.RoomLobby;
 
         roomClient.OnPeerAdded.AddListener(RoomClient_OnPeerAdded);
         roomClient.OnPeerRemoved.AddListener(RoomClient_OnPeerRemoved);
@@ -53,6 +55,7 @@ public class LevelManager : MonoBehaviour {
         localLobbyMenu.OnNewRoomCreated += MainMenu_OnNewRoomCreated;
         roomsListPanel.OnRoomJoined += RoomsListPanel_OnRoomJoined;
         roomLobbyMenu.OnRoomExited += RoomLobbyMenu_OnRoomExited;
+        roomLobby.OnRoomExited += RoomLobbyMenu_OnRoomExited;
 
         LoadLocalLobby();
     }
@@ -152,6 +155,7 @@ public class LevelManager : MonoBehaviour {
         localLobbyMenu.OnNewRoomCreated -= MainMenu_OnNewRoomCreated;
         roomsListPanel.OnRoomJoined -= RoomsListPanel_OnRoomJoined;
         roomLobbyMenu.OnRoomExited -= RoomLobbyMenu_OnRoomExited;
+        roomLobby.OnRoomExited -= RoomLobbyMenu_OnRoomExited;
     }
 
     void OnDrawGizmosSelected() {
