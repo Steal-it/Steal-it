@@ -1,4 +1,3 @@
-using SIPSorcery.Net;
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using UnityEngine;

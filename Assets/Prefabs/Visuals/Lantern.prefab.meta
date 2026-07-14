@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Visuals/Lantern.prefab.meta
 guid: 9b614ccc5367e3c469a3c7c455bb060e
+========
+guid: d508c7260bb6f1b4180a03e2cef19fbd
+>>>>>>>> open-map:Assets/Prefabs/Visuals/Left_Hand.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

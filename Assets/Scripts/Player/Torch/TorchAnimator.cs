@@ -57,8 +57,8 @@ public class TorchAnimator : LocalAvatar {
 
     public void SetupTorch(TorchLight _torchLight) {
         torchLight.range = _torchLight.MaxLightDistance;
-        torchLight.spotAngle = _torchLight.LightRadius;
-        torchLight.innerSpotAngle = _torchLight.LightRadius;
+        torchLight.spotAngle = _torchLight.LightAngle;
+        torchLight.innerSpotAngle = _torchLight.LightAngle;
     }
 
     public void ToggleLightVisual(object sender, Torch.OnTorchTurnedEventArgs _eventArgs) {

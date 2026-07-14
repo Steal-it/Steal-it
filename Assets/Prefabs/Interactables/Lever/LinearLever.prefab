@@ -486,6 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feadb23490e2b9e4792e916c407a914d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkMovement
+  Transform: {fileID: 0}
 --- !u!114 &4974127233995861679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,6 +941,10 @@ PrefabInstance:
     - target: {fileID: 3454426630491097271, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3454426630491097271, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8559399095067588744, guid: 5ec980d6168724a4fb37064dc656c426, type: 3}
       propertyPath: m_Renderer

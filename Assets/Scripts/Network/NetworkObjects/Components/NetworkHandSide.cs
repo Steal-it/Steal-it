@@ -1,16 +1,17 @@
 using System;
 using Ubiq.Messaging;
-using UnityEngine;
 
 public class NetworkHandSide : NetworkComponent {
     public event Action<Side> OnMessageReceived;
+
     void Awake() {
         RegisterContext(this);
     }
 
-    public void SendSideParameters(Side _side) {
+    public void SendSideParameters(Side _side, string _uuid) {
         HandSideMessage message = new HandSideMessage(
-            _side
+            _side,
+            _uuid
         );
 
         Context.SendJson(message);
@@ -18,7 +19,12 @@ public class NetworkHandSide : NetworkComponent {
 
     public override void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
         HandSideMessage message = _message.FromJson<HandSideMessage>();
-        OnMessageReceived?.Invoke(message.side);
+        string playerUUID = gameObject.transform.parent.parent.gameObject.name;
+        if (playerUUID != "Local Avatar") {
+            playerUUID = playerUUID.Split('#')[1];
+            if (playerUUID == message.uuid) {
+                OnMessageReceived?.Invoke(message.side);
+            }
+        }
     }
-
 }

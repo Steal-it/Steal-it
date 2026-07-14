@@ -80,6 +80,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5755357893630131388, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: m_StartingHoverFilters.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755357893630131388, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+      propertyPath: 'm_StartingHoverFilters.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7686772660730688839}
     - target: {fileID: 5828428092207229500, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
       propertyPath: m_Name
       value: Lock
@@ -137,6 +145,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93316ed72e9e0124f9d85aedfea30ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lock
+--- !u!114 &7686772660730688839 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3014828083320499035, guid: ee6e4360ee9de094d95cb1d43ed62e6c, type: 3}
+  m_PrefabInstance: {fileID: 4862257198400134684}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412029464968344608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23124b6a7cddfb4da40134c60de0c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocketSelectFilter
 --- !u!1001 &5484944153573560288
 PrefabInstance:
   m_ObjectHideFlags: 0

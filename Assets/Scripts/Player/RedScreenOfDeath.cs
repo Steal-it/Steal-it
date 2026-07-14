@@ -15,6 +15,8 @@ public class RedScreenOfDeath : MonoBehaviour {
         localCanvas.planeDistance = uiDistance;
 
         NetworkReferenceManager.Instance.SpectatorModeManager.OnSpectatorModeChanged += SpectatorModeManager_OnSpectatorModeChange;
+
+        canvas.SetActive(false);
     }
 
     private void SpectatorModeManager_OnSpectatorModeChange(object _sender, SpectatorModeManager.OnSpectatorModeChangeEventArgs _event) {

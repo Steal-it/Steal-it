@@ -4948,7 +4948,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2
   m_Range: 1.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5215,6 +5215,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 68615080635505177, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7560925777712958583}
+    - targetCorrespondingSourceObject: {fileID: 68615080635505177, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 62019894416718001}
     - targetCorrespondingSourceObject: {fileID: 3109453518150836662, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3291713240238181498}
@@ -5308,4 +5311,16 @@ MonoBehaviour:
   restDistance: 0.4
   hitMask:
     serializedVersion: 2
-    m_Bits: 131071
+    m_Bits: 131063
+--- !u!114 &62019894416718001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585545105387066892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b5f6a6082c01841beb5e531b22a068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkObjectEnabler

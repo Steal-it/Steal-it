@@ -96,7 +96,8 @@ public class MonsterStateManager : MonoBehaviour {
         stateDictionary.Add(StateKey.Murder, new MurderState());
         stateDictionary.Add(StateKey.Flashed, new FlashedState());
 
-        currentState = stateDictionary[StateKey.Wander];
+        currentStateKey = StateKey.Wander;
+        currentState = stateDictionary[currentStateKey];
         currentState.EnterState(this);
     }
 
@@ -109,8 +110,8 @@ public class MonsterStateManager : MonoBehaviour {
 
         currentState.ExitState();
 
-        currentState = stateDictionary[_stateKey];
         currentStateKey = _stateKey;
+        currentState = stateDictionary[_stateKey];
 
         currentState.EnterState(this);
     }

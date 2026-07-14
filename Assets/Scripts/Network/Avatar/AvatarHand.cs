@@ -32,7 +32,6 @@ public class AvatarHand : LocalAvatar {
         TorchAnimator torchAnimator = GetComponentInChildren<TorchAnimator>();
         animatorController = GetComponent<HandAnimatorController>();
         if (IsLocal) {
-
             if (side == Side.Left) {
                 Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
                 leftHand.GetComponentInChildren<HandCollisionController>().OnLadder += (_onLadder) => {
@@ -54,13 +53,8 @@ public class AvatarHand : LocalAvatar {
                 rightTorchLight = rightHand.GetComponentInChildren<TorchLight>();
                 torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
             }
-            playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);
-            FreeHand();
-            // ChangeHandTorch(playerSettings.playerTorchHand);
-            // NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.AddListener(SendSidePeer);
             NetworkReferenceManager.Instance.LevelManager.OnGameLoaded += UpdateHandsVisual;
         } else {
-            FreeHand();
             if (side == Side.Left) {
                 Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
                 torchAnimator.SetupTorch(leftTorchLight);
@@ -70,43 +64,19 @@ public class AvatarHand : LocalAvatar {
             }
             networkHandSide.OnMessageReceived += ChangeHandTorch;
         }
-    }
 
-    private void FreeHand() {
         animatorController.ToggleHandStateAnimation(true);
         animatorController.UpdateGripHand(side, true);
     }
 
     private void UpdateHandsVisual(object _, LevelManager.OnGameLoadedEventArgs __) {
         ChangeHandTorch(playerSettings.playerTorchHand);
-        networkHandSide.SendSideParameters(playerSettings.playerTorchHand);
-        // StartCoroutine(SendDelayedMessageCoroutine());
+        networkHandSide.SendSideParameters(playerSettings.playerTorchHand, NetworkReferenceManager.Instance.RoomClient.Me.uuid);
     }
 
-    // private void SendSidePeer(IPeer _) {
-    //     StartCoroutine(SendDelayedMessageCoroutine());
-    // }
-
-    // private IEnumerator SendDelayedMessageCoroutine() {
-    //     // Wait for the end of the frame or a couple of frames 
-    //     // to guarantee the joining client has run Awake/Start/Register
-    //     yield return new WaitForEndOfFrame();
-    //     yield return new WaitForSeconds(0.1f);
-
-    //     networkHandSide.SendSideParameters(playerSettings.playerTorchHand);
-    // }
-
     private void ChangeHandTorch(Side _side) {
-        if (IsLocal) {
-            networkHandSide.SendSideParameters(_side);
-        }
         bool amITheTorchHand = side == _side;
         animatorController.ToggleHandStateAnimation(!amITheTorchHand);
         animatorController.UpdateGripHand(side, !amITheTorchHand);
-    }
-
-    void OnDestroy() {
-        playerSettings.OnPlayerTorchChanged.Unregister(ChangeHandTorch);
-        // NetworkReferenceManager.Instance.RoomClient.OnPeerAdded.RemoveListener(SendSidePeer);
     }
 }

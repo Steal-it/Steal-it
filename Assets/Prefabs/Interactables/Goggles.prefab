@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 4962485073193384926}
     - target: {fileID: 5643644621821948167, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       propertyPath: m_InteractionLayers.m_Bits
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6264855903371201296, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       propertyPath: m_LocalRotation.w

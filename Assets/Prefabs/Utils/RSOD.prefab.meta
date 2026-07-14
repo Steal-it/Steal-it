@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 <<<<<<<< HEAD:Assets/Scenes/playtest/DemoWithHandChange.unity.meta
 guid: 7bfbc43e522211cdc8ee7af6cc20b7e5
-========
-guid: aab5e236b0e75259e8d2079a403c00df
-folderAsset: yes
->>>>>>>> dev:Assets/Scripts/Player/Preferences.meta
 DefaultImporter:
+========
+guid: da2ddb09970de3ce3ac283811f726912
+PrefabImporter:
+>>>>>>>> open-map:Assets/Prefabs/Utils/RSOD.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

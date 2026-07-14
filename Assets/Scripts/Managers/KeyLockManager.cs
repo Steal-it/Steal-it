@@ -1,12 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class KeyLockManager : MonoBehaviour {
     [SerializeField]
     private Unlockable unlockable;
     [SerializeField]
-    private Lock[] locks;
+    private Transform lockList;
+
+    private List<Lock> locks = new List<Lock>();
 
     void Start() {
+        foreach (Transform l in lockList) {
+            print(l);
+            locks.Add(l.GetComponent<Lock>());
+        }
+
         foreach (var l in locks) {
             l.OnUnlock += TryToUnlock;
         }

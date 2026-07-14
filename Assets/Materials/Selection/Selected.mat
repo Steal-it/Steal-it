@@ -7,7 +7,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<<< HEAD:Assets/Materials/Selection/Selected.mat
   m_Name: Selected
+========
+<<<<<<<< HEAD:Assets/Materials/SimpleMaterials/Key.mat
+  m_Name: Key
+========
+  m_Name: Deselected
+>>>>>>>> dev:Assets/Materials/Selection/Deselected.mat
+>>>>>>>> open-map:Assets/Materials/Selection/Deselected.mat
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -106,7 +114,11 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+<<<<<<<< HEAD:Assets/Materials/Selection/Selected.mat
     - _Smoothness: 0.5
+========
+    - _Smoothness: 0
+>>>>>>>> open-map:Assets/Materials/Selection/Deselected.mat
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -116,13 +128,31 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
+<<<<<<<< HEAD:Assets/Materials/Selection/Selected.mat
     - _BaseColor: {r: 0.28296506, g: 0.764151, b: 0.17661981, a: 1}
     - _Color: {r: 0.28296503, g: 0.764151, b: 0.17661977, a: 1}
+========
+<<<<<<<< HEAD:Assets/Materials/SimpleMaterials/Key.mat
+    - _BaseColor: {r: 1, g: 0.8992628, b: 0, a: 1}
+    - _Color: {r: 1, g: 0.8992628, b: 0, a: 1}
+========
+    - _BaseColor: {r: 0.9245283, g: 0.030526895, b: 0.030526895, a: 1}
+    - _Color: {r: 0.9245283, g: 0.030526895, b: 0.030526895, a: 1}
+>>>>>>>> dev:Assets/Materials/Selection/Deselected.mat
+>>>>>>>> open-map:Assets/Materials/Selection/Deselected.mat
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+<<<<<<<< HEAD:Assets/Materials/Selection/Selected.mat
 --- !u!114 &248704679305493734
+========
+<<<<<<<< HEAD:Assets/Materials/SimpleMaterials/Key.mat
+--- !u!114 &2317323872986620882
+========
+--- !u!114 &4843684889673844020
+>>>>>>>> dev:Assets/Materials/Selection/Deselected.mat
+>>>>>>>> open-map:Assets/Materials/Selection/Deselected.mat
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Scene/Map/NavMesh-Chase NavMesh Surface.asset.meta
+guid: 1044f3366670a974a9cc58c44b183fa1
+========
+guid: 71b311940b83b550ba07c28c10fc4bf8
+>>>>>>>> dev:Assets/Materials/Selection/Selected.mat.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 23800000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

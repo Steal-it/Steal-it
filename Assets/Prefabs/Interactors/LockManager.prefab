@@ -76,4 +76,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c516d2e5b109c48ae1612f7817a068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyLockManager
-  lockedInteractable: {fileID: 0}
+  unlockable: {fileID: 0}
+  lockList: {fileID: 6538005999812402348}

@@ -19,7 +19,7 @@ public class GameOver : MonoBehaviour {
     private IEnumerator WaitForQuit(bool _isWinner) {
         yield return new WaitForSeconds(gameOverUI.ActivatePanel(_isWinner));
 
-        Application.Quit();
+        // Application.Quit();
     }
 
     public void Winner() {

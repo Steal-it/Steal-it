@@ -41,4 +41,22 @@ public class MapConfiguration : MonoBehaviour {
         SetMonsterSpawnPoint(_monster);
         SetKeys(_keys);
     }
+
+    void OnDrawGizmosSelected() {
+        if (keys != null) {
+            foreach (Transform key in keys) {
+                Gizmos.DrawWireSphere(key.position, 1);
+            }
+        }
+
+        if (playersSpawnPoint != null) {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(playersSpawnPoint.position, 1);
+        }
+
+        if (monsterSpawnPoint != null) {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(monsterSpawnPoint.position, 1);
+        }
+    }
 }

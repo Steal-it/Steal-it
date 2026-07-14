@@ -18,10 +18,17 @@ public abstract class StunnedState : IMonsterState {
             // Look for a random destination no earlier than the minimum StunnedMinDistanceDestination
             Vector3 randomDestination;
             bool isFarEnough;
+            int remainingAttempts = 50;
             do {
                 randomDestination = MonsterStateManager.MonsterRandomDestinationManager.GenerateRandomDestination();
 
                 isFarEnough = Vector3.Distance(randomDestination, monsterAgent.transform.position) > MonsterStateManager.StunnedMinDistanceDestination;
+
+                remainingAttempts--;
+                if (remainingAttempts < 0) {
+                    Debug.LogWarning("No point too far from player found!");
+                    break;
+                }
             } while (!isFarEnough);
             monsterAgent.destination = randomDestination;
 

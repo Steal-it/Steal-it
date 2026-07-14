@@ -13,9 +13,7 @@ public class MonsterLightDetector : NetworkComponent {
 
     void Awake() {
         RegisterContext(this);
-    }
 
-    void Start() {
         levelManager = NetworkReferenceManager.Instance.LevelManager;
     }
 
@@ -23,10 +21,8 @@ public class MonsterLightDetector : NetworkComponent {
         // Allow only the client that acts as the server to run the logic
         if (!levelManager.IsClientAsServer) return;
 
-        if (
-            monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Murder ||
-            monsterStateManager.CurrentStateKey == MonsterStateManager.StateKey.Flashed
-        ) return;
+        // The monster can be flashed only when it chases a player
+        if (monsterStateManager.CurrentStateKey != MonsterStateManager.StateKey.Chase) return;
 
         // If at least one player is flashing the monster, start light exposure timer
         if (lightExposureCounter > 0) {

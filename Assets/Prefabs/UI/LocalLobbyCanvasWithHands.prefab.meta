@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/UI/LocalLobbyCanvasWithHands.prefab.meta
 guid: c5d536c2f9f8bf9cebf7211b4ec0415d
 PrefabImporter:
+========
+guid: 7bfbc43e522211cdc8ee7af6cc20b7e5
+DefaultImporter:
+>>>>>>>> dev:Assets/Scenes/playtest/DemoWithHandChange.unity.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

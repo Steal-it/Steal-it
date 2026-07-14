@@ -89,6 +89,8 @@ public abstract class Lever : MonoBehaviour, ICollisionListener {
     }
 
     public void OnTriggerEnterRec(Collider _other) {
+        if (!IsCollidingWithLevelTrigger(_other)) return;
+
         SetSpringPoint(ReferenceEquals(topTrigger, _other) ? topPosition : bottomPosition);
 
         if (eventsOnBoth) {
@@ -107,6 +109,8 @@ public abstract class Lever : MonoBehaviour, ICollisionListener {
     }
 
     public void OnTriggerExitRec(Collider _other) {
+        if (!IsCollidingWithLevelTrigger(_other)) return;
+
         if (leverActivationPoint == LeverActivationPoint.Both) {
             SetSpringPoint(0);
         } else {
@@ -126,6 +130,10 @@ public abstract class Lever : MonoBehaviour, ICollisionListener {
         } else {
             onLeverDeactivation?.Invoke();
         }
+    }
+
+    private bool IsCollidingWithLevelTrigger(Collider _other) {
+        return ReferenceEquals(topTrigger, _other) || ReferenceEquals(bottomTrigger, _other);
     }
 
     protected abstract void Init();

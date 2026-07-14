@@ -19,7 +19,6 @@ public class Hand : MonoBehaviour {
             handInteractionController.ToggleInteractions(_onLadder);
         };
 
-
         handCollisionController.OnCustomAction += handInteractionController.TorchInputAction.ChangeCurrentAction;
 
         playerSettings.OnPlayerTorchChanged.Register(ChangeHandTorch);

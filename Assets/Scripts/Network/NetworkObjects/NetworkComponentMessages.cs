@@ -44,9 +44,11 @@ public class EnabledMessage {
 [Serializable]
 public class HandSideMessage {
     public Side side;
+    public string uuid;
 
-    public HandSideMessage(Side _side) {
+    public HandSideMessage(Side _side, string _uuid) {
         side = _side;
+        uuid = _uuid;
     }
 }
 
