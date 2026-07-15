@@ -33,7 +33,7 @@ public class SpectatorMode : MonoBehaviour {
 
         //Disable the collider
         if (torso) {
-            var col = torso.GetComponent<Collider>();
+            Collider col = torso.GetComponent<Collider>();
             col.enabled = false;
         }
     }
@@ -41,12 +41,14 @@ public class SpectatorMode : MonoBehaviour {
     private void Disable() {
         gameObject.transform.parent.gameObject.SetActive(true);
         if (torso && playerUUID != "Local Avatar") {
-            var col = torso.GetComponent<Collider>();
+            Collider col = torso.GetComponent<Collider>();
             col.enabled = true;
         }
     }
 
     private void SpectatorModeManager_OnSpectatorModeChange(object _sender, SpectatorModeManager.OnSpectatorModeChangeEventArgs _event) {
+        if (enable) return;
+
         // Case of an avatar being killed by the monster
         // The coroutine allow for the sound to play when the Local Avatar is dead, otherwise it will stop since the avatar is deactivated
 

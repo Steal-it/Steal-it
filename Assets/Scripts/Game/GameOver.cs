@@ -6,6 +6,10 @@ public class GameOver : MonoBehaviour {
 
     [SerializeField]
     private GameOverUI gameOverUI;
+    [SerializeField]
+    private float uiDistance;
+
+    private Canvas canvas;
 
     void Awake() {
         if (Instance != null) {
@@ -16,10 +20,22 @@ public class GameOver : MonoBehaviour {
         Instance = this;
     }
 
+    void Start() {
+        if (transform.GetChild(0).TryGetComponent(out canvas)) {
+            if (Camera.main == null) {
+                Debug.LogWarning("Main camera not found");
+            }
+
+            canvas.worldCamera = Camera.main;
+            canvas.planeDistance = uiDistance;
+            canvas.gameObject.SetActive(false);
+        }
+    }
+
     private IEnumerator WaitForQuit(bool _isWinner) {
         yield return new WaitForSeconds(gameOverUI.ActivatePanel(_isWinner));
 
-        // Application.Quit();
+        Application.Quit();
     }
 
     public void Winner() {

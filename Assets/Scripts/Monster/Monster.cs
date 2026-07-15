@@ -65,6 +65,7 @@ public class Monster : MonoBehaviour {
     private void EnableServerMonster() {
         monsterAgent.gameObject.SetActive(true);
 
+        // Send the agent transform to other clients
         networkMovement.Transform = monsterAgent.transform;
         networkMovement.SelectObject();
     }
@@ -75,6 +76,8 @@ public class Monster : MonoBehaviour {
     private void EnableClientMonster() {
         monsterAgent.gameObject.SetActive(false);
 
+        // TODO: interpolate
+        // Apply the received transform to the common component
         networkMovement.Transform = commonTransform;
     }
 

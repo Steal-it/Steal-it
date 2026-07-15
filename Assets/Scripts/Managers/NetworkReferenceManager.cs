@@ -13,6 +13,7 @@ public class NetworkReferenceManager : MonoBehaviour {
     public LocalLobbyMenu LocalLobbyMenu => localLobbyMenu;
     public RoomsListPanel RoomsListPanel => roomsListPanel;
     public RoomLobbyMenu RoomLobbyMenu => roomLobbyMenu;
+    public RoomLobby RoomLobby => roomLobby;
 
     [SerializeField]
     private RoomClient roomClient;
@@ -30,6 +31,8 @@ public class NetworkReferenceManager : MonoBehaviour {
     private RoomsListPanel roomsListPanel;
     [SerializeField]
     private RoomLobbyMenu roomLobbyMenu;
+    [SerializeField]
+    private RoomLobby roomLobby;
 
     void Awake() {
         if (Instance != null) {

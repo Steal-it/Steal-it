@@ -1555,7 +1555,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_HandleRect: {fileID: 1606595961545704683}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1912,7 +1912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598753305659608215, guid: 632dc7a9dc4528c43890f8b75ce73032, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8963241974444337860, guid: 632dc7a9dc4528c43890f8b75ce73032, type: 3}
       propertyPath: m_Pivot.x

@@ -11,7 +11,6 @@ public class KeyLockManager : MonoBehaviour {
 
     void Start() {
         foreach (Transform l in lockList) {
-            print(l);
             locks.Add(l.GetComponent<Lock>());
         }
 
