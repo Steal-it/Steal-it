@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,49 +5,53 @@ public class HandSelectionHandler : MonoBehaviour {
     [SerializeField]
     private PlayerSettingsSO playerSettings;
     [SerializeField]
-    private Button leftHandButton;
+    private Button leftButton;
     [SerializeField]
-    private Button rightHandButton;
+    private GameObject leftOutline;
     [SerializeField]
-    private Renderer leftHandButtonLight;
+    private Button rightButton;
     [SerializeField]
-    private Renderer rightHandButtonLight;
-    [SerializeField]
-    private Material buttonSelectedMaterial;
-    [SerializeField]
-    private Material buttonDeselectedMaterial;
+    private GameObject rightOutline;
 
     void Awake() {
-        rightHandButton.onClick.AddListener(OnSelectRightHandButtonClicked);
-        leftHandButton.onClick.AddListener(OnSelectLeftHandButtonClicked);
+        leftButton.onClick.AddListener(OnSelectLeftHandButtonClicked);
+        rightButton.onClick.AddListener(OnSelectRightHandButtonClicked);
 
         if (playerSettings.playerTorchHand == Side.Left) {
-            rightHandButtonLight.material = buttonDeselectedMaterial;
-            leftHandButtonLight.material = buttonSelectedMaterial;
+            SelectLeftButton();
         } else {
-            rightHandButtonLight.material = buttonSelectedMaterial;
-            leftHandButtonLight.material = buttonDeselectedMaterial;
-        }
-    }
-
-    private void OnSelectRightHandButtonClicked() {
-        if (playerSettings.playerTorchHand != Side.Right) {
-            rightHandButtonLight.material = buttonSelectedMaterial;
-            leftHandButtonLight.material = buttonDeselectedMaterial;
-            playerSettings.SetPlayerTorchHand(Side.Right);
+            SelectRightButton();
         }
     }
 
     private void OnSelectLeftHandButtonClicked() {
         if (playerSettings.playerTorchHand != Side.Left) {
-            rightHandButtonLight.material = buttonDeselectedMaterial;
-            leftHandButtonLight.material = buttonSelectedMaterial;
             playerSettings.SetPlayerTorchHand(Side.Left);
+
+            SelectLeftButton();
         }
     }
 
+    private void OnSelectRightHandButtonClicked() {
+        if (playerSettings.playerTorchHand != Side.Right) {
+            playerSettings.SetPlayerTorchHand(Side.Right);
+
+            SelectRightButton();
+        }
+    }
+
+    private void SelectLeftButton() {
+        leftOutline.SetActive(true);
+        rightOutline.SetActive(false);
+    }
+
+    private void SelectRightButton() {
+        leftOutline.SetActive(false);
+        rightOutline.SetActive(true);
+    }
+
     void OnDestroy() {
-        rightHandButton.onClick.RemoveListener(OnSelectRightHandButtonClicked);
-        leftHandButton.onClick.RemoveListener(OnSelectLeftHandButtonClicked);
+        rightButton.onClick.RemoveListener(OnSelectRightHandButtonClicked);
+        leftButton.onClick.RemoveListener(OnSelectLeftHandButtonClicked);
     }
 }
