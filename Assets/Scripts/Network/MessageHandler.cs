@@ -38,11 +38,14 @@ public class MessageHandler : MonoBehaviour {
             await Task.Delay(100);
         } while (receiveReadyMsgCounter != roomClient.Peers.Count() + 1);
 
-        Debug.Log("All ready for change!");
         receiveReadyMsgCounter = 0;
         wasCounterRequested = false;
 
-        OnAllPeersReadyForChange?.Invoke(this, EventArgs.Empty);
+        if (roomClient.Peers.Count() + 1 > 1) {
+            // Cover the possibility of a player that press ready and another exit when only two people are in the room
+            Debug.Log("All ready for change!");
+            OnAllPeersReadyForChange?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private async void PeerLoadingHandler() {
