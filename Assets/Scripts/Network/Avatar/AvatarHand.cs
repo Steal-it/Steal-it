@@ -16,7 +16,6 @@ public class AvatarHand : LocalAvatar {
     }
 
     private void Start() {
-        // XROrigin origin = FindFirstObjectByType<XROrigin>();
         torchAnimator = GetComponentInChildren<TorchAnimator>();
         animatorController = GetComponent<HandAnimatorController>();
 
