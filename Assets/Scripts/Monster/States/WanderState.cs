@@ -82,7 +82,6 @@ public class WanderState : IMonsterState {
 
     public void ExitState() {
         monsterStateManager.WanderAndStunnedNavMeshSurface.enabled = false;
-        monsterStateManager.MonsterSFXManager.SetWander(false);
     }
 
     public void Accept(IMonsterStateVisitor _stateVisitor) {

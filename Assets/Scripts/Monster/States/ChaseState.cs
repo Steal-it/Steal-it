@@ -22,6 +22,7 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
         monsterAgent.speed = monsterStateManager.MinChasingSpeed;
         monsterAgent.autoBraking = false;
         monsterStateManager.MonsterAnimator.SetChase();
+        monsterStateManager.MonsterSFXManager.SetChase(true);
 
         IMonsterState wanderState = monsterStateManager.StateDictionary[MonsterStateManager.StateKey.Wander];
         wanderState.Accept(this);
@@ -58,6 +59,8 @@ public class ChaseState : IMonsterState, IMonsterStateVisitor {
     public void ExitState() {
         monsterAgent.destination = monsterAgent.transform.position;
         monsterStateManager.ChaseNavMeshSurface.enabled = false;
+        monsterStateManager.MonsterSFXManager.SetWander(false);
+        monsterStateManager.MonsterSFXManager.SetChase(false);
     }
 
     public void Accept(IMonsterStateVisitor _stateVisitor) { }
