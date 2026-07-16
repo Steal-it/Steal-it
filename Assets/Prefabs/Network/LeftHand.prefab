@@ -133,7 +133,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftHand
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4404629505503163663, guid: 6c2f915237355c04797f3f576a9fc7cf, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8057146785028860953, guid: 6c2f915237355c04797f3f576a9fc7cf, type: 3}
     - {fileID: 6912316757485737668, guid: 6c2f915237355c04797f3f576a9fc7cf, type: 3}

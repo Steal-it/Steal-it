@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Filtering;
@@ -28,7 +29,7 @@ public class NetworkInteractable : MonoBehaviour {
     }
 
     private void OnObjectReleased(HoverExitEventArgs _args) {
-        networkMovement.DeselectObject();
+        networkMovement.ReleaseObject();
     }
 
     private void OnObjectGrabbed(SelectEnterEventArgs _args) {
@@ -38,4 +39,5 @@ public class NetworkInteractable : MonoBehaviour {
     private void OnObjectReleased(SelectExitEventArgs _args) {
         networkMovement.DeselectObject();
     }
+
 }

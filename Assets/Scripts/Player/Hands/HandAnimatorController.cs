@@ -12,13 +12,11 @@ public class HandAnimatorController : MonoBehaviour {
     [SerializeField]
     private HeadAndHandsAvatar HeadAndHandsAvatar;
 
-    public void ToggleHandStateAnimation(bool _freeHand) {
-        FreeHandAnimator.ToggleTorchPosition(!_freeHand); // position only on torchhand
-        TorchAnimator.ToggleTorchVisible(!_freeHand); // torch is visible only on torchhand
-    }
+    private Transform parent;
 
     public void UpdateGripHand(Side side, bool _isThisHandFree) {
         FreeHandAnimator.ToggleTorchPosition(!_isThisHandFree);
+        TorchAnimator.ToggleTorchVisible(!_isThisHandFree); // torch is visible only on torchhand
         if (_isThisHandFree) {
             if (side == Side.Left) {
                 HeadAndHandsAvatar.OnLeftGripUpdate.AddListener(OnGripUpdate);
@@ -42,6 +40,33 @@ public class HandAnimatorController : MonoBehaviour {
         } else {
             FreeHandAnimator.TargetPoke = 0;
         }
+    }
+
+
+    public void OnGripReceived(Side side, object _sender, MessageHandler.OnAvatarComponentEnablerMessageReceivedEventArgs _args) {
+        if (_args.ComponentType != AvatarComponentType.GripHand) {
+            return;
+        }
+
+        if (parent == null) {
+            parent = transform;
+        }
+
+        string playerUUID = parent.name;
+
+        while (!playerUUID.Contains("Remote Avatar") && !playerUUID.Contains("Local Avatar")) {
+            parent = parent.parent;
+            playerUUID = parent.name;
+        }
+
+        if (playerUUID != "Local Avatar") {
+            playerUUID = playerUUID.Split('#')[1];
+            if (playerUUID != _args.PlayerUUID) {
+                return;
+            }
+        }
+
+        UpdateGripHand(side, _args.IsActive);
     }
 
 

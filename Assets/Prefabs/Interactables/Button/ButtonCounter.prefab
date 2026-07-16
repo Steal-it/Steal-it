@@ -389,6 +389,10 @@ PrefabInstance:
       propertyPath: Transform
       value: 
       objectReference: {fileID: 2937906849567592553}
+    - target: {fileID: 3326758356872085064, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
+      propertyPath: TransmitGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3409858895224849611, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
       propertyPath: m_Name
       value: ButtonCounter

@@ -1,5 +1,4 @@
 using UnityEngine;
-using Avatar = Ubiq.Avatars.Avatar;
 
 [RequireComponent(typeof(NetworkObjectEnabler))]
 public abstract class AvatarComponentEnabler : LocalAvatar {

@@ -310,6 +310,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button
       objectReference: {fileID: 0}
+    - target: {fileID: 3035244525080441481, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035244525080441481, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035244525080441481, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5418607388286389205}
+    - target: {fileID: 3035244525080441481, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035244525080441481, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SendEnableParameters
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035244525080441481, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: NetworkObjectEnabler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035244525080441481, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035244525080441481, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3069141492279619899, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
       propertyPath: m_PokeCollider
       value: 
@@ -382,6 +414,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 68615080635505177, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3326758356872085064}
+    - targetCorrespondingSourceObject: {fileID: 68615080635505177, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5418607388286389205}
   m_SourcePrefab: {fileID: 100100000, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}
 --- !u!114 &375560707047682025 stripped
 MonoBehaviour:
@@ -442,6 +477,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkMovement
   Transform: {fileID: 1679993776342786723}
+  TransmitGravity: 0
+--- !u!114 &5418607388286389205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3409858895224849611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b5f6a6082c01841beb5e531b22a068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkObjectEnabler
 --- !u!4 &5104617095670911310 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7599467750495293340, guid: b2e97eb6996c46241b44af8a412fdcf7, type: 3}

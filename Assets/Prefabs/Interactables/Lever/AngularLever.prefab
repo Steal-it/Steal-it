@@ -449,6 +449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkMovement
   Transform: {fileID: 0}
+  TransmitGravity: 0
 --- !u!114 &5365583914129559003
 MonoBehaviour:
   m_ObjectHideFlags: 0

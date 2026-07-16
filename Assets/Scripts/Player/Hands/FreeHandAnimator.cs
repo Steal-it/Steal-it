@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using Unity.XR.CoreUtils;
 using UnityEngine;
+using static MessageHandler;
 
-[RequireComponent(typeof(NetworkAnimation))]
 public class FreeHandAnimator : AnimatorNetworkExtension {
     [SerializeField]
     private Animator animator;
@@ -12,15 +12,13 @@ public class FreeHandAnimator : AnimatorNetworkExtension {
     private float smoothingSpeed = 4;
     [SerializeField]
     private float pokeAnimationOffset;
-
-    private NetworkAnimation networkAnimation;
-
     public float TargetGrip { private get; set; }
     public float TargetPoke { private get; set; }
     private float currentGrip;
     private float currentPoke;
     private bool completeGrip;
     private bool torch = false;
+    private Transform parent;
 
     private const string GRIP = "Grabbing";
     private const string POKE = "Pokeing";
@@ -31,28 +29,41 @@ public class FreeHandAnimator : AnimatorNetworkExtension {
         base.Awake();
         Animator = animator;
         ParameterTypeDictionary = new Dictionary<string, IAnimationParameter>() {
-            { GRIP, new AnimationFloatParameter() },
             { POKE, new AnimationFloatParameter() },
-            { COMPLETED, new AnimationBoolParameter() },
-            { TORCH, new AnimationBoolParameter() },
         };
-        TryGetComponent(out networkAnimation);
     }
 
     void Start() {
         if (IsLocal) {
             OnAnimationChanged += SendAnimation;
         } else {
-            networkAnimation.OnMessageReceived += ReciveAnimation;
+            NetworkReferenceManager.Instance.MessageHandler.OnAvatarAnimationMessageReceived += ReceiveAnimation;
         }
     }
 
     private void SendAnimation(object sender, OnAnimationChangedEventArgs _event) {
-        networkAnimation.SendAnimationParameters(_event.ParameterDictionary);
+        NetworkReferenceManager.Instance.MessageHandler.SendAvatarAnimationMessage(_event.ParameterDictionary);
     }
 
-    private void ReciveAnimation(object sender, NetworkAnimation.OnMessageReceivedEventArgs _event) {
-        SetParameterDictionary(_event.ParameterDictionary);
+    private void ReceiveAnimation(object sender, OnAvatarAnimationMessageReceivedEventArgs _args) {
+        if (parent == null) {
+            parent = transform;
+        }
+
+        string playerUUID = parent.name;
+
+        while (!playerUUID.Contains("Remote Avatar") && !playerUUID.Contains("Local Avatar")) {
+            parent = parent.parent;
+            playerUUID = parent.name;
+        }
+
+        if (playerUUID != "Local Avatar") {
+            playerUUID = playerUUID.Split('#')[1];
+            if (_args.PlayerUUID == playerUUID) {
+                SetParameterDictionary(_args.ParameterDictionary);
+            }
+        }
+
     }
 
     private void Update() {
@@ -90,7 +101,7 @@ public class FreeHandAnimator : AnimatorNetworkExtension {
     }
 
     void OnDestroy() {
-        networkAnimation.OnMessageReceived -= ReciveAnimation;
+        NetworkReferenceManager.Instance.MessageHandler.OnAvatarAnimationMessageReceived -= ReceiveAnimation;
     }
 
 }

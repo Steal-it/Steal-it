@@ -1,3 +1,4 @@
+using System;
 using Ubiq.Geometry;
 using Ubiq.Messaging;
 using UnityEngine;
@@ -6,6 +7,9 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class NetworkMovement : NetworkComponent {
     [SerializeField]
     public Transform Transform;
+
+    [SerializeField]
+    public bool TransmitGravity = true;
 
     public bool AmIOwner { get; private set; }
     public bool AmISender { get; private set; }
@@ -72,7 +76,7 @@ public class NetworkMovement : NetworkComponent {
         Pose pose = Transforms.ToWorld(message.Pose, Context.Scene.transform);
         Transform.SetPositionAndRotation(pose.position, pose.rotation);
 
-        if (TryGetComponent(out Rigidbody rb)) {
+        if (TryGetComponent(out Rigidbody rb) && TransmitGravity) {
             // Disable gravity if rigidbody is present
             rb.useGravity = !message.IsOwned;
         }

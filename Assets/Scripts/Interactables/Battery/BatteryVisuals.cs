@@ -34,4 +34,15 @@ public class BatteryVisuals : MonoBehaviour {
 
         orbLight.intensity = _chargeAmount * initialIntensity;
     }
+
+    public void Disable() {
+        orb.enabled = false;
+        orbLight.enabled = false;
+    }
+
+    public void Enable() {
+        orb.enabled = true;
+        orbLight.enabled = true;
+    }
+
 }
