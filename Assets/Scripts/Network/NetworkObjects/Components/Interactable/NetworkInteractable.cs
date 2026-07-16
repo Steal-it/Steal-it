@@ -8,8 +8,8 @@ public class NetworkInteractable : MonoBehaviour {
     private NetworkMovement networkMovement;
 
     void Awake() {
-        interactable = gameObject.GetComponent<XRBaseInteractable>();
-        networkMovement = gameObject.GetComponent<NetworkMovement>();
+        interactable = GetComponent<XRBaseInteractable>();
+        networkMovement = GetComponent<NetworkMovement>();
     }
 
     public void Start() {

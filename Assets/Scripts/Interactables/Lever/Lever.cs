@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class Lever : MonoBehaviour, ICollisionListener {
-
     enum LeverActivationPoint {
         Top,
         Bottom,

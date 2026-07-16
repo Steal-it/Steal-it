@@ -72,7 +72,8 @@ public class NetworkMovement : NetworkComponent {
         Pose pose = Transforms.ToWorld(message.Pose, Context.Scene.transform);
         Transform.SetPositionAndRotation(pose.position, pose.rotation);
 
-        if (TryGetComponent(out Rigidbody rb)) { // disable gravity if rigidbody is present
+        if (TryGetComponent(out Rigidbody rb)) {
+            // Disable gravity if rigidbody is present
             rb.useGravity = !message.IsOwned;
         }
 
