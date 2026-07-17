@@ -1,7 +1,5 @@
-using System.Collections;
 using UnityEngine;
 using DG.Tweening;
-
 
 [RequireComponent(typeof(NetworkObjectEnabler))]
 public class TorchAnimator : LocalAvatar {
@@ -74,5 +72,4 @@ public class TorchAnimator : LocalAvatar {
             torchLight.enabled = active;
         }
     }
-
 }
