@@ -412,9 +412,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3452425879354952918, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
-    - {fileID: 2995329255751517851, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 9058183891156421072, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
     m_AddedGameObjects:
@@ -428,6 +426,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 68615080635505177, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 425225245317040224}
+    - targetCorrespondingSourceObject: {fileID: 68615080635505177, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6280463051365827370}
   m_SourcePrefab: {fileID: 100100000, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}
 --- !u!1 &1310049828553574748 stripped
 GameObject:
@@ -449,6 +450,18 @@ MonoBehaviour:
   dischargeRate: 60
   visuals: {fileID: 4177935199512097523}
   gogglesSFXManager: {fileID: 4834303253965538673}
+--- !u!114 &6280463051365827370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310049828553574748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b5f6a6082c01841beb5e531b22a068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkObjectEnabler
 --- !u!1 &4177935199512097523 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3109453518150836662, guid: 695a218fbc72fb24789f8802a77144f0, type: 3}

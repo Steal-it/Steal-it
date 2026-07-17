@@ -1,8 +1,10 @@
 using UnityEngine;
 using DG.Tweening;
+using System;
 
-[RequireComponent(typeof(NetworkObjectEnabler))]
 public class TorchAnimator : LocalAvatar {
+    public event Action<bool> OnTorchPocket;
+
     [SerializeField]
     private Transform torchTransform;
     [SerializeField]
@@ -16,13 +18,11 @@ public class TorchAnimator : LocalAvatar {
     [SerializeField]
     private float duration = 1f;
     private bool active;
-
+    private Transform parent;
     private Tween moveTween;
-    private NetworkObjectEnabler networkObjectEnabler;
 
     protected override void Awake() {
         base.Awake();
-        TryGetComponent(out networkObjectEnabler);
     }
 
     void Start() {
@@ -31,12 +31,34 @@ public class TorchAnimator : LocalAvatar {
         }
 
         torchTransform.SetPositionAndRotation(torchAttachPoint.position, torchAttachPoint.rotation);
+    }
 
-        if (!IsLocal) {
-            networkObjectEnabler.OnMessageReceived += (_active) => {
-                torchLight.enabled = _active;
-                active = _active;
-            };
+    public void OnAvatarComponentEnablerMessageReceived(object _sender, MessageHandler.OnAvatarComponentEnablerMessageReceivedEventArgs _args) {
+        if (_args.ComponentType != AvatarComponentType.TorchLight) {
+            return;
+        }
+
+        if (parent == null) {
+            parent = transform;
+        }
+
+        string playerUUID = parent.name;
+
+        while (!playerUUID.Contains("Remote Avatar") && !playerUUID.Contains("Local Avatar")) {
+            parent = parent.parent;
+            playerUUID = parent.name;
+        }
+
+        if (playerUUID != "Local Avatar") {
+            playerUUID = playerUUID.Split('#')[1];
+            if (playerUUID != _args.PlayerUUID) {
+                return;
+            }
+        }
+
+        if (_args.ComponentType == AvatarComponentType.TorchLight) {
+            torchLight.enabled = _args.IsActive;
+            active = _args.IsActive;
         }
     }
 
@@ -46,10 +68,10 @@ public class TorchAnimator : LocalAvatar {
         InPocket(!_value);
         if (_value) {
             moveTween = torchTransform.DOLocalMove(torchAttachPoint.localPosition, duration).SetSpeedBased().SetEase(curve)
-                        .OnStart(() => torchTransform.gameObject.SetActive(_value));
+                        .OnStart(() => torchTransform.gameObject.SetActive(_value)).OnComplete(() => OnTorchPocket?.Invoke(!_value));
         } else {
             moveTween = torchTransform.DOLocalMove(pocketAttachPoint.localPosition, duration).SetSpeedBased().SetEase(curve)
-                        .OnComplete(() => torchTransform.gameObject.SetActive(_value));
+                        .OnStart(() => OnTorchPocket?.Invoke(!_value)).OnComplete(() => torchTransform.gameObject.SetActive(_value));
         }
     }
 
@@ -62,7 +84,7 @@ public class TorchAnimator : LocalAvatar {
     public void ToggleLightVisual(object sender, Torch.OnTorchTurnedEventArgs _eventArgs) {
         torchLight.enabled = _eventArgs.isTurnedOn;
         active = _eventArgs.isTurnedOn;
-        networkObjectEnabler.SendEnableParameters(torchLight.enabled);
+        NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.TorchLight, torchLight.enabled);
     }
 
     private void InPocket(bool _isInPocket) {
@@ -71,5 +93,9 @@ public class TorchAnimator : LocalAvatar {
         } else {
             torchLight.enabled = active;
         }
+    }
+
+    void OnDestroy() {
+        NetworkReferenceManager.Instance.MessageHandler.OnAvatarComponentEnablerMessageReceived -= OnAvatarComponentEnablerMessageReceived;
     }
 }

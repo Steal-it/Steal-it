@@ -15,10 +15,10 @@ public class KeyboardEventDebug : MonoBehaviour {
     void Update() {
         if (Keyboard.current[Key.V].wasPressedThisFrame) {
             if (t) {
-                playerSettings.SetPlayerTorchHand(Side.Right);
+                playerSettings.playerTorchHand = Side.Right;
                 t = false;
             } else {
-                playerSettings.SetPlayerTorchHand(Side.Left);
+                playerSettings.playerTorchHand = Side.Left;
                 t = true;
             }
         }

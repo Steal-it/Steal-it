@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Ubiq.Dictionaries;
 using Ubiq.Messaging;
 using Ubiq.Rooms;
 using UnityEngine;
@@ -14,12 +15,27 @@ public class MessageHandler : MonoBehaviour {
     public class OnApplySpectatorModeRequestEventArgs : EventArgs {
         public string PlayerUUID;
     }
+    public event EventHandler<OnAvatarAnimationMessageReceivedEventArgs> OnAvatarAnimationMessageReceived;
+    public class OnAvatarAnimationMessageReceivedEventArgs : EventArgs {
+        public string PlayerUUID;
+        public SerializableDictionary ParameterDictionary;
+    }
+    public event EventHandler<OnAvatarSendHandSideMessageReceivedEventArgs> OnAvatarSendHandSideMessageReceived;
+    public class OnAvatarSendHandSideMessageReceivedEventArgs : EventArgs {
+        public string PlayerUUID;
+        public Side Side;
+    }
+    public event EventHandler<OnAvatarComponentEnablerMessageReceivedEventArgs> OnAvatarComponentEnablerMessageReceived;
+    public class OnAvatarComponentEnablerMessageReceivedEventArgs : EventArgs {
+        public string PlayerUUID;
+        public AvatarComponentType ComponentType;
+        public bool IsActive;
+    }
     public event EventHandler<OnPlayerExitedOrNotExitedEventArgs> OnPlayerExited;
     public event EventHandler<OnPlayerExitedOrNotExitedEventArgs> OnPlayerNotExited;
     public class OnPlayerExitedOrNotExitedEventArgs : EventArgs {
         public string PlayerUUID;
     }
-
     private RoomClient roomClient;
     private NetworkContext context;
     private bool wasCounterRequested;
@@ -159,6 +175,36 @@ public class MessageHandler : MonoBehaviour {
         }
     }
 
+    public async void SendAvatarAnimationMessage(SerializableDictionary _parameterDictionary) {
+        if (context.Scene != null) {
+            context.SendJson(new AvatarAnimationMessage(roomClient.Me.uuid, _parameterDictionary));
+        } else {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendAvatarAnimationMessage(_parameterDictionary);
+        }
+    }
+
+    public async void SendAvatarSendHandSideMessage(Side _side) {
+        if (context.Scene != null) {
+            context.SendJson(new AvatarSendHandSideMessage(roomClient.Me.uuid, _side));
+        } else {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendAvatarSendHandSideMessage(_side);
+        }
+    }
+
+    public async void SendAvatarComponentEnablerMessage(AvatarComponentType _componentType, bool _isActive) {
+        if (context.Scene != null) {
+            context.SendJson(new AvatarComponentEnablerMessage(roomClient.Me.uuid, _componentType, _isActive));
+        } else {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendAvatarComponentEnablerMessage(_componentType, _isActive);
+        }
+    }
+
     public void ProcessMessage(ReferenceCountedSceneGraphMessage _message) {
         BaseMessage message = _message.FromJson<BaseMessage>();
         switch (message.type) {
@@ -216,6 +262,34 @@ public class MessageHandler : MonoBehaviour {
                         PlayerUUID = msg.PlayerUUID
                     });
                     Debug.Log($"Received {PlayerExited.TYPE}");
+                }
+                break;
+            case AvatarAnimationMessage.TYPE: {
+                    Debug.Log($"Received {AvatarAnimationMessage.TYPE}");
+                    AvatarAnimationMessage msg = _message.FromJson<AvatarAnimationMessage>();
+                    OnAvatarAnimationMessageReceived?.Invoke(this, new OnAvatarAnimationMessageReceivedEventArgs {
+                        PlayerUUID = msg.PlayerUUID,
+                        ParameterDictionary = msg.ParameterDictionary
+                    });
+                }
+                break;
+            case AvatarSendHandSideMessage.TYPE: {
+                    Debug.Log($"Received {AvatarSendHandSideMessage.TYPE}");
+                    AvatarSendHandSideMessage msg = _message.FromJson<AvatarSendHandSideMessage>();
+                    OnAvatarSendHandSideMessageReceived?.Invoke(this, new OnAvatarSendHandSideMessageReceivedEventArgs {
+                        PlayerUUID = msg.PlayerUUID,
+                        Side = msg.Side
+                    });
+                }
+                break;
+            case AvatarComponentEnablerMessage.TYPE: {
+                    Debug.Log($"Received {AvatarComponentEnablerMessage.TYPE}");
+                    AvatarComponentEnablerMessage msg = _message.FromJson<AvatarComponentEnablerMessage>();
+                    OnAvatarComponentEnablerMessageReceived?.Invoke(this, new OnAvatarComponentEnablerMessageReceivedEventArgs {
+                        PlayerUUID = msg.PlayerUUID,
+                        ComponentType = msg.ComponentType,
+                        IsActive = msg.isActive
+                    });
                 }
                 break;
             case PlayerNotExited.TYPE: {

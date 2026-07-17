@@ -1,4 +1,5 @@
 using System;
+using Ubiq.Dictionaries;
 
 [Serializable]
 public class BaseMessage {
@@ -98,3 +99,46 @@ public class PlayerNotExited : BaseMessage {
         PlayerUUID = _playerUUID;
     }
 }
+
+[Serializable]
+public class AvatarAnimationMessage : BaseMessage {
+    public const string TYPE = "AvatarAnimationMessage";
+
+    public SerializableDictionary ParameterDictionary;
+
+    public string PlayerUUID;
+
+    public AvatarAnimationMessage(string _playerUUID, SerializableDictionary _parameterDictionary) : base(TYPE) {
+        ParameterDictionary = _parameterDictionary;
+        PlayerUUID = _playerUUID;
+    }
+}
+
+[Serializable]
+public class AvatarSendHandSideMessage : BaseMessage {
+    public const string TYPE = "AvatarSendHandSideMessage";
+
+    public Side Side;
+    public string PlayerUUID;
+
+    public AvatarSendHandSideMessage(string _playerUUID, Side _side) : base(TYPE) {
+        PlayerUUID = _playerUUID;
+        Side = _side;
+    }
+}
+
+[Serializable]
+public class AvatarComponentEnablerMessage : BaseMessage {
+    public const string TYPE = "AvatarComponentEnablerMessage";
+
+    public AvatarComponentType ComponentType;
+    public bool isActive;
+
+    public string PlayerUUID;
+
+    public AvatarComponentEnablerMessage(string _playerUUID, AvatarComponentType _componentType, bool _isActive) : base(TYPE) {
+        PlayerUUID = _playerUUID;
+        ComponentType = _componentType;
+        isActive = _isActive;
+    }
+};

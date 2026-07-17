@@ -17,12 +17,23 @@ public class Goggles : MonoBehaviour {
     private bool isActive = false;
     private Coroutine seeCoroutine;
     private XRGrabInteractable grabInteractable;
+    private NetworkObjectEnabler networkEnabler;
 
     void Awake() {
         TryGetComponent(out grabInteractable);
+        TryGetComponent(out networkEnabler);
+        if (networkEnabler) {
+            networkEnabler.OnMessageReceived += OnNetworkEnablerMessageReceived;
+        }
     }
 
-    public void DisableVisuals() {
+    private void OnNetworkEnablerMessageReceived(bool _active) {
+        if (!_active) {
+            DisableVisuals(false);
+        }
+    }
+
+    public void DisableVisuals(bool _sendToOthers) {
         if (grabInteractable != null) {
             Destroy(grabInteractable);
         }
@@ -32,6 +43,11 @@ public class Goggles : MonoBehaviour {
         if (TryGetComponent(out BoxCollider collider)) {
             Destroy(collider);
         }
+
+        if (_sendToOthers) {
+            networkEnabler.SendEnableParameters(false);
+        }
+
         visuals.SetActive(false);
     }
 
@@ -75,5 +91,8 @@ public class Goggles : MonoBehaviour {
     void OnDisable() {
         grabInteractable.selectEntered.RemoveAllListeners();
         grabInteractable.selectExited.RemoveAllListeners();
+        if (networkEnabler) {
+            networkEnabler.OnMessageReceived -= OnNetworkEnablerMessageReceived;
+        }
     }
 }

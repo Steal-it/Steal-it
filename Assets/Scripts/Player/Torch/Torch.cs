@@ -113,12 +113,26 @@ public class Torch : CustomAction {
         });
     }
 
+    public void ToggleInPocket(bool _isInPocket) {
+        if (battery == null) return;
+        if (_isInPocket) {
+            battery.GetComponentInChildren<BatteryVisuals>().Disable();
+            battery.StopUse();
+        } else {
+            battery.GetComponentInChildren<BatteryVisuals>().Enable();
+            battery.Use();
+        }
+    }
+
     void OnDestroy() {
         socketInteractor.hoverEntered.RemoveAllListeners();
     }
 
     protected override void AfterInputSet(bool _isActive) {
-        gameObject.SetActive(_isActive);
+        // gameObject.SetActive(_isActive);
+        if (!socketInteractor.hasSelection) {
+            socketInteractor.allowSelect = _isActive;
+        }
     }
 
     public override void OnInputFired(InputAction.CallbackContext _) {

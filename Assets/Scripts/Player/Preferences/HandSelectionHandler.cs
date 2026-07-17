@@ -26,7 +26,7 @@ public class HandSelectionHandler : MonoBehaviour {
 
     private void OnSelectLeftHandButtonClicked() {
         if (playerSettings.playerTorchHand != Side.Left) {
-            playerSettings.SetPlayerTorchHand(Side.Left);
+            playerSettings.playerTorchHand = Side.Left;
 
             SelectLeftButton();
         }
@@ -34,7 +34,7 @@ public class HandSelectionHandler : MonoBehaviour {
 
     private void OnSelectRightHandButtonClicked() {
         if (playerSettings.playerTorchHand != Side.Right) {
-            playerSettings.SetPlayerTorchHand(Side.Right);
+            playerSettings.playerTorchHand = Side.Right;
 
             SelectRightButton();
         }
