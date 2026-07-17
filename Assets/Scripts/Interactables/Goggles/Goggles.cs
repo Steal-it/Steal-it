@@ -77,6 +77,7 @@ public class Goggles : MonoBehaviour {
 
         if (chargeLevel == 0) {
             OnGooglesToggle?.Invoke(false);
+            NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.Goggles, false);
         }
     }
 
