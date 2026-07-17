@@ -10,14 +10,16 @@ public class AvatarHand : LocalAvatar {
 
     private HandAnimatorController animatorController;
     private TorchAnimator torchAnimator;
+    private TorchSFXManager torchSFXManager;
 
     protected override void Awake() {
         base.Awake();
     }
 
     private void Start() {
-        torchAnimator = GetComponentInChildren<TorchAnimator>();
         animatorController = GetComponent<HandAnimatorController>();
+        torchAnimator = GetComponentInChildren<TorchAnimator>();
+        torchSFXManager = GetComponentInChildren<TorchSFXManager>();
 
         ChangeHandTorch(false);
         if (IsLocal) {
@@ -25,7 +27,6 @@ public class AvatarHand : LocalAvatar {
         } else {
             NetworkReferenceManager.Instance.MessageHandler.OnAvatarSendHandSideMessageReceived += OnAvatarSendHandMessageMessageReceived;
         }
-
     }
 
     private void OnGripRecived(object sender, MessageHandler.OnAvatarComponentEnablerMessageReceivedEventArgs _args) {
@@ -37,7 +38,7 @@ public class AvatarHand : LocalAvatar {
         Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
         Transform rightHand = origin.transform.Find("Camera Offset/Right Controller");
 
-        if (playerSettings.playerTorchHand == side) { // if i am the torchhand
+        if (playerSettings.playerTorchHand == side) {  // If i am the torchhand
             ChangeHandTorch(true);
             print(torchAnimator);
             if (side == Side.Left) {
@@ -46,6 +47,10 @@ public class AvatarHand : LocalAvatar {
                     NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.GripHand, _onLadder);
                 };
                 leftHand.GetComponentInChildren<Torch>().OnTorchTurned += torchAnimator.ToggleLightVisual;
+                leftHand.GetComponentInChildren<Torch>().OnTorchTurned += (_sender, _event) => {
+                    torchSFXManager.SetLightOn(_event.isTurnedOn);
+                    torchSFXManager.SetLightOff(!_event.isTurnedOn);
+                };
                 torchAnimator.OnTorchPocket += leftHand.GetComponentInChildren<Torch>().ToggleInPocket;
                 torchAnimator.SetupTorch(leftHand.GetComponentInChildren<TorchLight>());
             } else {
@@ -54,11 +59,14 @@ public class AvatarHand : LocalAvatar {
                     NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.GripHand, _onLadder);
                 };
                 rightHand.GetComponentInChildren<Torch>().OnTorchTurned += torchAnimator.ToggleLightVisual;
+                rightHand.GetComponentInChildren<Torch>().OnTorchTurned += (_sender, _event) => {
+                    torchSFXManager.SetLightOn(_event.isTurnedOn);
+                    torchSFXManager.SetLightOff(!_event.isTurnedOn);
+                };
                 torchAnimator.OnTorchPocket += rightHand.GetComponentInChildren<Torch>().ToggleInPocket;
                 torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
             }
-
-        } else { // im not the torchhand
+        } else {  // I'm not the torchhand
             ChangeHandTorch(false);
             if (side == Side.Left) {
                 leftHand.GetComponentInChildren<HandCollisionController>().OnPoke += animatorController.CalculatePoke;
@@ -70,7 +78,7 @@ public class AvatarHand : LocalAvatar {
                 leftHand.GetComponentInChildren<Hand>().ChangeHandTorch(true);
             }
         }
-        NetworkReferenceManager.Instance.MessageHandler.SendAvatarSendHandSideMessage(playerSettings.playerTorchHand);
+        NetworkReferenceManager.Instance.MessageHandler.SendAvatarHandSideMessage(playerSettings.playerTorchHand);
     }
 
     private void OnAvatarSendHandMessageMessageReceived(object _sender, MessageHandler.OnAvatarSendHandSideMessageReceivedEventArgs _args) {
@@ -83,6 +91,7 @@ public class AvatarHand : LocalAvatar {
                 if (_args.Side == side) { // if i am the torchhand
                     NetworkReferenceManager.Instance.MessageHandler.OnAvatarComponentEnablerMessageReceived += OnGripRecived;
                     NetworkReferenceManager.Instance.MessageHandler.OnAvatarComponentEnablerMessageReceived += torchAnimator.OnAvatarComponentEnablerMessageReceived;
+                    NetworkReferenceManager.Instance.MessageHandler.OnAvatarTorchSFXMessageReceived += torchSFXManager.OnAvatarTorchSFXReceived;
                     if (side == Side.Left) {
                         Transform leftHand = origin.transform.Find("Camera Offset/Left Controller");
                         torchAnimator.SetupTorch(leftHand.GetComponentInChildren<TorchLight>());
@@ -93,8 +102,8 @@ public class AvatarHand : LocalAvatar {
                         torchAnimator.OnTorchPocket += rightHand.GetComponentInChildren<Torch>().ToggleInPocket;
                     }
                 }
-                // im not the torchhand
-                // do nothing special
+
+                // I'm not the torchhand, do nothing special
             }
         }
     }

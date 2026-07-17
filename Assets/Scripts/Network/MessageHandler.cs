@@ -8,11 +8,16 @@ using UnityEngine;
 using WebSocketSharp;
 
 public class MessageHandler : MonoBehaviour {
+    #region Events
     public event EventHandler OnAllPeersReadyForChange;
     public event EventHandler OnClientAsServerChanged;
-
     public event EventHandler<OnApplySpectatorModeRequestEventArgs> OnApplySpectatorModeRequested;
     public class OnApplySpectatorModeRequestEventArgs : EventArgs {
+        public string PlayerUUID;
+    }
+    public event EventHandler<OnPlayerExitedOrNotExitedEventArgs> OnPlayerExited;
+    public event EventHandler<OnPlayerExitedOrNotExitedEventArgs> OnPlayerNotExited;
+    public class OnPlayerExitedOrNotExitedEventArgs : EventArgs {
         public string PlayerUUID;
     }
     public event EventHandler<OnAvatarAnimationMessageReceivedEventArgs> OnAvatarAnimationMessageReceived;
@@ -31,11 +36,13 @@ public class MessageHandler : MonoBehaviour {
         public AvatarComponentType ComponentType;
         public bool IsActive;
     }
-    public event EventHandler<OnPlayerExitedOrNotExitedEventArgs> OnPlayerExited;
-    public event EventHandler<OnPlayerExitedOrNotExitedEventArgs> OnPlayerNotExited;
-    public class OnPlayerExitedOrNotExitedEventArgs : EventArgs {
+    public event EventHandler<OnAvatarTorchSFXMessageReceivedEventArgs> OnAvatarTorchSFXMessageReceived;
+    public class OnAvatarTorchSFXMessageReceivedEventArgs : EventArgs {
         public string PlayerUUID;
+        public SerializableDictionary SFXDictionary;
     }
+    #endregion
+
     private RoomClient roomClient;
     private NetworkContext context;
     private bool wasCounterRequested;
@@ -185,13 +192,13 @@ public class MessageHandler : MonoBehaviour {
         }
     }
 
-    public async void SendAvatarSendHandSideMessage(Side _side) {
+    public async void SendAvatarHandSideMessage(Side _side) {
         if (context.Scene != null) {
             context.SendJson(new AvatarSendHandSideMessage(roomClient.Me.uuid, _side));
         } else {
             Debug.LogWarning("Network context is not available, retry send in one second");
             await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
-            SendAvatarSendHandSideMessage(_side);
+            SendAvatarHandSideMessage(_side);
         }
     }
 
@@ -202,6 +209,16 @@ public class MessageHandler : MonoBehaviour {
             Debug.LogWarning("Network context is not available, retry send in one second");
             await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
             SendAvatarComponentEnablerMessage(_componentType, _isActive);
+        }
+    }
+
+    public async void SendAvatarTorchSFXMessage(SerializableDictionary _SFXDictionary) {
+        if (context.Scene != null) {
+            context.SendJson(new AvatarTorchSFXMessage(roomClient.Me.uuid, _SFXDictionary));
+        } else {
+            Debug.LogWarning("Network context is not available, retry send in one second");
+            await Task.Delay(1000); // Wait a second before sending a message: this allow to be sure about a complete connection between a new peer and existing peers.
+            SendAvatarTorchSFXMessage(_SFXDictionary);
         }
     }
 
@@ -264,6 +281,14 @@ public class MessageHandler : MonoBehaviour {
                     Debug.Log($"Received {PlayerExited.TYPE}");
                 }
                 break;
+            case PlayerNotExited.TYPE: {
+                    PlayerNotExited msg = _message.FromJson<PlayerNotExited>();
+                    OnPlayerNotExited?.Invoke(this, new OnPlayerExitedOrNotExitedEventArgs {
+                        PlayerUUID = msg.PlayerUUID
+                    });
+                    Debug.Log($"Received {PlayerNotExited.TYPE}");
+                }
+                break;
             case AvatarAnimationMessage.TYPE: {
                     Debug.Log($"Received {AvatarAnimationMessage.TYPE}");
                     AvatarAnimationMessage msg = _message.FromJson<AvatarAnimationMessage>();
@@ -292,12 +317,13 @@ public class MessageHandler : MonoBehaviour {
                     });
                 }
                 break;
-            case PlayerNotExited.TYPE: {
-                    PlayerNotExited msg = _message.FromJson<PlayerNotExited>();
-                    OnPlayerNotExited?.Invoke(this, new OnPlayerExitedOrNotExitedEventArgs {
-                        PlayerUUID = msg.PlayerUUID
+            case AvatarTorchSFXMessage.TYPE: {
+                    Debug.Log($"Received {AvatarTorchSFXMessage.TYPE}");
+                    AvatarTorchSFXMessage msg = _message.FromJson<AvatarTorchSFXMessage>();
+                    OnAvatarTorchSFXMessageReceived?.Invoke(this, new OnAvatarTorchSFXMessageReceivedEventArgs {
+                        PlayerUUID = msg.PlayerUUID,
+                        SFXDictionary = msg.SFXDictionary
                     });
-                    Debug.Log($"Received {PlayerNotExited.TYPE}");
                 }
                 break;
             default:
