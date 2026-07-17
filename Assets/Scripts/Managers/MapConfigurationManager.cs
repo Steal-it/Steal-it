@@ -2,22 +2,31 @@ using System.Collections.Generic;
 using System.Linq;
 using Ubiq.Rooms;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class MapConfigurationManager : MonoBehaviour {
-    private List<MapConfiguration> mapConfigurationArray;
-
     [SerializeField]
     private Transform playersSpawnPoint;
     [SerializeField]
     private Monster monster;
     [SerializeField]
-    private Transform keys;
+    private Transform locks;
+
+    private List<MapConfiguration> mapConfigurationArray;
+    private List<Transform> keyList;
 
     void Start() {
         mapConfigurationArray = new List<MapConfiguration>();
         foreach (Transform child in transform) {
             if (child.gameObject.activeInHierarchy) {
                 mapConfigurationArray.Add(child.GetComponent<MapConfiguration>());
+            }
+        }
+
+        keyList = new List<Transform>();
+        foreach (Transform child in locks) {
+            foreach (XRGrabInteractable key in child.GetComponent<SocketFilter>().GrabInteractableList) {
+                keyList.Add(key.transform);
             }
         }
     }
@@ -49,7 +58,7 @@ public class MapConfigurationManager : MonoBehaviour {
         mapConfigurationArray[mapConfigurationIndex].Apply(
             playersSpawnPoint,
             monster.transform,
-            keys
+            keyList.ToArray()
         );
     }
 }
