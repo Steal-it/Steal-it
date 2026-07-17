@@ -78,3 +78,7 @@ Finally you must need to run the following command on the root of the repo:
 ```
     git config --local include.path ../.gitconfig
 ```
+
+# Models
+
+The monster model can be downloaded from [sketchfab](https://sketchfab.com/3d-models/low-poly-ghost-character-4e6b7329c21b400e806d078dd0969212): "Low Poly Ghost Character" made by [TheoClarke](https://sketchfab.com/TheoClarke) and released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en)
