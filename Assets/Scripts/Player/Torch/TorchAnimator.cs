@@ -33,8 +33,8 @@ public class TorchAnimator : LocalAvatar {
         torchTransform.SetPositionAndRotation(torchAttachPoint.position, torchAttachPoint.rotation);
     }
 
-    public void OnAvatarComponentEnablerMessageReceived(object _sender, MessageHandler.OnAvatarComponentEnablerMessageReceivedEventArgs _args) {
-        if (_args.ComponentType != AvatarComponentType.TorchLight) {
+    public void OnAvatarComponentEnablerMessageReceived(object _sender, MessageHandler.OnAvatarComponentEnablerMessageReceivedEventArgs _event) {
+        if (_event.ComponentType != AvatarComponentType.TorchLight) {
             return;
         }
 
@@ -51,15 +51,13 @@ public class TorchAnimator : LocalAvatar {
 
         if (playerUUID != "Local Avatar") {
             playerUUID = playerUUID.Split('#')[1];
-            if (playerUUID != _args.PlayerUUID) {
+            if (playerUUID != _event.PlayerUUID) {
                 return;
             }
         }
 
-        if (_args.ComponentType == AvatarComponentType.TorchLight) {
-            torchLight.enabled = _args.IsActive;
-            active = _args.IsActive;
-        }
+        torchLight.enabled = _event.IsActive;
+        active = _event.IsActive;
     }
 
     public void ToggleTorchVisible(bool _value) {
@@ -82,8 +80,8 @@ public class TorchAnimator : LocalAvatar {
     }
 
     public void ToggleLightVisual(object sender, Torch.OnTorchTurnedEventArgs _eventArgs) {
-        torchLight.enabled = _eventArgs.isTurnedOn;
-        active = _eventArgs.isTurnedOn;
+        torchLight.enabled = _eventArgs.IsTurnedOn;
+        active = _eventArgs.IsTurnedOn;
         NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.TorchLight, torchLight.enabled);
     }
 
@@ -95,8 +93,7 @@ public class TorchAnimator : LocalAvatar {
         }
     }
 
-    void OnDisable() {
+    void OnDestroy() {
         NetworkReferenceManager.Instance.MessageHandler.OnAvatarComponentEnablerMessageReceived -= OnAvatarComponentEnablerMessageReceived;
     }
-
 }

@@ -79,6 +79,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b5f6a6082c01841beb5e531b22a068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkObjectEnabler
+  OnActivationNeeded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4681868913169065445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,7 +499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05287
+      value: 0.052870005
       objectReference: {fileID: 0}
     - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -508,15 +511,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9041522820804899189, guid: ee2a0e0e9237cfcf896c0f9808ccb5d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

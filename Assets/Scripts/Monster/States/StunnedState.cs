@@ -38,6 +38,8 @@ public abstract class StunnedState : IMonsterState {
 
     protected abstract void SetAnimation();
 
+    protected abstract void SetSFX(bool _isActive);
+
     public void EnterState(MonsterStateManager _monsterStateManager) {
         MonsterStateManager = _monsterStateManager;
 
@@ -50,6 +52,7 @@ public abstract class StunnedState : IMonsterState {
         monsterAgent.speed = MonsterStateManager.WanderAndStunnedSpeed;
         monsterAgent.autoBraking = true;
         PlayAnimation();
+        SetSFX(true);
     }
 
     public void UpdateState() {
@@ -66,6 +69,7 @@ public abstract class StunnedState : IMonsterState {
 
     public void ExitState() {
         monsterAgent.destination = monsterAgent.transform.position;
+        SetSFX(false);
     }
 
     public void Accept(IMonsterStateVisitor _stateVisitor) { }

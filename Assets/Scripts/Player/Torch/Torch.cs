@@ -8,7 +8,8 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class Torch : CustomAction {
     public event EventHandler<OnTorchTurnedEventArgs> OnTorchTurned;
     public class OnTorchTurnedEventArgs : EventArgs {
-        public bool isTurnedOn;
+        public bool IsTurnedOn;
+        public bool IsBatteryRunOut;
     }
 
     [SerializeField]
@@ -49,7 +50,6 @@ public class Torch : CustomAction {
         battery.OnBatteryRanOut += Battery_OnBatteryRanOut;
 
         // Start discharging the battery
-        // battery.Use();
         battery.BatteryInserted();
 
         // Turn on the light
@@ -64,13 +64,14 @@ public class Torch : CustomAction {
     }
 
     private void RemoveBattery(SelectExitEventArgs _) {
+        if (battery == null) return;
+
         emitLight = false;
         ToggleLight();
 
-        // battery.StopUse();
         battery.BatteryRemoved();
 
-        battery.GetComponent<NetworkMovement>().DeselectObject(); // remove ownership and sendership(??) of the battery
+        battery.GetComponent<NetworkMovement>().DeselectObject();
 
         battery = null;
 
@@ -104,12 +105,13 @@ public class Torch : CustomAction {
 
         // Turn off the light
         emitLight = false;
-        ToggleLight();
+        ToggleLight(true);
     }
 
-    private void ToggleLight() {
+    private void ToggleLight(bool _isBatteryRunOut = false) {
         OnTorchTurned?.Invoke(this, new OnTorchTurnedEventArgs {
-            isTurnedOn = emitLight
+            IsTurnedOn = emitLight,
+            IsBatteryRunOut = _isBatteryRunOut
         });
     }
 
@@ -129,7 +131,6 @@ public class Torch : CustomAction {
     }
 
     protected override void AfterInputSet(bool _isActive) {
-        // gameObject.SetActive(_isActive);
         if (!socketInteractor.hasSelection) {
             socketInteractor.allowSelect = _isActive;
         }

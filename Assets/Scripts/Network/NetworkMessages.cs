@@ -104,13 +104,12 @@ public class PlayerNotExited : BaseMessage {
 public class AvatarAnimationMessage : BaseMessage {
     public const string TYPE = "AvatarAnimationMessage";
 
+    public string PlayerUUID;
     public SerializableDictionary ParameterDictionary;
 
-    public string PlayerUUID;
-
     public AvatarAnimationMessage(string _playerUUID, SerializableDictionary _parameterDictionary) : base(TYPE) {
-        ParameterDictionary = _parameterDictionary;
         PlayerUUID = _playerUUID;
+        ParameterDictionary = _parameterDictionary;
     }
 }
 
@@ -118,8 +117,8 @@ public class AvatarAnimationMessage : BaseMessage {
 public class AvatarSendHandSideMessage : BaseMessage {
     public const string TYPE = "AvatarSendHandSideMessage";
 
-    public Side Side;
     public string PlayerUUID;
+    public Side Side;
 
     public AvatarSendHandSideMessage(string _playerUUID, Side _side) : base(TYPE) {
         PlayerUUID = _playerUUID;
@@ -131,14 +130,26 @@ public class AvatarSendHandSideMessage : BaseMessage {
 public class AvatarComponentEnablerMessage : BaseMessage {
     public const string TYPE = "AvatarComponentEnablerMessage";
 
+    public string PlayerUUID;
     public AvatarComponentType ComponentType;
     public bool isActive;
-
-    public string PlayerUUID;
 
     public AvatarComponentEnablerMessage(string _playerUUID, AvatarComponentType _componentType, bool _isActive) : base(TYPE) {
         PlayerUUID = _playerUUID;
         ComponentType = _componentType;
         isActive = _isActive;
     }
-};
+}
+
+[Serializable]
+public class AvatarTorchSFXMessage : BaseMessage {
+    public const string TYPE = "AvatarTorchSFXMessage";
+
+    public string PlayerUUID;
+    public SerializableDictionary SFXDictionary;
+
+    public AvatarTorchSFXMessage(string _playerUUID, SerializableDictionary _SFXDictionary) : base(TYPE) {
+        PlayerUUID = _playerUUID;
+        SFXDictionary = _SFXDictionary;
+    }
+}

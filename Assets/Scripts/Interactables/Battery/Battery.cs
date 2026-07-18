@@ -47,6 +47,17 @@ public class Battery : MonoBehaviour {
         networkObjectEnabler.OnMessageReceived += UsgeBatteryRecived;
     }
 
+    void FixedUpdate() {
+        if (!canFloat || isInserted) return;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, restDistance, hitMask)) {
+            float springForce = spring * (restDistance - hit.distance);
+            float dampingfactor = damper * rb.linearVelocity.y;
+            float force = springForce - dampingfactor;
+            rb.AddForce(Vector3.up * force);
+        }
+    }
+
     private void UsgeBatteryRecived(bool _isActive) {
         ToggleBatteryUsage(_isActive);
     }
@@ -73,16 +84,6 @@ public class Battery : MonoBehaviour {
         networkObjectEnabler.SendEnableParameters(false);
     }
 
-    void FixedUpdate() {
-        if (!canFloat || isInserted) return;
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, restDistance, hitMask)) {
-            float springForce = spring * (restDistance - hit.distance);
-            float dampingfactor = damper * rb.linearVelocity.y;
-            float force = springForce - dampingfactor;
-            rb.AddForce(Vector3.up * force);
-        }
-    }
-
     private IEnumerator UseCO() {
         if (chargeLevel == 0) yield break;
 
@@ -98,7 +99,7 @@ public class Battery : MonoBehaviour {
 
         if (chargeLevel == 0) {
             // Logically stop and visually destroy the battery
-            visuals.enabled = false;
+            visuals.Disable();
             runOutParticleSystem.Play();
 
             OnBatteryRanOut?.Invoke(this, EventArgs.Empty);

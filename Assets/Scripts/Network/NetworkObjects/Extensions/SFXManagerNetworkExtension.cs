@@ -26,6 +26,12 @@ public abstract class SFXManagerNetworkExtension : MonoBehaviour {
         }
     }
 
+    protected void NotifySFXSet() {
+        OnSFXChanged?.Invoke(this, new OnSFXChangedEventArgs {
+            SFXDictionary = SerializeSFXDictionary()
+        });
+    }
+
     protected void NotifySFXSet(int _idx, bool _isActive) {
         SerializableDictionary _SFXDictionary = new SerializableDictionary(new Dictionary<string, string> {
             { _idx.ToString(), _isActive.ToString() }
@@ -36,12 +42,13 @@ public abstract class SFXManagerNetworkExtension : MonoBehaviour {
         });
     }
 
-    protected void NotifySFXSet(Dictionary<string, string> _sfxDictionary) {
-        SerializableDictionary SFXDictionary = new SerializableDictionary(_sfxDictionary);
+    protected SerializableDictionary SerializeSFXDictionary() {
+        Dictionary<string, string> convertedDictionary = new Dictionary<string, string>();
+        for (int i = 0; i < SFXDictionary.Count; i++) {
+            convertedDictionary.Add(i.ToString(), SFXDictionary.Values.ElementAt(i).ToString());
+        }
 
-        OnSFXChanged?.Invoke(this, new OnSFXChangedEventArgs {
-            SFXDictionary = SFXDictionary
-        });
+        return new SerializableDictionary(convertedDictionary);
     }
 
     public void SetSFXDictionary(SerializableDictionary _sfxDictionary) {

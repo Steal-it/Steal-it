@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class Goggles : MonoBehaviour {
+    public Action<bool> OnGooglesToggle;
+
     [SerializeField]
     private float dischargeRate = 60;
     [SerializeField]
     private GameObject visuals;
-    public Action<bool> OnGooglesToggle;
+    [SerializeField]
+    private GogglesSFXManager gogglesSFXManager;
 
     private float chargeLevel = 1;
     private bool isActive = false;
@@ -51,7 +54,13 @@ public class Goggles : MonoBehaviour {
     public void ToggleGlasses() {
         isActive = !isActive;
 
-        if (!isActive) {
+        if (isActive) {
+            gogglesSFXManager.SetActivation(true);
+            gogglesSFXManager.SetDeactivation(false);
+        } else {
+            gogglesSFXManager.SetActivation(false);
+            gogglesSFXManager.SetDeactivation(true);
+
             OnGooglesToggle?.Invoke(false);
             return;
         }
@@ -66,7 +75,6 @@ public class Goggles : MonoBehaviour {
         if (chargeLevel == 0) yield break;
 
         OnGooglesToggle?.Invoke(true);
-
 
         while (chargeLevel > 0) {
             yield return new WaitForFixedUpdate();
