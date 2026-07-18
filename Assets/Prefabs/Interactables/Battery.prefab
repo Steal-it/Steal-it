@@ -5324,3 +5324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b5f6a6082c01841beb5e531b22a068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkObjectEnabler
+  OnActivationNeeded:
+    m_PersistentCalls:
+      m_Calls: []

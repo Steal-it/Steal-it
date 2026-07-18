@@ -61,7 +61,7 @@ public class TorchLight : MonoBehaviour {
     }
 
     public void ToggleLight(object _, Torch.OnTorchTurnedEventArgs _eventArgs) {
-        power = _eventArgs.isTurnedOn;
+        power = _eventArgs.IsTurnedOn;
     }
 
     void OnDrawGizmos() {

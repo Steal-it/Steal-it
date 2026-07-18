@@ -47,10 +47,7 @@ public class AvatarHand : LocalAvatar {
                     NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.GripHand, _onLadder);
                 };
                 leftHand.GetComponentInChildren<Torch>().OnTorchTurned += torchAnimator.ToggleLightVisual;
-                leftHand.GetComponentInChildren<Torch>().OnTorchTurned += (_sender, _event) => {
-                    torchSFXManager.SetLightOn(_event.isTurnedOn);
-                    torchSFXManager.SetLightOff(!_event.isTurnedOn);
-                };
+                leftHand.GetComponentInChildren<Torch>().OnTorchTurned += setSFX;
                 torchAnimator.OnTorchPocket += leftHand.GetComponentInChildren<Torch>().ToggleInPocket;
                 torchAnimator.SetupTorch(leftHand.GetComponentInChildren<TorchLight>());
             } else {
@@ -59,10 +56,7 @@ public class AvatarHand : LocalAvatar {
                     NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.GripHand, _onLadder);
                 };
                 rightHand.GetComponentInChildren<Torch>().OnTorchTurned += torchAnimator.ToggleLightVisual;
-                rightHand.GetComponentInChildren<Torch>().OnTorchTurned += (_sender, _event) => {
-                    torchSFXManager.SetLightOn(_event.isTurnedOn);
-                    torchSFXManager.SetLightOff(!_event.isTurnedOn);
-                };
+                rightHand.GetComponentInChildren<Torch>().OnTorchTurned += setSFX;
                 torchAnimator.OnTorchPocket += rightHand.GetComponentInChildren<Torch>().ToggleInPocket;
                 torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
             }
@@ -79,6 +73,16 @@ public class AvatarHand : LocalAvatar {
             }
         }
         NetworkReferenceManager.Instance.MessageHandler.SendAvatarHandSideMessage(playerSettings.playerTorchHand);
+    }
+
+    private void setSFX(object _sender, Torch.OnTorchTurnedEventArgs _event) {
+        if (_event.IsBatteryRunOut) {
+            torchSFXManager.SetAllSFXs(false);
+            torchSFXManager.SetBatteryRunOut(true);
+        } else {
+            torchSFXManager.SetLightOn(_event.IsTurnedOn);
+            torchSFXManager.SetLightOff(!_event.IsTurnedOn);
+        }
     }
 
     private void OnAvatarSendHandMessageMessageReceived(object _sender, MessageHandler.OnAvatarSendHandSideMessageReceivedEventArgs _args) {

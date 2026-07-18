@@ -80,8 +80,8 @@ public class TorchAnimator : LocalAvatar {
     }
 
     public void ToggleLightVisual(object sender, Torch.OnTorchTurnedEventArgs _eventArgs) {
-        torchLight.enabled = _eventArgs.isTurnedOn;
-        active = _eventArgs.isTurnedOn;
+        torchLight.enabled = _eventArgs.IsTurnedOn;
+        active = _eventArgs.IsTurnedOn;
         NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.TorchLight, torchLight.enabled);
     }
 
