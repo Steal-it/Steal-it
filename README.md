@@ -22,13 +22,13 @@ In order to use the rig and the interactions inside the Editor, go to `Project S
 
 For leveraging Git LFS in order to track large files, very common in Unity projects, make sure it is installed and configured running:
 
-```
+```sh
     git lfs install
 ```
 
 If the command does not return `Git LFS initialized`, download and install it following the [GitHub Docs](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage). Then, run the following commands to track specific files.
 
-```
+```sh
     git lfs install
     git lfs track "*.png"
     git lfs track "*.jpg"
@@ -52,30 +52,31 @@ The path is something like:
 - On Windows:
 ```
     C:\Program Files\Unity\Editor\Data\Tools\UnityYAMLMerge.exe
-
-        or
-
+```
+or
+```
     C:\Program Files (x86)\Unity\Editor\Data\Tools\UnityYAMLMerge.exe
-```
-
-<!-- - On Linux:
-```
-``` -->
-
-To create the variable run:
-
-- On Windows:
-```
-    setx UNITY_MERGE <PATH>
 ```
 
 - On Linux:
 ```
+    ~/Unity/Hub/Editor/6000.3.13f1/Editor/Data/Tools/UnityYAMLMerge
+```
+
+To create the variable run:
+
+- On Windows:
+```cmd
+    setx UNITY_MERGE <PATH>
+```
+
+- On Linux:
+```sh
     export UNITY_MERGE=<PATH>
 ```
 
 Finally you must need to run the following command on the root of the repo:
-```
+```sh
     git config --local include.path ../.gitconfig
 ```
 
