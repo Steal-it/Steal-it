@@ -42,6 +42,26 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
+--- !u!114 &-3243278210460066621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: Dithering
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.FullScreenPassRendererFeature
+  m_Active: 1
+  injectionPoint: 600
+  fetchColorBuffer: 1
+  requirements: 0
+  passMaterial: {fileID: 2100000, guid: 57a98ecd37412f748809fd55f2885338, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,7 +92,9 @@ MonoBehaviour:
   - {fileID: 7664898225041807159}
   - {fileID: 3616836025929197860}
   - {fileID: 7806891670913236261}
-  m_RendererFeatureMap: 91793b9e9ce8ab1bf66148f7888723af3797234753305f6a246958e833953132253dbdac9ca6576c
+  - {fileID: 1829668261088815837}
+  - {fileID: -3243278210460066621}
+  m_RendererFeatureMap: 91793b9e9ce8ab1bf66148f7888723af3797234753305f6a246958e833953132253dbdac9ca6576cdd6a01e796496419c35cc3b5a68ffdd2
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -82,10 +104,10 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 188415
+    m_Bits: 253951
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 196607
+    m_Bits: 262143
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
@@ -101,6 +123,26 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &1829668261088815837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: Pixelation
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.FullScreenPassRendererFeature
+  m_Active: 0
+  injectionPoint: 600
+  fetchColorBuffer: 1
+  requirements: 0
+  passMaterial: {fileID: 2100000, guid: 63fe824c1a62b4047b2334911f55b022, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
 --- !u!114 &1993943019408816529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +202,7 @@ MonoBehaviour:
     passTag: ToOutline
     Event: 450
     filterSettings:
-      RenderQueueType: 1
+      RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
         m_Bits: 65536
@@ -244,7 +286,7 @@ MonoBehaviour:
     passTag: Outline
     Event: 500
     filterSettings:
-      RenderQueueType: 1
+      RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
         m_Bits: 65536

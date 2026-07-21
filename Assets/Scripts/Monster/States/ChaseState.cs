@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class ChaseState : IMonsterState, IMonsterStateVisitor {
-
     public Transform Player => player;
 
     private MonsterStateManager monsterStateManager;

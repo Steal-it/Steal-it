@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MonsterLightDetector : NetworkComponent {
     [SerializeField]
-    private MonsterStateManager monsterStateManager;  // TODO: remove, used only for gizmos
+    private MonsterStateManager monsterStateManager;
     [SerializeField, Range(0.2f, 1)]
     private float lightExposureTime = 0.5f;
 

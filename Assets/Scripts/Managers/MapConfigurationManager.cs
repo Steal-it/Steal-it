@@ -10,7 +10,7 @@ public class MapConfigurationManager : MonoBehaviour {
     [SerializeField]
     private Monster monster;
     [SerializeField]
-    private Transform locks;
+    private KeyLockManager keyLockManager;
 
     private List<MapConfiguration> mapConfigurationArray;
     private List<Transform> keyList;
@@ -24,7 +24,7 @@ public class MapConfigurationManager : MonoBehaviour {
         }
 
         keyList = new List<Transform>();
-        foreach (Transform child in locks) {
+        foreach (Transform child in keyLockManager.LockList) {
             foreach (XRGrabInteractable key in child.GetComponent<SocketFilter>().GrabInteractableList) {
                 keyList.Add(key.transform);
             }

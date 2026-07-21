@@ -71,9 +71,15 @@ public class WanderState : IMonsterState {
         // Check avatar (not hidden by a wall)
         // Offsetting the origin of the ray a bit behind the monster ensures that, even when the monster pops out from a wall,
         // it fully crosses the wall before targeting the player, so the NavMesh Surface change looks smooth
-        Vector3 origin = monsterAgent.transform.position + dirToTarget.normalized * -1.5f + Vector3.up;
+        // Vector3 origin = monsterAgent.transform.position + dirToTarget.normalized * -1.5f + Vector3.up;
+        Vector3 origin = monsterAgent.transform.position + Vector3.up;
         float playerDistance = Vector3.Distance(origin, _targetPosition + Vector3.up);
         if (Physics.Raycast(origin, dirToTarget, playerDistance, monsterStateManager.WallLayer)) {
+            return false;
+        }
+
+        // Check wall overlap
+        if (Physics.CheckSphere(origin, monsterStateManager.WallOverlapRadius, monsterStateManager.WallLayer)) {
             return false;
         }
 

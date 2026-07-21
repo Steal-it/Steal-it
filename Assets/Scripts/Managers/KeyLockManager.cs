@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class KeyLockManager : MonoBehaviour {
+    public Transform LockList => lockList;
+
     [SerializeField]
     private Unlockable unlockable;
     [SerializeField]

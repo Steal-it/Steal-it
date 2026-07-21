@@ -54,25 +54,26 @@ public class Goggles : MonoBehaviour {
     public void ToggleGlasses() {
         isActive = !isActive;
 
-        if (isActive) {
-            gogglesSFXManager.SetActivation(true);
-            gogglesSFXManager.SetDeactivation(false);
-        } else {
+        if (seeCoroutine != null) {
+            StopCoroutine(seeCoroutine);
+
             gogglesSFXManager.SetActivation(false);
             gogglesSFXManager.SetDeactivation(true);
+        }
 
+        if (!isActive) {
             OnGooglesToggle?.Invoke(false);
             return;
         }
 
-        if (seeCoroutine != null) {
-            StopCoroutine(seeCoroutine);
-        }
         seeCoroutine = StartCoroutine(UseXray());
     }
 
     private IEnumerator UseXray() {
         if (chargeLevel == 0) yield break;
+
+        gogglesSFXManager.SetActivation(true);
+        gogglesSFXManager.SetDeactivation(false);
 
         OnGooglesToggle?.Invoke(true);
 

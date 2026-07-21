@@ -261,6 +261,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5916022134655529363, guid: e650a430438a4844889c36cde7d65208, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916022134655529363, guid: e650a430438a4844889c36cde7d65208, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916022134655529363, guid: e650a430438a4844889c36cde7d65208, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5932771579499463112, guid: e650a430438a4844889c36cde7d65208, type: 3}
       propertyPath: chaseNavMeshSurface
       value: 

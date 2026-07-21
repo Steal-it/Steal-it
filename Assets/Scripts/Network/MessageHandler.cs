@@ -107,7 +107,6 @@ public class MessageHandler : MonoBehaviour {
         } while (receiveRecoverCurrentCounterReplyCounter == roomClient.Peers.Count());
 
         receiveRecoverCurrentCounterReplyCounter = 0;
-        // TODO: OnCounterRecoverFinished?.Invoke(this, EventArgs.Empty);
     }
 
     public async void SendReadyMessage() {

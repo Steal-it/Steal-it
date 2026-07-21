@@ -241,7 +241,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6653495510032384753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1043}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1318}
   m_LocalScale: {x: 0.0019999999, y: 0.0019999999, z: 0.0019999999}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -251,7 +251,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.017}
   m_SizeDelta: {x: 42, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4173106517607936770
@@ -386,10 +386,6 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3326758356872085064, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
-      propertyPath: Transform
-      value: 
-      objectReference: {fileID: 2937906849567592553}
-    - target: {fileID: 3326758356872085064, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
       propertyPath: TransmitGravity
       value: 0
       objectReference: {fileID: 0}
@@ -399,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3949328237616280954, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 5104617095670911310, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -489,11 +485,6 @@ MonoBehaviour:
   OnPressRequirementSatisfied:
     m_PersistentCalls:
       m_Calls: []
---- !u!4 &2937906849567592553 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1679993776342786723, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}
-  m_PrefabInstance: {fileID: 4581572347012494026}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8737614351637635972 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5104617095670911310, guid: 3fbf8599f7913fe4b982815cac7e16cd, type: 3}

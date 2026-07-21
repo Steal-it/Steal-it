@@ -3,7 +3,27 @@ guid: f1e658f08e979cf4185609278476abf8
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Handle_Shpere
+    second: {fileID: 2100000, guid: ab1a17f812b2b2047acefd51e7e0a620, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lantern
+    second: {fileID: 2100000, guid: cab62014a122bda4bb2f5fb4bb1b6e24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lantern_Glass
+    second: {fileID: 2100000, guid: 0baa661f6680ccd498529d9b9139f47d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lantern_Metal
+    second: {fileID: 2100000, guid: 690ee86ae4685324aabf1002c46a41d9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

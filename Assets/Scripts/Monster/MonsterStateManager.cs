@@ -21,6 +21,7 @@ public class MonsterStateManager : MonoBehaviour {
     // Wander Mode
     public float ViewRadius => viewRadius;
     public float ViewAngle => viewAngle;
+    public float WallOverlapRadius => wallOverlapRadius;
     public LayerMask WallLayer => wallLayer;
     public MonsterRandomDestinationManager MonsterRandomDestinationManager => monsterWanderModeManager;
 
@@ -54,6 +55,8 @@ public class MonsterStateManager : MonoBehaviour {
     private float viewRadius = 20;
     [SerializeField, Range(0, 360)]
     private float viewAngle = 150;
+    [SerializeField, Range(0.1f, 1)]
+    private float wallOverlapRadius = 0.25f;
     [SerializeField]
     private LayerMask wallLayer;
 

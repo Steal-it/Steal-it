@@ -47,7 +47,7 @@ public class AvatarHand : LocalAvatar {
                     NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.GripHand, _onLadder);
                 };
                 leftHand.GetComponentInChildren<Torch>().OnTorchTurned += torchAnimator.ToggleLightVisual;
-                leftHand.GetComponentInChildren<Torch>().OnTorchTurned += setSFX;
+                leftHand.GetComponentInChildren<Torch>().OnTorchTurned += SetSFX;
                 torchAnimator.OnTorchPocket += leftHand.GetComponentInChildren<Torch>().ToggleInPocket;
                 torchAnimator.SetupTorch(leftHand.GetComponentInChildren<TorchLight>());
             } else {
@@ -56,7 +56,7 @@ public class AvatarHand : LocalAvatar {
                     NetworkReferenceManager.Instance.MessageHandler.SendAvatarComponentEnablerMessage(AvatarComponentType.GripHand, _onLadder);
                 };
                 rightHand.GetComponentInChildren<Torch>().OnTorchTurned += torchAnimator.ToggleLightVisual;
-                rightHand.GetComponentInChildren<Torch>().OnTorchTurned += setSFX;
+                rightHand.GetComponentInChildren<Torch>().OnTorchTurned += SetSFX;
                 torchAnimator.OnTorchPocket += rightHand.GetComponentInChildren<Torch>().ToggleInPocket;
                 torchAnimator.SetupTorch(rightHand.GetComponentInChildren<TorchLight>());
             }
@@ -75,7 +75,7 @@ public class AvatarHand : LocalAvatar {
         NetworkReferenceManager.Instance.MessageHandler.SendAvatarHandSideMessage(playerSettings.playerTorchHand);
     }
 
-    private void setSFX(object _sender, Torch.OnTorchTurnedEventArgs _event) {
+    private void SetSFX(object _sender, Torch.OnTorchTurnedEventArgs _event) {
         if (_event.IsBatteryRunOut) {
             torchSFXManager.SetAllSFXs(false);
             torchSFXManager.SetBatteryRunOut(true);
