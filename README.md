@@ -86,3 +86,15 @@ Finally you must need to run the following command on the root of the repo:
 - The low battery icon can be downloaded from [Vecteezy](https://www.vecteezy.com): [Battery Warning Vectors by Vecteezy](https://www.vecteezy.com/free-vector/battery-warning), created by [gino tripoloni](https://www.vecteezy.com/members/ginotripolonidg)
 - The soda banners are designed by Magnific and can be downloaded from the [Magnific website](https://www.magnific.com/free-vector/sweet-soda-banners-drink-splashing-out-tin-cans_25072682.htm#fromView=keyword&page=1&position=1&uuid=7f4d28e4-2cc7-435c-b67d-1dd0933db044&query=Soda+can+label)
 - Classic64 Lowpoly Asset Library, released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.it) and created by [craigsnedeker](https://itch.io/profile/craigsnedeker). Downloadable from [itch.io](https://craigsnedeker.itch.io/classic64-asset-library)
+
+# Possible fixes
+- battery on pocket in remote
+- flash behind doors
+- disable rig in spectator mode
+- better bake
+- realtime lights and shadow atlas
+- fix bugged props
+- disable lights on goggles
+- fix sfx goggles
+- fix key gravity
+- make flash bigger
