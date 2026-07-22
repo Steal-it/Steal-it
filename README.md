@@ -18,29 +18,31 @@
 
 Clone the repo, add it into Unity Hub and start it using the proper Unity Editor version. Once opened, go to `Build Profiles` and switch to Android. Packages and dependencies should be already imported.
 
-In order to use the rig and the interactions inside the Editor, go to `Project Settings > XR Plug-in Management > XR Interaction Toolkit` and enbale `Use XR Interaction Simulator in scenes`.
+To remove the warning "Could not find Samples directory (Assets\Samples)", double click on it and replace the path in `k_SamplesRootDirectoryName` at the beginning of the class with "XR Interaction Toolkit\3.3.1".
 
 For leveraging Git LFS in order to track large files, very common in Unity projects, make sure it is installed and configured running:
 
 ```sh
-    git lfs install
+git lfs install
 ```
 
 If the command does not return `Git LFS initialized`, download and install it following the [GitHub Docs](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage). Then, run the following commands to track specific files.
 
 ```sh
-    git lfs install
-    git lfs track "*.png"
-    git lfs track "*.jpg"
-    git lfs track "*.psd"
-    git lfs track "*.fbx"
-    git lfs track "*.wav"
-    git lfs track "*.mp3"
-    git lfs track "*.mp4"
-    git lfs track "*.ttf"
-    git add .gitattributes
-    git commit -m "configured Git LFS"
+git lfs install
+git lfs track "*.png"
+git lfs track "*.jpg"
+git lfs track "*.psd"
+git lfs track "*.fbx"
+git lfs track "*.wav"
+git lfs track "*.mp3"
+git lfs track "*.mp4"
+git lfs track "*.ttf"
+git add .gitattributes
+git commit -m "configured Git LFS"
 ```
+
+In order to use the rig and the interactions inside the Editor, `Use XR Interaction Simulator in scenes` must be checked in `Project Settings > XR Plug-in Management > XR Interaction Toolkit`. Make sure the prefab used as simulator is under `XR Interaction Toolkit\3.3.1`. If the `Samples` folder is generated, delete it.
 
 ## Merge and merge conflitcs
 
@@ -51,33 +53,33 @@ The path is something like:
 
 - On Windows:
 ```
-    C:\Program Files\Unity\Editor\Data\Tools\UnityYAMLMerge.exe
+C:\Program Files\Unity\Editor\Data\Tools\UnityYAMLMerge.exe
 ```
 or
 ```
-    C:\Program Files (x86)\Unity\Editor\Data\Tools\UnityYAMLMerge.exe
+C:\Program Files (x86)\Unity\Editor\Data\Tools\UnityYAMLMerge.exe
 ```
 
 - On Linux:
 ```
-    ~/Unity/Hub/Editor/6000.3.13f1/Editor/Data/Tools/UnityYAMLMerge
+~/Unity/Hub/Editor/6000.3.13f1/Editor/Data/Tools/UnityYAMLMerge
 ```
 
 To create the variable run:
 
 - On Windows:
 ```cmd
-    setx UNITY_MERGE <PATH>
+setx UNITY_MERGE <PATH>
 ```
 
 - On Linux:
 ```sh
-    export UNITY_MERGE=<PATH>
+export UNITY_MERGE=<PATH>
 ```
 
 Finally you must need to run the following command on the root of the repo:
 ```sh
-    git config --local include.path ../.gitconfig
+git config --local include.path ../.gitconfig
 ```
 
 # Models
@@ -88,13 +90,14 @@ Finally you must need to run the following command on the root of the repo:
 - Classic64 Lowpoly Asset Library, released under [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.it) and created by [craigsnedeker](https://itch.io/profile/craigsnedeker). Downloadable from [itch.io](https://craigsnedeker.itch.io/classic64-asset-library)
 
 # Possible fixes
-- battery on pocket in remote
-- flash behind doors
-- disable rig in spectator mode
-- better bake
-- realtime lights and shadow atlas
-- fix bugged props
-- disable lights on goggles
-- fix sfx goggles
-- fix key gravity
-- make flash bigger
+
+- Battery on pocket in remote
+- Flash behind doors
+- Disable rig in spectator mode
+- Better bake
+- Realtime lights and shadow atlas
+- Fix bugged props
+- Disable lights on goggles
+- Fix sfx goggles
+- Fix key gravity
+- Make flash bigger
