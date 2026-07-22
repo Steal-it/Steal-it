@@ -14,7 +14,7 @@
 
 - Visual Studio Code with the Unity extension 1.2.2 or above, Visual Studio in alternative
 
-## Clone and set up
+## Clone and setup
 
 Clone the repo, add it into Unity Hub and start it using the proper Unity Editor version. Once opened, go to `Build Profiles` and switch to Android. Packages and dependencies should be already imported.
 
@@ -43,6 +43,16 @@ git commit -m "configured Git LFS"
 ```
 
 In order to use the rig and the interactions inside the Editor, `Use XR Interaction Simulator in scenes` must be checked in `Project Settings > XR Plug-in Management > XR Interaction Toolkit`. Make sure the prefab used as simulator is under `XR Interaction Toolkit\3.3.1`. If the `Samples` folder is generated, delete it.
+
+### Server setup
+
+Clone the forked repository of the Ubiq server, then go to the `Node` folder and run the command:
+
+```sh
+npm start
+```
+
+The project is set up for connecting to a local server. If you need to connect to external servers, such as the public one of Ubiq, open the Network prefab and change the `Connection Definition` profile under the `Room Client` component, or just modify the IP.
 
 ## Merge and merge conflitcs
 
