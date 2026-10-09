@@ -47,9 +47,9 @@ LightingSettings:
   m_PVRSampling: 1
   m_PVRDirectSampleCount: 1
   m_PVRSampleCount: 1
-  m_PVREnvironmentSampleCount: 256
+  m_PVREnvironmentSampleCount: 4
   m_PVREnvironmentReferencePointCount: 2048
-  m_LightProbeSampleCountMultiplier: 1
+  m_LightProbeSampleCountMultiplier: 4
   m_PVRBounces: 0
   m_PVRMinBounces: 0
   m_PVREnvironmentImportanceSampling: 1
